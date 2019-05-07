@@ -15,6 +15,7 @@
 		17818BC622811A89000EAFF1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17818BC422811A89000EAFF1 /* LaunchScreen.storyboard */; };
 		17818BD122811A89000EAFF1 /* InfosafeCSI_onMoveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17818BD022811A89000EAFF1 /* InfosafeCSI_onMoveTests.swift */; };
 		17818BDC22811A89000EAFF1 /* InfosafeCSI_onMoveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17818BDB22811A89000EAFF1 /* InfosafeCSI_onMoveUITests.swift */; };
+		57C8B92822813EEC004966C5 /* WCFMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C8B92722813EEC004966C5 /* WCFMethods.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		17818BD722811A89000EAFF1 /* InfosafeCSI onMoveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "InfosafeCSI onMoveUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		17818BDB22811A89000EAFF1 /* InfosafeCSI_onMoveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfosafeCSI_onMoveUITests.swift; sourceTree = "<group>"; };
 		17818BDD22811A89000EAFF1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		57C8B92722813EEC004966C5 /* WCFMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCFMethods.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 		17818BAC22811A88000EAFF1 = {
 			isa = PBXGroup;
 			children = (
+				57C8B92622813ECC004966C5 /* WCF */,
 				17818BB722811A88000EAFF1 /* InfosafeCSI onMove */,
 				17818BCF22811A89000EAFF1 /* InfosafeCSI onMoveTests */,
 				17818BDA22811A89000EAFF1 /* InfosafeCSI onMoveUITests */,
@@ -126,6 +129,14 @@
 				17818BDD22811A89000EAFF1 /* Info.plist */,
 			);
 			path = "InfosafeCSI onMoveUITests";
+			sourceTree = "<group>";
+		};
+		57C8B92622813ECC004966C5 /* WCF */ = {
+			isa = PBXGroup;
+			children = (
+				57C8B92722813EEC004966C5 /* WCFMethods.swift */,
+			);
+			path = WCF;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,6 +273,7 @@
 				17818BBB22811A88000EAFF1 /* ViewController.swift in Sources */,
 				17818BB922811A88000EAFF1 /* AppDelegate.swift in Sources */,
 				17818BC122811A88000EAFF1 /* InfosafeCSI_onMove.xcdatamodeld in Sources */,
+				57C8B92822813EEC004966C5 /* WCFMethods.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,7 +449,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ZT7UW87A6L;
+				DEVELOPMENT_TEAM = DQNS8CDPT5;
 				INFOPLIST_FILE = "InfosafeCSI onMove/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -455,7 +467,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ZT7UW87A6L;
+				DEVELOPMENT_TEAM = DQNS8CDPT5;
 				INFOPLIST_FILE = "InfosafeCSI onMove/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
