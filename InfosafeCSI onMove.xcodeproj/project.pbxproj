@@ -15,6 +15,8 @@
 		17818BC622811A89000EAFF1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17818BC422811A89000EAFF1 /* LaunchScreen.storyboard */; };
 		17818BD122811A89000EAFF1 /* InfosafeCSI_onMoveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17818BD022811A89000EAFF1 /* InfosafeCSI_onMoveTests.swift */; };
 		17818BDC22811A89000EAFF1 /* InfosafeCSI_onMoveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17818BDB22811A89000EAFF1 /* InfosafeCSI_onMoveUITests.swift */; };
+		17818BED22815661000EAFF1 /* UserProfilesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17818BEC22815661000EAFF1 /* UserProfilesData.swift */; };
+		17818BEF22815681000EAFF1 /* UserProfilesAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17818BEE22815681000EAFF1 /* UserProfilesAccess.swift */; };
 		57C8B92822813EEC004966C5 /* csiWCFMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C8B92722813EEC004966C5 /* csiWCFMethods.swift */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +52,8 @@
 		17818BD722811A89000EAFF1 /* InfosafeCSI onMoveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "InfosafeCSI onMoveUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		17818BDB22811A89000EAFF1 /* InfosafeCSI_onMoveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfosafeCSI_onMoveUITests.swift; sourceTree = "<group>"; };
 		17818BDD22811A89000EAFF1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17818BEC22815661000EAFF1 /* UserProfilesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilesData.swift; sourceTree = "<group>"; };
+		17818BEE22815681000EAFF1 /* UserProfilesAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilesAccess.swift; sourceTree = "<group>"; };
 		57C8B92722813EEC004966C5 /* csiWCFMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csiWCFMethods.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -139,9 +143,27 @@
 			path = csiWCF;
 			sourceTree = "<group>";
 		};
+		17818BEA22815524000EAFF1 /* UserProfile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UserProfile;
+			sourceTree = "<group>";
+		};
+		17818BEB2281563E000EAFF1 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				17818BEC22815661000EAFF1 /* UserProfilesData.swift */,
+				17818BEE22815681000EAFF1 /* UserProfilesAccess.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
 		57C8B92622813ECC004966C5 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				17818BEB2281563E000EAFF1 /* Entities */,
+				17818BEA22815524000EAFF1 /* UserProfile */,
 				17818BE9228152AA000EAFF1 /* csiWCF */,
 			);
 			path = Modules;
@@ -279,8 +301,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				17818BBB22811A88000EAFF1 /* ViewController.swift in Sources */,
+				17818BED22815661000EAFF1 /* UserProfilesData.swift in Sources */,
 				17818BB922811A88000EAFF1 /* AppDelegate.swift in Sources */,
 				17818BC122811A88000EAFF1 /* InfosafeCSI_onMove.xcdatamodeld in Sources */,
+				17818BEF22815681000EAFF1 /* UserProfilesAccess.swift in Sources */,
 				57C8B92822813EEC004966C5 /* csiWCFMethods.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
