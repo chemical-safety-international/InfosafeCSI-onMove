@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		17818BB922811A88000EAFF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17818BB822811A88000EAFF1 /* AppDelegate.swift */; };
-		17818BBB22811A88000EAFF1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17818BBA22811A88000EAFF1 /* ViewController.swift */; };
+		17818BBB22811A88000EAFF1 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17818BBA22811A88000EAFF1 /* LoginViewController.swift */; };
 		17818BBE22811A88000EAFF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17818BBC22811A88000EAFF1 /* Main.storyboard */; };
 		17818BC122811A88000EAFF1 /* InfosafeCSI_onMove.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 17818BBF22811A88000EAFF1 /* InfosafeCSI_onMove.xcdatamodeld */; };
 		17818BC322811A89000EAFF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17818BC222811A89000EAFF1 /* Assets.xcassets */; };
@@ -18,6 +18,7 @@
 		17818BED22815661000EAFF1 /* UserProfilesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17818BEC22815661000EAFF1 /* UserProfilesData.swift */; };
 		17818BEF22815681000EAFF1 /* UserProfilesAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17818BEE22815681000EAFF1 /* UserProfilesAccess.swift */; };
 		57C8B92822813EEC004966C5 /* csiWCFMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C8B92722813EEC004966C5 /* csiWCFMethods.swift */; };
+		57C8B92C22825DE4004966C5 /* LoginViewModules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C8B92B22825DE4004966C5 /* LoginViewModules.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +41,7 @@
 /* Begin PBXFileReference section */
 		17818BB522811A88000EAFF1 /* InfosafeCSI onMove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "InfosafeCSI onMove.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		17818BB822811A88000EAFF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		17818BBA22811A88000EAFF1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		17818BBA22811A88000EAFF1 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		17818BBD22811A88000EAFF1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		17818BC022811A88000EAFF1 /* InfosafeCSI_onMove.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = InfosafeCSI_onMove.xcdatamodel; sourceTree = "<group>"; };
 		17818BC222811A89000EAFF1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -55,6 +56,7 @@
 		17818BEC22815661000EAFF1 /* UserProfilesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilesData.swift; sourceTree = "<group>"; };
 		17818BEE22815681000EAFF1 /* UserProfilesAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilesAccess.swift; sourceTree = "<group>"; };
 		57C8B92722813EEC004966C5 /* csiWCFMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csiWCFMethods.swift; sourceTree = "<group>"; };
+		57C8B92B22825DE4004966C5 /* LoginViewModules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModules.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +87,6 @@
 		17818BAC22811A88000EAFF1 = {
 			isa = PBXGroup;
 			children = (
-				57C8B92622813ECC004966C5 /* Modules */,
 				17818BB722811A88000EAFF1 /* InfosafeCSI onMove */,
 				17818BCF22811A89000EAFF1 /* InfosafeCSI onMoveTests */,
 				17818BDA22811A89000EAFF1 /* InfosafeCSI onMoveUITests */,
@@ -106,8 +107,10 @@
 		17818BB722811A88000EAFF1 /* InfosafeCSI onMove */ = {
 			isa = PBXGroup;
 			children = (
+				57C8B92A22825DBB004966C5 /* ViewModules */,
+				57C8B92922825D98004966C5 /* Views */,
+				57C8B92622813ECC004966C5 /* Modules */,
 				17818BB822811A88000EAFF1 /* AppDelegate.swift */,
-				17818BBA22811A88000EAFF1 /* ViewController.swift */,
 				17818BBC22811A88000EAFF1 /* Main.storyboard */,
 				17818BC222811A89000EAFF1 /* Assets.xcassets */,
 				17818BC422811A89000EAFF1 /* LaunchScreen.storyboard */,
@@ -167,6 +170,22 @@
 				17818BE9228152AA000EAFF1 /* csiWCF */,
 			);
 			path = Modules;
+			sourceTree = "<group>";
+		};
+		57C8B92922825D98004966C5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				17818BBA22811A88000EAFF1 /* LoginViewController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		57C8B92A22825DBB004966C5 /* ViewModules */ = {
+			isa = PBXGroup;
+			children = (
+				57C8B92B22825DE4004966C5 /* LoginViewModules.swift */,
+			);
+			path = ViewModules;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,9 +319,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17818BBB22811A88000EAFF1 /* ViewController.swift in Sources */,
+				17818BBB22811A88000EAFF1 /* LoginViewController.swift in Sources */,
 				17818BED22815661000EAFF1 /* UserProfilesData.swift in Sources */,
 				17818BB922811A88000EAFF1 /* AppDelegate.swift in Sources */,
+				57C8B92C22825DE4004966C5 /* LoginViewModules.swift in Sources */,
 				17818BC122811A88000EAFF1 /* InfosafeCSI_onMove.xcdatamodeld in Sources */,
 				17818BEF22815681000EAFF1 /* UserProfilesAccess.swift in Sources */,
 				57C8B92822813EEC004966C5 /* csiWCFMethods.swift in Sources */,
