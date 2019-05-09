@@ -9,7 +9,7 @@
 import Foundation
 
 
-class logincorresponding {
+class csiWCF_VM {
     
     func callLogin(email: String, password: String) {
         

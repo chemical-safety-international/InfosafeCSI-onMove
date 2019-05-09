@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginPage_VC: UIViewController {
 
     //IBOutlet
     @IBOutlet weak var userIDTextField: UITextField!
@@ -37,7 +37,7 @@ class LoginViewController: UIViewController {
         let email = userIDTextField.text!
         let password = passwordTextField.text!
         
-        logincorresponding().callLogin(email: email, password: password)
+        csiWCF_VM().callLogin(email: email, password: password)
         
     }
     
