@@ -64,8 +64,8 @@ class csiWCF_VM: UIViewController {
     }
     
     func callSearch(loginData:(String,String,String), inputData:String) {
-        let inputData = "acetone"
-        TablePage_VC().beginSearch(loginData: loginData, input: inputData)
+        let input = inputData
+        TablePage_VC().beginSearch(loginData: loginData, input: input)
         }
     
 //    func showAlert() {

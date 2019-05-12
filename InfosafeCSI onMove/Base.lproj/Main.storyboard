@@ -141,6 +141,9 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <state key="normal" title="SDS"/>
+                                                    <connections>
+                                                        <segue destination="PT5-on-lP4" kind="show" id="pL2-oD-gkc"/>
+                                                    </connections>
                                                 </button>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="th5-7q-3fh">
                                                     <rect key="frame" x="20" y="85" width="279" height="15"/>
@@ -174,6 +177,35 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dMK-hz-seV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3102.898550724638" y="-228.34821428571428"/>
+        </scene>
+        <!--ViewVC-->
+        <scene sceneID="3jr-l2-tWo">
+            <objects>
+                <viewController id="PT5-on-lP4" customClass="SDSView_VC" customModule="InfosafeCSI_onMove" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="icz-E7-RV1">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Aa-Yb-VYa">
+                                <rect key="frame" x="0.0" y="139" width="414" height="609"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="CSM-50-euU"/>
+                    </view>
+                    <connections>
+                        <outlet property="sdsDisplay" destination="0Aa-Yb-VYa" id="oqt-Gm-3Xh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="izI-at-Yi7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4100" y="-228.34821428571428"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="63e-F7-9UZ">

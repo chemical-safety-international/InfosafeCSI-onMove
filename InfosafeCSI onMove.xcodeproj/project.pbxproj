@@ -23,6 +23,7 @@
 		577B1A5D2285195600E5C4AB /* TablePage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577B1A5C2285195600E5C4AB /* TablePage_VC.swift */; };
 		57C8B92822813EEC004966C5 /* csiWCFMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C8B92722813EEC004966C5 /* csiWCFMethods.swift */; };
 		57C8B92C22825DE4004966C5 /* csiWCF_VM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C8B92B22825DE4004966C5 /* csiWCF_VM.swift */; };
+		AC9AB9DA2288DFA900C2C71E /* SDSView_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		577B1A5C2285195600E5C4AB /* TablePage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TablePage_VC.swift; sourceTree = "<group>"; };
 		57C8B92722813EEC004966C5 /* csiWCFMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csiWCFMethods.swift; sourceTree = "<group>"; };
 		57C8B92B22825DE4004966C5 /* csiWCF_VM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csiWCF_VM.swift; sourceTree = "<group>"; };
+		AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSView_VC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +190,7 @@
 				577B1A582284059700E5C4AB /* SearchPage_VC.swift */,
 				577B1A5C2285195600E5C4AB /* TablePage_VC.swift */,
 				57711F56228808300051E576 /* TableViewCell.swift */,
+				AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				577B1A592284059700E5C4AB /* SearchPage_VC.swift in Sources */,
 				17818BED22815661000EAFF1 /* UserProfilesData.swift in Sources */,
 				17818BB922811A88000EAFF1 /* AppDelegate.swift in Sources */,
+				AC9AB9DA2288DFA900C2C71E /* SDSView_VC.swift in Sources */,
 				57C8B92C22825DE4004966C5 /* csiWCF_VM.swift in Sources */,
 				17818BC122811A88000EAFF1 /* InfosafeCSI_onMove.xcdatamodeld in Sources */,
 				57711F57228808300051E576 /* TableViewCell.swift in Sources */,

@@ -24,6 +24,8 @@ class TablePage_VC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
     }
     
 
@@ -41,6 +43,10 @@ class TablePage_VC: UIViewController {
         self.view.endEditing(true)
     }
     
+    @objc func loadList(notification: NSNotification) {
+    self.tableDisplay.reloadData()
+    }
+    
     func beginSearch(loginData: (String,String,String), input: String) {
         csiWCF_GetSDSSearchResultsPageEx(clientid: loginData.0, clientmemberid: loginData.1, infosafeid: loginData.2, inputData: input) {
             (returnData) in
@@ -56,7 +62,7 @@ class TablePage_VC: UIViewController {
                 self.arrNo = returnArray.2 as! [String]
                 
                 DispatchQueue.main.async {
-//                    NotificationCenter.default.post(name: NSNotification.Name(rowVaule: "")).tableDisplay.reloadData()
+//                    NotificationCenter.default.post(name: NSNotification.Name(rawVaule: "load"), object: nil)
                     TablePage_VC().tableDisplay.reloadData()
                 }
             }
