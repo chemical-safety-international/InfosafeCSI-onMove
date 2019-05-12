@@ -10,6 +10,7 @@ import UIKit
 
 class SearchPage_VC: UIViewController {
 
+    var loginDataSet:(String,String,String) = ("","","")
     //IBOutlet
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchBtn: UIButton!
@@ -21,13 +22,17 @@ class SearchPage_VC: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+//    func  getLoginData(loginData: (String,String,String)) {
+//        loginDataSet = loginData
+//        print("LoginDataSet: \(loginDataSet)")
+//    }
 
     @IBAction func searchBtnTapped(_ sender: Any) {
         
         let searchInPut = searchTextField.text!
-        
         //call search function
-        //csiWCF_VM().callSearch(loginData: csiWCF_VM().loginData, inputData: searchInPut)
+        print("loginDataSetis \(loginDataSet.0)")
+        csiWCF_VM().callSearch(loginData: csiWCF_VM().loginDataSet, inputData: searchInPut)
         
 //        let loginJump = storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
 //        self.navigationController?.pushViewController(loginJump!, animated: true)

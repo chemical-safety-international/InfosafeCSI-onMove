@@ -13,33 +13,40 @@ import UIKit
 class csiWCF_VM: UIViewController {
     
     //create var
-    var loginData: (String,String,String)!
-    var client:String = ""
-    var clientmember:String = ""
-    var infosafe:String = ""
+    var loginDataSet: (String, String, String) = ("","","")
     
-    
-    func callLogin(email: String, password: String) ->(String, String, String, Bool) {
+    func callLogin(email: String, password: String) {
         
         print("email is: " + email)
         print("password is:" + password)
         
-        var loginStatus: Bool = false
+        
         let deviceid: String = ""
         let devicemac: String = ""
-        csiWCF_loginbyEmail(email: email, password: password, deviceid: deviceid, devicemac: devicemac) { (clientid, clientmemberid, infosafeid) in
-            
-            if clientid == "" {
-                print("Verify failed: \n \(loginVarStatus.statusBool)")
+        
+ //       let group = DispatchGroup()
+//        group.enter()
+//       csiWCF_loginbyEmail(email: email, password: password, deviceid: deviceid, devicemac: devicemac)
+        csiWCF_loginbyEmail(email: email, password: password, deviceid: deviceid, devicemac: devicemac) { (outdata) in
+            if outdata.contains("true") {
+                self.loginDataSet = csiWCF_LoginReturnValueFix(inValue: outdata)
                 
+            let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
+            self.navigationController?.pushViewController(loginJump!, animated: true)
+            } else {
+                print("Login failed: email or password not correct.")
+            }
+//            print("\(clientid), \(clientmemberid), \(infosafeid)")
+//            if loginVarStatus.statusBool == false {
+//                print("Verify failed: \n \(loginVarStatus.statusBool)")
+        
 //                DispatchQueue.main.async {
                   //LoginViewController().showAlertWith(title: "Login Failed", message: "Your email address or password is invaild.")
-                    loginStatus = false
 //                }
                 
                 
-            } else {
-                print("Success login: \n \(loginVarStatus.statusBool)")
+//            } else {
+//                print("Success login: \n \(loginVarStatus.statusBool)")
                 //self.loginData = csiWCF_LoginReturnValueFix(inValue: returnData)
                 
 //                print(self.loginData as Any)
@@ -48,29 +55,18 @@ class csiWCF_VM: UIViewController {
 //                DispatchQueue.main.async {
                     //LoginPage_VC().showAlertWith(title: "Login Success", message: "Welcome to CSI!")
 //                    LoginPage_VC().pushPage()
-                    loginStatus = true
+
 //                }
-                self.client = clientid
-                self.clientmember = clientmemberid
-                self.infosafe = infosafeid
-                
+        
             }
-        }
-        return (client, clientmember, infosafe, loginStatus)
+//        }
+//        group.leave()
     }
     
     func callSearch(loginData:(String,String,String), inputData:String) {
         let inputData = "acetone"
-        csiWCF_GetSDSSearchResultsPageEx(clientid: loginData.0, clientmemberid: loginData.1, infosafeid: loginData.2, inputData: inputData) {
-            (returnData) in
-
-            if returnData.contains("false") {
-                print("No data return from search")
-            } else {
-                print("Success called search: \n \(returnData)")
-            }
+        TablePage_VC().beginSearch(loginData: loginData, input: inputData)
         }
-    }
     
 //    func showAlert() {
 //        if loginVarStatus.statusBool.contains("true") {

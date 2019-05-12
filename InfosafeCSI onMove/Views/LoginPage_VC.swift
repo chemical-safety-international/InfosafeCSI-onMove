@@ -30,7 +30,7 @@ class LoginPage_VC: UIViewController {
 
     
     func showAlert() {
-        if loginVarStatus.statusBool.contains("true") {
+        if loginVarStatus.statusBool == true {
             //            DispatchQueue.main.async {
             // LoginPage_VC().showAlertWith(title: "Login Success", message: "Welcome to CSI!")
             let ac = UIAlertController(title: "Login success", message: "Welcome", preferredStyle: .alert)
@@ -61,22 +61,28 @@ class LoginPage_VC: UIViewController {
 //        let group = DispatchGroup()
 //        group.enter()
         //DispatchQueue.main.async {
-            let loginReturnInfo = csiWCF_VM().callLogin(email: email, password: password)
-        if loginReturnInfo.3 == true {
-
-            let ac = UIAlertController(title: "Login success", message: "Welcome", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style:  .default))
-            self.present(ac, animated: true)
-            
-
-            
-            let loginJump = storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
-            self.navigationController?.pushViewController(loginJump!, animated: true)
-        } else {
-            let ac = UIAlertController(title: "Verify Failed", message: "Email or Password is invaild, please try again.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style:  .default))
-            self.present(ac, animated: true)
-        }
+        csiWCF_VM().callLogin(email: email, password: password)
+ //       print("\(loginVarStatus.client) + \(loginVarStatus.clientmemberid) + \(loginVarStatus.infosafeid))")
+        showAlert()
+//        print("last data: \n \(loginReturnInfo.0) \n \(loginReturnInfo.1) \n \(loginReturnInfo.2)")
+//        run(after: 10) {
+//            if loginReturnInfo.3 == true {
+//
+//                let ac = UIAlertController(title: "Login success", message: "Welcome", preferredStyle: .alert)
+//                ac.addAction(UIAlertAction(title: "OK", style:  .default))
+//                self.present(ac, animated: true)
+//
+//
+//
+//                let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
+//                self.navigationController?.pushViewController(loginJump!, animated: true)
+//            } else {
+//                let ac = UIAlertController(title: "Verify Failed", message: "Email or Password is invaild, please try again.", preferredStyle: .alert)
+//                ac.addAction(UIAlertAction(title: "OK", style:  .default))
+//                self.present(ac, animated: true)
+//            }
+//        }
+        
 //            group.leave()
 //       //}
 //        group.wait()
@@ -90,6 +96,13 @@ class LoginPage_VC: UIViewController {
     func pushPage()  {
         let loginJump = storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
         self.navigationController?.pushViewController(loginJump!, animated: true)
+    }
+    
+    func run(after seconds: Int, completion: @escaping () -> Void) {
+        let deadline = DispatchTime.now() + .seconds(seconds)
+        DispatchQueue.main.asyncAfter(deadline: deadline) {
+            completion()
+        }
     }
 
 }

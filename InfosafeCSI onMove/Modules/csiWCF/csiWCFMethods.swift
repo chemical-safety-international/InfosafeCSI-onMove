@@ -9,7 +9,8 @@
 import Foundation
 
 // Call the WCF function: 'loginbyEami' with email, password, deviceid, devicemac and return the data from WCF
-func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicemac:String, completion:@escaping(String, String, String) -> Void) -> (Void)
+//func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicemac:String, completion:@escaping(String, String, String) -> Void) -> (Void)
+func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicemac:String, completion: @escaping (String) -> Void) -> (Void)
 {
     //WCF for LoginByEamil
     
@@ -44,21 +45,20 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
         //get the return data
         guard let data = data else {return}
         let responseString = String(data: data, encoding: .utf8)
-        
-        if responseString!.contains("true") {
-            let loginInfo = csiWCF_LoginReturnValueFix(inValue: responseString!)
-            let clientid = loginInfo.0
-            let clientmemberid = loginInfo.1
-            let infosafeid = loginInfo.2
-           // statusCheck = "true"
-            loginVarStatus.statusBool = "true"
-            
-            completion(clientid, clientmemberid, infosafeid)
-        } else {
-           // statusCheck = "false"
-            completion("", "", "")
-            loginVarStatus.statusBool = "false"
-        }
+        completion(responseString!)
+//        if responseString!.contains("true") {
+//            let loginInfo = csiWCF_LoginReturnValueFix(inValue: responseString!)
+//            loginVarStatus.client = loginInfo.0
+//            loginVarStatus.clientmemberid = loginInfo.1
+//            loginVarStatus.infosafeid = loginInfo.2
+//           // statusCheck = "true"
+//            loginVarStatus.statusBool = true
+//            print("response true")
+//        } else {
+//           // statusCheck = "false"
+//            loginVarStatus.statusBool = false
+//            print("response false")
+//        }
         
     }
     
@@ -73,10 +73,11 @@ func  csiWCF_GetSDSSearchResultsPageEx(clientid:String, clientmemberid:String, i
     let uid = infosafeid
     
     //let json: [String: Any] = ["client":"CDB_Test", "uid":"releski", "apptp":"1", "c":"", "v":"acetone", "p":"1", "psize":"50"]
-    let json: [String: Any] = ["client":client, "uid":uid, "apptp":"1", "c":"", "v":inputData, "p":"1", "psize":"50"]
+//    let json: [String: Any] = ["client":client, "uid":uid, "apptp":"1", "c":"", "v":inputData, "p":"1", "psize":"50"]
+    let json: [String: Any] = ["client":"CDB_Test", "uid":"releski", "apptp":"1", "c":"", "v":inputData, "p":"1", "psize":"50"]
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
-    let url = URL(string: "http://gold/CSIMD_WCF/CSI_MD_Service.svc/GetSDSSearchResultsPageEx")!
+    let url = URL(string: "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/GetSDSSearchResultsPageEx")!
     
     var request = URLRequest(url: url)
     request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
@@ -136,4 +137,77 @@ func csiWCF_LoginReturnValueFix(inValue:String) -> (String,String,String){
     print("resutlt: \n \(clientid) \n \(clientmemberid) \n \(infosafeid)")
     
     return (clientid,clientmemberid,infosafeid)
+}
+
+
+func csiWCF_SearchReturnValueFix(inValue:String) -> (Array<Any>, Array<Any>, Array<Any>) {
+    
+    var temp = inValue
+    temp = temp.replacingOccurrences(of: "\\", with: "")
+    temp = temp.replacingOccurrences(of: "u000d", with: "")
+    temp = temp.replacingOccurrences(of: "u000a", with: "")
+    temp = temp.replacingOccurrences(of: "\"", with: "")
+    
+    var nameArray: Array<String> = []
+    var detailsArray: Array<String> = []
+    var sdsNoArray: Array<String> = []
+    
+    var scText:NSString?
+    var name:String
+    var no:String
+    var com:String
+    var issue:String
+    var code:String
+    var unno:String
+    var detailText:String
+    
+    let sc = Scanner(string: temp)
+    
+    while(!sc.isAtEnd) {
+        sc.scanUpTo("name: {        ", into:nil)
+        sc.scanUpTo(",", into: &scText)
+        name = scText!.components(separatedBy: ":")[2]
+        //            print(name)
+        nameArray.append(name)
+        
+        sc.scanUpTo("no: {        ", into:nil)
+        sc.scanUpTo(",", into: &scText)
+        no = scText!.components(separatedBy: ":")[2]
+        sdsNoArray.append(no)
+        //
+        sc.scanUpTo("com: {        ", into:nil)
+        sc.scanUpTo(",", into: &scText)
+        com = scText!.components(separatedBy: ":")[2]
+        
+        sc.scanUpTo("issue: {        ", into:nil)
+        sc.scanUpTo(",", into: &scText)
+        issue = scText!.components(separatedBy: ":")[2]
+        
+        sc.scanUpTo("code: {        ", into:nil)
+        sc.scanUpTo(",", into: &scText)
+        code = scText!.components(separatedBy: ":")[2]
+        
+        sc.scanUpTo("unno: {        ", into:nil)
+        sc.scanUpTo(",", into: &scText)
+        unno = scText!.components(separatedBy: ":")[2]
+        
+        detailText = "\rCompany:" + com + "\rSDS NO.:" + no + "\rIssue Date:" + issue + "\rProduct Code:" + code + "\rUNNO:" + unno
+        //            print(detailText)
+        detailsArray.append(detailText)
+    }
+    
+    if (nameArray.isEmpty){
+        nameArray = []
+        detailsArray = []
+        sdsNoArray = []
+        return(nameArray, detailsArray, sdsNoArray)
+    } else {
+        
+        nameArray.removeLast()
+        detailsArray.removeLast()
+        //        print(sdsNoArray)
+        sdsNoArray.removeLast()
+        
+        return(nameArray, detailsArray, sdsNoArray)
+    }
 }
