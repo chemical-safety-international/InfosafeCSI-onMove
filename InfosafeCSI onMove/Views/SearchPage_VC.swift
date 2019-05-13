@@ -30,22 +30,16 @@ class SearchPage_VC: UIViewController {
     @IBAction func searchBtnTapped(_ sender: Any) {
         
         let searchInPut = searchTextField.text!
+        csiclientsearchinfo.arrName = []
+        csiclientsearchinfo.arrDetail = []
+        csiclientsearchinfo.arrNo = []
         //call search function
-        print("loginDataSetis \(loginDataSet.0)")
-        csiWCF_VM().callSearch(loginData: csiWCF_VM().loginDataSet, inputData: searchInPut)
+        print("loginDataSetis \(String(describing: csiclientinfo.clientid))")
+        csiWCF_VM().callSearch(clientid: csiclientinfo.clientid, infosafeid: csiclientinfo.infosafeid, inputData: searchInPut)
+
         
 //        let loginJump = storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
 //        self.navigationController?.pushViewController(loginJump!, animated: true)
         
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

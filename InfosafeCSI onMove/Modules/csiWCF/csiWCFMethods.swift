@@ -46,19 +46,11 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
         guard let data = data else {return}
         let responseString = String(data: data, encoding: .utf8)
         completion(responseString!)
-//        if responseString!.contains("true") {
-//            let loginInfo = csiWCF_LoginReturnValueFix(inValue: responseString!)
-//            loginVarStatus.client = loginInfo.0
-//            loginVarStatus.clientmemberid = loginInfo.1
-//            loginVarStatus.infosafeid = loginInfo.2
-//           // statusCheck = "true"
-//            loginVarStatus.statusBool = true
-//            print("response true")
-//        } else {
-//           // statusCheck = "false"
-//            loginVarStatus.statusBool = false
-//            print("response false")
-//        }
+        
+        let clientinfo = csiWCF_LoginReturnValueFix(inValue: responseString!)
+        csiclientinfo.clientid = clientinfo.0
+        csiclientinfo.clientmemberid = clientinfo.1
+        csiclientinfo.infosafeid = clientinfo.2
         
     }
     
@@ -67,14 +59,13 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 }
 
 //Call the WCF function: 'GetSDSSearchResultsPageEx' with input data
-func  csiWCF_GetSDSSearchResultsPageEx(clientid:String, clientmemberid:String, infosafeid:String, inputData:String, completion:@escaping(String) -> Void) -> (Void) {
+func  csiWCF_GetSDSSearchResultsPageEx(clientid:String, infosafeid:String, inputData:String, completion:@escaping(String) -> Void) -> (Void) {
     
     let client = clientid
     let uid = infosafeid
     
-    //let json: [String: Any] = ["client":"CDB_Test", "uid":"releski", "apptp":"1", "c":"", "v":"acetone", "p":"1", "psize":"50"]
-//    let json: [String: Any] = ["client":client, "uid":uid, "apptp":"1", "c":"", "v":inputData, "p":"1", "psize":"50"]
-    let json: [String: Any] = ["client":"CDB_Test", "uid":"releski", "apptp":"1", "c":"", "v":inputData, "p":"1", "psize":"50"]
+
+    let json: [String: Any] = ["client":"CDB_Test", "uid":uid, "apptp":"1", "c":"", "v":inputData, "p":"1", "psize":"50"]
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
     let url = URL(string: "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/GetSDSSearchResultsPageEx")!
@@ -93,9 +84,9 @@ func  csiWCF_GetSDSSearchResultsPageEx(clientid:String, clientmemberid:String, i
         
         guard let data = data else {return}
         let responseString = String(data: data, encoding: .utf8)
-        
-        print(responseString as Any)
         completion(responseString!)
+        
+        
     }
     
     task.resume()

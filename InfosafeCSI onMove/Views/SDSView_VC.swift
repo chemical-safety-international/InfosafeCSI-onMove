@@ -21,6 +21,7 @@ class SDSView_VC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.sdsShow()
     }
     
 
@@ -50,7 +51,7 @@ class SDSView_VC: UIViewController {
             var wholeHtml:String = ""
             
             while (!sc.isAtEnd) {
-                sc.scanUpTo("\"html\": \"", into: &test)
+                sc.scanUpTo("\"html\": \"", into:&test)
                 sc.scanUpTo("\",  \"title\"", into: &removedstr)
                 let temp2 = String(describing: removedstr)
                 let temp3 = String(describing: test)
@@ -60,7 +61,23 @@ class SDSView_VC: UIViewController {
             }
             
             let strForWeb = """
-    
+            <html>
+            <head>
+            <meta name="viewport" content="width = device - width, initial-scale = 1">
+            <style>
+            body { font-size: 30%; }
+            </style>
+            </head>
+            <body>
+            \(wholeHtml)
+            </body>
+            </html>
+            """
+            
+            DispatchQueue.main.async {
+                self.sdsDisplay.loadHTMLString(strForWeb, baseURL: nil)
+                //self.sdsDisplay.loadHTMLString(temp, baseURL: nil)
+            }
             
         }
     }
@@ -71,7 +88,7 @@ class SDSView_VC: UIViewController {
         let json: [String: Any] = ["client":"CDB_Test", "apptp":"1", "uid":"releski", "sds": sdsNoGet, "regetFormat":"", "f":"", "subf":""]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
-        let url = URL(string: "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/ViewSDSD")!
+        let url = URL(string: "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/ViewSDS")!
         
         var request = URLRequest(url:url)
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
@@ -86,7 +103,7 @@ class SDSView_VC: UIViewController {
             
             guard let data = data else { return }
             let responseString = String(data:data, encoding: .utf8)
-            
+            print(responseString as Any)
             completion(responseString!)
         }
         task.resume()

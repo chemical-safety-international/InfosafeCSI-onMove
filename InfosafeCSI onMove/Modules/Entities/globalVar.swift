@@ -8,18 +8,20 @@
 
 import Foundation
 
-class loginVar {
-    var statusBool: Bool
-    var client: String
-    var clientmemberid: String
-    var infosafeid: String
-    init(statusBool: Bool, client: String, clientmemberid: String, infosafeid: String) {
-        self.statusBool = statusBool
-        self.client = client
-        self.clientmemberid = clientmemberid
-        self.infosafeid = infosafeid
-    }
 
+
+struct csiclientinfo {
+    static var clientid: String!
+    static var clientcode: String!
+    static var clientmemberid: String!
+    static var infosafeid: String!
+    static var clientfirstname: String!
+    static var clientsurname: String!
+    
 }
 
-var loginVarStatus = loginVar(statusBool: false, client: "", clientmemberid: "", infosafeid: "")
+struct csiclientsearchinfo {
+    static var arrName: [String]!
+    static var arrDetail: [String]!
+    static var arrNo: [String]!
+}

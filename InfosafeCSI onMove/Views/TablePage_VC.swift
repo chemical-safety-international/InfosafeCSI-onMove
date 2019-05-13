@@ -12,10 +12,6 @@ class TablePage_VC: UIViewController {
 
     @IBOutlet weak var tableDisplay: UITableView!
     
-    var arrName:[String] = []
-    var arrDetail:[String] = []
-    var arrNo:[String] = []
-    
     var selectedIndex:Bool = false;
     var select = -1
     var rowNo = 0
@@ -26,6 +22,9 @@ class TablePage_VC: UIViewController {
         // Do any additional setup after loading the view.
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
+        
+        tableDisplay.rowHeight = UITableView.automaticDimension
+        tableDisplay.estimatedRowHeight = 100
     }
     
 
@@ -44,11 +43,13 @@ class TablePage_VC: UIViewController {
     }
     
     @objc func loadList(notification: NSNotification) {
-    self.tableDisplay.reloadData()
+        DispatchQueue.main.async {
+            self.tableDisplay.reloadData()
+        }
     }
     
-    func beginSearch(loginData: (String,String,String), input: String) {
-        csiWCF_GetSDSSearchResultsPageEx(clientid: loginData.0, clientmemberid: loginData.1, infosafeid: loginData.2, inputData: input) {
+    func beginSearch(clientid: String, infosafeid: String, input: String) {
+        csiWCF_GetSDSSearchResultsPageEx(clientid: clientid, infosafeid: infosafeid, inputData: input) {
             (returnData) in
             
             if returnData.contains("false") {
@@ -57,18 +58,23 @@ class TablePage_VC: UIViewController {
                 let returnArray = csiWCF_SearchReturnValueFix(inValue: returnData)
                 print("Success called search: \n \(returnArray.0)")
                 
-                self.arrName = returnArray.0 as! [String]
-                self.arrDetail = returnArray.1 as! [String]
-                self.arrNo = returnArray.2 as! [String]
-                
-                DispatchQueue.main.async {
-//                    NotificationCenter.default.post(name: NSNotification.Name(rawVaule: "load"), object: nil)
-                    TablePage_VC().tableDisplay.reloadData()
-                }
+                csiclientsearchinfo.arrName = returnArray.0 as? [String]
+                csiclientsearchinfo.arrDetail = returnArray.1 as? [String]
+                csiclientsearchinfo.arrNo = returnArray.2 as? [String]
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+//                DispatchQueue.main.async {
+//                    NotificationCenter.default.post(name: NSNotification.Name(rawVaule: "loadList"), object: nil)
+//                }
             }
         }
     }
-
+    @IBAction func sdsViewBtnTapped(_ sender: Any) {
+        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
+        sdsJump?.sdsNo = csiclientsearchinfo.arrNo[rowNo]
+        
+        self.navigationController?.pushViewController(sdsJump!, animated: true)
+    }
+    
 }
 
 
@@ -80,35 +86,20 @@ class TablePage_VC: UIViewController {
 extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     // non-expandable
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrName.count
+        return csiclientsearchinfo.arrName.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
         
-        cell?.name.text = arrName[indexPath.row]
-        cell?.details.text = arrDetail[indexPath.row]
+        cell?.name.text = csiclientsearchinfo.arrName[indexPath.row]
+        cell?.details.text = csiclientsearchinfo.arrDetail[indexPath.row]
         return cell!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         self.view.endEditing(true)
-        
-        //            if (select == indexPath.row)
-        //            {
-        //                select = -1;
-        //                tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
-        //                return
-        //            }
-        //            if (select == -1)
-        //            {
-        //                let prev = NSIndexPath(row:select, section: 0)
-        //                select = indexPath.row
-        //                tableView.reloadRows(at: [prev as IndexPath], with: UITableView.RowAnimation.automatic)
-        //            }
-        //            select = indexPath.row
-        //            tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
         
         rowNo = indexPath.row
         
@@ -130,9 +121,9 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     // swipe to delete the row function
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            arrName.remove(at: indexPath.row)
-            arrDetail.remove(at: indexPath.row)
-            arrNo.remove(at: indexPath.row)
+            csiclientsearchinfo.arrName.remove(at: indexPath.row)
+            csiclientsearchinfo.arrDetail.remove(at: indexPath.row)
+            csiclientsearchinfo.arrNo.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
