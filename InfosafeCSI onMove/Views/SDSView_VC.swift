@@ -14,13 +14,14 @@ class SDSView_VC: UIViewController {
     @IBOutlet weak var sdsDisplay: WKWebView!
     
     
-    var sdsNo = ""
+//    var sdsNo : String = ""
     var strForWeb = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        print("sds NO. \(String(describing: csicurrentSDS.sdsNo))")
         self.sdsShow()
     }
     
@@ -36,7 +37,7 @@ class SDSView_VC: UIViewController {
     */
     
     func sdsShow() {
-        getHTML(sdsNoGet: sdsNo) { (output) in
+        getHTML(clientid: csiclientinfo.clientid, uid: csiclientinfo.infosafeid, sdsNoGet: csicurrentSDS.sdsNo) { (output) in
             var temp = output
             temp = temp.replacingOccurrences(of: "\\\\", with: "\\")
             temp = temp.replacingOccurrences(of: "u000d", with: "")
@@ -57,7 +58,7 @@ class SDSView_VC: UIViewController {
                 let temp3 = String(describing: test)
                 
                 wholeHtml = removedstr!.components(separatedBy: "\"html\": \"")[1]
-                print("whole HTML is \r\r\r", wholeHtml)
+                //print("whole HTML is \r\r\r", wholeHtml)
             }
             
             let strForWeb = """
@@ -82,13 +83,15 @@ class SDSView_VC: UIViewController {
         }
     }
     
-    func getHTML(sdsNoGet: String, completion:@escaping(String) -> Void) -> (Void) {
+    func getHTML(clientid: String, uid: String, sdsNoGet: String, completion:@escaping(String) -> Void) -> (Void) {
         let sdsNoGet = sdsNoGet.replacingOccurrences(of: " ", with: "")
         
-        let json: [String: Any] = ["client":"CDB_Test", "apptp":"1", "uid":"releski", "sds": sdsNoGet, "regetFormat":"", "f":"", "subf":""]
+        let json: [String: Any] = ["client":clientid, "apptp":"1", "uid":uid, "sds": sdsNoGet, "regetFormat":"", "f":"", "subf":""]
+        print(json)
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
-        let url = URL(string: "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/ViewSDS")!
+        let url = URL(string: "http://gold/CSIMD_WCF/CSI_MD_Service.svc/ViewSDS")!
+        //let url = URL(string:"http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/ViewSDS")!
         
         var request = URLRequest(url:url)
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
@@ -105,6 +108,7 @@ class SDSView_VC: UIViewController {
             let responseString = String(data:data, encoding: .utf8)
             print(responseString as Any)
             completion(responseString!)
+            print(responseString!)
         }
         task.resume()
     }

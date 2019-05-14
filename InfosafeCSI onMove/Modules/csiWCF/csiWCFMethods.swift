@@ -65,11 +65,11 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 //Call the WCF function: 'GetSDSSearchResultsPageEx' with input data
 func  csiWCF_GetSDSSearchResultsPageEx(clientid:String, infosafeid:String, inputData:String, completion:@escaping(String) -> Void) -> (Void) {
     
-//    let client = clientid
+    let client = clientid
     let uid = infosafeid
     
 
-    let json: [String: Any] = ["client":"CDB_Test", "uid":uid, "apptp":"1", "c":"", "v":inputData, "p":"1", "psize":"50"]
+    let json: [String: Any] = ["client":client, "uid":uid, "apptp":"1", "c":"", "v":inputData, "p":"1", "psize":"50"]
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
     let url = URL(string: "http://gold/CSIMD_WCF/CSI_MD_Service.svc/GetSDSSearchResultsPageEx")!
@@ -89,7 +89,7 @@ func  csiWCF_GetSDSSearchResultsPageEx(clientid:String, infosafeid:String, input
         guard let data = data else {return}
         let responseString = String(data: data, encoding: .utf8)
         completion(responseString!)
-        print(responseString as Any)
+ //       print(responseString as Any)
         
     }
     

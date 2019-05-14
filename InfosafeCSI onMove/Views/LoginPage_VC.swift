@@ -40,7 +40,6 @@ class LoginPage_VC: UIViewController {
 
         csiWCF_VM().callLogin(email: email, password: password)
         
-        run(after: 5) {
         
         if csiclientinfo.clientloginstatus == true {
             
@@ -57,8 +56,8 @@ class LoginPage_VC: UIViewController {
             ac.addAction(UIAlertAction(title: "OK", style:  .default))
             self.present(ac, animated: true)
             }
-        }
 //        showAlert()
+        }
     }
     
     

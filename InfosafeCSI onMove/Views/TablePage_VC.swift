@@ -58,7 +58,7 @@ class TablePage_VC: UIViewController {
             } else {
                 csiclientsearchinfo.searchstatus = true
                 let returnArray = csiWCF_SearchReturnValueFix(inValue: returnData)
-                print("Success called search: \n \(returnArray.0)")
+                print("Success called search: \n \(returnArray.0) \n \(returnArray.1) \n \(returnArray.1)")
                 
                 csiclientsearchinfo.arrName = returnArray.0 as? [String]
                 csiclientsearchinfo.arrDetail = returnArray.1 as? [String]
@@ -68,10 +68,13 @@ class TablePage_VC: UIViewController {
         }
     }
     @IBAction func sdsViewBtnTapped(_ sender: Any) {
-        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
-        sdsJump?.sdsNo = csiclientsearchinfo.arrNo[rowNo]
+        //let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
+        let vc = SDSView_VC()
+        csicurrentSDS.sdsNo = csiclientsearchinfo.arrNo[rowNo]
         
-        self.navigationController?.pushViewController(sdsJump!, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
+        
+        //self.navigationController?.pushViewController(sdsJump!, animated: true)
     }
     
 }

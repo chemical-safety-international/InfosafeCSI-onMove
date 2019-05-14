@@ -26,9 +26,9 @@ class csiWCF_VM: UIViewController {
         
         csiWCF_loginbyEmail(email: email, password: password, deviceid: deviceid, devicemac: devicemac) { (outdata) in
             if outdata.contains("true") {
-                csiclientinfo.clientloginstatus = true
+                csiclientinfo.clientloginstatus = "true"
             } else {
-                csiclientinfo.clientloginstatus = false
+                csiclientinfo.clientloginstatus = "false"
 //                print("Login failed: email or password not correct.")
             }
         }

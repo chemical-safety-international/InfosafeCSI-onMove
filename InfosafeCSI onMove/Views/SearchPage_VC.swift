@@ -37,7 +37,7 @@ class SearchPage_VC: UIViewController {
 //        print("loginDataSetis \(String(describing: csiclientinfo.clientid))")
         csiWCF_VM().callSearch(clientid: csiclientinfo.clientid, infosafeid: csiclientinfo.infosafeid, inputData: searchInPut)
         
-        run(after: 50) {
+        run(after: 7) {
             if csiclientsearchinfo.searchstatus == true {
                 let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "TablePage") as? TablePage_VC
                 self.navigationController?.pushViewController(searchJump!, animated: true)
