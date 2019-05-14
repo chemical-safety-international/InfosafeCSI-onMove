@@ -28,30 +28,9 @@ class LoginPage_VC: UIViewController {
 //        self.present(ac, animated: true)
 //    }
 
-    
-//    func showAlert() {
-//        if loginVarStatus.statusBool == true {
-//            //            DispatchQueue.main.async {
-//            // LoginPage_VC().showAlertWith(title: "Login Success", message: "Welcome to CSI!")
-//            let ac = UIAlertController(title: "Login success", message: "Welcome", preferredStyle: .alert)
-//            ac.addAction(UIAlertAction(title: "OK", style:  .default))
-//            self.present(ac, animated: true)
-//            //            }
-//
-//            let loginJump = storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
-//            self.navigationController?.pushViewController(loginJump!, animated: true)
-//
-//        } else {
-//            let ac = UIAlertController(title: "Verify Failed", message: "Email or Password is invaild, please try again.", preferredStyle: .alert)
-//            ac.addAction(UIAlertAction(title: "OK", style:  .default))
-//            self.present(ac, animated: true)
-//        }
-//    }
-    
 
     //IBAction
     @IBAction func loginBtnTapped(_ sender: Any) {
-        print("Login Button Tapped!")
         
         //call the function with input from viewModule
         let email = userIDTextField.text!
@@ -60,10 +39,24 @@ class LoginPage_VC: UIViewController {
 
         csiWCF_VM().callLogin(email: email, password: password)
         
-        let loginJump = storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
-        self.navigationController?.pushViewController(loginJump!, animated: true)
+        run(after: 5) {
+        
+        if csiclientinfo.clientloginstatus == true {
+            
+            
+//            let ac = UIAlertController(title: "Login success", message: "Welcome", preferredStyle: .alert)
+//            ac.addAction(UIAlertAction(title: "OK", style:  .default))
+//            self.present(ac, animated: true)
+            
+            let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
+            self.navigationController?.pushViewController(loginJump!, animated: true)
+        } else {
+            let ac = UIAlertController(title: "Verify Failed", message: "Email or Password is invaild, please try again.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style:  .default))
+            self.present(ac, animated: true)
+            }
+        }
 //        showAlert()
-
     }
     
     

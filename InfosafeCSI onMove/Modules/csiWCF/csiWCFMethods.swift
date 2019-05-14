@@ -9,12 +9,11 @@
 import Foundation
 
 // Call the WCF function: 'loginbyEami' with email, password, deviceid, devicemac and return the data from WCF
-//func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicemac:String, completion:@escaping(String, String, String) -> Void) -> (Void)
+
 func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicemac:String, completion: @escaping (String) -> Void) -> (Void)
 {
     //WCF for LoginByEamil
     
-//    var statusCheck:String = ""
     //create a json type string
     let json: [String: Any] = ["email":email, "password":password, "deviceid":deviceid, "devicemac":devicemac]
     
@@ -32,7 +31,7 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
     //insert json string to the request
     request.httpBody = jsonData
     
-    print(request)
+//    print(request)
     //create a session to call wcf method
     let task = URLSession.shared.dataTask(with: request) { data, response, error in if let error = error {
         // print out error
@@ -40,17 +39,22 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
         return
         }
         
-        print("json:", json)
+//        print("json:", json)
         
         //get the return data
         guard let data = data else {return}
         let responseString = String(data: data, encoding: .utf8)
         completion(responseString!)
         
-        let clientinfo = csiWCF_LoginReturnValueFix(inValue: responseString!)
-        csiclientinfo.clientid = clientinfo.0
-        csiclientinfo.clientmemberid = clientinfo.1
-        csiclientinfo.infosafeid = clientinfo.2
+        if (responseString?.contains("true"))! {
+            let clientinfo = csiWCF_LoginReturnValueFix(inValue: responseString!)
+            csiclientinfo.clientid = clientinfo.0
+            csiclientinfo.clientmemberid = clientinfo.1
+            csiclientinfo.infosafeid = clientinfo.2
+        } else {
+            csiclientinfo.clientid = ""
+        }
+        
         
     }
     
@@ -61,14 +65,14 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 //Call the WCF function: 'GetSDSSearchResultsPageEx' with input data
 func  csiWCF_GetSDSSearchResultsPageEx(clientid:String, infosafeid:String, inputData:String, completion:@escaping(String) -> Void) -> (Void) {
     
-    let client = clientid
+//    let client = clientid
     let uid = infosafeid
     
 
     let json: [String: Any] = ["client":"CDB_Test", "uid":uid, "apptp":"1", "c":"", "v":inputData, "p":"1", "psize":"50"]
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
-    let url = URL(string: "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/GetSDSSearchResultsPageEx")!
+    let url = URL(string: "http://gold/CSIMD_WCF/CSI_MD_Service.svc/GetSDSSearchResultsPageEx")!
     
     var request = URLRequest(url: url)
     request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
@@ -76,7 +80,7 @@ func  csiWCF_GetSDSSearchResultsPageEx(clientid:String, infosafeid:String, input
     
     request.httpBody = jsonData
     
-    print(request)
+//    print(request)
     let task = URLSession.shared.dataTask(with: request) { data, response, error in if let error = error {
             print("Error:", error)
             return
@@ -85,7 +89,7 @@ func  csiWCF_GetSDSSearchResultsPageEx(clientid:String, infosafeid:String, input
         guard let data = data else {return}
         let responseString = String(data: data, encoding: .utf8)
         completion(responseString!)
-        
+        print(responseString as Any)
         
     }
     
@@ -96,7 +100,7 @@ func  csiWCF_GetSDSSearchResultsPageEx(clientid:String, infosafeid:String, input
 
 //Create the WCF function: 'LoginReturnValueFix' with inValue
 func csiWCF_LoginReturnValueFix(inValue:String) -> (String,String,String){
-    print(" returnValueFix traggled")
+//    print(" returnValueFix traggled")
     
     var clientid: String = ""
     var clientmemberid: String = ""
@@ -108,7 +112,7 @@ func csiWCF_LoginReturnValueFix(inValue:String) -> (String,String,String){
     tempValue = tempValue.replacingOccurrences(of: "\\", with: "")
     tempValue = tempValue.replacingOccurrences(of: "\"", with: "")
     
-    print("tempValue: \n \(tempValue)")
+//    print("tempValue: \n \(tempValue)")
     let sc = Scanner(string: tempValue)
     
     while (!sc.isAtEnd) {
@@ -125,7 +129,7 @@ func csiWCF_LoginReturnValueFix(inValue:String) -> (String,String,String){
         infosafeid = scText!.components(separatedBy: ":")[1]
         break
     }
-    print("resutlt: \n \(clientid) \n \(clientmemberid) \n \(infosafeid)")
+//    print("resutlt: \n \(clientid) \n \(clientmemberid) \n \(infosafeid)")
     
     return (clientid,clientmemberid,infosafeid)
 }

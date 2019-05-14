@@ -54,7 +54,9 @@ class TablePage_VC: UIViewController {
             
             if returnData.contains("false") {
                 print("No data return from search")
+                csiclientsearchinfo.searchstatus = false
             } else {
+                csiclientsearchinfo.searchstatus = true
                 let returnArray = csiWCF_SearchReturnValueFix(inValue: returnData)
                 print("Success called search: \n \(returnArray.0)")
                 
@@ -62,9 +64,6 @@ class TablePage_VC: UIViewController {
                 csiclientsearchinfo.arrDetail = returnArray.1 as? [String]
                 csiclientsearchinfo.arrNo = returnArray.2 as? [String]
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
-//                DispatchQueue.main.async {
-//                    NotificationCenter.default.post(name: NSNotification.Name(rawVaule: "loadList"), object: nil)
-//                }
             }
         }
     }
@@ -108,13 +107,7 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     // change the height to expand tableDisplay value
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        //                    if (select == indexPath.row){
-        return 170
-        //                    }
-        //                    else {
-        //
-        //                        return UITableView.automaticDimension
-        //                    }
+        return 150
         
     }
     

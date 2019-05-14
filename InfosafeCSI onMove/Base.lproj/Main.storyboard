@@ -44,14 +44,6 @@
                                     <action selector="loginBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hFR-Pf-4az"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Asm-Vg-yPS">
-                                <rect key="frame" x="184" y="496" width="140" height="67"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <segue destination="GdH-TU-FXW" kind="show" id="VLP-97-EU3"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -61,6 +53,7 @@
                         <outlet property="loginBtn" destination="VJP-XL-LUG" id="iQF-uV-WAL"/>
                         <outlet property="passwordTextField" destination="oMZ-2a-qi9" id="SAN-Gc-iQT"/>
                         <outlet property="userIDTextField" destination="R3k-Mw-Z8A" id="W1e-GA-Kq2"/>
+                        <segue destination="GdH-TU-FXW" kind="show" id="cJE-Cl-ui8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -85,7 +78,6 @@
                                 </state>
                                 <connections>
                                     <action selector="searchBtnTapped:" destination="GdH-TU-FXW" eventType="touchUpInside" id="wa8-1G-a1s"/>
-                                    <segue destination="t3O-3d-EwC" kind="show" id="PQd-vv-YKg"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0jS-92-Frx">
@@ -103,6 +95,7 @@
                     <connections>
                         <outlet property="searchBtn" destination="9Xg-Hh-5Md" id="wx5-Qw-YdR"/>
                         <outlet property="searchTextField" destination="0jS-92-Frx" id="2Eh-0g-kcS"/>
+                        <segue destination="t3O-3d-EwC" kind="show" id="1jP-Uc-Mmf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5hh-37-BZI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -112,7 +105,7 @@
         <!--Table PageVC-->
         <scene sceneID="8v6-Ym-Rob">
             <objects>
-                <viewController id="t3O-3d-EwC" customClass="TablePage_VC" customModule="InfosafeCSI_onMove" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TablePage" id="t3O-3d-EwC" customClass="TablePage_VC" customModule="InfosafeCSI_onMove" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3Rf-xC-hig">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

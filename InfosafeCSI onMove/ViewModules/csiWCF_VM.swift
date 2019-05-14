@@ -17,8 +17,8 @@ class csiWCF_VM: UIViewController {
     
     func callLogin(email: String, password: String) {
         
-        print("email is: " + email)
-        print("password is:" + password)
+//        print("email is: " + email)
+//        print("password is:" + password)
         
         
         let deviceid: String = ""
@@ -26,9 +26,10 @@ class csiWCF_VM: UIViewController {
         
         csiWCF_loginbyEmail(email: email, password: password, deviceid: deviceid, devicemac: devicemac) { (outdata) in
             if outdata.contains("true") {
-                //self.loginDataSet = csiWCF_LoginReturnValueFix(inValue: outdata)
+                csiclientinfo.clientloginstatus = true
             } else {
-                print("Login failed: email or password not correct.")
+                csiclientinfo.clientloginstatus = false
+//                print("Login failed: email or password not correct.")
             }
         }
 
@@ -37,6 +38,6 @@ class csiWCF_VM: UIViewController {
     func callSearch(clientid: String, infosafeid: String, inputData:String) {
         //let input = inputData
         TablePage_VC().beginSearch(clientid: clientid, infosafeid: infosafeid, input: inputData)
-        }
+    }
     
 }

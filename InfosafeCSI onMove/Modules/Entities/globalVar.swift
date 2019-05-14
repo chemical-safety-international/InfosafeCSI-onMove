@@ -17,6 +17,7 @@ struct csiclientinfo {
     static var infosafeid: String!
     static var clientfirstname: String!
     static var clientsurname: String!
+    static var clientloginstatus: Bool!
     
 }
 
@@ -24,4 +25,5 @@ struct csiclientsearchinfo {
     static var arrName: [String]!
     static var arrDetail: [String]!
     static var arrNo: [String]!
+    static var searchstatus: Bool!
 }
