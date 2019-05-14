@@ -40,8 +40,9 @@ class LoginPage_VC: UIViewController {
 
         csiWCF_VM().callLogin(email: email, password: password)
         
-        
-        if csiclientinfo.clientloginstatus == true {
+        run(after:5)
+        {
+        if csiclientinfo.clientloginstatus != "" {
             
             
 //            let ac = UIAlertController(title: "Login success", message: "Welcome", preferredStyle: .alert)
