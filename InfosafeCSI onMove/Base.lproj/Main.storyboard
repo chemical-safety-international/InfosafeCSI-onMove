@@ -143,7 +143,6 @@
                                                     <state key="normal" title="SDS"/>
                                                     <connections>
                                                         <action selector="sdsViewBtnTapped:" destination="t3O-3d-EwC" eventType="touchUpInside" id="svR-0Q-Y2j"/>
-                                                        <segue destination="PT5-on-lP4" kind="show" id="pL2-oD-gkc"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -165,6 +164,7 @@
                     </view>
                     <connections>
                         <outlet property="tableDisplay" destination="1e9-TH-Vzm" id="ieW-HQ-fhE"/>
+                        <segue destination="PT5-on-lP4" kind="show" id="Tfa-Ee-GOB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dMK-hz-seV" userLabel="First Responder" sceneMemberID="firstResponder"/>
