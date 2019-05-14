@@ -86,12 +86,12 @@ class SDSView_VC: UIViewController {
     func getHTML(clientid: String, uid: String, sdsNoGet: String, completion:@escaping(String) -> Void) -> (Void) {
         let sdsNoGet = sdsNoGet.replacingOccurrences(of: " ", with: "")
         
-        let json: [String: Any] = ["client":"CDB_Test", "apptp":"1", "uid":"releski", "sds": sdsNoGet, "regetFormat":"", "f":"", "subf":""]
+        let json: [String: Any] = ["client":clientid, "apptp":"1", "uid":uid, "sds": sdsNoGet, "regetFormat":"", "f":"", "subf":""]
         print(json)
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
-        //let url = URL(string: "http://gold/CSIMD_WCF/CSI_MD_Service.svc/ViewSDS")!
-        let url = URL(string:"http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/ViewSDS")!
+        let url = URL(string: "http://gold/CSIMD_WCF/CSI_MD_Service.svc/ViewSDS")!
+        //let url = URL(string:"http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/ViewSDS")!
         
         var request = URLRequest(url:url)
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
