@@ -31,3 +31,15 @@ struct csiclientsearchinfo {
 struct csicurrentSDS {
     static var sdsNo: String!
 }
+
+struct ViewSDSData: Codable {
+    var result: String!
+    var CanPDF: String!
+    var CanExcel: String!
+    var html: String!
+    var title: String!
+    var format: String!
+    var subResults: String!
+    var hasSummary: String!
+    var message: String!
+}

@@ -124,6 +124,7 @@ func getHTML(clientid: String, uid: String, sdsNoGet: String, completion:@escapi
         let responseString = String(data:data, encoding: .utf8)
 //        let responseString = data
 //        print(responseString as Any)
+        
         completion(responseString!)
     }
     task.resume()
