@@ -58,7 +58,7 @@ class TablePage_VC: UIViewController {
             } else {
                 csiclientsearchinfo.searchstatus = true
                 let returnArray = csiWCF_SearchReturnValueFix(inValue: returnData)
-                print("Success called search: \n \(returnArray.0) \n \(returnArray.1) \n \(returnArray.1)")
+                print("Success called search: \n \(returnArray.0) \n \(returnArray.1) \n \(returnArray.2)")
                 
                 csiclientsearchinfo.arrName = returnArray.0 as? [String]
                 csiclientsearchinfo.arrDetail = returnArray.1 as? [String]

@@ -103,7 +103,7 @@ func csiWCF_GetSDSSearchResultsPageEx(clientid:String, infosafeid:String, inputD
 func getHTML(clientid: String, uid: String, sdsNoGet: String, completion:@escaping(String) -> Void) -> (Void) {
     let sdsNoGet = sdsNoGet.replacingOccurrences(of: " ", with: "")
     
-    let json: [String: Any] = ["client":clientid, "apptp":"1", "uid":uid, "sds": sdsNoGet + "00", "regetFormat":"1", "f":"", "subf":""]
+    let json: [String: Any] = ["client":clientid, "apptp":"1", "uid":uid, "sds": sdsNoGet, "regetFormat":"1", "f":"", "subf":""]
     print(json)
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
@@ -122,7 +122,8 @@ func getHTML(clientid: String, uid: String, sdsNoGet: String, completion:@escapi
         
         guard let data = data else { return }
         let responseString = String(data:data, encoding: .utf8)
-        print(responseString as Any)
+//        let responseString = data
+//        print(responseString as Any)
         completion(responseString!)
     }
     task.resume()
