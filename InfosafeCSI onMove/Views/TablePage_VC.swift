@@ -68,13 +68,14 @@ class TablePage_VC: UIViewController {
         }
     }
     @IBAction func sdsViewBtnTapped(_ sender: Any) {
-        //let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
-        let vc = SDSView_VC()
+        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
+        //let vc = SDSView_VC()
+        
         csicurrentSDS.sdsNo = csiclientsearchinfo.arrNo[rowNo]
         
-        navigationController?.pushViewController(vc, animated: true)
+        //navigationController?.pushViewController(vc, animated: true)
         
-        //self.navigationController?.pushViewController(sdsJump!, animated: true)
+        self.navigationController?.pushViewController(sdsJump!, animated: true)
     }
     
 }

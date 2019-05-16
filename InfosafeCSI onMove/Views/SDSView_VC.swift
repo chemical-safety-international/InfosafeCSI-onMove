@@ -153,8 +153,8 @@ class SDSView_VC: UIViewController {
         getHTML(clientid: csiclientinfo.clientid, uid: csiclientinfo.infosafeid, sdsNoGet: csicurrentSDS.sdsNo) { (output) in
             var temp = output
             temp = temp.replacingOccurrences(of: "\\\\", with: "\\")
-            //temp = temp.replacingOccurrences(of: "u000d", with: "")
-            //temp = temp.replacingOccurrences(of: "u000a", with: "")
+            temp = temp.replacingOccurrences(of: "u000d", with: "")
+            temp = temp.replacingOccurrences(of: "u000a", with: "")
             temp = temp.replacingOccurrences(of: "\\r", with: "\r")
             temp = temp.replacingOccurrences(of: "\\n", with: "\n")
             temp = temp.replacingOccurrences(of: "\\", with: "")
