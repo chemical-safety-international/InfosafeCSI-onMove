@@ -153,6 +153,7 @@
 		17818BE9228152AA000EAFF1 /* csiWCF */ = {
 			isa = PBXGroup;
 			children = (
+				57C8B92722813EEC004966C5 /* csiWCFMethods.swift */,
 			);
 			path = csiWCF;
 			sourceTree = "<group>";
@@ -160,7 +161,6 @@
 		17818BEA22815524000EAFF1 /* UserProfile */ = {
 			isa = PBXGroup;
 			children = (
-				57C8B92722813EEC004966C5 /* csiWCFMethods.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
