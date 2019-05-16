@@ -18,7 +18,6 @@ struct csiclientinfo {
     static var clientfirstname: String!
     static var clientsurname: String!
     static var clientloginstatus: String!
-    
 }
 
 struct csiclientsearchinfo {
@@ -42,4 +41,16 @@ struct ViewSDSData: Codable {
     var subResults: String!
     var hasSummary: String!
     var message: String!
+}
+
+struct LoginData: Codable {
+    var apptype: Int!
+    var clientcode: String!
+    var clientid: String!
+    var clientmemberid: String!
+    var error: String!
+    var firstname: String!
+    var infosafeid: String!
+    var passed: Bool!
+    var surname: String!
 }

@@ -8,7 +8,8 @@
 
 import Foundation
 
-var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
+//var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
+var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
 
 
 // Call the WCF function: 'loginbyEami' with email, password, deviceid, devicemac and return the data from WCF
@@ -24,46 +25,79 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
     //*create URL string point to wcf method* should be changed after setting up core data
-    let url = URL(string: csiWCF_URLHeader + "loginbyEmail")!
-    
+    let url = URL(string: csiWCF_URLHeader + "loginbyEmail2")!
+
     //create request
     var request = URLRequest(url: url)
     request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
     request.httpMethod = "POST"
-    
+
     //insert json string to the request
     request.httpBody = jsonData
+//
+////    print(request)
+//    //create a session to call wcf method
+//    let task = URLSession.shared.dataTask(with: request) { data, response, error in if let error = error {
+//        // print out error
+//        print("Error:", error)
+//        return
+//        }
     
-//    print(request)
-    //create a session to call wcf method
-    let task = URLSession.shared.dataTask(with: request) { data, response, error in if let error = error {
-        // print out error
-        print("Error:", error)
-        return
+        //guard let url = URL(string: csiWCF_URLHeader + "loginbyEmail2") else {return}
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let dataResponse = data,
+                error == nil else {
+                    print(error?.localizedDescription ?? "Response Error")
+                    return }
+            do{
+                //here dataResponse received from a network request
+                let jsonResponse = try JSONSerialization.jsonObject(with:
+                    dataResponse, options: [])
+                print(jsonResponse) //Response result
+                
+                do {
+                    //here dataResponse received from a network request
+                    let decoder = JSONDecoder()
+                    let model = try decoder.decode(LoginData.self, from:
+                        dataResponse) //Decode JSON Response Data
+                    print(model)
+                    csiclientinfo.clientid = model.clientid
+                    csiclientinfo.clientmemberid = model.clientmemberid
+                    csiclientinfo.infosafeid = model.infosafeid
+                } catch let parsingError {
+                    print("Error", parsingError)
+                }
+                
+            } catch let parsingError {
+                print("Error", parsingError)
+            }
         }
+        task.resume()
         
 //        print("json:", json)
         
         //get the return data
-        guard let data = data else {return}
-        let responseString = String(data: data, encoding: .utf8)
-        completion(responseString!)
-        
-        if (responseString?.contains("true"))! {
-            let clientinfo = csiWCF_LoginReturnValueFix(inValue: responseString!)
-            csiclientinfo.clientid = clientinfo.0
-            csiclientinfo.clientmemberid = clientinfo.1
-            csiclientinfo.infosafeid = clientinfo.2
-        } else {
-            csiclientinfo.clientid = ""
-            csiclientinfo.clientloginstatus = "false"
-        }
-        
-        
-    }
+        //guard let data = data else {return}
+//        let responseString = String(data: data, encoding: .utf8)
+//        completion(responseString!)
+//
+//        if (responseString?.contains("true"))! {
+//            print(responseString as Any)
+//
+//            let clientinfo = csiWCF_LoginReturnValueFix(inValue: responseString!)
+//            csiclientinfo.clientid = clientinfo.0
+//            csiclientinfo.clientmemberid = clientinfo.1
+//            csiclientinfo.infosafeid = clientinfo.2
+//        } else {
+//            csiclientinfo.clientid = ""
+//            csiclientinfo.clientloginstatus = "false"
+//        }
+//
+    
+   // }
     
     //start the task
-    task.resume()
+    //task.resume()
 }
 
 //Call the WCF function: 'GetSDSSearchResultsPageEx' with input data
