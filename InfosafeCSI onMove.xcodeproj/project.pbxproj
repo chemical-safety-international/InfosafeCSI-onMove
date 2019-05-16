@@ -17,6 +17,7 @@
 		17818BDC22811A89000EAFF1 /* InfosafeCSI_onMoveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17818BDB22811A89000EAFF1 /* InfosafeCSI_onMoveUITests.swift */; };
 		17818BED22815661000EAFF1 /* UserProfilesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17818BEC22815661000EAFF1 /* UserProfilesData.swift */; };
 		17818BEF22815681000EAFF1 /* UserProfilesAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17818BEE22815681000EAFF1 /* UserProfilesAccess.swift */; };
+		17A26840228D04410039A798 /* Startup_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A2683F228D04410039A798 /* Startup_VC.swift */; };
 		57711F57228808300051E576 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57711F56228808300051E576 /* TableViewCell.swift */; };
 		577B1A592284059700E5C4AB /* SearchPage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577B1A582284059700E5C4AB /* SearchPage_VC.swift */; };
 		577B1A5B228500BE00E5C4AB /* globalVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577B1A5A228500BE00E5C4AB /* globalVar.swift */; };
@@ -60,6 +61,7 @@
 		17818BDD22811A89000EAFF1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17818BEC22815661000EAFF1 /* UserProfilesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilesData.swift; sourceTree = "<group>"; };
 		17818BEE22815681000EAFF1 /* UserProfilesAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilesAccess.swift; sourceTree = "<group>"; };
+		17A2683F228D04410039A798 /* Startup_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Startup_VC.swift; sourceTree = "<group>"; };
 		57711F56228808300051E576 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		577B1A582284059700E5C4AB /* SearchPage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPage_VC.swift; sourceTree = "<group>"; };
 		577B1A5A228500BE00E5C4AB /* globalVar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalVar.swift; sourceTree = "<group>"; };
@@ -151,7 +153,6 @@
 		17818BE9228152AA000EAFF1 /* csiWCF */ = {
 			isa = PBXGroup;
 			children = (
-				57C8B92722813EEC004966C5 /* csiWCFMethods.swift */,
 			);
 			path = csiWCF;
 			sourceTree = "<group>";
@@ -159,6 +160,7 @@
 		17818BEA22815524000EAFF1 /* UserProfile */ = {
 			isa = PBXGroup;
 			children = (
+				57C8B92722813EEC004966C5 /* csiWCFMethods.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
@@ -191,6 +193,7 @@
 				577B1A5C2285195600E5C4AB /* TablePage_VC.swift */,
 				57711F56228808300051E576 /* TableViewCell.swift */,
 				AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */,
+				17A2683F228D04410039A798 /* Startup_VC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				577B1A592284059700E5C4AB /* SearchPage_VC.swift in Sources */,
 				17818BED22815661000EAFF1 /* UserProfilesData.swift in Sources */,
 				17818BB922811A88000EAFF1 /* AppDelegate.swift in Sources */,
+				17A26840228D04410039A798 /* Startup_VC.swift in Sources */,
 				AC9AB9DA2288DFA900C2C71E /* SDSView_VC.swift in Sources */,
 				57C8B92C22825DE4004966C5 /* csiWCF_VM.swift in Sources */,
 				17818BC122811A88000EAFF1 /* InfosafeCSI_onMove.xcdatamodeld in Sources */,

@@ -20,6 +20,8 @@ class LoginPage_VC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        self.navigationController!.navigationBar.isHidden = false;
+
     }
     
 //    func showAlertWith(title: String, message: String) {

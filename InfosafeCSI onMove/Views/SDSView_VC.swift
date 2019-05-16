@@ -151,6 +151,7 @@ class SDSView_VC: UIViewController {
     
     func sdsShow() {
         getHTML(clientid: csiclientinfo.clientid, uid: csiclientinfo.infosafeid, sdsNoGet: csicurrentSDS.sdsNo) { (output) in
+            
             var temp = output
             temp = temp.replacingOccurrences(of: "\\\\", with: "\\")
             temp = temp.replacingOccurrences(of: "u000d", with: "")
@@ -158,9 +159,6 @@ class SDSView_VC: UIViewController {
             temp = temp.replacingOccurrences(of: "\\r", with: "\r")
             temp = temp.replacingOccurrences(of: "\\n", with: "\n")
             temp = temp.replacingOccurrences(of: "\\", with: "")
-
-            print(temp)
-
 
 
 //            let sc = Scanner(string: temp)
