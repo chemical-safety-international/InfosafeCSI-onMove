@@ -15,7 +15,7 @@ class csiWCF_VM: UIViewController {
     //create var
     var loginDataSet: (String, String, String) = ("","","")
     
-    func callLogin(email: String, password: String) {
+    func callLogin(email: String, password: String, completion:@escaping(String) -> Void) {
         
 //        print("email is: " + email)
 //        print("password is:" + password)
@@ -27,9 +27,10 @@ class csiWCF_VM: UIViewController {
         csiWCF_loginbyEmail(email: email, password: password, deviceid: deviceid, devicemac: devicemac) { (outdata) in
             if outdata.contains("true") {
                 csiclientinfo.clientloginstatus = "true"
+                completion("true")
             } else {
                 csiclientinfo.clientloginstatus = "false"
-//                print("Login failed: email or password not correct.")
+                completion("false")
             }
         }
 

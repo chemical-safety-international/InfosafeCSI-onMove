@@ -37,28 +37,52 @@ class LoginPage_VC: UIViewController {
         let password = passwordTextField.text!
         
         self.showSpinner(onView: self.view)
+        csiWCF_VM().callLogin(email: email, password: password) { (completion) in
+            print(completion)
+   
+                
+                
+                //            let ac = UIAlertController(title: "Login success", message: "Welcome", preferredStyle: .alert)
+                //            ac.addAction(UIAlertAction(title: "OK", style:  .default))
+                //            self.present(ac, animated: true)
+                DispatchQueue.main.async {
+                             if csiclientinfo.clientloginstatus.contains("true") {
+                                self.removeSpinner()
+                                let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
+                                self.navigationController?.pushViewController(loginJump!, animated: true)
+                             } else if csiclientinfo.clientloginstatus.contains("false"){
+                                self.removeSpinner()
+                                let ac = UIAlertController(title: "Verify Failed", message: "Email or Password is invaild, please try again.", preferredStyle: .alert)
+                                ac.addAction(UIAlertAction(title: "OK", style:  .default))
+                                self.present(ac, animated: true)
+                    }
+                    self.removeSpinner()
+                }
+            
+                
 
-        csiWCF_VM().callLogin(email: email, password: password)
+            //        showAlert()
+        }
         
-        run(after:5)
-        {
-        if csiclientinfo.clientloginstatus != "" {
-            
-            
-//            let ac = UIAlertController(title: "Login success", message: "Welcome", preferredStyle: .alert)
+//        run(after:5)
+//        {
+//        if csiclientinfo.clientloginstatus != "" {
+//
+//
+////            let ac = UIAlertController(title: "Login success", message: "Welcome", preferredStyle: .alert)
+////            ac.addAction(UIAlertAction(title: "OK", style:  .default))
+////            self.present(ac, animated: true)
+//            self.removeSpinner()
+//
+//            let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
+//            self.navigationController?.pushViewController(loginJump!, animated: true)
+//        } else {
+//            let ac = UIAlertController(title: "Verify Failed", message: "Email or Password is invaild, please try again.", preferredStyle: .alert)
 //            ac.addAction(UIAlertAction(title: "OK", style:  .default))
 //            self.present(ac, animated: true)
-            self.removeSpinner()
-            
-            let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
-            self.navigationController?.pushViewController(loginJump!, animated: true)
-        } else {
-            let ac = UIAlertController(title: "Verify Failed", message: "Email or Password is invaild, please try again.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style:  .default))
-            self.present(ac, animated: true)
-            }
-//        showAlert()
-        }
+//            }
+////        showAlert()
+//        }
     }
     
     

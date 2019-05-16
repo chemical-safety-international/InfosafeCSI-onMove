@@ -163,10 +163,10 @@ class SDSView_VC: UIViewController {
 
 
 
-            let sc = Scanner(string: temp)
-            var removedstr:NSString?
-            var test:NSString?
-            var wholeHtml:String = temp
+//            let sc = Scanner(string: temp)
+//            var removedstr:NSString?
+//            var test:NSString?
+//            var wholeHtml:String = temp
 //
 //            while (!sc.isAtEnd) {
 //                sc.scanUpTo("\"html\": \"", into:&test)
@@ -190,7 +190,7 @@ class SDSView_VC: UIViewController {
             </style>
             </head>
             <body>
-            \(wholeHtml)
+            \(temp)
             </body>
             </html>
             """

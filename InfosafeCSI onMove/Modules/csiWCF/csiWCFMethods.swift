@@ -56,6 +56,7 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
             csiclientinfo.infosafeid = clientinfo.2
         } else {
             csiclientinfo.clientid = ""
+            csiclientinfo.clientloginstatus = "false"
         }
         
         
