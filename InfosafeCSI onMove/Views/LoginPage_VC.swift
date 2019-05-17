@@ -40,66 +40,28 @@ class LoginPage_VC: UIViewController {
         
         self.showSpinner(onView: self.view)
         csiWCF_VM().callLogin(email: email, password: password) { (completion) in
-            print(completion)
    
-                
-                
-                //            let ac = UIAlertController(title: "Login success", message: "Welcome", preferredStyle: .alert)
-                //            ac.addAction(UIAlertAction(title: "OK", style:  .default))
-                //            self.present(ac, animated: true)
                 DispatchQueue.main.async {
-                             if csiclientinfo.clientloginstatus.contains("true") {
-                                self.removeSpinner()
-                                let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
-                                self.navigationController?.pushViewController(loginJump!, animated: true)
-                             } else if csiclientinfo.clientloginstatus.contains("false"){
-                                self.removeSpinner()
-                                let ac = UIAlertController(title: "Verify Failed", message: "Email or Password is invaild, please try again.", preferredStyle: .alert)
-                                ac.addAction(UIAlertAction(title: "OK", style:  .default))
-                                self.present(ac, animated: true)
+                    if completion.contains("true") {
+                        self.removeSpinner()
+                        let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
+                        self.navigationController?.pushViewController(loginJump!, animated: true)
+                    } else if completion.contains("false"){
+                        self.removeSpinner()
+                        let ac = UIAlertController(title: "Verify Failed", message: "Email or Password is invaild, please try again.", preferredStyle: .alert)
+                        ac.addAction(UIAlertAction(title: "OK", style:  .default))
+                        self.present(ac, animated: true)
                     }
-                    self.removeSpinner()
                 }
-            
-                
-
-            //        showAlert()
-        }
-        
-//        run(after:5)
-//        {
-//        if csiclientinfo.clientloginstatus != "" {
-//
-//
-////            let ac = UIAlertController(title: "Login success", message: "Welcome", preferredStyle: .alert)
-////            ac.addAction(UIAlertAction(title: "OK", style:  .default))
-////            self.present(ac, animated: true)
-//            self.removeSpinner()
-//
-//            let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
-//            self.navigationController?.pushViewController(loginJump!, animated: true)
-//        } else {
-//            let ac = UIAlertController(title: "Verify Failed", message: "Email or Password is invaild, please try again.", preferredStyle: .alert)
-//            ac.addAction(UIAlertAction(title: "OK", style:  .default))
-//            self.present(ac, animated: true)
-//            }
-////        showAlert()
-//        }
-    }
-    
-    
-    func run(after seconds: Int, completion: @escaping () -> Void) {
-        let deadline = DispatchTime.now() + .seconds(seconds)
-        DispatchQueue.main.asyncAfter(deadline: deadline) {
-            completion()
         }
     }
-
 }
 
+//create a spinner for ViewController
 var vSpinner : UIView?
 
 extension UIViewController {
+    //start spinner function
     func showSpinner(onView: UIView){
         let spinnerView = UIView.init(frame: onView.bounds)
         spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
@@ -113,7 +75,7 @@ extension UIViewController {
         }
         vSpinner = spinnerView
     }
-    
+    //stop spinner function
     func removeSpinner(){
         DispatchQueue.main.async {
             vSpinner?.removeFromSuperview()

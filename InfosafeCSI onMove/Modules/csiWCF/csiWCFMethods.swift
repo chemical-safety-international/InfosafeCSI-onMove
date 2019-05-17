@@ -8,15 +8,15 @@
 
 import Foundation
 
-//var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
-var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
+var csiWCF_oldURLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
+var csiWCF_goldURLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
 
 
 // Call the WCF function: 'loginbyEami' with email, password, deviceid, devicemac and return the data from WCF
-
+//WCF for LoginByEamil
 func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicemac:String, completion: @escaping (String) -> Void) -> (Void)
 {
-    //WCF for LoginByEamil
+
     
     //create a json type string
     let json: [String: Any] = ["email":email, "password":password, "deviceid":deviceid, "devicemac":devicemac]
@@ -25,7 +25,7 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
     //*create URL string point to wcf method* should be changed after setting up core data
-    let url = URL(string: csiWCF_URLHeader + "loginbyEmail2")!
+    let url = URL(string: csiWCF_goldURLHeader + "loginbyEmail2")!
 
     //create request
     var request = URLRequest(url: url)
@@ -34,7 +34,7 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 
     //insert json string to the request
     request.httpBody = jsonData
-//
+
 ////    print(request)
 //    //create a session to call wcf method
 //    let task = URLSession.shared.dataTask(with: request) { data, response, error in if let error = error {
@@ -64,6 +64,11 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
                     csiclientinfo.clientid = model.clientid
                     csiclientinfo.clientmemberid = model.clientmemberid
                     csiclientinfo.infosafeid = model.infosafeid
+                    if model.passed == true {
+                        completion("true")
+                    } else if model.passed == false {
+                        completion("false")
+                    }
                 } catch let parsingError {
                     print("Error", parsingError)
                 }
@@ -106,19 +111,21 @@ func csiWCF_GetSDSSearchResultsPageEx(clientid:String, infosafeid:String, inputD
     let client = clientid
     let uid = infosafeid
     
-
+    //create json data
     let json: [String: Any] = ["client":client, "uid":uid, "apptp":"1", "c":"", "v":inputData, "p":"1", "psize":"50"]
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
-    let url = URL(string: csiWCF_URLHeader + "GetSDSSearchResultsPageEx")!
+    //setup url
+    let url = URL(string: csiWCF_oldURLHeader + "GetSDSSearchResultsPageEx")!
     
+    //setup request
     var request = URLRequest(url: url)
     request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
     request.httpMethod = "POST"
     
     request.httpBody = jsonData
     
-//    print(request)
+    //create task
     let task = URLSession.shared.dataTask(with: request) { data, response, error in if let error = error {
             print("Error:", error)
             return
@@ -130,19 +137,19 @@ func csiWCF_GetSDSSearchResultsPageEx(clientid:String, infosafeid:String, inputD
  //       print(responseString as Any)
         
     }
-    
+    //start task
     task.resume()
     
 }
 
-func getHTML(clientid: String, uid: String, sdsNoGet: String, completion:@escaping(String) -> Void) -> (Void) {
+func csiWCF_getHTML(clientid: String, uid: String, sdsNoGet: String, completion:@escaping(String) -> Void) -> (Void) {
     let sdsNoGet = sdsNoGet.replacingOccurrences(of: " ", with: "")
     
     let json: [String: Any] = ["client":clientid, "apptp":"1", "uid":uid, "sds": sdsNoGet, "regetFormat":"1", "f":"", "subf":""]
     print(json)
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
-    let url = URL(string: csiWCF_URLHeader + "ViewSDS")!
+    let url = URL(string: csiWCF_oldURLHeader + "ViewSDS")!
     
     var request = URLRequest(url:url)
     request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
@@ -166,40 +173,40 @@ func getHTML(clientid: String, uid: String, sdsNoGet: String, completion:@escapi
 }
 
 //Create the WCF function: 'LoginReturnValueFix' with inValue
-func csiWCF_LoginReturnValueFix(inValue:String) -> (String,String,String){
-//    print(" returnValueFix traggled")
-    
-    var clientid: String = ""
-    var clientmemberid: String = ""
-    var infosafeid: String = ""
-    var scText: NSString?
-    var tempValue = inValue
-    
-    
-    tempValue = tempValue.replacingOccurrences(of: "\\", with: "")
-    tempValue = tempValue.replacingOccurrences(of: "\"", with: "")
-    
-//    print("tempValue: \n \(tempValue)")
-    let sc = Scanner(string: tempValue)
-    
-    while (!sc.isAtEnd) {
-        sc.scanUpTo("clientid:", into: nil)
-        sc.scanUpTo(",", into: &scText)
-        clientid = scText!.components(separatedBy: ":")[1]
-        
-        sc.scanUpTo("clientmemberid:", into: nil)
-        sc.scanUpTo(",", into: &scText)
-        clientmemberid = scText!.components(separatedBy: ":")[1]
-        
-        sc.scanUpTo("infosafeid:", into: nil)
-        sc.scanUpTo(",", into: &scText)
-        infosafeid = scText!.components(separatedBy: ":")[1]
-        break
-    }
-//    print("resutlt: \n \(clientid) \n \(clientmemberid) \n \(infosafeid)")
-    
-    return (clientid,clientmemberid,infosafeid)
-}
+//func csiWCF_LoginReturnValueFix(inValue:String) -> (String,String,String){
+////    print(" returnValueFix traggled")
+//    
+//    var clientid: String = ""
+//    var clientmemberid: String = ""
+//    var infosafeid: String = ""
+//    var scText: NSString?
+//    var tempValue = inValue
+//    
+//    
+//    tempValue = tempValue.replacingOccurrences(of: "\\", with: "")
+//    tempValue = tempValue.replacingOccurrences(of: "\"", with: "")
+//    
+////    print("tempValue: \n \(tempValue)")
+//    let sc = Scanner(string: tempValue)
+//    
+//    while (!sc.isAtEnd) {
+//        sc.scanUpTo("clientid:", into: nil)
+//        sc.scanUpTo(",", into: &scText)
+//        clientid = scText!.components(separatedBy: ":")[1]
+//        
+//        sc.scanUpTo("clientmemberid:", into: nil)
+//        sc.scanUpTo(",", into: &scText)
+//        clientmemberid = scText!.components(separatedBy: ":")[1]
+//        
+//        sc.scanUpTo("infosafeid:", into: nil)
+//        sc.scanUpTo(",", into: &scText)
+//        infosafeid = scText!.components(separatedBy: ":")[1]
+//        break
+//    }
+////    print("resutlt: \n \(clientid) \n \(clientmemberid) \n \(infosafeid)")
+//    
+//    return (clientid,clientmemberid,infosafeid)
+//}
 
 
 func csiWCF_SearchReturnValueFix(inValue:String) -> (Array<Any>, Array<Any>, Array<Any>) {

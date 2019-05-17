@@ -22,7 +22,8 @@ class TablePage_VC: UIViewController {
         // Do any additional setup after loading the view.
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
-        
+        self.tableDisplay.delegate = self
+        self.tableDisplay.dataSource = self
         tableDisplay.rowHeight = UITableView.automaticDimension
         tableDisplay.estimatedRowHeight = 100
     }
@@ -48,32 +49,17 @@ class TablePage_VC: UIViewController {
         }
     }
     
-    func beginSearch(clientid: String, infosafeid: String, input: String) {
-        csiWCF_GetSDSSearchResultsPageEx(clientid: clientid, infosafeid: infosafeid, inputData: input) {
-            (returnData) in
-            
-            if returnData.contains("false") {
-                print("No data return from search")
-                csiclientsearchinfo.searchstatus = false
-            } else {
-                csiclientsearchinfo.searchstatus = true
-                let returnArray = csiWCF_SearchReturnValueFix(inValue: returnData)
-                print("Success called search: \n \(returnArray.0) \n \(returnArray.1) \n \(returnArray.2)")
-                
-                csiclientsearchinfo.arrName = returnArray.0 as? [String]
-                csiclientsearchinfo.arrDetail = returnArray.1 as? [String]
-                csiclientsearchinfo.arrNo = returnArray.2 as? [String]
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
-            }
-        }
-    }
-    @IBAction func sdsViewBtnTapped(_ sender: Any) {
+
+    
+    @IBAction func sdsViewBtnTapped(_ sender: UIButton) {
+        
+        //get row number 
+        let buttonRow = sender.tag
+        
         let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
-        //let vc = SDSView_VC()
-        
-        csicurrentSDS.sdsNo = csiclientsearchinfo.arrNo[rowNo]
-        
-        //navigationController?.pushViewController(vc, animated: true)
+    
+        //csicurrentSDS.sdsNo = csiclientsearchinfo.arrNo[rowNo]
+        csicurrentSDS.sdsNo = csiclientsearchinfo.arrNo[buttonRow]
         
         self.navigationController?.pushViewController(sdsJump!, animated: true)
     }
@@ -97,6 +83,12 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         
         cell?.name.text = csiclientsearchinfo.arrName[indexPath.row]
         cell?.details.text = csiclientsearchinfo.arrDetail[indexPath.row]
+        
+        //set row number of button that inside cell when tap
+        cell?.sdsBtn.tag = indexPath.row
+        cell?.sdsBtn.addTarget(self, action: #selector(sdsViewBtnTapped(_:)), for: .touchUpInside)
+        
+//        print(cell?.sdsBtn.tag)
         return cell!
     }
     

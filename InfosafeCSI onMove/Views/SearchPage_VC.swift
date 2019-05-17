@@ -29,35 +29,32 @@ class SearchPage_VC: UIViewController {
 
     @IBAction func searchBtnTapped(_ sender: Any) {
         
+        //create empty arrays
         let searchInPut = searchTextField.text!
         csiclientsearchinfo.arrName = []
         csiclientsearchinfo.arrDetail = []
         csiclientsearchinfo.arrNo = []
-        //call search function
-//        print("loginDataSetis \(String(describing: csiclientinfo.clientid))")
-        csiWCF_VM().callSearch(clientid: csiclientinfo.clientid, infosafeid: csiclientinfo.infosafeid, inputData: searchInPut)
         
-        run(after: 7) {
-            if csiclientsearchinfo.searchstatus == true {
-                let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "TablePage") as? TablePage_VC
-                self.navigationController?.pushViewController(searchJump!, animated: true)
-            } else {
-                print("search failed")
-                let ac = UIAlertController(title: "Search Failed", message: "Please check the network and type the correct infomation search again.", preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "OK", style:  .default))
-                self.present(ac, animated: true)
+        //call search function
+        self.showSpinner(onView: self.view)
+        csiWCF_VM().callSearch(clientid: csiclientinfo.clientid, infosafeid: csiclientinfo.infosafeid, inputData: searchInPut) { (completionReturnData) in
+            
+            //handle true or false for search function
+            DispatchQueue.main.async {
+                if completionReturnData.contains("true") {
+                    
+                    self.removeSpinner()
+                    let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "TablePage") as? TablePage_VC
+                    self.navigationController?.pushViewController(searchJump!, animated: true)
+                    
+                } else if completionReturnData.contains("false") {
+                    self.removeSpinner()
+                    let ac = UIAlertController(title: "Search Failed", message: "Please check the network and type the correct infomation search again.", preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
+                    self.present(ac, animated: true)
+                }
             }
         }
 
-        
-
-        
-    }
-
-    func run(after seconds: Int, completion: @escaping () -> Void) {
-        let deadline = DispatchTime.now() + .seconds(seconds)
-        DispatchQueue.main.asyncAfter(deadline: deadline) {
-            completion()
-        }
-    }
+}
 }

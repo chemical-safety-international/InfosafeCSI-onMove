@@ -29,6 +29,7 @@ struct csiclientsearchinfo {
 
 struct csicurrentSDS {
     static var sdsNo: String!
+    static var sdsRowNo: Int!
 }
 
 struct ViewSDSData: Codable {

@@ -12,6 +12,7 @@ class TableViewCell: UITableViewCell {
 
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var details: UITextView!
+    @IBOutlet weak var sdsBtn: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
