@@ -53,7 +53,7 @@ class TablePage_VC: UIViewController {
     
     @IBAction func sdsViewBtnTapped(_ sender: UIButton) {
         
-        //get row number 
+        //get row number
         let buttonRow = sender.tag
         
         let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
@@ -98,6 +98,9 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         
         rowNo = indexPath.row
         
+        csicurrentSDS.sdsNo = csiclientsearchinfo.arrNo[rowNo]
+        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
+        self.navigationController?.pushViewController(sdsJump!, animated: true)
     }
     
     // change the height to expand tableDisplay value
