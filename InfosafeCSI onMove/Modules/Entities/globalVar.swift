@@ -81,5 +81,9 @@ struct SearchData: Codable {
 }
 
 struct CriteriaData: Codable {
-    var items: [String]!
+    struct items : Codable {
+        let code: String
+        let name: String
+    }
+    let items: [items]!
 }

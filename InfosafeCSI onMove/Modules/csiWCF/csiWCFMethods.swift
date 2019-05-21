@@ -8,8 +8,8 @@
 
 import Foundation
 
-var csiWCF_oldURLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
-var csiWCF_goldURLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
+//var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
+var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
 
 
 // Call the WCF function: 'loginbyEami' with email, password, deviceid, devicemac and return the data from WCF
@@ -25,7 +25,7 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
     //*create URL string point to wcf method* should be changed after setting up core data
-    let url = URL(string: csiWCF_goldURLHeader + "loginbyEmail")!
+    let url = URL(string: csiWCF_URLHeader + "loginbyEmail")!
 
     //create request
     var request = URLRequest(url: url)
@@ -34,79 +34,37 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 
     //insert json string to the request
     request.httpBody = jsonData
+    
+    //guard let url = URL(string: csiWCF_URLHeader + "loginbyEmail2") else {return}
+    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        guard let dataResponse = data,
+            error == nil else {
+                print(error?.localizedDescription ?? "Response Error")
+                return }
 
-////    print(request)
-//    //create a session to call wcf method
-//    let task = URLSession.shared.dataTask(with: request) { data, response, error in if let error = error {
-//        // print out error
-//        print("Error:", error)
-//        return
-//        }
-    
-        //guard let url = URL(string: csiWCF_URLHeader + "loginbyEmail2") else {return}
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let dataResponse = data,
-                error == nil else {
-                    print(error?.localizedDescription ?? "Response Error")
-                    return }
-            do{
-                //here dataResponse received from a network request
-                let jsonResponse = try JSONSerialization.jsonObject(with:
-                    dataResponse, options: [])
-                print(jsonResponse) //Response result
-                
-                do {
-                    //here dataResponse received from a network request
-                    let decoder = JSONDecoder()
-                    let model = try decoder.decode(LoginData.self, from:
-                        dataResponse) //Decode JSON Response Data
-                    //print(model)
-                    csiclientinfo.clientid = model.clientid
-                    csiclientinfo.clientmemberid = model.clientmemberid
-                    csiclientinfo.infosafeid = model.infosafeid
-                    csiclientinfo.clientcode = model.clientcode
-                    
-                    if model.passed == true {
-                        completion("true")
-                    } else if model.passed == false {
-                        completion("false")
-                    } else {
-                        completion("Error")
-                    }
-                } catch let parsingError {
-                    print("Error", parsingError)
-                }
-                
-            } catch let parsingError {
-                print("Error", parsingError)
+        //here dataResponse received from a network request
+        do {
+            //here dataResponse received from a network request
+            let decoder = JSONDecoder()
+            let model = try decoder.decode(LoginData.self, from:
+                dataResponse) //Decode JSON Response Data
+            csiclientinfo.clientid = model.clientid
+            csiclientinfo.clientmemberid = model.clientmemberid
+            csiclientinfo.infosafeid = model.infosafeid
+            csiclientinfo.clientcode = model.clientcode
+            
+            if model.passed == true {
+                completion("true")
+            } else if model.passed == false {
+                completion("false")
+            } else {
+                completion("Error")
             }
+        } catch let parsingError {
+            print("Error", parsingError)
         }
-        task.resume()
-        
-//        print("json:", json)
-        
-        //get the return data
-        //guard let data = data else {return}
-//        let responseString = String(data: data, encoding: .utf8)
-//        completion(responseString!)
-//
-//        if (responseString?.contains("true"))! {
-//            print(responseString as Any)
-//
-//            let clientinfo = csiWCF_LoginReturnValueFix(inValue: responseString!)
-//            csiclientinfo.clientid = clientinfo.0
-//            csiclientinfo.clientmemberid = clientinfo.1
-//            csiclientinfo.infosafeid = clientinfo.2
-//        } else {
-//            csiclientinfo.clientid = ""
-//            csiclientinfo.clientloginstatus = "false"
-//        }
-//
-    
-   // }
-    
-    //start the task
-    //task.resume()
+    }
+    task.resume()
 }
 
 //Call the WCF function: 'GetSDSSearchResultsPageEx' with input data
@@ -123,7 +81,7 @@ func csiWCF_GetSDSSearchResultsPageEx(clientid:String, infosafeid:String, inputD
     
     print(json)
     //setup url
-    let url = URL(string: csiWCF_goldURLHeader + "GetSDSSearchResultsPage")!
+    let url = URL(string: csiWCF_URLHeader + "GetSDSSearchResultsPage")!
     
     //setup request
     var request = URLRequest(url: url)
@@ -193,14 +151,13 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, completion
     
     
     //create json data
-    //let json: [String: Any] = ["client":client, "uid":uid, "apptp":"1", "c":"", "v":inputData, "p":"1", "psize":"50"]
     let  json:[String:Any] = ["ClientCode":client, "AppType":"1", "UserID":uid]
     
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
     print(json)
     //setup url
-    let url = URL(string: csiWCF_goldURLHeader + "GetSearchCriteriaList")!
+    let url = URL(string: csiWCF_URLHeader + "GetSearchCriteriaList")!
     
     //setup request
     var request = URLRequest(url: url)
@@ -216,55 +173,20 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, completion
             error == nil else {
                 print(error?.localizedDescription ?? "Response Error")
                 return }
-        do{
-            //here dataResponse received from a network request
-            let jsonResponse = try JSONSerialization.jsonObject(with:
-            dataResponse, options: []) as! [String: Any]
-            print(jsonResponse) //Response result
-//            let items = jsonResponse["items"] as? [(String)] ?? []
-//            print(items)
-            
-//            let itemsArr = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions()) as? [Any]
-//            for itemDict in itemsArr! {
-//                if let dict = itemDict as? [String: Any], let itemArray = dict["items"] as? [String] {
-//                    csicriteriainfo.arrList.append(itemArray)
-//                }
-//            }
-            
-//            let jsonData = try JSONSerialization.data(withJSONObject: data as Any, options: JSONSerialization.WritingOptions.prettyPrinted)
-//            let decode = try JSONSerialization.jsonObject(with: jsonData, options: [])
-//            
-//            if let dictFromJSON = decode as? [String:String] {
-//                print("here ia \(dictFromJSON)")
-//            } else {
-//                print("false")
-//            }
-//            
             
             do {
                 //here dataResponse received from a network request
                 let decoder = JSONDecoder()
-                let model = try decoder.decode([CriteriaData].self, from:
+                let model = try decoder.decode(CriteriaData.self, from:
                     dataResponse) //Decode JSON Response Data
+                
+                //Populate the search criteria ddl
                 print(model)
-                
-                
 
-//                csicriteriainfo.arrList = items
-//                print(csicriteriainfo.arrList as Any)
 
-//                if model.items != [] {
-//                    completion("true")
-//                } else if model.items == [] {
-//                    completion("false")
-//                }
             } catch let parsingError {
                 print("Error", parsingError)
             }
-            
-        } catch let parsingError {
-            print("Error", parsingError)
-        }
     }
     //start task
     task.resume()
@@ -278,7 +200,7 @@ func csiWCF_getHTML(clientid: String, uid: String, sdsNoGet: String, completion:
     print(json)
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
-    let url = URL(string: csiWCF_oldURLHeader + "ViewSDS")!
+    let url = URL(string: csiWCF_URLHeader + "ViewSDS")!
     
     var request = URLRequest(url:url)
     request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
