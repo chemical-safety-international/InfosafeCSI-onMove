@@ -28,7 +28,8 @@ struct csiclientsearchinfo {
 }
 
 struct csicriteriainfo {
-    static var arrList: [String]!
+    static var arrCode: [String]!
+    static var arrName: [String]!
 }
 
 struct csicurrentSDS {

@@ -182,7 +182,11 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, completion
                 
                 //Populate the search criteria ddl
                 print(model)
-
+                print(model.items[0].code)
+                
+                for noCount in model.items {
+                    csicriteriainfo.arrCode.append(model.items?[noCount].code)
+                }
 
             } catch let parsingError {
                 print("Error", parsingError)
