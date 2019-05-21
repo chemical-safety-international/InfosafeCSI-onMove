@@ -51,6 +51,11 @@ class LoginPage_VC: UIViewController {
                         let ac = UIAlertController(title: "Verify Failed", message: "Email or Password is invaild, please try again.", preferredStyle: .alert)
                         ac.addAction(UIAlertAction(title: "OK", style:  .default))
                         self.present(ac, animated: true)
+                    } else if completion.contains("Error") {
+                        self.removeSpinner()
+                        let ac = UIAlertController(title: "Failed", message: "Server is no response.", preferredStyle: .alert)
+                        ac.addAction(UIAlertAction(title: "OK", style:  .default))
+                        self.present(ac, animated: true)
                     }
                 }
         }

@@ -2,7 +2,7 @@
 //  SDSView_VC.swift
 //  InfosafeCSI onMove
 //
-//  Created by Sailing on 5/13/19.
+//  Created by Releski Tan on 5/13/19.
 //  Copyright © 2019 Chemical Safety International. All rights reserved.
 //
 

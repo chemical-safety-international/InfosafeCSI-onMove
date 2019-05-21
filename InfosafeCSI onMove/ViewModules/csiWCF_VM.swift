@@ -23,8 +23,10 @@ class csiWCF_VM: UIViewController {
         csiWCF_loginbyEmail(email: email, password: password, deviceid: deviceid, devicemac: devicemac) { (completion) in
             if completion.contains("true") {
                 completions("true")
-            } else {
+            } else if completion.contains("false"){
                 completions("false")
+            } else {
+                completions("Error")
             }
         }
 
@@ -32,23 +34,41 @@ class csiWCF_VM: UIViewController {
     
     func callSearch(clientid: String, infosafeid: String, inputData:String, completion:@escaping(String) -> Void) {
         
-        // call the search function in the ECF
+        // call the search function in the WCF
         csiWCF_GetSDSSearchResultsPageEx(clientid: clientid, infosafeid: infosafeid, inputData: inputData) {
             (completionReturnData) in
             
             if completionReturnData.contains("false") {
                 completion("false")
-            } else {
+            } else if completionReturnData.contains("true") {
                 // get return value and put in every array
-                let returnArray = csiWCF_SearchReturnValueFix(inValue: completionReturnData)
-                
-                csiclientsearchinfo.arrName = returnArray.0 as? [String]
-                csiclientsearchinfo.arrDetail = returnArray.1 as? [String]
-                csiclientsearchinfo.arrNo = returnArray.2 as? [String]
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
+//                let returnArray = csiWCF_SearchReturnValueFix(inValue: completionReturnData)
+//                
+//                csiclientsearchinfo.arrName = returnArray.0 as? [String]
+//                csiclientsearchinfo.arrDetail = returnArray.1 as? [String]
+//                csiclientsearchinfo.arrNo = returnArray.2 as? [String]
+//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
                 completion("true")
+            } else {
+                completion("Error")
             }
         }
+    }
+    
+    func callCriteriaList(completion:@escaping(String) -> Void) {
+        
+        //call the search criteria list function in the WCF
+        csiWCF_GetSearchCriteriaList(clientid: csiclientinfo.clientid, infosafeid: csiclientinfo.infosafeid) { (returnCompletionData) in
+            if returnCompletionData.contains("true") {
+                completion("true")
+            } else if returnCompletionData.contains("false") {
+                completion("false")
+            } else {
+                completion("Error")
+            }
+            
+        }
+        
     }
     
     func callSDS( completion:@escaping(String) -> Void ) {

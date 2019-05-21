@@ -52,9 +52,29 @@ class SearchPage_VC: UIViewController {
                     let ac = UIAlertController(title: "Search Failed", message: "Please check the network and type the correct infomation search again.", preferredStyle: .alert)
                     ac.addAction(UIAlertAction(title: "OK", style:  .default))
                     self.present(ac, animated: true)
+                }  else if completionReturnData.contains("Error") {
+                    self.removeSpinner()
+                    let ac = UIAlertController(title: "Failed", message: "Server is no response.", preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
+                    self.present(ac, animated: true)
                 }
             }
         }
-
-}
+    }
+    @IBAction func criteriaListBtnTapped(_ sender: Any) {
+        csiWCF_VM().callCriteriaList() { (completionReturnData) in
+            DispatchQueue.main.async {
+                if completionReturnData.contains("true") {
+                    
+                    print("true")
+                    
+                } else if completionReturnData.contains("false") {
+                    print("false")
+                }  else if completionReturnData.contains("Error") {
+                    print("Error")
+                }
+            }
+        }
+    }
+    
 }

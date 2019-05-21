@@ -27,6 +27,10 @@ struct csiclientsearchinfo {
     static var searchstatus: Bool!
 }
 
+struct csicriteriainfo {
+    static var arrList: [String]!
+}
+
 struct csicurrentSDS {
     static var sdsNo: String!
     static var sdsRowNo: Int!
@@ -54,4 +58,28 @@ struct LoginData: Codable {
     var infosafeid: String!
     var passed: Bool!
     var surname: String!
+}
+
+struct SearchData: Codable {
+    
+    var column: [String]!
+    var data: [String]!
+    var result: Bool!
+    var size: Int!
+    var no: Int!
+    var pagecount: Int!
+    var count: Int!
+    var list: Int!
+    var pcount: Int!
+    var lcount: Int!
+    var ocount: Int!
+    var acount: Int!
+    var order: String!
+    var desc: String!
+    var showachive: String!
+    
+}
+
+struct CriteriaData: Codable {
+    var items: [String]!
 }
