@@ -68,14 +68,16 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 }
 
 //Call the WCF function: 'GetSDSSearchResultsPageEx' with input data
-func csiWCF_GetSDSSearchResultsPageEx(clientid:String, infosafeid:String, inputData:String, completion:@escaping(String) -> Void) -> (Void) {
+func csiWCF_GetSDSSearchResultsPageEx(inputData:String, completion:@escaping(String) -> Void) -> (Void) {
     
-    let client = clientid
-    let uid = infosafeid
+    let client = csiclientinfo.clientid
+    let uid = csiclientinfo.infosafeid
+    let  c = csicriteriainfo.code
+    
     
 
     //create json data
-    let json: [String: Any] = ["client":client, "uid":uid, "apptp":"1", "c":"", "v":inputData, "p":"1", "psize":"50"]
+    let json: [String: Any] = ["client":client!, "uid":uid!, "apptp":"1", "c":c!, "v":inputData, "p":"1", "psize":"50"]
     
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
@@ -180,21 +182,20 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, completion
                 let model = try decoder.decode(CriteriaData.self, from:
                     dataResponse) //Decode JSON Response Data
                 
-//                csicriteriainfo.arrCode = []
-//                csicriteriainfo.arrName = []
-                //Populate the search criteria ddl
+
+                //Store and seprate the return data
                 for noCount in model.items {
                     
                     csicriteriainfo.arrCode.append(noCount.code)
                     csicriteriainfo.arrName.append(noCount.name)
                 }
+                csicriteriainfo.code = model.items[0].code
                 if csicriteriainfo.arrName != [] {
                     completion("true")
                 } else {
                     completion("false")
                 }
-                print(csicriteriainfo.arrCode)
-                print(csicriteriainfo.arrName)
+
             } catch let parsingError {
                 print("Error", parsingError)
             }
@@ -234,41 +235,6 @@ func csiWCF_getHTML(clientid: String, uid: String, sdsNoGet: String, completion:
     task.resume()
 }
 
-//Create the WCF function: 'LoginReturnValueFix' with inValue
-//func csiWCF_LoginReturnValueFix(inValue:String) -> (String,String,String){
-////    print(" returnValueFix traggled")
-//    
-//    var clientid: String = ""
-//    var clientmemberid: String = ""
-//    var infosafeid: String = ""
-//    var scText: NSString?
-//    var tempValue = inValue
-//    
-//    
-//    tempValue = tempValue.replacingOccurrences(of: "\\", with: "")
-//    tempValue = tempValue.replacingOccurrences(of: "\"", with: "")
-//    
-////    print("tempValue: \n \(tempValue)")
-//    let sc = Scanner(string: tempValue)
-//    
-//    while (!sc.isAtEnd) {
-//        sc.scanUpTo("clientid:", into: nil)
-//        sc.scanUpTo(",", into: &scText)
-//        clientid = scText!.components(separatedBy: ":")[1]
-//        
-//        sc.scanUpTo("clientmemberid:", into: nil)
-//        sc.scanUpTo(",", into: &scText)
-//        clientmemberid = scText!.components(separatedBy: ":")[1]
-//        
-//        sc.scanUpTo("infosafeid:", into: nil)
-//        sc.scanUpTo(",", into: &scText)
-//        infosafeid = scText!.components(separatedBy: ":")[1]
-//        break
-//    }
-////    print("resutlt: \n \(clientid) \n \(clientmemberid) \n \(infosafeid)")
-//    
-//    return (clientid,clientmemberid,infosafeid)
-//}
 
 
 func csiWCF_SearchReturnValueFix(inValue:String) -> (Array<Any>, Array<Any>, Array<Any>) {

@@ -10,12 +10,12 @@ import UIKit
 
 class SearchPage_VC: UIViewController {
 
-    var loginDataSet:(String,String,String) = ("","","")
     //IBOutlet
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var criteriaListTable: UITableView!
     @IBOutlet weak var criteriaListBtn: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     
     override func viewDidLoad() {
@@ -28,6 +28,7 @@ class SearchPage_VC: UIViewController {
         self.criteriaListTable.delegate = self
         self.criteriaListTable.dataSource = self
         criteriaListTable.isHidden = true
+        scrollView.isHidden = true
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -50,7 +51,7 @@ class SearchPage_VC: UIViewController {
         
         //call search function
         self.showSpinner(onView: self.view)
-        csiWCF_VM().callSearch(clientid: csiclientinfo.clientid, infosafeid: csiclientinfo.infosafeid, inputData: searchInPut) { (completionReturnData) in
+        csiWCF_VM().callSearch(inputData: searchInPut) { (completionReturnData) in
             
             //handle true or false for search function
             DispatchQueue.main.async {
@@ -87,10 +88,12 @@ class SearchPage_VC: UIViewController {
         if toogle {
             UIView.animate(withDuration: 0.3) {
                 self.criteriaListTable.isHidden = false
+                self.scrollView.isHidden = false
             }
         } else {
             UIView.animate(withDuration: 0.3) {
                 self.criteriaListTable.isHidden = true
+                self.scrollView.isHidden = true
             }
         }
     }
