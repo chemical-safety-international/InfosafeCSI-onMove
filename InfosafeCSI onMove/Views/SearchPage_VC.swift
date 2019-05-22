@@ -15,18 +15,30 @@ class SearchPage_VC: UIViewController {
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var criteriaListTable: UITableView!
+    @IBOutlet weak var criteriaListBtn: UIButton!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        self.callCriteriaList()
         // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
+        self.criteriaListTable.delegate = self
+        self.criteriaListTable.dataSource = self
+        criteriaListTable.isHidden = true
     }
     
-//    func  getLoginData(loginData: (String,String,String)) {
-//        loginDataSet = loginData
-//        print("LoginDataSet: \(loginDataSet)")
-//    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    @objc func loadList(notification: NSNotification) {
+        DispatchQueue.main.async {
+            self.criteriaListTable.reloadData()
+        }
+    }
 
     @IBAction func searchBtnTapped(_ sender: Any) {
         
@@ -63,16 +75,39 @@ class SearchPage_VC: UIViewController {
         }
     }
     @IBAction func criteriaListBtnTapped(_ sender: Any) {
+        if criteriaListTable.isHidden {
+            animate(toogle: true)
+        } else {
+            animate(toogle: false)
+        }
+
+    }
+    
+    func animate(toogle: Bool) {
+        if toogle {
+            UIView.animate(withDuration: 0.3) {
+                self.criteriaListTable.isHidden = false
+            }
+        } else {
+            UIView.animate(withDuration: 0.3) {
+                self.criteriaListTable.isHidden = true
+            }
+        }
+    }
+    
+    func callCriteriaList() {
         csiWCF_VM().callCriteriaList() { (completionReturnData) in
             DispatchQueue.main.async {
                 if completionReturnData.contains("true") {
-                    
-                    print("true")
-                    
+
                 } else if completionReturnData.contains("false") {
-                    print("false")
+                    let ac = UIAlertController(title: "Failed", message: "Cannot get the criteria list!", preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
+                    self.present(ac, animated: true)
                 }  else if completionReturnData.contains("Error") {
-                    print("Error")
+                    let ac = UIAlertController(title: "Failed", message: "Cannot get the criteria list!", preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
+                    self.present(ac, animated: true)
                 }
             }
         }
@@ -81,17 +116,26 @@ class SearchPage_VC: UIViewController {
 }
 
 
-//extension SearchPage_VC: UITableViewDelegate, UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        <#code#>
-//    }
-//    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        <#code#>
-//    }
-//    
-//    
-//    
-//    
-//    
-//}
+extension SearchPage_VC: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return csicriteriainfo.arrCode.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "criteriacell", for: indexPath)
+        cell.textLabel?.text = csicriteriainfo.arrName[indexPath.row]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        criteriaListBtn.setTitle("\(csicriteriainfo.arrName[indexPath.row])", for: .normal)
+        csicriteriainfo.code = csicriteriainfo.arrCode[indexPath.row]
+        print(csicriteriainfo.arrName[indexPath.row])
+        print(csicriteriainfo.arrCode[indexPath.row])
+        animate(toogle: false)
+    }
+    
+    
+    
+    
+}

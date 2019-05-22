@@ -180,14 +180,21 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, completion
                 let model = try decoder.decode(CriteriaData.self, from:
                     dataResponse) //Decode JSON Response Data
                 
+//                csicriteriainfo.arrCode = []
+//                csicriteriainfo.arrName = []
                 //Populate the search criteria ddl
-                print(model)
-                print(model.items[0].code)
-                
                 for noCount in model.items {
-                    csicriteriainfo.arrCode.append(model.items?[noCount].code)
+                    
+                    csicriteriainfo.arrCode.append(noCount.code)
+                    csicriteriainfo.arrName.append(noCount.name)
                 }
-
+                if csicriteriainfo.arrName != [] {
+                    completion("true")
+                } else {
+                    completion("false")
+                }
+                print(csicriteriainfo.arrCode)
+                print(csicriteriainfo.arrName)
             } catch let parsingError {
                 print("Error", parsingError)
             }
