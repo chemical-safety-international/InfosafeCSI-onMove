@@ -68,7 +68,7 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 }
 
 //Call the WCF function: 'GetSDSSearchResultsPageEx' with input data
-func csiWCF_GetSDSSearchResultsPageEx(inputData:String, completion:@escaping(String) -> Void) -> (Void) {
+func csiWCF_GetSDSSearchResultsPageEx(inputData:String, client: String, uid: String, c:String, p : Int, psize : Int, completion:@escaping(String) -> Void) -> (Void) {
     
     let client = csiclientinfo.clientid
     let uid = csiclientinfo.infosafeid
