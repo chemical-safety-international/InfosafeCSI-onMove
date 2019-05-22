@@ -49,9 +49,17 @@ class SearchPage_VC: UIViewController {
         csiclientsearchinfo.arrDetail = []
         csiclientsearchinfo.arrNo = []
         
+        let client = csiclientinfo.clientid
+        let uid = csiclientinfo.infosafeid
+        let  c = csicriteriainfo.code
+        let p = 1
+        let psize = 50
+        let apptp = csiclientinfo.apptype
+        
+        
         //call search function
         self.showSpinner(onView: self.view)
-        csiWCF_VM().callSearch(inputData: searchInPut) { (completionReturnData) in
+        csiWCF_VM().callSearch(inputData: searchInPut, client: client!, uid: uid!, c: c!, p: p, psize:psize, apptp:apptp!) { (completionReturnData) in
             
             //handle true or false for search function
             DispatchQueue.main.async {
@@ -102,7 +110,7 @@ class SearchPage_VC: UIViewController {
         csiWCF_VM().callCriteriaList() { (completionReturnData) in
             DispatchQueue.main.async {
                 if completionReturnData.contains("true") {
-
+                    self.criteriaListBtn.setTitle("\(csicriteriainfo.arrName[0])", for: .normal)
                 } else if completionReturnData.contains("false") {
                     let ac = UIAlertController(title: "Failed", message: "Cannot get the criteria list!", preferredStyle: .alert)
                     ac.addAction(UIAlertAction(title: "OK", style:  .default))

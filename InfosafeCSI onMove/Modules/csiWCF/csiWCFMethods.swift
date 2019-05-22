@@ -52,6 +52,7 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
             csiclientinfo.clientmemberid = model.clientmemberid
             csiclientinfo.infosafeid = model.infosafeid
             csiclientinfo.clientcode = model.clientcode
+            csiclientinfo.apptype = model.apptype
             
             if model.passed == true {
                 completion("true")
@@ -68,16 +69,10 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 }
 
 //Call the WCF function: 'GetSDSSearchResultsPageEx' with input data
-func csiWCF_GetSDSSearchResultsPageEx(inputData:String, client: String, uid: String, c:String, p : Int, psize : Int, completion:@escaping(String) -> Void) -> (Void) {
-    
-    let client = csiclientinfo.clientid
-    let uid = csiclientinfo.infosafeid
-    let  c = csicriteriainfo.code
-    
-    
-
+func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: String, c:String, p : Int, psize : Int, apptp: Int, completion:@escaping(String) -> Void) -> (Void) {
+ 
     //create json data
-    let json: [String: Any] = ["client":client!, "uid":uid!, "apptp":"1", "c":c!, "v":inputData, "p":"1", "psize":"50"]
+    let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":c, "v":inputData, "p":p, "psize":psize]
     
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
@@ -111,30 +106,69 @@ func csiWCF_GetSDSSearchResultsPageEx(inputData:String, client: String, uid: Str
                 return }
         do{
             //here dataResponse received from a network request
-            let jsonResponse = try JSONSerialization.jsonObject(with:
-                dataResponse, options: [])
-            print(jsonResponse) //Response result
+            let json = String(data: data!, encoding: .utf8)
+            print(json!)
             
-            do {
+            let jsonResponse = try JSONSerialization.jsonObject(with:
+            dataResponse, options: [.allowFragments, JSONSerialization.ReadingOptions.mutableContainers]) as? [String: [String: [String:Any]]]
+            
+//            let jsonResponse = try JSONSerialization.jsonObject(with:
+//                dataResponse, options: []) as? [String: Any]
+            //print(jsonResponse!)
+            //print(jsonResponse!) //Response result
+            
+//            let jsonArr1 = jsonResponse!["data"] as? [[String: Any]]
+//            print(jsonArr1!)
+            //let jsonArr2 = jsonArr1["com"] as? [String: Any]
+            
+//            for data in jsonArr1! {
+//                let jsonArr2 = jsonArr1!["com"] as? [String: Any]
+//            }
+//
+//
+//            if  let jsonArr3 = jsonArr2!["value"] as? String {
+//                for companyName in jsonArr3 {
+//                    print(companyName)
+//                }
+//
+//            }
+            //new
+//            if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
+//                for info in jsonArr1 {
+//                    if let jsonArr2 = info["com"] as? [String] {
+////                        for companyName in jsonArr2 {
+////                            if let comN = companyName["value"] as? String {
+////
+////                            }
+//
+////                        }
+//                        print(jsonArr2)
+//                    }
+//                   // print(jsonArr1)
+//                }
+//            }
+            
+            
+//            do {
                 //here dataResponse received from a network request
-                let decoder = JSONDecoder()
-                let model = try decoder.decode(SearchData.self, from:
-                    dataResponse) //Decode JSON Response Data
-                print(model)
+//                let decoder = JSONDecoder()
+//                let model = try decoder.decode(SearchData.self, from:
+//                    dataResponse) //Decode JSON Response Data
+//                print(model)
                 
 //                csiclientinfo.clientid = model.clientid
 //                csiclientinfo.clientmemberid = model.clientmemberid
 //                csiclientinfo.infosafeid = model.infosafeid
-                if model.result == true {
-                    completion("true")
-                } else if model.result == false {
-                    completion("false")
-                } else {
-                    completion("Error")
-                }
-            } catch let parsingError {
-                print("Error", parsingError)
-            }
+//                if model.result == true {
+//                    completion("true")
+//                } else if model.result == false {
+//                    completion("false")
+//                } else {
+//                    completion("Error")
+//                }
+//            } catch let parsingError {
+//                print("Error", parsingError)
+//            }
             
         } catch let parsingError {
             print("Error", parsingError)

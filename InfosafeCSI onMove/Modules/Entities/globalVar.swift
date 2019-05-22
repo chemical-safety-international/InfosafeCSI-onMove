@@ -18,13 +18,13 @@ struct csiclientinfo {
     static var clientfirstname: String!
     static var clientsurname: String!
     static var clientloginstatus: String!
+    static var apptype: Int!
 }
 
 struct csiclientsearchinfo {
     static var arrName: [String]!
     static var arrDetail: [String]!
     static var arrNo: [String]!
-    static var searchstatus: Bool!
 }
 
 struct csicriteriainfo {
@@ -65,8 +65,19 @@ struct LoginData: Codable {
 
 struct SearchData: Codable {
     
-    var column: [String]!
-    var data: [String]!
+    struct column: Codable{
+        let checkbox: Int
+        let display: Int
+        let key: String
+        let locked: String
+        let name: String
+        let order: String
+        let tip: String
+        let width: Int
+    }
+    struct data: Codable {
+        
+    }
     var result: Bool!
     var size: Int!
     var no: Int!

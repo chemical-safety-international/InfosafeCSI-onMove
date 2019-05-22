@@ -32,10 +32,10 @@ class csiWCF_VM: UIViewController {
 
     }
     
-    func callSearch(inputData:String, completion:@escaping(String) -> Void) {
+    func callSearch(inputData:String, client: String, uid: String, c: String, p: Int, psize:Int, apptp: Int, completion:@escaping(String) -> Void) {
         
         // call the search function in the WCF
-        csiWCF_GetSDSSearchResultsPageEx(inputData: inputData) {
+        csiWCF_GetSDSSearchResultsPage(inputData: inputData, client: client, uid: uid, c: c, p: p, psize: psize, apptp: apptp) {
             (completionReturnData) in
             
             if completionReturnData.contains("false") {
