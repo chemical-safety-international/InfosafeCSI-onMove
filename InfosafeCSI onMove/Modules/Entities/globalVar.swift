@@ -27,6 +27,7 @@ struct csiclientsearchinfo {
     static var arrIssueData: [String]!
     static var arrDetail: [String]!
     static var arrNo: [String]!
+    static var details: String!
 }
 
 struct csicriteriainfo {
@@ -94,17 +95,16 @@ struct CriteriaData: Codable {
 }
 
 struct ViewSDSData: Codable {
-    var result: String!
-    var CanPDF: String!
-    var CanExcel: String!
+    var result: Bool!
+    var CanPDF: Bool!
+    var CanExcel: Bool!
     var html: String!
     var title: String!
     var format: String!
-    var subResults: String!
-    var hasSummary: String!
+    var subResults: Bool!
+    var hasSummary: Bool!
     var message: String!
     var html_0: String!
-    var hasSummary: String!
     var html_2: String!
     var html_4: String!
     var html_1: String!

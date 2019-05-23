@@ -74,34 +74,6 @@ class csiWCF_VM: UIViewController {
     func callSDS( completion:@escaping(String) -> Void ) {
         
         csiWCF_getHTML(clientid: csiclientinfo.clientid, uid: csiclientinfo.infosafeid, sdsNoGet: csicurrentSDS.sdsNo) { (output) in
-            print("reach here")
-            
-//            var temp = output
-//            temp = temp.replacingOccurrences(of: "\\\\", with: "\\")
-//            temp = temp.replacingOccurrences(of: "u000d", with: "")
-//            temp = temp.replacingOccurrences(of: "u000a", with: "")
-//            temp = temp.replacingOccurrences(of: "\\r", with: "\r")
-//            temp = temp.replacingOccurrences(of: "\\n", with: "\n")
-//            temp = temp.replacingOccurrences(of: "\\", with: "")
-            
-            
-            //            let sc = Scanner(string: temp)
-            //            var removedstr:NSString?
-            //            var test:NSString?
-            //            var wholeHtml:String = temp
-            //
-            //            while (!sc.isAtEnd) {
-            //                sc.scanUpTo("\"html\": \"", into:&test)
-            //                // sc.scanUpTo("\",  \"title\"", into: &removedstr)
-            //                sc.scanUpTo("\",  \"title\"", into: &removedstr)
-            //                let temp2 = String(describing: removedstr)
-            //                let temp3 = String(describing: test)
-            //
-            //                wholeHtml = removedstr!.components(separatedBy: "\"html\": \"")[1]
-            //                //                print("html is \r\r\r\r", temp2)
-            //                //                print("title is :\r\r\r\r", temp3)
-            //                //print("whole HTML is \r\r\r", wholeHtml)
-            //            }
             
             let strForWeb = """
             <html>

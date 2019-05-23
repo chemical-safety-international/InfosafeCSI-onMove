@@ -133,15 +133,22 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
 
                     }
                     
+//                    if let issue = info["issue"] as? [String: Any] {
+//                        issue.forEach { issueDate in
+//                                if issueDate.key == "value"
+//                                {
+//                                    csiclientsearchinfo.arrIssueData.append(issueDate.value as! String)
+//                                }
+//                            }
+//                    }
+                    
                 }
                 if csiclientsearchinfo.arrCompanyName != [] {
                     completion("true")
                 } else {
                     completion("false")
                 }
-                print(csiclientsearchinfo.arrCompanyName!)
-                print(csiclientsearchinfo.arrNo!)
-                }
+            }
  
             
             
@@ -217,7 +224,6 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, completion
 func csiWCF_getHTML(clientid: String, uid: String, sdsNoGet: String, completion:@escaping(String) -> Void) -> (Void) {
     
     let json: [String: Any] = ["client":clientid, "apptp":"1", "uid":uid, "sds": sdsNoGet, "regetFormat":"1", "f":"", "subf":""]
-    print(json)
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
     let url = URL(string: csiWCF_URLHeader + "ViewSDS")!
@@ -237,10 +243,6 @@ func csiWCF_getHTML(clientid: String, uid: String, sdsNoGet: String, completion:
 
         
         do {
-            let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: []) as? [String: Any]
-            
-            print(jsonResponse!)
-            
             let decoder = JSONDecoder()
             let model = try decoder.decode(ViewSDSData.self, from: dataResponse)
             
@@ -252,12 +254,6 @@ func csiWCF_getHTML(clientid: String, uid: String, sdsNoGet: String, completion:
         }
         
         
-//        guard let data = data else { return }
-//        let responseString = String(data:data, encoding: .utf8)
-////        let responseString = data
-////        print(responseString as Any)
-//
-//        completion(responseString!)
     }
     task.resume()
     
@@ -265,74 +261,3 @@ func csiWCF_getHTML(clientid: String, uid: String, sdsNoGet: String, completion:
 
 
 
-//func csiWCF_SearchReturnValueFix(inValue:String) -> (Array<Any>, Array<Any>, Array<Any>) {
-//
-//    var temp = inValue
-//    temp = temp.replacingOccurrences(of: "\\", with: "")
-//    temp = temp.replacingOccurrences(of: "u000d", with: "")
-//    temp = temp.replacingOccurrences(of: "u000a", with: "")
-//    temp = temp.replacingOccurrences(of: "\"", with: "")
-//
-//    var nameArray: Array<String> = []
-//    var detailsArray: Array<String> = []
-//    var sdsNoArray: Array<String> = []
-//
-//    var scText:NSString?
-//    var name:String
-//    var no:String
-//    var com:String
-//    var issue:String
-//    var code:String
-//    var unno:String
-//    var detailText:String
-//
-//    let sc = Scanner(string: temp)
-//
-//    while(!sc.isAtEnd) {
-//        sc.scanUpTo("name: {        ", into:nil)
-//        sc.scanUpTo(",", into: &scText)
-//        name = scText!.components(separatedBy: ":")[2]
-//        //            print(name)
-//        nameArray.append(name)
-//
-//        sc.scanUpTo("no: {        ", into:nil)
-//        sc.scanUpTo(",", into: &scText)
-//        no = scText!.components(separatedBy: ":")[2]
-//        sdsNoArray.append(no)
-//        //
-//        sc.scanUpTo("com: {        ", into:nil)
-//        sc.scanUpTo(",", into: &scText)
-//        com = scText!.components(separatedBy: ":")[2]
-//
-//        sc.scanUpTo("issue: {        ", into:nil)
-//        sc.scanUpTo(",", into: &scText)
-//        issue = scText!.components(separatedBy: ":")[2]
-//
-//        sc.scanUpTo("code: {        ", into:nil)
-//        sc.scanUpTo(",", into: &scText)
-//        code = scText!.components(separatedBy: ":")[2]
-//
-//        sc.scanUpTo("unno: {        ", into:nil)
-//        sc.scanUpTo(",", into: &scText)
-//        unno = scText!.components(separatedBy: ":")[2]
-//
-//        detailText = "\rCompany:" + com + "\rSDS NO.:" + no + "\rIssue Date:" + issue + "\rProduct Code:" + code + "\rUNNO:" + unno
-//        //            print(detailText)
-//        detailsArray.append(detailText)
-//    }
-//
-//    if (nameArray.isEmpty){
-//        nameArray = []
-//        detailsArray = []
-//        sdsNoArray = []
-//        return(nameArray, detailsArray, sdsNoArray)
-//    } else {
-//
-//        nameArray.removeLast()
-//        detailsArray.removeLast()
-//        //        print(sdsNoArray)
-//        sdsNoArray.removeLast()
-//
-//        return(nameArray, detailsArray, sdsNoArray)
-//    }
-//}
