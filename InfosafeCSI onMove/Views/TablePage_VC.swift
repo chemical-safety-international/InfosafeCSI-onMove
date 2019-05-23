@@ -25,7 +25,7 @@ class TablePage_VC: UIViewController {
         self.tableDisplay.delegate = self
         self.tableDisplay.dataSource = self
         tableDisplay.rowHeight = UITableView.automaticDimension
-        tableDisplay.estimatedRowHeight = 100
+//        tableDisplay.estimatedRowHeight = 100
     }
     
 
@@ -75,14 +75,14 @@ class TablePage_VC: UIViewController {
 extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     // non-expandable
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return csiclientsearchinfo.arrName.count
+        return csiclientsearchinfo.arrCompanyName.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
         
-        cell?.name.text = csiclientsearchinfo.arrName[indexPath.row]
-        cell?.details.text = csiclientsearchinfo.arrDetail[indexPath.row]
+        cell?.name.text = csiclientsearchinfo.arrCompanyName[indexPath.row]
+        //cell?.details.text = csiclientsearchinfo.arrDetail[indexPath.row]
         
         //set row number of button that inside cell when tap
         cell?.sdsBtn.tag = indexPath.row
@@ -106,15 +106,15 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     // change the height to expand tableDisplay value
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return 150
+        return 100
         
     }
     
     // swipe to delete the row function
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            csiclientsearchinfo.arrName.remove(at: indexPath.row)
-            csiclientsearchinfo.arrDetail.remove(at: indexPath.row)
+            csiclientsearchinfo.arrCompanyName.remove(at: indexPath.row)
+            //csiclientsearchinfo.arrDetail.remove(at: indexPath.row)
             csiclientsearchinfo.arrNo.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {

@@ -45,7 +45,7 @@ class SearchPage_VC: UIViewController {
         
         //create empty arrays
         let searchInPut = searchTextField.text!
-        csiclientsearchinfo.arrName = []
+        csiclientsearchinfo.arrCompanyName = []
         csiclientsearchinfo.arrDetail = []
         csiclientsearchinfo.arrNo = []
         

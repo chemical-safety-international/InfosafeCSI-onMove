@@ -22,7 +22,9 @@ struct csiclientinfo {
 }
 
 struct csiclientsearchinfo {
-    static var arrName: [String]!
+    static var arrProductName: [String]!
+    static var arrCompanyName: [String]!
+    static var arrIssueData: [String]!
     static var arrDetail: [String]!
     static var arrNo: [String]!
 }
@@ -39,17 +41,6 @@ struct csicurrentSDS {
     static var sdsRowNo: Int!
 }
 
-struct ViewSDSData: Codable {
-    var result: String!
-    var CanPDF: String!
-    var CanExcel: String!
-    var html: String!
-    var title: String!
-    var format: String!
-    var subResults: String!
-    var hasSummary: String!
-    var message: String!
-}
 
 struct LoginData: Codable {
     var apptype: Int!
@@ -100,4 +91,22 @@ struct CriteriaData: Codable {
         let name: String
     }
     let items: [items]!
+}
+
+struct ViewSDSData: Codable {
+    var result: String!
+    var CanPDF: String!
+    var CanExcel: String!
+    var html: String!
+    var title: String!
+    var format: String!
+    var subResults: String!
+    var hasSummary: String!
+    var message: String!
+    var html_0: String!
+    var hasSummary: String!
+    var html_2: String!
+    var html_4: String!
+    var html_1: String!
+    var html_3: String!
 }

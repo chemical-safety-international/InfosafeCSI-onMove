@@ -35,7 +35,6 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
     //insert json string to the request
     request.httpBody = jsonData
     
-    //guard let url = URL(string: csiWCF_URLHeader + "loginbyEmail2") else {return}
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
@@ -76,7 +75,6 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
     
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
-    print(json)
     //setup url
     let url = URL(string: csiWCF_URLHeader + "GetSDSSearchResultsPage")!
     
@@ -88,87 +86,64 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
     request.httpBody = jsonData
     
     //create task
-//    let task = URLSession.shared.dataTask(with: request) { data, response, error in if let error = error {
-//            print("Error:", error)
-//            return
-//        }
-//
-//        guard let data = data else {return}
-//        let responseString = String(data: data, encoding: .utf8)
-//        completion(responseString!)
-//        print(responseString as Any)
-//
-//    }
+
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
                 print(error?.localizedDescription ?? "Response Error")
                 return }
         do{
-            //here dataResponse received from a network request
-            let json = String(data: data!, encoding: .utf8)
-            print(json!)
             
+            //use JSONSerialization
             let jsonResponse = try JSONSerialization.jsonObject(with:
-            dataResponse, options: [.allowFragments, JSONSerialization.ReadingOptions.mutableContainers]) as? [String: [String: [String:Any]]]
-            
-//            let jsonResponse = try JSONSerialization.jsonObject(with:
-//                dataResponse, options: []) as? [String: Any]
+                dataResponse, options: []) as? [String: AnyObject]
+
             //print(jsonResponse!)
-            //print(jsonResponse!) //Response result
             
-//            let jsonArr1 = jsonResponse!["data"] as? [[String: Any]]
-//            print(jsonArr1!)
-            //let jsonArr2 = jsonArr1["com"] as? [String: Any]
-            
-//            for data in jsonArr1! {
-//                let jsonArr2 = jsonArr1!["com"] as? [String: Any]
-//            }
-//
-//
-//            if  let jsonArr3 = jsonArr2!["value"] as? String {
-//                for companyName in jsonArr3 {
-//                    print(companyName)
-//                }
-//
-//            }
-            //new
-//            if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
-//                for info in jsonArr1 {
-//                    if let jsonArr2 = info["com"] as? [String] {
-////                        for companyName in jsonArr2 {
-////                            if let comN = companyName["value"] as? String {
-////
-////                            }
-//
-////                        }
-//                        print(jsonArr2)
+
+            if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
+
+                jsonArr1.forEach { info in
+                    if let com = info["com"] as? [String: Any] {
+                        com.forEach { companyName in
+
+                            if companyName.key == "value"
+                            {
+                                csiclientsearchinfo.arrCompanyName.append(companyName.value as! String)
+                            }
+                        }
+                    }
+                    
+//                    if let name = info["name"] as? [String: Any] {
+//                        name.forEach { pName in
+//                                if pName.key == "value"
+//                                {
+//                                    csiclientsearchinfo.arrProductName.append(pName.value as! String)
+//                                }
+//                            }
+//                        print(csiclientsearchinfo.arrProductName!)
 //                    }
-//                   // print(jsonArr1)
-//                }
-//            }
+                    if let no = info["no"] as? [String: Any] {
+                        no.forEach { nocode in
+                                if nocode.key == "value"
+                                {
+                                    csiclientsearchinfo.arrNo.append(nocode.value as! String)
+                                }
+                            }
+
+                    }
+                    
+                }
+                if csiclientsearchinfo.arrCompanyName != [] {
+                    completion("true")
+                } else {
+                    completion("false")
+                }
+                print(csiclientsearchinfo.arrCompanyName!)
+                print(csiclientsearchinfo.arrNo!)
+                }
+ 
             
-            
-//            do {
-                //here dataResponse received from a network request
-//                let decoder = JSONDecoder()
-//                let model = try decoder.decode(SearchData.self, from:
-//                    dataResponse) //Decode JSON Response Data
-//                print(model)
-                
-//                csiclientinfo.clientid = model.clientid
-//                csiclientinfo.clientmemberid = model.clientmemberid
-//                csiclientinfo.infosafeid = model.infosafeid
-//                if model.result == true {
-//                    completion("true")
-//                } else if model.result == false {
-//                    completion("false")
-//                } else {
-//                    completion("Error")
-//                }
-//            } catch let parsingError {
-//                print("Error", parsingError)
-//            }
             
         } catch let parsingError {
             print("Error", parsingError)
@@ -240,7 +215,6 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, completion
 }
 
 func csiWCF_getHTML(clientid: String, uid: String, sdsNoGet: String, completion:@escaping(String) -> Void) -> (Void) {
-    let sdsNoGet = sdsNoGet.replacingOccurrences(of: " ", with: "")
     
     let json: [String: Any] = ["client":clientid, "apptp":"1", "uid":uid, "sds": sdsNoGet, "regetFormat":"1", "f":"", "subf":""]
     print(json)
@@ -254,91 +228,111 @@ func csiWCF_getHTML(clientid: String, uid: String, sdsNoGet: String, completion:
     
     request.httpBody = jsonData
     
-    let task = URLSession.shared.dataTask(with: request) { data, response, error in if let error = error {
-        print("Error:", error)
-        return
+    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        guard let dataResponse = data,
+            error == nil else {
+                print(error?.localizedDescription ?? "Response Error")
+                return }
+
+
+        
+        do {
+            let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: []) as? [String: Any]
+            
+            print(jsonResponse!)
+            
+            let decoder = JSONDecoder()
+            let model = try decoder.decode(ViewSDSData.self, from: dataResponse)
+            
+            completion(model.html)
+
+
+        } catch let parsingError {
+            print("Error", parsingError)
         }
         
-        guard let data = data else { return }
-        let responseString = String(data:data, encoding: .utf8)
-//        let responseString = data
-//        print(responseString as Any)
         
-        completion(responseString!)
+//        guard let data = data else { return }
+//        let responseString = String(data:data, encoding: .utf8)
+////        let responseString = data
+////        print(responseString as Any)
+//
+//        completion(responseString!)
     }
     task.resume()
+    
 }
 
 
 
-func csiWCF_SearchReturnValueFix(inValue:String) -> (Array<Any>, Array<Any>, Array<Any>) {
-    
-    var temp = inValue
-    temp = temp.replacingOccurrences(of: "\\", with: "")
-    temp = temp.replacingOccurrences(of: "u000d", with: "")
-    temp = temp.replacingOccurrences(of: "u000a", with: "")
-    temp = temp.replacingOccurrences(of: "\"", with: "")
-    
-    var nameArray: Array<String> = []
-    var detailsArray: Array<String> = []
-    var sdsNoArray: Array<String> = []
-    
-    var scText:NSString?
-    var name:String
-    var no:String
-    var com:String
-    var issue:String
-    var code:String
-    var unno:String
-    var detailText:String
-    
-    let sc = Scanner(string: temp)
-    
-    while(!sc.isAtEnd) {
-        sc.scanUpTo("name: {        ", into:nil)
-        sc.scanUpTo(",", into: &scText)
-        name = scText!.components(separatedBy: ":")[2]
-        //            print(name)
-        nameArray.append(name)
-        
-        sc.scanUpTo("no: {        ", into:nil)
-        sc.scanUpTo(",", into: &scText)
-        no = scText!.components(separatedBy: ":")[2]
-        sdsNoArray.append(no)
-        //
-        sc.scanUpTo("com: {        ", into:nil)
-        sc.scanUpTo(",", into: &scText)
-        com = scText!.components(separatedBy: ":")[2]
-        
-        sc.scanUpTo("issue: {        ", into:nil)
-        sc.scanUpTo(",", into: &scText)
-        issue = scText!.components(separatedBy: ":")[2]
-        
-        sc.scanUpTo("code: {        ", into:nil)
-        sc.scanUpTo(",", into: &scText)
-        code = scText!.components(separatedBy: ":")[2]
-        
-        sc.scanUpTo("unno: {        ", into:nil)
-        sc.scanUpTo(",", into: &scText)
-        unno = scText!.components(separatedBy: ":")[2]
-        
-        detailText = "\rCompany:" + com + "\rSDS NO.:" + no + "\rIssue Date:" + issue + "\rProduct Code:" + code + "\rUNNO:" + unno
-        //            print(detailText)
-        detailsArray.append(detailText)
-    }
-    
-    if (nameArray.isEmpty){
-        nameArray = []
-        detailsArray = []
-        sdsNoArray = []
-        return(nameArray, detailsArray, sdsNoArray)
-    } else {
-        
-        nameArray.removeLast()
-        detailsArray.removeLast()
-        //        print(sdsNoArray)
-        sdsNoArray.removeLast()
-        
-        return(nameArray, detailsArray, sdsNoArray)
-    }
-}
+//func csiWCF_SearchReturnValueFix(inValue:String) -> (Array<Any>, Array<Any>, Array<Any>) {
+//
+//    var temp = inValue
+//    temp = temp.replacingOccurrences(of: "\\", with: "")
+//    temp = temp.replacingOccurrences(of: "u000d", with: "")
+//    temp = temp.replacingOccurrences(of: "u000a", with: "")
+//    temp = temp.replacingOccurrences(of: "\"", with: "")
+//
+//    var nameArray: Array<String> = []
+//    var detailsArray: Array<String> = []
+//    var sdsNoArray: Array<String> = []
+//
+//    var scText:NSString?
+//    var name:String
+//    var no:String
+//    var com:String
+//    var issue:String
+//    var code:String
+//    var unno:String
+//    var detailText:String
+//
+//    let sc = Scanner(string: temp)
+//
+//    while(!sc.isAtEnd) {
+//        sc.scanUpTo("name: {        ", into:nil)
+//        sc.scanUpTo(",", into: &scText)
+//        name = scText!.components(separatedBy: ":")[2]
+//        //            print(name)
+//        nameArray.append(name)
+//
+//        sc.scanUpTo("no: {        ", into:nil)
+//        sc.scanUpTo(",", into: &scText)
+//        no = scText!.components(separatedBy: ":")[2]
+//        sdsNoArray.append(no)
+//        //
+//        sc.scanUpTo("com: {        ", into:nil)
+//        sc.scanUpTo(",", into: &scText)
+//        com = scText!.components(separatedBy: ":")[2]
+//
+//        sc.scanUpTo("issue: {        ", into:nil)
+//        sc.scanUpTo(",", into: &scText)
+//        issue = scText!.components(separatedBy: ":")[2]
+//
+//        sc.scanUpTo("code: {        ", into:nil)
+//        sc.scanUpTo(",", into: &scText)
+//        code = scText!.components(separatedBy: ":")[2]
+//
+//        sc.scanUpTo("unno: {        ", into:nil)
+//        sc.scanUpTo(",", into: &scText)
+//        unno = scText!.components(separatedBy: ":")[2]
+//
+//        detailText = "\rCompany:" + com + "\rSDS NO.:" + no + "\rIssue Date:" + issue + "\rProduct Code:" + code + "\rUNNO:" + unno
+//        //            print(detailText)
+//        detailsArray.append(detailText)
+//    }
+//
+//    if (nameArray.isEmpty){
+//        nameArray = []
+//        detailsArray = []
+//        sdsNoArray = []
+//        return(nameArray, detailsArray, sdsNoArray)
+//    } else {
+//
+//        nameArray.removeLast()
+//        detailsArray.removeLast()
+//        //        print(sdsNoArray)
+//        sdsNoArray.removeLast()
+//
+//        return(nameArray, detailsArray, sdsNoArray)
+//    }
+//}
