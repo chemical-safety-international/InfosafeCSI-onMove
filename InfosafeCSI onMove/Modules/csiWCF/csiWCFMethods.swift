@@ -227,9 +227,9 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, completion
     
 }
 
-func csiWCF_getHTML(clientid: String, uid: String, sdsNoGet: String, completion:@escaping(String) -> Void) -> (Void) {
+func csiWCF_getHTML(clientid: String, uid: String, sdsNoGet: String, apptp : String, rtype: String, completion:@escaping(String) -> Void) -> (Void) {
     
-    let json: [String: Any] = ["client":clientid, "apptp":"1", "uid":uid, "sds": sdsNoGet, "regetFormat":"1", "f":"", "subf":""]
+    let json: [String: Any] = ["client":clientid, "apptp": apptp, "uid":uid, "sds": sdsNoGet, "rtype" : rtype, "regetFormat":"1", "f":"", "subf":""]
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
     let url = URL(string: csiWCF_URLHeader + "ViewSDS")!

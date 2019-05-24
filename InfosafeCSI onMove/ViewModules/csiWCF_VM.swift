@@ -71,24 +71,30 @@ class csiWCF_VM: UIViewController {
         
     }
     
-    func callSDS( completion:@escaping(String) -> Void ) {
+    func callSDS(rtype : String, completion:@escaping(String) -> Void ) {
+
         
-        csiWCF_getHTML(clientid: csiclientinfo.clientid, uid: csiclientinfo.infosafeid, sdsNoGet: csicurrentSDS.sdsNo) { (output) in
+        csiWCF_getHTML(clientid: csiclientinfo.clientid, uid: csiclientinfo.infosafeid, sdsNoGet: csicurrentSDS.sdsNo, apptp: "1", rtype: rtype) { (output) in
             
+            if rtype == "1" {
+                completion(output)
+            }
+            else if rtype == "2" {
             let strForWeb = """
-            <html>
-            <head>
-            <meta name="viewport" content="width = device - width, initial-scale = 1">
-            <style>
-            body { font-size: 30%; }
-            </style>
-            </head>
-            <body>
-            \(output)
-            </body>
-            </html>
-            """
-            completion(strForWeb)
+                <html>
+                <head>
+                <meta name="viewport" content="width = device - width, initial-scale = 1">
+                <style>
+                body { font-size: 30%; }
+                </style>
+                </head>
+                <body>
+                \(output)
+                </body>
+                </html>
+                """
+                completion(strForWeb)
+            }
         }
     }
     

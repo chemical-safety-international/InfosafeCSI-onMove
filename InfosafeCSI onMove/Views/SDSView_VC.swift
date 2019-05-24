@@ -24,10 +24,20 @@ class SDSView_VC: UIViewController {
     
     func sdsShow() {
         self.showSpinner(onView: self.view)
-        csiWCF_VM().callSDS() { (completionReturnData) in
+        let rtype : String = "1"
+        csiWCF_VM().callSDS(rtype : rtype) { (completionReturnData) in
             DispatchQueue.main.async {
                 self.removeSpinner()
-                self.sdsDisplay!.loadHTMLString(completionReturnData, baseURL: nil)
+                
+                if rtype == "1" {
+                    print(completionReturnData)
+                    if let decodeData = Data(base64Encoded: completionReturnData, options: .ignoreUnknownCharacters) {
+                        self.sdsDisplay!.load(decodeData, mimeType: "application/pdf", characterEncodingName: "utf-8", baseURL: URL(fileURLWithPath: ""))
+                    } // since you don't have url, only encoded String
+                }
+                else if rtype == "2" {
+                    self.sdsDisplay!.loadHTMLString(String(describing: completionReturnData), baseURL: nil)
+                }
             }
             
         }
