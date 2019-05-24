@@ -58,7 +58,7 @@ class csiWCF_VM: UIViewController {
     func callCriteriaList(completion:@escaping(String) -> Void) {
         
         //call the search criteria list function in the WCF
-        csiWCF_GetSearchCriteriaList(clientid: csiclientinfo.clientid, infosafeid: csiclientinfo.infosafeid) { (returnCompletionData) in
+        csiWCF_GetSearchCriteriaList(clientid: localclientinfo.clientid, infosafeid: localclientinfo.infosafeid) { (returnCompletionData) in
             if returnCompletionData.contains("true") {
                 completion("true")
             } else if returnCompletionData.contains("false") {
@@ -74,7 +74,7 @@ class csiWCF_VM: UIViewController {
     func callSDS(rtype : String, completion:@escaping(String) -> Void ) {
 
         
-        csiWCF_getHTML(clientid: csiclientinfo.clientid, uid: csiclientinfo.infosafeid, sdsNoGet: csicurrentSDS.sdsNo, apptp: "1", rtype: rtype) { (output) in
+        csiWCF_getHTML(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: rtype) { (output) in
             
             if rtype == "1" {
                 completion(output)

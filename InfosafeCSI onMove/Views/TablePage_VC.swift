@@ -59,7 +59,7 @@ class TablePage_VC: UIViewController {
         let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
     
         //csicurrentSDS.sdsNo = csiclientsearchinfo.arrNo[rowNo]
-        csicurrentSDS.sdsNo = csiclientsearchinfo.arrNo[buttonRow]
+        localcurrentSDS.sdsNo = localsearchinfo.arrNo[buttonRow]
         
         self.navigationController?.pushViewController(sdsJump!, animated: true)
     }
@@ -75,16 +75,16 @@ class TablePage_VC: UIViewController {
 extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     // non-expandable
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return csiclientsearchinfo.arrCompanyName.count
+        return localsearchinfo.arrCompanyName.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
         //csiclientsearchinfo.details = ("Issue date: \(csiclientsearchinfo.arrIssueDate[indexPath.row]) \n SDS No.: \(csiclientsearchinfo.arrNo[indexPath.row])")
-        csiclientsearchinfo.details = ("SDS No.: \(csiclientsearchinfo.arrNo[indexPath.row])")
+        localsearchinfo.details = ("SDS No.: \(localsearchinfo.arrNo[indexPath.row])")
         
-        cell?.name.text = csiclientsearchinfo.arrCompanyName[indexPath.row]
-        cell?.details.text = csiclientsearchinfo.details
+        cell?.name.text = localsearchinfo.arrCompanyName[indexPath.row]
+        cell?.details.text = localsearchinfo.details
         
         //set row number of button that inside cell when tap
         cell?.sdsBtn.tag = indexPath.row
@@ -100,7 +100,7 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         
         rowNo = indexPath.row
         
-        csicurrentSDS.sdsNo = csiclientsearchinfo.arrNo[rowNo]
+        localcurrentSDS.sdsNo = localsearchinfo.arrNo[rowNo]
         let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
         self.navigationController?.pushViewController(sdsJump!, animated: true)
     }
@@ -115,9 +115,9 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     // swipe to delete the row function
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            csiclientsearchinfo.arrCompanyName.remove(at: indexPath.row)
-            csiclientsearchinfo.arrIssueDate.remove(at: indexPath.row)
-            csiclientsearchinfo.arrNo.remove(at: indexPath.row)
+            localsearchinfo.arrCompanyName.remove(at: indexPath.row)
+            localsearchinfo.arrIssueDate.remove(at: indexPath.row)
+            localsearchinfo.arrNo.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view

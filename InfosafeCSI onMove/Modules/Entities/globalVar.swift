@@ -8,42 +8,7 @@
 
 import Foundation
 
-
-
-struct csiclientinfo {
-    static var clientid: String!
-    static var clientcode: String!
-    static var clientmemberid: String!
-    static var infosafeid: String!
-    static var clientfirstname: String!
-    static var clientsurname: String!
-    static var clientloginstatus: String!
-    static var apptype: Int!
-}
-
-struct csiclientsearchinfo {
-    static var arrProductName: [String]!
-    static var arrCompanyName: [String]!
-    static var arrIssueDate: [Any]!
-    static var arrDetail: [String]!
-    static var arrNo: [String]!
-    static var details: String!
-}
-
-struct csicriteriainfo {
-    static var arrCode: [String] = []
-    static var arrName: [String] = []
-    static var code: String!
-    
-}
-
-struct csicurrentSDS {
-    static var sdsNo: String!
-    static var sdsRowNo: Int!
-}
-
-
-struct LoginData: Codable {
+struct outLoginData: Codable {
     var apptype: Int!
     var clientcode: String!
     var clientid: String!
@@ -55,38 +20,18 @@ struct LoginData: Codable {
     var surname: String!
 }
 
-struct SearchData: Codable {
-    
-    struct column: Codable{
-        let checkbox: Int
-        let display: Int
-        let key: String
-        let locked: String
-        let name: String
-        let order: String
-        let tip: String
-        let width: Int
-    }
-    struct data: Codable {
-        
-    }
-    var result: Bool!
-    var size: Int!
-    var no: Int!
-    var pagecount: Int!
-    var count: Int!
-    var list: Int!
-    var pcount: Int!
-    var lcount: Int!
-    var ocount: Int!
-    var acount: Int!
-    var order: String!
-    var desc: String!
-    var showachive: String!
-    
+struct localclientinfo {
+    static var clientid: String!
+    static var clientcode: String!
+    static var clientmemberid: String!
+    static var infosafeid: String!
+    static var clientfirstname: String!
+    static var clientsurname: String!
+    static var clientloginstatus: String!
+    static var apptype: Int!
 }
 
-struct CriteriaData: Codable {
+struct outCriteriaData: Codable {
     struct items : Codable {
         let code: String
         let name: String
@@ -94,7 +39,27 @@ struct CriteriaData: Codable {
     let items: [items]!
 }
 
-struct ViewSDSData: Codable {
+struct localcriteriainfo {
+    static var arrCode: [String] = []
+    static var arrName: [String] = []
+    static var code: String!
+}
+
+struct localsearchinfo {
+    static var arrProductName: [String]!
+    static var arrCompanyName: [String]!
+    static var arrIssueDate: [Any]!
+    static var arrDetail: [String]!
+    static var arrNo: [String]!
+    static var details: String!
+}
+
+struct localcurrentSDS {
+    static var sdsNo: String!
+    static var sdsRowNo: Int!
+}
+
+struct outViewSDSData: Codable {
     var result: Bool!
     var CanPDF: Bool!
     var CanExcel: Bool!

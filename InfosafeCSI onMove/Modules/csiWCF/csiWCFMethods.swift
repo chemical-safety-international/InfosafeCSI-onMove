@@ -45,13 +45,13 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
         do {
             //here dataResponse received from a network request
             let decoder = JSONDecoder()
-            let model = try decoder.decode(LoginData.self, from:
+            let model = try decoder.decode(outLoginData.self, from:
                 dataResponse) //Decode JSON Response Data
-            csiclientinfo.clientid = model.clientid
-            csiclientinfo.clientmemberid = model.clientmemberid
-            csiclientinfo.infosafeid = model.infosafeid
-            csiclientinfo.clientcode = model.clientcode
-            csiclientinfo.apptype = model.apptype
+            localclientinfo.clientid = model.clientid
+            localclientinfo.clientmemberid = model.clientmemberid
+            localclientinfo.infosafeid = model.infosafeid
+            localclientinfo.clientcode = model.clientcode
+            localclientinfo.apptype = model.apptype
             
             if model.passed == true {
                 completion("true")
@@ -102,6 +102,8 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
             
 
             if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
+                
+                print(jsonArr1)
 
                 jsonArr1.forEach { info in
                     if let com = info["com"] as? [String: Any] {
@@ -109,7 +111,7 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
 
                             if companyName.key == "value"
                             {
-                                csiclientsearchinfo.arrCompanyName.append(companyName.value as! String)
+                                localsearchinfo.arrCompanyName.append(companyName.value as! String)
                             }
                         }
                     }
@@ -127,7 +129,7 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
                         no.forEach { nocode in
                                 if nocode.key == "value"
                                 {
-                                    csiclientsearchinfo.arrNo.append(nocode.value as! String)
+                                    localsearchinfo.arrNo.append(nocode.value as! String)
                                 }
                             }
 
@@ -149,7 +151,7 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
 //                    }
                     
                 }
-                if csiclientsearchinfo.arrCompanyName != [] {
+                if localsearchinfo.arrCompanyName != [] {
                     completion("true")
                 } else {
                     completion("false")
@@ -201,18 +203,18 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, completion
             do {
                 //here dataResponse received from a network request
                 let decoder = JSONDecoder()
-                let model = try decoder.decode(CriteriaData.self, from:
+                let model = try decoder.decode(outCriteriaData.self, from:
                     dataResponse) //Decode JSON Response Data
                 
 
                 //Store and seprate the return data
                 for noCount in model.items {
                     
-                    csicriteriainfo.arrCode.append(noCount.code)
-                    csicriteriainfo.arrName.append(noCount.name)
+                    localcriteriainfo.arrCode.append(noCount.code)
+                    localcriteriainfo.arrName.append(noCount.name)
                 }
-                csicriteriainfo.code = model.items[0].code
-                if csicriteriainfo.arrName != [] {
+                localcriteriainfo.code = model.items[0].code
+                if localcriteriainfo.arrName != [] {
                     completion("true")
                 } else {
                     completion("false")
@@ -250,7 +252,7 @@ func csiWCF_getHTML(clientid: String, uid: String, sdsNoGet: String, apptp : Str
         
         do {
             let decoder = JSONDecoder()
-            let model = try decoder.decode(ViewSDSData.self, from: dataResponse)
+            let model = try decoder.decode(outViewSDSData.self, from: dataResponse)
             
             completion(model.html)
 

@@ -59,16 +59,16 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate {
         
         //create empty arrays
         let searchInPut = searchBar.text!
-        csiclientsearchinfo.arrCompanyName = []
-        csiclientsearchinfo.arrDetail = []
-        csiclientsearchinfo.arrNo = []
+        localsearchinfo.arrCompanyName = []
+        localsearchinfo.arrDetail = []
+        localsearchinfo.arrNo = []
         
-        let client = csiclientinfo.clientid
-        let uid = csiclientinfo.infosafeid
-        let  c = csicriteriainfo.code
+        let client = localclientinfo.clientid
+        let uid = localclientinfo.infosafeid
+        let  c = localcriteriainfo.code
         let p = 1
         let psize = 50
-        let apptp = csiclientinfo.apptype
+        let apptp = localclientinfo.apptype
         
         
         //call search function
@@ -102,16 +102,16 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate {
         searchBar.resignFirstResponder()
         //create empty arrays
         let searchInPut = searchBar.text!
-        csiclientsearchinfo.arrCompanyName = []
-        csiclientsearchinfo.arrDetail = []
-        csiclientsearchinfo.arrNo = []
+        localsearchinfo.arrCompanyName = []
+        localsearchinfo.arrDetail = []
+        localsearchinfo.arrNo = []
         
-        let client = csiclientinfo.clientid
-        let uid = csiclientinfo.infosafeid
-        let  c = csicriteriainfo.code
+        let client = localclientinfo.clientid
+        let uid = localclientinfo.infosafeid
+        let c = localcriteriainfo.code
         let p = 1
         let psize = 50
-        let apptp = csiclientinfo.apptype
+        let apptp = localclientinfo.apptype
         
         
         //call search function
@@ -169,7 +169,7 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate {
         csiWCF_VM().callCriteriaList() { (completionReturnData) in
             DispatchQueue.main.async {
                 if completionReturnData.contains("true") {
-                    self.criteriaListBtn.setTitle("\(csicriteriainfo.arrName[0])", for: .normal)
+                    self.criteriaListBtn.setTitle("\(localcriteriainfo.arrName[0])", for: .normal)
                 } else if completionReturnData.contains("false") {
                     let ac = UIAlertController(title: "Failed", message: "Cannot get the criteria list!", preferredStyle: .alert)
                     ac.addAction(UIAlertAction(title: "OK", style:  .default))
@@ -188,24 +188,20 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate {
 
 extension SearchPage_VC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return csicriteriainfo.arrCode.count
+        return localcriteriainfo.arrCode.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "criteriacell", for: indexPath)
-        cell.textLabel?.text = csicriteriainfo.arrName[indexPath.row]
+        cell.textLabel?.text = localcriteriainfo.arrName[indexPath.row]
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        criteriaListBtn.setTitle("\(csicriteriainfo.arrName[indexPath.row])", for: .normal)
-        csicriteriainfo.code = csicriteriainfo.arrCode[indexPath.row]
-        print(csicriteriainfo.arrName[indexPath.row])
-        print(csicriteriainfo.arrCode[indexPath.row])
+        criteriaListBtn.setTitle("\(localcriteriainfo.arrName[indexPath.row])", for: .normal)
+        localcriteriainfo.code = localcriteriainfo.arrCode[indexPath.row]
+        print(localcriteriainfo.arrName[indexPath.row])
+        print(localcriteriainfo.arrCode[indexPath.row])
         animate(toogle: false)
     }
-    
-    
-    
-    
 }
