@@ -80,7 +80,7 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
-        //csiclientsearchinfo.details = ("Issue date: \(csiclientsearchinfo.arrIssueData[indexPath.row]) \n SDS No.: \(csiclientsearchinfo.arrNo[indexPath.row])")
+        //csiclientsearchinfo.details = ("Issue date: \(csiclientsearchinfo.arrIssueDate[indexPath.row]) \n SDS No.: \(csiclientsearchinfo.arrNo[indexPath.row])")
         csiclientsearchinfo.details = ("SDS No.: \(csiclientsearchinfo.arrNo[indexPath.row])")
         
         cell?.name.text = csiclientsearchinfo.arrCompanyName[indexPath.row]
@@ -116,7 +116,7 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             csiclientsearchinfo.arrCompanyName.remove(at: indexPath.row)
-            csiclientsearchinfo.arrIssueData.remove(at: indexPath.row)
+            csiclientsearchinfo.arrIssueDate.remove(at: indexPath.row)
             csiclientsearchinfo.arrNo.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {

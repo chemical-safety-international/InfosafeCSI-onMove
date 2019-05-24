@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchPage_VC: UIViewController {
+class SearchPage_VC: UIViewController, UISearchBarDelegate {
 
     //IBOutlet
     @IBOutlet weak var searchTextField: UITextField!
@@ -16,6 +16,7 @@ class SearchPage_VC: UIViewController {
     @IBOutlet weak var criteriaListTable: UITableView!
     @IBOutlet weak var criteriaListBtn: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     
     override func viewDidLoad() {
@@ -27,8 +28,21 @@ class SearchPage_VC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
         self.criteriaListTable.delegate = self
         self.criteriaListTable.dataSource = self
+        self.searchBar.delegate = self
         criteriaListTable.isHidden = true
         scrollView.isHidden = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.navigationController?.navigationBar.isHidden = false
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -44,7 +58,7 @@ class SearchPage_VC: UIViewController {
     @IBAction func searchBtnTapped(_ sender: Any) {
         
         //create empty arrays
-        let searchInPut = searchTextField.text!
+        let searchInPut = searchBar.text!
         csiclientsearchinfo.arrCompanyName = []
         csiclientsearchinfo.arrDetail = []
         csiclientsearchinfo.arrNo = []
@@ -83,6 +97,51 @@ class SearchPage_VC: UIViewController {
             }
         }
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        //create empty arrays
+        let searchInPut = searchBar.text!
+        csiclientsearchinfo.arrCompanyName = []
+        csiclientsearchinfo.arrDetail = []
+        csiclientsearchinfo.arrNo = []
+        
+        let client = csiclientinfo.clientid
+        let uid = csiclientinfo.infosafeid
+        let  c = csicriteriainfo.code
+        let p = 1
+        let psize = 50
+        let apptp = csiclientinfo.apptype
+        
+        
+        //call search function
+        self.showSpinner(onView: self.view)
+        csiWCF_VM().callSearch(inputData: searchInPut, client: client!, uid: uid!, c: c!, p: p, psize:psize, apptp:apptp!) { (completionReturnData) in
+            
+            //handle true or false for search function
+            DispatchQueue.main.async {
+                if completionReturnData.contains("true") {
+                    
+                    self.removeSpinner()
+                    let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "TablePage") as? TablePage_VC
+                    self.navigationController?.pushViewController(searchJump!, animated: true)
+                    
+                } else if completionReturnData.contains("false") {
+                    self.removeSpinner()
+                    let ac = UIAlertController(title: "Search Failed", message: "Please check the network and type the correct infomation search again.", preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
+                    self.present(ac, animated: true)
+                }  else if completionReturnData.contains("Error") {
+                    self.removeSpinner()
+                    let ac = UIAlertController(title: "Failed", message: "Server is no response.", preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
+                    self.present(ac, animated: true)
+                }
+            }
+        }
+    }
+    
+    
     @IBAction func criteriaListBtnTapped(_ sender: Any) {
         if criteriaListTable.isHidden {
             animate(toogle: true)

@@ -24,6 +24,18 @@ class LoginPage_VC: UIViewController {
 
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.navigationController?.navigationBar.isHidden = false
+    }
+    
 //    func showAlertWith(title: String, message: String) {
 //        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
 //        ac.addAction(UIAlertAction(title: "OK", style:  .default))

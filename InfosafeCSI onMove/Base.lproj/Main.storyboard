@@ -87,13 +87,13 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNN-zi-Bdh">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNN-zi-Bdh">
                                 <rect key="frame" x="87" y="231" width="166" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="20"/>
                                 <state key="normal" title="Select Criteria">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
                                 <connections>
                                     <action selector="criteriaListBtnTapped:" destination="GdH-TU-FXW" eventType="touchUpInside" id="xQM-33-xqe"/>
@@ -106,7 +106,7 @@
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" indicatorStyle="black" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ko6-wb-TfI">
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="273"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="criteriacell" textLabel="ZBN-e7-rhA" style="IBUITableViewCellStyleDefault" id="2Jd-ci-ros">
                                                 <rect key="frame" x="0.0" y="28" width="280" height="44"/>
@@ -134,6 +134,11 @@
                                     </tableView>
                                 </subviews>
                             </scrollView>
+                            <searchBar contentMode="redraw" fixedFrame="YES" searchBarStyle="minimal" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IxT-yf-YDK">
+                                <rect key="frame" x="37" y="551" width="357" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="NxL-lQ-6dM"/>
@@ -143,6 +148,7 @@
                         <outlet property="criteriaListBtn" destination="yNN-zi-Bdh" id="1XU-Pb-fHV"/>
                         <outlet property="criteriaListTable" destination="ko6-wb-TfI" id="ZCb-iA-6ki"/>
                         <outlet property="scrollView" destination="mNa-mQ-WAJ" id="yOm-Dk-vPo"/>
+                        <outlet property="searchBar" destination="IxT-yf-YDK" id="PXY-E3-oWC"/>
                         <outlet property="searchBtn" destination="9Xg-Hh-5Md" id="wx5-Qw-YdR"/>
                         <outlet property="searchTextField" destination="0jS-92-Frx" id="2Eh-0g-kcS"/>
                         <segue destination="t3O-3d-EwC" kind="show" id="1jP-Uc-Mmf"/>
@@ -300,6 +306,7 @@
         <!--Navigation Controller-->
         <scene sceneID="XZE-uW-GUL">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ooW-Dm-da3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="X00-Ze-osW" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="e4d-7d-cdc">
@@ -311,7 +318,6 @@
                         <segue destination="hs3-HY-k8j" kind="relationship" relationship="rootViewController" id="si5-al-lEb"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ooW-Dm-da3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="102.89855072463769" y="137.94642857142856"/>
         </scene>

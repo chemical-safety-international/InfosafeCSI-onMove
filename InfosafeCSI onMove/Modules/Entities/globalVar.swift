@@ -24,7 +24,7 @@ struct csiclientinfo {
 struct csiclientsearchinfo {
     static var arrProductName: [String]!
     static var arrCompanyName: [String]!
-    static var arrIssueData: [String]!
+    static var arrIssueDate: [Any]!
     static var arrDetail: [String]!
     static var arrNo: [String]!
     static var details: String!

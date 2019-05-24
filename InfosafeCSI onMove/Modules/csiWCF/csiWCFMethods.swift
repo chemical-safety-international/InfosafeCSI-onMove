@@ -98,7 +98,7 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
             let jsonResponse = try JSONSerialization.jsonObject(with:
                 dataResponse, options: []) as? [String: AnyObject]
 
-            //print(jsonResponse!)
+            print(jsonResponse!)
             
 
             if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
@@ -137,7 +137,13 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
 //                        issue.forEach { issueDate in
 //                                if issueDate.key == "value"
 //                                {
-//                                    csiclientsearchinfo.arrIssueData.append(issueDate.value as! String)
+//                                    if issueDate.value as? String != "" {
+//                                        print(issueDate.value)
+//                                        csiclientsearchinfo.arrIssueDate.append(issueDate.value as! String)
+//                                    } else if issueDate.value as? String == "" {
+//                                        csiclientsearchinfo.arrIssueDate.append(" ")
+//                                    }
+//
 //                                }
 //                            }
 //                    }
