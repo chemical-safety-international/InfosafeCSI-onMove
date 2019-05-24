@@ -68,27 +68,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Xg-Hh-5Md">
-                                <rect key="frame" x="88" y="327" width="239" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="0.62440943149999995" blue="0.2609370406" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Search">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="searchBtnTapped:" destination="GdH-TU-FXW" eventType="touchUpInside" id="wa8-1G-a1s"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0jS-92-Frx">
-                                <rect key="frame" x="89" y="269" width="239" height="30"/>
+                            <searchBar contentMode="redraw" fixedFrame="YES" searchBarStyle="minimal" placeholder="Enter search" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IxT-yf-YDK">
+                                <rect key="frame" x="37" y="324" width="357" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            </searchBar>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNN-zi-Bdh">
-                                <rect key="frame" x="87" y="231" width="166" height="30"/>
+                                <rect key="frame" x="45" y="294" width="166" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="20"/>
@@ -100,7 +86,7 @@
                                 </connections>
                             </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mNa-mQ-WAJ">
-                                <rect key="frame" x="87" y="255" width="280" height="273"/>
+                                <rect key="frame" x="45" y="324" width="280" height="273"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" indicatorStyle="black" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ko6-wb-TfI">
@@ -134,11 +120,6 @@
                                     </tableView>
                                 </subviews>
                             </scrollView>
-                            <searchBar contentMode="redraw" fixedFrame="YES" searchBarStyle="minimal" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IxT-yf-YDK">
-                                <rect key="frame" x="37" y="551" width="357" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="NxL-lQ-6dM"/>
@@ -149,8 +130,6 @@
                         <outlet property="criteriaListTable" destination="ko6-wb-TfI" id="ZCb-iA-6ki"/>
                         <outlet property="scrollView" destination="mNa-mQ-WAJ" id="yOm-Dk-vPo"/>
                         <outlet property="searchBar" destination="IxT-yf-YDK" id="PXY-E3-oWC"/>
-                        <outlet property="searchBtn" destination="9Xg-Hh-5Md" id="wx5-Qw-YdR"/>
-                        <outlet property="searchTextField" destination="0jS-92-Frx" id="2Eh-0g-kcS"/>
                         <segue destination="t3O-3d-EwC" kind="show" id="1jP-Uc-Mmf"/>
                     </connections>
                 </viewController>
@@ -306,7 +285,6 @@
         <!--Navigation Controller-->
         <scene sceneID="XZE-uW-GUL">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ooW-Dm-da3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="X00-Ze-osW" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="e4d-7d-cdc">
@@ -318,6 +296,7 @@
                         <segue destination="hs3-HY-k8j" kind="relationship" relationship="rootViewController" id="si5-al-lEb"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ooW-Dm-da3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="102.89855072463769" y="137.94642857142856"/>
         </scene>

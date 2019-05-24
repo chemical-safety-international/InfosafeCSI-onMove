@@ -11,8 +11,6 @@ import UIKit
 class SearchPage_VC: UIViewController, UISearchBarDelegate {
 
     //IBOutlet
-    @IBOutlet weak var searchTextField: UITextField!
-    @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var criteriaListTable: UITableView!
     @IBOutlet weak var criteriaListBtn: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -54,52 +52,28 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate {
             self.criteriaListTable.reloadData()
         }
     }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
 
-    @IBAction func searchBtnTapped(_ sender: Any) {
-        
-        //create empty arrays
-        let searchInPut = searchBar.text!
-        localsearchinfo.arrCompanyName = []
-        localsearchinfo.arrDetail = []
-        localsearchinfo.arrNo = []
-        
-        let client = localclientinfo.clientid
-        let uid = localclientinfo.infosafeid
-        let  c = localcriteriainfo.code
-        let p = 1
-        let psize = 50
-        let apptp = localclientinfo.apptype
-        
-        
-        //call search function
-        self.showSpinner(onView: self.view)
-        csiWCF_VM().callSearch(inputData: searchInPut, client: client!, uid: uid!, c: c!, p: p, psize:psize, apptp:apptp!) { (completionReturnData) in
-            
-            //handle true or false for search function
-            DispatchQueue.main.async {
-                if completionReturnData.contains("true") {
-                    
-                    self.removeSpinner()
-                    let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "TablePage") as? TablePage_VC
-                    self.navigationController?.pushViewController(searchJump!, animated: true)
-                    
-                } else if completionReturnData.contains("false") {
-                    self.removeSpinner()
-                    let ac = UIAlertController(title: "Search Failed", message: "Please check the network and type the correct infomation search again.", preferredStyle: .alert)
-                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
-                    self.present(ac, animated: true)
-                }  else if completionReturnData.contains("Error") {
-                    self.removeSpinner()
-                    let ac = UIAlertController(title: "Failed", message: "Server is no response.", preferredStyle: .alert)
-                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
-                    self.present(ac, animated: true)
-                }
-            }
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+        guard let firstSub = searchBar.subviews.first else {return}
+        firstSub.subviews.forEach{
+            ($0 as? UITextField)?.clearButtonMode = .never
         }
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.text = ""
+        searchBar.endEditing(true)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+        
         //create empty arrays
         let searchInPut = searchBar.text!
         localsearchinfo.arrCompanyName = []

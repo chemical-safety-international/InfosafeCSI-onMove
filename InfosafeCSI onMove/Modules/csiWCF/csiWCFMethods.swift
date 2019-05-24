@@ -98,12 +98,12 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
             let jsonResponse = try JSONSerialization.jsonObject(with:
                 dataResponse, options: []) as? [String: AnyObject]
 
-            print(jsonResponse!)
+            //print(jsonResponse!)
             
 
             if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
                 
-                print(jsonArr1)
+                //print(jsonArr1)
 
                 jsonArr1.forEach { info in
                     if let com = info["com"] as? [String: Any] {
