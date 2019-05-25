@@ -72,7 +72,7 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
  
     //create json data
     let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":c, "v":inputData, "p":p, "psize":psize]
-    
+    print(json)
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
     //setup url

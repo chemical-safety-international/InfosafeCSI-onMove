@@ -8,27 +8,23 @@
 
 import UIKit
 
-class SearchPage_VC: UIViewController, UISearchBarDelegate {
+class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate{
+
+    
 
     //IBOutlet
-    @IBOutlet weak var criteriaListTable: UITableView!
-    @IBOutlet weak var criteriaListBtn: UIButton!
-    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var cPickView: UITextField!
+    @IBOutlet weak var thePicker: UIPickerView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
         self.callCriteriaList()
         // Do any additional setup after loading the view.
-        NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
-        self.criteriaListTable.delegate = self
-        self.criteriaListTable.dataSource = self
         self.searchBar.delegate = self
-        criteriaListTable.isHidden = true
-        scrollView.isHidden = true
+        thePicker.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,11 +43,6 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate {
         self.view.endEditing(true)
     }
     
-    @objc func loadList(notification: NSNotification) {
-        DispatchQueue.main.async {
-            self.criteriaListTable.reloadData()
-        }
-    }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
@@ -116,34 +107,14 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate {
     }
     
     
-    @IBAction func criteriaListBtnTapped(_ sender: Any) {
-        if criteriaListTable.isHidden {
-            animate(toogle: true)
-        } else {
-            animate(toogle: false)
-        }
 
-    }
     
-    func animate(toogle: Bool) {
-        if toogle {
-            UIView.animate(withDuration: 0.3) {
-                self.criteriaListTable.isHidden = false
-                self.scrollView.isHidden = false
-            }
-        } else {
-            UIView.animate(withDuration: 0.3) {
-                self.criteriaListTable.isHidden = true
-                self.scrollView.isHidden = true
-            }
-        }
-    }
     
     func callCriteriaList() {
         csiWCF_VM().callCriteriaList() { (completionReturnData) in
             DispatchQueue.main.async {
                 if completionReturnData.contains("true") {
-                    self.criteriaListBtn.setTitle("\(localcriteriainfo.arrName[0])", for: .normal)
+                    self.cPickView.text = localcriteriainfo.arrName[0]
                 } else if completionReturnData.contains("false") {
                     let ac = UIAlertController(title: "Failed", message: "Cannot get the criteria list!", preferredStyle: .alert)
                     ac.addAction(UIAlertAction(title: "OK", style:  .default))
@@ -157,25 +128,32 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate {
         }
     }
     
-}
-
-
-extension SearchPage_VC: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return localcriteriainfo.arrCode.count
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "criteriacell", for: indexPath)
-        cell.textLabel?.text = localcriteriainfo.arrName[indexPath.row]
-        return cell
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return localcriteriainfo.arrName.count
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        criteriaListBtn.setTitle("\(localcriteriainfo.arrName[indexPath.row])", for: .normal)
-        localcriteriainfo.code = localcriteriainfo.arrCode[indexPath.row]
-        print(localcriteriainfo.arrName[indexPath.row])
-        print(localcriteriainfo.arrCode[indexPath.row])
-        animate(toogle: false)
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.cPickView.text = localcriteriainfo.arrName[row]
+        localcriteriainfo.code = localcriteriainfo.arrCode[row]
+        self.thePicker.isHidden = true
+        
     }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        self.view.endEditing(true)
+        return localcriteriainfo.arrName[row]
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == self.cPickView {
+            self.thePicker.isHidden = false
+            textField.endEditing(true)
+        }
+    }
+    
 }
+

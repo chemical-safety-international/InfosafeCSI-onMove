@@ -68,68 +68,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uKa-kl-URf">
+                                <rect key="frame" x="45" y="294" width="172" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="GdH-TU-FXW" id="SSJ-4w-epD"/>
+                                </connections>
+                            </textField>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fcd-GA-PC7">
+                                <rect key="frame" x="45" y="294" width="280" height="162"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="GdH-TU-FXW" id="MKH-hN-lQO"/>
+                                    <outlet property="delegate" destination="GdH-TU-FXW" id="1H1-Ug-cd8"/>
+                                </connections>
+                            </pickerView>
                             <searchBar contentMode="redraw" fixedFrame="YES" searchBarStyle="minimal" placeholder="Enter search" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IxT-yf-YDK">
                                 <rect key="frame" x="37" y="324" width="357" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNN-zi-Bdh">
-                                <rect key="frame" x="45" y="294" width="166" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="20"/>
-                                <state key="normal" title="Select Criteria">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="criteriaListBtnTapped:" destination="GdH-TU-FXW" eventType="touchUpInside" id="xQM-33-xqe"/>
-                                </connections>
-                            </button>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mNa-mQ-WAJ">
-                                <rect key="frame" x="45" y="324" width="280" height="273"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" indicatorStyle="black" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ko6-wb-TfI">
-                                        <rect key="frame" x="0.0" y="0.0" width="280" height="273"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                        <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="criteriacell" textLabel="ZBN-e7-rhA" style="IBUITableViewCellStyleDefault" id="2Jd-ci-ros">
-                                                <rect key="frame" x="0.0" y="28" width="280" height="44"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2Jd-ci-ros" id="cFP-9L-2nx">
-                                                    <rect key="frame" x="0.0" y="0.0" width="280" height="43.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <subviews>
-                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZBN-e7-rhA">
-                                                            <rect key="frame" x="16" y="0.0" width="248" height="43.5"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                </tableViewCellContentView>
-                                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
-                                            </tableViewCell>
-                                        </prototypes>
-                                        <connections>
-                                            <outlet property="dataSource" destination="GdH-TU-FXW" id="fp4-UL-aJj"/>
-                                            <outlet property="delegate" destination="GdH-TU-FXW" id="GXe-NI-aYI"/>
-                                        </connections>
-                                    </tableView>
-                                </subviews>
-                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="NxL-lQ-6dM"/>
                     </view>
                     <navigationItem key="navigationItem" id="Mwt-0q-7bI"/>
                     <connections>
-                        <outlet property="criteriaListBtn" destination="yNN-zi-Bdh" id="1XU-Pb-fHV"/>
-                        <outlet property="criteriaListTable" destination="ko6-wb-TfI" id="ZCb-iA-6ki"/>
-                        <outlet property="scrollView" destination="mNa-mQ-WAJ" id="yOm-Dk-vPo"/>
+                        <outlet property="cPickView" destination="uKa-kl-URf" id="jyq-Cq-WFk"/>
                         <outlet property="searchBar" destination="IxT-yf-YDK" id="PXY-E3-oWC"/>
+                        <outlet property="thePicker" destination="fcd-GA-PC7" id="C0X-gb-X2v"/>
                         <segue destination="t3O-3d-EwC" kind="show" id="1jP-Uc-Mmf"/>
                     </connections>
                 </viewController>
