@@ -31,13 +31,18 @@ class SDSView_VC: UIViewController {
                 
                 if rtype == "1" {
                     print(completionReturnData)
-
-                    if let decodeData = Data(base64Encoded: completionReturnData, options: .ignoreUnknownCharacters) {
-                        self.sdsDisplay!.load(decodeData, mimeType: "application/pdf", characterEncodingName: "", baseURL: URL(fileURLWithPath: ""))
-                    }// since you don't have url, only encoded String
-                    else {
-                        print("not cinvert")
-                    }
+                    
+                    let b = completionReturnData.toBase64()
+                    let a = Data(base64Encoded: b, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+                    //let decodeData = Data(completionReturnData.utf8)
+                    
+                    self.sdsDisplay!.load(a!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
+//                    if let decodeData = Data(base64Encoded: b, options: .ignoreUnknownCharacters) {
+//                        self.sdsDisplay!.load(decodeData, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
+//                    }// since you don't have url, only encoded String
+//                    else {
+//                        print("not cinvert")
+//                    }
 
                 }
                 else if rtype == "2" {
@@ -49,5 +54,17 @@ class SDSView_VC: UIViewController {
     }
 }
 
-
-
+extension String {
+    
+    func fromBase64() -> String? {
+        guard let data = Data(base64Encoded: self) else {
+            return nil
+        }
+        
+        return String(data: data, encoding: .utf8)
+    }
+    
+    func toBase64() -> String {
+        return Data(self.utf8).base64EncodedString()
+    }
+}
