@@ -12,6 +12,13 @@ class TablePage_VC: UIViewController {
 
     @IBOutlet weak var tableDisplay: UITableView!
     
+    
+    @IBOutlet weak var pickerTextField: UITextField!
+    @IBOutlet weak var thePicker: UIPickerView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    
+    
     var selectedIndex:Bool = false;
     var select = -1
     var rowNo = 0
