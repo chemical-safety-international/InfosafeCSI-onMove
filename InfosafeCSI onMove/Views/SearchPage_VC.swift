@@ -71,6 +71,8 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
         localsearchinfo.arrDetail = []
         localsearchinfo.arrNo = []
         
+        localcriteriainfo.searchValue = searchInPut
+        
         let client = localclientinfo.clientid
         let uid = localclientinfo.infosafeid
         let c = localcriteriainfo.code
@@ -139,6 +141,7 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.cPickView.text = localcriteriainfo.arrName[row]
         localcriteriainfo.code = localcriteriainfo.arrCode[row]
+        localcriteriainfo.pickerValue = localcriteriainfo.arrName[row]
         self.thePicker.isHidden = true
         
     }

@@ -8,7 +8,8 @@
 
 import UIKit
 
-class TablePage_VC: UIViewController {
+class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+    
 
     @IBOutlet weak var tableDisplay: UITableView!
     
@@ -33,6 +34,22 @@ class TablePage_VC: UIViewController {
         self.tableDisplay.dataSource = self
         tableDisplay.rowHeight = UITableView.automaticDimension
 //        tableDisplay.estimatedRowHeight = 100
+        thePicker.isHidden = true
+        
+        pickerTextField.text = localcriteriainfo.pickerValue
+        searchBar.text = localcriteriainfo.searchValue
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.navigationController?.navigationBar.isHidden = false
     }
     
 
@@ -69,6 +86,91 @@ class TablePage_VC: UIViewController {
         localcurrentSDS.sdsNo = localsearchinfo.arrNo[buttonRow]
         
         self.navigationController?.pushViewController(sdsJump!, animated: true)
+    }
+    
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+        guard let firstSub = searchBar.subviews.first else {return}
+        firstSub.subviews.forEach{
+            ($0 as? UITextField)?.clearButtonMode = .never
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.text = ""
+        searchBar.endEditing(true)
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return localcriteriainfo.arrName.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.pickerTextField.text = localcriteriainfo.arrName[row]
+        localcriteriainfo.code = localcriteriainfo.arrCode[row]
+        self.thePicker.isHidden = true
+        
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        self.view.endEditing(true)
+        return localcriteriainfo.arrName[row]
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == self.pickerTextField {
+            self.thePicker.isHidden = false
+            textField.endEditing(true)
+        }
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        
+        //create empty arrays
+        let searchInPut = searchBar.text!
+        
+        let client = localclientinfo.clientid
+        let uid = localclientinfo.infosafeid
+        let c = localcriteriainfo.code
+        let p = 1
+        let psize = 50
+        let apptp = localclientinfo.apptype
+        
+        
+        //call search function
+        self.showSpinner(onView: self.view)
+        csiWCF_VM().callSearch(inputData: searchInPut, client: client!, uid: uid!, c: c!, p: p, psize:psize, apptp:apptp!) { (completionReturnData) in
+            
+            //handle true or false for search function
+            DispatchQueue.main.async {
+                if completionReturnData.contains("true") {
+                    self.removeSpinner()
+                    self.tableDisplay.reloadData()
+                    
+                } else if completionReturnData.contains("false") {
+                    self.removeSpinner()
+                    let ac = UIAlertController(title: "Search Failed", message: "Please check the network and type the correct infomation search again.", preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
+                    self.present(ac, animated: true)
+                }  else if completionReturnData.contains("Error") {
+                    self.removeSpinner()
+                    let ac = UIAlertController(title: "Failed", message: "Server is no response.", preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
+                    self.present(ac, animated: true)
+                }
+            }
+        }
     }
     
 }

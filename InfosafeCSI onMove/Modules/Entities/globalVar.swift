@@ -43,6 +43,8 @@ struct localcriteriainfo {
     static var arrCode: [String] = []
     static var arrName: [String] = []
     static var code: String!
+    static var pickerValue: String!
+    static var searchValue: String!
 }
 
 struct localsearchinfo {
