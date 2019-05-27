@@ -229,7 +229,7 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, completion
     
 }
 
-func csiWCF_getHTML(clientid: String, uid: String, sdsNoGet: String, apptp : String, rtype: String, completion:@escaping(String) -> Void) -> (Void) {
+func csiWCF_getSDS(clientid: String, uid: String, sdsNoGet: String, apptp : String, rtype: String, completion:@escaping(outViewSDSData) -> Void) -> (Void) {
     
     let json: [String: Any] = ["client":clientid, "apptp": apptp, "uid":uid, "sds": sdsNoGet, "rtype" : rtype, "regetFormat":"1", "f":"", "subf":""]
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
@@ -252,7 +252,7 @@ func csiWCF_getHTML(clientid: String, uid: String, sdsNoGet: String, apptp : Str
             let decoder = JSONDecoder()
             let model = try decoder.decode(outViewSDSData.self, from: dataResponse)
             
-            completion(model.html)
+            completion(model)
 
         } catch let parsingError {
             print("Error", parsingError)
@@ -261,7 +261,6 @@ func csiWCF_getHTML(clientid: String, uid: String, sdsNoGet: String, apptp : Str
         
     }
     task.resume()
-    
 }
 
 

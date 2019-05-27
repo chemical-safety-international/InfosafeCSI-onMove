@@ -73,27 +73,29 @@ class csiWCF_VM: UIViewController {
     
     func callSDS(rtype : String, completion:@escaping(String) -> Void ) {
 
-        
-        csiWCF_getHTML(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: rtype) { (output) in
-            
-            if rtype == "1" {
-                completion(output)
+        if rtype == "1" {
+            csiWCF_getSDS(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: rtype) { (output) in
+
+                completion(output.Base64String)
             }
-            else if rtype == "2" {
-            let strForWeb = """
-                <html>
-                <head>
-                <meta name="viewport" content="width = device - width, initial-scale = 1">
-                <style>
-                body { font-size: 30%; }
-                </style>
-                </head>
-                <body>
-                \(output)
-                </body>
-                </html>
-                """
-                completion(strForWeb)
+        }
+        else if rtype == "2" {
+            csiWCF_getSDS(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: rtype) { (output) in
+                
+                let strForWeb = """
+                    <html>
+                    <head>
+                    <meta name="viewport" content="width = device - width, initial-scale = 1">
+                    <style>
+                    body { font-size: 30%; }
+                    </style>
+                    </head>
+                    <body>
+                    \(output.html)
+                    </body>
+                    </html>
+                    """
+                    completion(strForWeb)
             }
         }
     }

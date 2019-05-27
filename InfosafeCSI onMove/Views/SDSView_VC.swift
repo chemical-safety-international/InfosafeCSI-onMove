@@ -30,20 +30,9 @@ class SDSView_VC: UIViewController {
                 self.removeSpinner()
                 
                 if rtype == "1" {
-                    print(completionReturnData)
-                    
-                    let b = completionReturnData.toBase64()
-                    let a = Data(base64Encoded: b, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
-                    //let decodeData = Data(completionReturnData.utf8)
-                    
-                    self.sdsDisplay!.load(a!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
-//                    if let decodeData = Data(base64Encoded: b, options: .ignoreUnknownCharacters) {
-//                        self.sdsDisplay!.load(decodeData, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
-//                    }// since you don't have url, only encoded String
-//                    else {
-//                        print("not cinvert")
-//                    }
-
+                    //PDF return string must be base64string
+                    let decodeData = Data(base64Encoded: completionReturnData, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+                    self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
                 }
                 else if rtype == "2" {
                     self.sdsDisplay!.loadHTMLString(String(describing: completionReturnData), baseURL: nil)
