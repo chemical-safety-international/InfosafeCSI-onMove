@@ -91,15 +91,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <pickerView contentMode="bottom" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fcd-GA-PC7">
-                                <rect key="frame" x="45" y="324" width="342" height="162"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="GdH-TU-FXW" id="MKH-hN-lQO"/>
-                                    <outlet property="delegate" destination="GdH-TU-FXW" id="1H1-Ug-cd8"/>
-                                </connections>
-                            </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0CG-hq-yUg">
                                 <rect key="frame" x="44" y="88" width="49" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -108,12 +99,22 @@
                                     <segue destination="BYZ-38-t0r" kind="show" id="MuK-dy-WTs"/>
                                 </connections>
                             </button>
+                            <pickerView contentMode="bottom" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fcd-GA-PC7">
+                                <rect key="frame" x="0.0" y="696" width="414" height="200"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="GdH-TU-FXW" id="MKH-hN-lQO"/>
+                                    <outlet property="delegate" destination="GdH-TU-FXW" id="1H1-Ug-cd8"/>
+                                </connections>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="NxL-lQ-6dM"/>
                     </view>
                     <connections>
                         <outlet property="cPickView" destination="uKa-kl-URf" id="jyq-Cq-WFk"/>
+                        <outlet property="pickerBtn" destination="Hra-tY-Bby" id="7CL-No-GqM"/>
                         <outlet property="searchBar" destination="IxT-yf-YDK" id="PXY-E3-oWC"/>
                         <outlet property="thePicker" destination="fcd-GA-PC7" id="C0X-gb-X2v"/>
                         <segue destination="t3O-3d-EwC" kind="show" id="1jP-Uc-Mmf"/>
@@ -126,7 +127,6 @@
         <!--Table PageVC-->
         <scene sceneID="8v6-Ym-Rob">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dMK-hz-seV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="TablePage" id="t3O-3d-EwC" customClass="TablePage_VC" customModule="InfosafeCSI_onMove" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3Rf-xC-hig">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -208,8 +208,8 @@
                                 </connections>
                             </button>
                             <pickerView contentMode="bottom" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eMJ-Ji-Lwb">
-                                <rect key="frame" x="8" y="118" width="398" height="162"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="0.0" y="703" width="418" height="200"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="t3O-3d-EwC" id="pFn-dq-Zub"/>
@@ -228,6 +228,7 @@
                         <segue destination="PT5-on-lP4" kind="show" id="Tfa-Ee-GOB"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dMK-hz-seV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4013.04347826087" y="-228.34821428571428"/>
         </scene>

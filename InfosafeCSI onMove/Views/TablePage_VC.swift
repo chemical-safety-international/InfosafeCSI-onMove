@@ -67,6 +67,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
         thePicker.isHidden = true
+        pickerTextField.endEditing(true)
 
     }
     

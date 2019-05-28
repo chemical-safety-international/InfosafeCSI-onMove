@@ -16,6 +16,7 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var cPickView: UITextField!
     @IBOutlet weak var thePicker: UIPickerView!
+    @IBOutlet weak var pickerBtn: UIButton!
     
     
     override func viewDidLoad() {
@@ -119,6 +120,7 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
             DispatchQueue.main.async {
                 if completionReturnData.contains("true") {
                     self.cPickView.text = localcriteriainfo.arrName[0]
+                    self.thePicker.reloadAllComponents()
                 } else if completionReturnData.contains("false") {
                     let ac = UIAlertController(title: "Failed", message: "Cannot get the criteria list!", preferredStyle: .alert)
                     ac.addAction(UIAlertAction(title: "OK", style:  .default))
@@ -144,7 +146,10 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
         self.cPickView.text = localcriteriainfo.arrName[row]
         localcriteriainfo.code = localcriteriainfo.arrCode[row]
         localcriteriainfo.pickerValue = localcriteriainfo.arrName[row]
+        let image = UIImage(named: "up arrow")
+        self.pickerBtn.setImage(image, for: .normal)
         self.thePicker.isHidden = true
+
         
     }
     
@@ -162,8 +167,15 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
     @IBAction func pickerBtnTapped(_ sender: Any) {
         if thePicker.isHidden == false {
             self.thePicker.isHidden = true
+            let image = UIImage(named: "drop arrow")
+            self.pickerBtn.setImage(image, for: .normal)
+
+            
         } else if thePicker.isHidden == true {
             self.thePicker.isHidden = false
+            let image = UIImage(named: "up arrow")
+            self.pickerBtn.setImage(image, for: .normal)
+            
         }
     }
     
