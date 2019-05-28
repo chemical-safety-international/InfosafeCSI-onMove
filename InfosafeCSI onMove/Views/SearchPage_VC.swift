@@ -133,7 +133,7 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
             }
         }
     }
-    
+    // setup picker
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
