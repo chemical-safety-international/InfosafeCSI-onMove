@@ -78,10 +78,13 @@
                                     <outlet property="delegate" destination="GdH-TU-FXW" id="SSJ-4w-epD"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hra-tY-Bby">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hra-tY-Bby">
                                 <rect key="frame" x="356" y="294" width="31" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="drop arrow"/>
+                                <connections>
+                                    <action selector="pickerBtnTapped:" destination="GdH-TU-FXW" eventType="touchUpInside" id="jso-0k-TDH"/>
+                                </connections>
                             </button>
                             <searchBar contentMode="redraw" fixedFrame="YES" searchBarStyle="minimal" placeholder="Enter search" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IxT-yf-YDK">
                                 <rect key="frame" x="37" y="324" width="357" height="44"/>
@@ -97,11 +100,18 @@
                                     <outlet property="delegate" destination="GdH-TU-FXW" id="1H1-Ug-cd8"/>
                                 </connections>
                             </pickerView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0CG-hq-yUg">
+                                <rect key="frame" x="44" y="88" width="49" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Log off"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="MuK-dy-WTs"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="NxL-lQ-6dM"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Mwt-0q-7bI"/>
                     <connections>
                         <outlet property="cPickView" destination="uKa-kl-URf" id="jyq-Cq-WFk"/>
                         <outlet property="searchBar" destination="IxT-yf-YDK" id="PXY-E3-oWC"/>
@@ -116,6 +126,7 @@
         <!--Table PageVC-->
         <scene sceneID="8v6-Ym-Rob">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dMK-hz-seV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="TablePage" id="t3O-3d-EwC" customClass="TablePage_VC" customModule="InfosafeCSI_onMove" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3Rf-xC-hig">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -188,10 +199,13 @@
                                     <outlet property="delegate" destination="t3O-3d-EwC" id="tO4-ih-OuU"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqy-dp-pQY">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqy-dp-pQY">
                                 <rect key="frame" x="375" y="88" width="31" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="drop arrow"/>
+                                <connections>
+                                    <action selector="pickerBtnTapped:" destination="t3O-3d-EwC" eventType="touchUpInside" id="WKa-AF-1hc"/>
+                                </connections>
                             </button>
                             <pickerView contentMode="bottom" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eMJ-Ji-Lwb">
                                 <rect key="frame" x="8" y="118" width="398" height="162"/>
@@ -214,7 +228,6 @@
                         <segue destination="PT5-on-lP4" kind="show" id="Tfa-Ee-GOB"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dMK-hz-seV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4013.04347826087" y="-228.34821428571428"/>
         </scene>
@@ -317,4 +330,7 @@
         <image name="StartScreen" width="375" height="812"/>
         <image name="drop arrow" width="296" height="171"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="MuK-dy-WTs"/>
+    </inferredMetricsTieBreakers>
 </document>

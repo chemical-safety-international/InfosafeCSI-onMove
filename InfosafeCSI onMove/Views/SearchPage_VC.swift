@@ -25,6 +25,7 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
         // Do any additional setup after loading the view.
         self.searchBar.delegate = self
         thePicker.isHidden = true
+        self.hideKeyboardWhenTappedAround()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,6 +42,7 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+        thePicker.isHidden = true
     }
     
     
@@ -155,6 +157,13 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
         if textField == self.cPickView {
             self.thePicker.isHidden = false
             textField.endEditing(true)
+        }
+    }
+    @IBAction func pickerBtnTapped(_ sender: Any) {
+        if thePicker.isHidden == false {
+            self.thePicker.isHidden = true
+        } else if thePicker.isHidden == true {
+            self.thePicker.isHidden = false
         }
     }
     

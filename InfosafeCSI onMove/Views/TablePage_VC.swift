@@ -38,6 +38,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
         
         pickerTextField.text = localcriteriainfo.pickerValue
         searchBar.text = localcriteriainfo.searchValue
+        self.hideKeyboardWhenTappedAround()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,6 +66,8 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+        thePicker.isHidden = true
+
     }
     
     @objc func loadList(notification: NSNotification) {
@@ -88,7 +91,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
         self.navigationController?.pushViewController(sdsJump!, animated: true)
     }
     
-    
+    // search bar editing
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
     }
@@ -118,6 +121,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.pickerTextField.text = localcriteriainfo.arrName[row]
         localcriteriainfo.code = localcriteriainfo.arrCode[row]
+        pickerTextField.endEditing(true)
         self.thePicker.isHidden = true
         
     }
@@ -126,6 +130,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
         self.view.endEditing(true)
         return localcriteriainfo.arrName[row]
     }
+    
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == self.pickerTextField {
@@ -170,6 +175,13 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
                     self.present(ac, animated: true)
                 }
             }
+        }
+    }
+    @IBAction func pickerBtnTapped(_ sender: Any) {
+        if thePicker.isHidden == false {
+            self.thePicker.isHidden = true
+        } else if thePicker.isHidden == true {
+            self.thePicker.isHidden = false
         }
     }
     
