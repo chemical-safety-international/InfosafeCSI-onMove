@@ -61,7 +61,7 @@ class LoginPage_VC: UIViewController {
                         self.navigationController?.pushViewController(loginJump!, animated: true)
                     } else if completion.contains("false"){
                         self.removeSpinner()
-                        let ac = UIAlertController(title: "Verify Failed", message: "Email or Password is invaild, please try again.", preferredStyle: .alert)
+                        let ac = UIAlertController(title: "Login Failed", message: localclientinfo.error, preferredStyle: .alert)
                         ac.addAction(UIAlertAction(title: "OK", style:  .default))
                         self.present(ac, animated: true)
                     } else if completion.contains("Error") {

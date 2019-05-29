@@ -8,8 +8,8 @@
 
 import Foundation
 
-var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
-//var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
+//var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
+var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
 
 
 // Call the WCF function: 'loginbyEami' with email, password, deviceid, devicemac and return the data from WCF
@@ -52,6 +52,7 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
             localclientinfo.infosafeid = model.infosafeid
             localclientinfo.clientcode = model.clientcode
             localclientinfo.apptype = model.apptype
+            localclientinfo.error = model.error
             
             if model.passed == true {
                 completion("true")
@@ -98,7 +99,7 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
             let jsonResponse = try JSONSerialization.jsonObject(with:
                 dataResponse, options: []) as? [String: AnyObject]
 
-            //print(jsonResponse!)
+            print(jsonResponse!)
             
 
             if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {

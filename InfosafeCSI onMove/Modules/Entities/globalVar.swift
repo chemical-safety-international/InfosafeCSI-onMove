@@ -29,6 +29,7 @@ struct localclientinfo {
     static var clientsurname: String!
     static var clientloginstatus: String!
     static var apptype: Int!
+    static var error: String!
 }
 
 struct outCriteriaData: Codable {
@@ -48,12 +49,35 @@ struct localcriteriainfo {
 }
 
 struct localsearchinfo {
-    static var arrProductName: [String]!
-    static var arrCompanyName: [String]!
-    static var arrIssueDate: [Any]!
-    static var arrDetail: [String]!
-    static var arrNo: [String]!
-    static var details: String!
+    static var pcount: Int!
+    static var ocount: Int!
+    static var lcount: Int!
+    static var pageno: Int!
+//    static var arrProductName: [String]!
+//    static var arrCompanyName: [String]!
+//    static var arrIssueDate: [Any]!
+//    static var arrDetail: [String]!
+//    static var arrNo: [String]!
+//    static var details: String!
+    var results: [item]!
+    
+    struct item {
+        var sdsno: String!
+        var synno: String!
+        var company: String!
+        var IssueDate: Date!
+        var prodname: String!
+        var prodtype: String!
+        var ispartial: Bool!
+        var ps: String!
+        var unno: String!
+        var subrisk1: String!
+        var ufs: [uf]!
+    }
+    struct uf {
+        var uftitle: String!
+        var uftext: String!
+    }
 }
 
 struct localcurrentSDS {
