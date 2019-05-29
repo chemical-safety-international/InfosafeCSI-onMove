@@ -43,12 +43,16 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+        self.cPickView.endEditing(true)
         thePicker.isHidden = true
+        dropArrow()
     }
     
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
+        self.view.endEditing(true)
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -143,11 +147,11 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.view.endEditing(true)
         self.cPickView.text = localcriteriainfo.arrName[row]
         localcriteriainfo.code = localcriteriainfo.arrCode[row]
         localcriteriainfo.pickerValue = localcriteriainfo.arrName[row]
-        let image = UIImage(named: "up arrow")
-        self.pickerBtn.setImage(image, for: .normal)
+        dropArrow()
         self.thePicker.isHidden = true
 
         
@@ -158,23 +162,51 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
         return localcriteriainfo.arrName[row]
     }
     
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var pickerLabel: UILabel? = (view as? UILabel)
+        if pickerLabel == nil {
+            pickerLabel = UILabel()
+            pickerLabel?.font = UIFont.systemFont(ofSize: 25, weight: UIFont.Weight.bold)
+            pickerLabel?.textAlignment = .center
+        }
+        pickerLabel?.text = localcriteriainfo.arrName[row]
+        return pickerLabel!
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == self.cPickView {
-            self.thePicker.isHidden = false
+            if self.thePicker.isHidden == false {
+                self.thePicker.isHidden = true
+                dropArrow()
+            } else if thePicker.isHidden == true {
+                self.thePicker.isHidden = false
+                upArrow()
+            }
+            
             textField.endEditing(true)
         }
+        
     }
+    
+    func dropArrow() {
+        let image = UIImage(named: "drop arrow")
+        self.pickerBtn.setImage(image, for: .normal)
+    }
+    
+    func upArrow() {
+        let image = UIImage(named: "up arrow")
+        self.pickerBtn.setImage(image, for: .normal)
+    }
+    
     @IBAction func pickerBtnTapped(_ sender: Any) {
         if thePicker.isHidden == false {
             self.thePicker.isHidden = true
-            let image = UIImage(named: "drop arrow")
-            self.pickerBtn.setImage(image, for: .normal)
+            dropArrow()
 
             
         } else if thePicker.isHidden == true {
             self.thePicker.isHidden = false
-            let image = UIImage(named: "up arrow")
-            self.pickerBtn.setImage(image, for: .normal)
+            upArrow()
             
         }
     }

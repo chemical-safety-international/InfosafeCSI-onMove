@@ -8,12 +8,11 @@
 
 import UIKit
 
-class LoginPage_VC: UIViewController {
+class LoginPage_VC: UIViewController, UITextFieldDelegate {
 
     //IBOutlet
     @IBOutlet weak var userIDTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var loginBtn: UIButton!
     
     
     
@@ -37,23 +36,18 @@ class LoginPage_VC: UIViewController {
         self.navigationController?.navigationBar.isHidden = false
     }
     
-//    func showAlertWith(title: String, message: String) {
-//        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
-//        ac.addAction(UIAlertAction(title: "OK", style:  .default))
-//        self.present(ac, animated: true)
-//    }
-
-
-    //IBAction
-    @IBAction func loginBtnTapped(_ sender: Any) {
-        
-        //call the function with input from viewModule
-        let email = userIDTextField.text!
-        let password = passwordTextField.text!
-        
-        self.showSpinner(onView: self.view)
-        csiWCF_VM().callLogin(email: email, password: password) { (completion) in
-   
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == passwordTextField {
+            textField.resignFirstResponder()
+            
+            //call the function with input from viewModule
+            let email = userIDTextField.text!
+            let password = passwordTextField.text!
+            
+            self.showSpinner(onView: self.view)
+            csiWCF_VM().callLogin(email: email, password: password) { (completion) in
+                
                 DispatchQueue.main.async {
                     if completion.contains("true") {
                         self.removeSpinner()
@@ -61,17 +55,23 @@ class LoginPage_VC: UIViewController {
                         self.navigationController?.pushViewController(loginJump!, animated: true)
                     } else if completion.contains("false"){
                         self.removeSpinner()
-                        let ac = UIAlertController(title: "Login Failed", message: localclientinfo.error, preferredStyle: .alert)
-                        ac.addAction(UIAlertAction(title: "OK", style:  .default))
-                        self.present(ac, animated: true)
+                        self.showAlert(title: "Verify Failed", message: "Email or Password is invaild, please try again.")
+                        //                        let ac = UIAlertController(title: "Verify Failed", message: "Email or Password is invaild, please try again.", preferredStyle: .alert)
+                        //                        ac.addAction(UIAlertAction(title: "OK", style:  .default))
+                        //                        self.present(ac, animated: true)
                     } else if completion.contains("Error") {
                         self.removeSpinner()
-                        let ac = UIAlertController(title: "Failed", message: "Server is no response.", preferredStyle: .alert)
-                        ac.addAction(UIAlertAction(title: "OK", style:  .default))
-                        self.present(ac, animated: true)
+                        self.showAlert(title: "Failed", message: "Server is no response.")
+                        //                        let ac = UIAlertController(title: "Failed", message: "Server is no response.", preferredStyle: .alert)
+                        //                        ac.addAction(UIAlertAction(title: "OK", style:  .default))
+                        //                        self.present(ac, animated: true)
                     }
                 }
+            }
+            return false
         }
+
+        return true
     }
 }
 
@@ -100,10 +100,7 @@ extension UIViewController {
             vSpinner = nil
         }
     }
-}
-
-
-extension UIViewController {
+    
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
         tap.cancelsTouchesInView = false
@@ -114,4 +111,10 @@ extension UIViewController {
         view.endEditing(true)
     }
     
+    func showAlert(title: String, message: String) {
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style:  .default))
+        self.present(ac, animated: true)
+    }
 }
+
