@@ -48,29 +48,39 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
             self.showSpinner(onView: self.view)
             csiWCF_VM().callLogin(email: email, password: password) { (completion) in
                 
-                DispatchQueue.main.async {
-                    if completion.contains("true") {
-                        self.removeSpinner()
-                        let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
-                        self.navigationController?.pushViewController(loginJump!, animated: true)
-                    } else if completion.contains("false"){
-                        self.removeSpinner()
-                        self.showAlert(title: "Verify Failed", message: "Email or Password is invaild, please try again.")
-                        //                        let ac = UIAlertController(title: "Verify Failed", message: "Email or Password is invaild, please try again.", preferredStyle: .alert)
-                        //                        ac.addAction(UIAlertAction(title: "OK", style:  .default))
-                        //                        self.present(ac, animated: true)
-                    } else if completion.contains("Error") {
-                        self.removeSpinner()
-                        self.showAlert(title: "Failed", message: "Server is no response.")
-                        //                        let ac = UIAlertController(title: "Failed", message: "Server is no response.", preferredStyle: .alert)
-                        //                        ac.addAction(UIAlertAction(title: "OK", style:  .default))
-                        //                        self.present(ac, animated: true)
+                //here dataResponse received from a network request
+                do {
+                    //here dataResponse received from a network request
+                    let decoder = JSONDecoder()
+                    let model = try decoder.decode(outLoginData.self, from:
+                        completion) //Decode JSON Response Data
+                    localclientinfo.clientid = model.clientid
+                    localclientinfo.clientmemberid = model.clientmemberid
+                    localclientinfo.infosafeid = model.infosafeid
+                    localclientinfo.clientcode = model.clientcode
+                    localclientinfo.apptype = model.apptype
+                    localclientinfo.error = model.error
+        
+                    DispatchQueue.main.async {
+                        if model.passed == true {
+                            self.removeSpinner()
+                            let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
+                            self.navigationController?.pushViewController(loginJump!, animated: true)
+                        } else if model.passed == false {
+                            self.removeSpinner()
+                            self.showAlert(title: "Verify Failed", message: "Email or Password is invaild, please try again.")
+                            self.passwordTextField.text = ""
+                        } else {
+                            self.removeSpinner()
+                            self.showAlert(title: "Failed", message: "Server is no response.")
+                        }
                     }
+                } catch let parsingError {
+                    print("Error", parsingError)
                 }
             }
             return false
         }
-
         return true
     }
 }
@@ -80,13 +90,13 @@ var vSpinner : UIView?
 
 extension UIViewController {
     //start spinner function
-    func showSpinner(onView: UIView){
+    func showSpinner(onView: UIView) {
         let spinnerView = UIView.init(frame: onView.bounds)
         spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
         let ai = UIActivityIndicatorView.init(style: .whiteLarge)
         ai.startAnimating()
         ai.center = spinnerView.center
-        
+
         DispatchQueue.main.async {
             spinnerView.addSubview(ai)
             onView.addSubview(spinnerView)
@@ -100,17 +110,17 @@ extension UIViewController {
             vSpinner = nil
         }
     }
-    
+
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
         tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
+        self.view.addGestureRecognizer(tap)
     }
-    
+
     @objc func dismissKeyboard() {
-        view.endEditing(true)
+        self.view.endEditing(true)
     }
-    
+
     func showAlert(title: String, message: String) {
         let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style:  .default))

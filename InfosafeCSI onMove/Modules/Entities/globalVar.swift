@@ -53,19 +53,15 @@ struct localsearchinfo {
     static var ocount: Int!
     static var lcount: Int!
     static var pageno: Int!
-//    static var arrProductName: [String]!
-//    static var arrCompanyName: [String]!
-//    static var arrIssueDate: [Any]!
-//    static var arrDetail: [String]!
-//    static var arrNo: [String]!
-//    static var details: String!
-    var results: [item]!
+    
+    static var results: [item]!
     
     struct item {
+
         var sdsno: String!
         var synno: String!
         var company: String!
-        var IssueDate: Date!
+        var issueDate: Date!
         var prodname: String!
         var prodtype: String!
         var ispartial: Bool!
@@ -78,6 +74,15 @@ struct localsearchinfo {
         var uftitle: String!
         var uftext: String!
     }
+    let item: [item]!
+    
+    // old methods arrays
+    static var arrProductName: [String]!
+    static var arrCompanyName: [String]!
+    static var arrIssueDate: [Any]!
+    static var arrDetail: [String]!
+    static var arrNo: [String]!
+    static var details: String!
 }
 
 struct localcurrentSDS {

@@ -14,7 +14,7 @@ var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
 
 // Call the WCF function: 'loginbyEami' with email, password, deviceid, devicemac and return the data from WCF
 //WCF for LoginByEamil
-func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicemac:String, completion: @escaping (String) -> Void) -> (Void)
+func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicemac:String, completion: @escaping (Data) -> Void) -> (Void)
 {
 
     
@@ -40,36 +40,13 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
             error == nil else {
                 print(error?.localizedDescription ?? "Response Error")
                 return }
-
-        //here dataResponse received from a network request
-        do {
-            //here dataResponse received from a network request
-            let decoder = JSONDecoder()
-            let model = try decoder.decode(outLoginData.self, from:
-                dataResponse) //Decode JSON Response Data
-            localclientinfo.clientid = model.clientid
-            localclientinfo.clientmemberid = model.clientmemberid
-            localclientinfo.infosafeid = model.infosafeid
-            localclientinfo.clientcode = model.clientcode
-            localclientinfo.apptype = model.apptype
-            localclientinfo.error = model.error
-            
-            if model.passed == true {
-                completion("true")
-            } else if model.passed == false {
-                completion("false")
-            } else {
-                completion("Error")
-            }
-        } catch let parsingError {
-            print("Error", parsingError)
-        }
+        completion(dataResponse)
     }
     task.resume()
 }
 
 //Call the WCF function: 'GetSDSSearchResultsPageEx' with input data
-func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: String, c:String, p : Int, psize : Int, apptp: Int, completion:@escaping(String) -> Void) -> (Void) {
+func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: String, c:String, p : Int, psize : Int, apptp: Int, completion:@escaping(Data) -> Void) -> (Void) {
  
     //create json data
     let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":c, "v":inputData, "p":p, "psize":psize]
@@ -93,77 +70,78 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
             error == nil else {
                 print(error?.localizedDescription ?? "Response Error")
                 return }
-        do{
-            
-            //use JSONSerialization
-            let jsonResponse = try JSONSerialization.jsonObject(with:
-                dataResponse, options: []) as? [String: AnyObject]
-
-            print(jsonResponse!)
-            
-
-            if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
-                
-                //print(jsonArr1)
-
-                jsonArr1.forEach { info in
-                    if let com = info["com"] as? [String: Any] {
-                        com.forEach { companyName in
-
-                            if companyName.key == "value"
-                            {
-                                localsearchinfo.arrCompanyName.append(companyName.value as! String)
-                            }
-                        }
-                    }
-                    
-//                    if let name = info["name"] as? [String: Any] {
-//                        name.forEach { pName in
-//                                if pName.key == "value"
-//                                {
-//                                    csiclientsearchinfo.arrProductName.append(pName.value as! String)
-//                                }
-//                            }
-//                        print(csiclientsearchinfo.arrProductName!)
-//                    }
-                    if let no = info["no"] as? [String: Any] {
-                        no.forEach { nocode in
-                                if nocode.key == "value"
-                                {
-                                    localsearchinfo.arrNo.append(nocode.value as! String)
-                                }
-                            }
-
-                    }
-                    
-//                    if let issue = info["issue"] as? [String: Any] {
-//                        issue.forEach { issueDate in
-//                                if issueDate.key == "value"
-//                                {
-//                                    if issueDate.value as? String != "" {
-//                                        print(issueDate.value)
-//                                        csiclientsearchinfo.arrIssueDate.append(issueDate.value as! String)
-//                                    } else if issueDate.value as? String == "" {
-//                                        csiclientsearchinfo.arrIssueDate.append(" ")
-//                                    }
+        completion(dataResponse)
+//        do{
 //
+//            //use JSONSerialization
+//            let jsonResponse = try JSONSerialization.jsonObject(with:
+//                dataResponse, options: []) as? [String: AnyObject]
+//
+//            print(jsonResponse!)
+//
+//
+//            if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
+//
+//                //print(jsonArr1)
+//
+//                jsonArr1.forEach { info in
+//                    if let com = info["com"] as? [String: Any] {
+//                        com.forEach { companyName in
+//
+//                            if companyName.key == "value"
+//                            {
+//                                localsearchinfo.arrCompanyName.append(companyName.value as! String)
+//                            }
+//                        }
+//                    }
+//
+////                    if let name = info["name"] as? [String: Any] {
+////                        name.forEach { pName in
+////                                if pName.key == "value"
+////                                {
+////                                    csiclientsearchinfo.arrProductName.append(pName.value as! String)
+////                                }
+////                            }
+////                        print(csiclientsearchinfo.arrProductName!)
+////                    }
+//                    if let no = info["no"] as? [String: Any] {
+//                        no.forEach { nocode in
+//                                if nocode.key == "value"
+//                                {
+//                                    localsearchinfo.arrNo.append(nocode.value as! String)
 //                                }
 //                            }
+//
 //                    }
-                    
-                }
-                if localsearchinfo.arrCompanyName != [] {
-                    completion("true")
-                } else {
-                    completion("false")
-                }
-            }
- 
-            
-            
-        } catch let parsingError {
-            print("Error", parsingError)
-        }
+//
+////                    if let issue = info["issue"] as? [String: Any] {
+////                        issue.forEach { issueDate in
+////                                if issueDate.key == "value"
+////                                {
+////                                    if issueDate.value as? String != "" {
+////                                        print(issueDate.value)
+////                                        csiclientsearchinfo.arrIssueDate.append(issueDate.value as! String)
+////                                    } else if issueDate.value as? String == "" {
+////                                        csiclientsearchinfo.arrIssueDate.append(" ")
+////                                    }
+////
+////                                }
+////                            }
+////                    }
+//
+//                }
+//                if localsearchinfo.arrCompanyName != [] {
+//                    completion("true")
+//                } else {
+//                    completion("false")
+//                }
+//            }
+//
+//
+//
+//        } catch let parsingError {
+//            print("Error", parsingError)
+//        }
     }
     //start task
     task.resume()
@@ -200,17 +178,18 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, completion
             error == nil else {
                 print(error?.localizedDescription ?? "Response Error")
                 return }
+        
             
             do {
                 //here dataResponse received from a network request
                 let decoder = JSONDecoder()
                 let model = try decoder.decode(outCriteriaData.self, from:
                     dataResponse) //Decode JSON Response Data
-                
+
 
                 //Store and seprate the return data
                 for noCount in model.items {
-                    
+
                     localcriteriainfo.arrCode.append(noCount.code)
                     localcriteriainfo.arrName.append(noCount.name)
                 }
@@ -234,7 +213,7 @@ func csiWCF_getSDS(clientid: String, uid: String, sdsNoGet: String, apptp : Stri
     
     let json: [String: Any] = ["client":clientid, "apptp": apptp, "uid":uid, "sds": sdsNoGet, "rtype" : rtype, "regetFormat":"1", "f":"", "subf":""]
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
-    
+    print(json)
     let url = URL(string: csiWCF_URLHeader + "ViewSDS")!
     
     var request = URLRequest(url:url)
@@ -252,7 +231,7 @@ func csiWCF_getSDS(clientid: String, uid: String, sdsNoGet: String, apptp : Stri
         do {
             let decoder = JSONDecoder()
             let model = try decoder.decode(outViewSDSData.self, from: dataResponse)
-            
+            print(model)
             completion(model)
 
         } catch let parsingError {

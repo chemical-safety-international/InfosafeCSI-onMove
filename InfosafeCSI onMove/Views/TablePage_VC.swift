@@ -158,24 +158,50 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
         self.showSpinner(onView: self.view)
         csiWCF_VM().callSearch(inputData: searchInPut, client: client!, uid: uid!, c: c!, p: p, psize:psize, apptp:apptp!) { (completionReturnData) in
             
-            //handle true or false for search function
-            DispatchQueue.main.async {
-                if completionReturnData.contains("true") {
-                    self.removeSpinner()
-                    self.tableDisplay.reloadData()
+            do {
+                let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
+                
+                
+                if let jsonArr1 = jsonResponse!["name"] as? [String: Any] {
+                    jsonArr1.forEach { productName in
+                        localsearchinfo.arrProductName.append(productName.value as! String)
+                    }
                     
-                } else if completionReturnData.contains("false") {
-                    self.removeSpinner()
-                    let ac = UIAlertController(title: "Search Failed", message: "Please check the network and type the correct infomation search again.", preferredStyle: .alert)
-                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
-                    self.present(ac, animated: true)
-                }  else if completionReturnData.contains("Error") {
-                    self.removeSpinner()
-                    let ac = UIAlertController(title: "Failed", message: "Server is no response.", preferredStyle: .alert)
-                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
-                    self.present(ac, animated: true)
                 }
+                print(localsearchinfo.arrProductName!)
+                
+//                if let jsonArr2 = jsonResponse!["no"] as? [String: Any] {
+//                    jsonArr2.forEach { sdsno in
+//                        localsearchinfo.item.init(sdsno: sdsno.value as! String)
+//                        
+//                    }
+//                    
+//                }
+                
+                
+                
+            } catch let parsingError {
+                print("Error", parsingError)
             }
+            
+            //handle true or false for search function
+//            DispatchQueue.main.async {
+//                if completionReturnData.contains("true") {
+//                    self.removeSpinner()
+//                    self.tableDisplay.reloadData()
+//
+//                } else if completionReturnData.contains("false") {
+//                    self.removeSpinner()
+//                    let ac = UIAlertController(title: "Search Failed", message: "Please check the network and type the correct infomation search again.", preferredStyle: .alert)
+//                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
+//                    self.present(ac, animated: true)
+//                }  else if completionReturnData.contains("Error") {
+//                    self.removeSpinner()
+//                    let ac = UIAlertController(title: "Failed", message: "Server is no response.", preferredStyle: .alert)
+//                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
+//                    self.present(ac, animated: true)
+//                }
+//            }
         }
     }
     @IBAction func pickerBtnTapped(_ sender: Any) {

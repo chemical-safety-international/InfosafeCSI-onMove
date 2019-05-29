@@ -329,7 +329,6 @@
         <image name="drop arrow" width="296" height="171"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="cJE-Cl-ui8"/>
         <segue reference="MuK-dy-WTs"/>
     </inferredMetricsTieBreakers>
 </document>

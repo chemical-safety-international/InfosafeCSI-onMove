@@ -15,43 +15,33 @@ class csiWCF_VM: UIViewController {
     //create var
     var loginDataSet: (String, String, String) = ("","","")
     
-    func callLogin(email: String, password: String, completions:@escaping(String) -> Void) {
+    func callLogin(email: String, password: String, completions:@escaping(Data) -> Void) {
         
         let deviceid: String = ""
         let devicemac: String = ""
         
-        csiWCF_loginbyEmail(email: email, password: password, deviceid: deviceid, devicemac: devicemac) { (completion) in
-            if completion.contains("true") {
-                completions("true")
-            } else if completion.contains("false"){
-                completions("false")
-            } else {
-                completions("Error")
-            }
-        }
+        csiWCF_loginbyEmail(email: email, password: password, deviceid: deviceid, devicemac: devicemac) { (returnCompletionData) in
 
+            completions(returnCompletionData)
+        }
     }
     
-    func callSearch(inputData:String, client: String, uid: String, c: String, p: Int, psize:Int, apptp: Int, completion:@escaping(String) -> Void) {
+    func callSearch(inputData:String, client: String, uid: String, c: String, p: Int, psize:Int, apptp: Int, completion:@escaping(Data) -> Void) {
         
         // call the search function in the WCF
         csiWCF_GetSDSSearchResultsPage(inputData: inputData, client: client, uid: uid, c: c, p: p, psize: psize, apptp: apptp) {
             (completionReturnData) in
             
-            if completionReturnData.contains("false") {
-                completion("false")
-            } else if completionReturnData.contains("true") {
-                // get return value and put in every array
-//                let returnArray = csiWCF_SearchReturnValueFix(inValue: completionReturnData)
-//                
-//                csiclientsearchinfo.arrName = returnArray.0 as? [String]
-//                csiclientsearchinfo.arrDetail = returnArray.1 as? [String]
-//                csiclientsearchinfo.arrNo = returnArray.2 as? [String]
-//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
-                completion("true")
-            } else {
-                completion("Error")
-            }
+            completion(completionReturnData)
+            
+//            if completionReturnData.contains("false") {
+//                completion("false")
+//            } else if completionReturnData.contains("true") {
+//
+//                completion("true")
+//            } else {
+//                completion("Error")
+//            }
         }
     }
     
@@ -75,7 +65,7 @@ class csiWCF_VM: UIViewController {
 
         if rtype == "1" {
             csiWCF_getSDS(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: rtype) { (output) in
-
+                print(output.Base64String as Any)
                 completion(output.Base64String)
             }
         }

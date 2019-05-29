@@ -92,20 +92,79 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
         self.showSpinner(onView: self.view)
         csiWCF_VM().callSearch(inputData: searchInPut, client: client!, uid: uid!, c: c!, p: p, psize:psize, apptp:apptp!) { (completionReturnData) in
             
+//            var resultData = localsearchinfo.results
+            
+            do {
+                let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
+                
+                //print(jsonResponse!)
+                
+                if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
+                    
+                    jsonArr1.forEach { info in
+//                        if let prodname = info["name"] as? [String: Any] {
+//                            prodname.forEach { pn in
+//                                if pn.key == "value" {
+//                                    localsearchinfo.arrProductName.append(pn.value as! String)
+//                                }
+//
+//                            }
+//                        }
+                        if let comname = info["com"] as? [String: Any] {
+                            comname.forEach { cn in
+                                if cn.key == "value" {
+                                    localsearchinfo.arrCompanyName.append(cn.value as! String)
+                                }
+                                
+                            }
+                            
+                        }
+                        
+                        if let no = info["no"] as? [String: Any] {
+                            no.forEach { nocode in
+                                    if nocode.key == "value"
+                                    {
+                                        localsearchinfo.arrNo.append(nocode.value as! String)
+                                    }
+                                }
+                        }
+                        
+                        
+                    }
+                    
+                }
+//                print(localsearchinfo.arrProductName!)
+//                print(localsearchinfo.arrCompanyName!)
+                
+                //                if let jsonArr2 = jsonResponse!["no"] as? [String: Any] {
+                //                    jsonArr2.forEach { sdsno in
+                //                        localsearchinfo.item.init(sdsno: sdsno.value as! String)
+                //
+                //                    }
+                //
+                //                }
+                
+                
+                
+            } catch let parsingError {
+                print("Error", parsingError)
+            }
+            
+            
             //handle true or false for search function
             DispatchQueue.main.async {
-                if completionReturnData.contains("true") {
-                    
+                if localsearchinfo.arrNo != [] {
+
                     self.removeSpinner()
                     let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "TablePage") as? TablePage_VC
                     self.navigationController?.pushViewController(searchJump!, animated: true)
-                    
-                } else if completionReturnData.contains("false") {
+
+                } else if localsearchinfo.arrNo == [] {
                     self.removeSpinner()
                     let ac = UIAlertController(title: "Search Failed", message: "Please check the network and type the correct infomation search again.", preferredStyle: .alert)
                     ac.addAction(UIAlertAction(title: "OK", style:  .default))
                     self.present(ac, animated: true)
-                }  else if completionReturnData.contains("Error") {
+                }  else {
                     self.removeSpinner()
                     let ac = UIAlertController(title: "Failed", message: "Server is no response.", preferredStyle: .alert)
                     ac.addAction(UIAlertAction(title: "OK", style:  .default))
