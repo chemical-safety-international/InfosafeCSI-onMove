@@ -231,7 +231,6 @@ func csiWCF_getSDS(clientid: String, uid: String, sdsNoGet: String, apptp : Stri
         do {
             let decoder = JSONDecoder()
             let model = try decoder.decode(outViewSDSData.self, from: dataResponse)
-            print(model)
             completion(model)
 
         } catch let parsingError {

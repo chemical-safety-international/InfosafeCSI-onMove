@@ -92,7 +92,9 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
         self.showSpinner(onView: self.view)
         csiWCF_VM().callSearch(inputData: searchInPut, client: client!, uid: uid!, c: c!, p: p, psize:psize, apptp:apptp!) { (completionReturnData) in
             
-//            var resultData = localsearchinfo.results
+//            var resultData: localsearchinfo!
+//
+//            resultData.results[0].sdsno = ""
             
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]

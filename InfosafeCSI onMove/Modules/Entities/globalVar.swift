@@ -48,13 +48,15 @@ struct localcriteriainfo {
     static var searchValue: String!
 }
 
+var localresult: localsearchinfo!
+
 struct localsearchinfo {
-    static var pcount: Int!
-    static var ocount: Int!
-    static var lcount: Int!
-    static var pageno: Int!
+     var pcount: Int!
+     var ocount: Int!
+     var lcount: Int!
+     var pageno: Int!
     
-    static var results: [item]!
+     var results: [item]!
     
     struct item {
 

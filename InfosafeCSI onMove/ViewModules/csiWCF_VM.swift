@@ -65,8 +65,7 @@ class csiWCF_VM: UIViewController {
 
         if rtype == "1" {
             csiWCF_getSDS(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: rtype) { (output) in
-                print(output.Base64String as Any)
-                completion(output.Base64String)
+                completion(output.html)
             }
         }
         else if rtype == "2" {
