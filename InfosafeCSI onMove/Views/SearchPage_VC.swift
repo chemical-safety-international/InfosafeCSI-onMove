@@ -71,97 +71,24 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        
-        //create empty arrays
+        self.showSpinner(onView: self.view)
         let searchInPut = searchBar.text!
-        localsearchinfo.arrProductName = []
-        localsearchinfo.arrCompanyName = []
-        localsearchinfo.arrIssueDate = []
-        localsearchinfo.arrDetail = []
-        localsearchinfo.arrNo = []
-        
         localcriteriainfo.searchValue = searchInPut
         
-        let client = localclientinfo.clientid
-        let uid = localclientinfo.infosafeid
-        let c = localcriteriainfo.code
-        let p = 1
-        let psize = 50
-        let apptp = localclientinfo.apptype
-        
-        
-        //call search function
-        self.showSpinner(onView: self.view)
-        csiWCF_VM().callSearch(inputData: searchInPut, client: client!, uid: uid!, c: c!, p: p, psize:psize, apptp:apptp!) { (completionReturnData) in
-            
-           // var resultData: localsearchinfo!
-//            var count1: Int = 0
-            
-            do {
-                let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
-                
-                //print(jsonResponse!)
-                
-                if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
-        
-                    jsonArr1.forEach { info in
-                        
-                        if let prodname = info["name"] as? [String: Any] {
-                            localsearchinfo.arrProductName.append(prodname["value"] as! String)
-                        }
-                        if let comname = info["com"] as? [String: Any] {
-                            localsearchinfo.arrCompanyName.append(comname["value"] as! String)
-                            
-                        }
-                        
-                        if let no = info["no"] as? [String: Any] {
-                            localsearchinfo.arrNo.append(no["value"] as! String)
-                        }
-                        
-                        if let issueData = info["issue"] as? [String: Any] {
-                            localsearchinfo.arrIssueDate.append(issueData["value"] as! String)
-                        }
-                        
-                        
-                    }
-                    
-                }
-                
-                //                if let jsonArr2 = jsonResponse!["no"] as? [String: Any] {
-                //                    jsonArr2.forEach { sdsno in
-                //                        localsearchinfo.item.init(sdsno: sdsno.value as! String)
-                //
-                //                    }
-                //
-                //                }
-                
-                
-                
-            } catch let parsingError {
-                print("Error", parsingError)
-            }
-            
-            
-            //handle true or false for search function
-            DispatchQueue.main.async {
-                if localsearchinfo.arrNo != [] {
-
+        csiWCF_VM().callSearch(inputData: searchInPut) { (completionReturnData) in
+            if completionReturnData == true {
+                DispatchQueue.main.async {
                     self.removeSpinner()
                     let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "TablePage") as? TablePage_VC
                     self.navigationController?.pushViewController(searchJump!, animated: true)
-
-                } else if localsearchinfo.arrNo == [] {
+                }
+            } else {
+                DispatchQueue.main.async {
                     self.removeSpinner()
-                    let ac = UIAlertController(title: "Search Failed", message: "Please check the network and type the correct infomation search again.", preferredStyle: .alert)
-                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
-                    self.present(ac, animated: true)
-                }  else {
-                    self.removeSpinner()
-                    let ac = UIAlertController(title: "Failed", message: "Server is no response.", preferredStyle: .alert)
-                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
-                    self.present(ac, animated: true)
+                    self.showAlert(title: "Failed", message: "Cannot found the search results.")
                 }
             }
+
         }
     }
     

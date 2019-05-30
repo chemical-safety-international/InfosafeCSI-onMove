@@ -56,14 +56,14 @@ struct localsearchinfo {
      var lcount: Int!
      var pageno: Int!
     
-     var results: [item]!
+    static var results: [item]!
     
     struct item {
 
         var sdsno: String!
         var synno: String!
         var company: String!
-        var issueDate: Date!
+        var issueDate: String!
         var prodname: String!
         var prodtype: String!
         var ispartial: Bool!
@@ -71,19 +71,41 @@ struct localsearchinfo {
         var unno: String!
         var subrisk1: String!
         var ufs: [uf]!
+        
+        init(sdsno: String? = nil, synno: String? = nil, company: String? = nil, issueDate: String? = nil, prodname: String? = nil, prodtype: String? = nil, ispartial: Bool? = nil, ps: String? = nil, unno: String? = nil, subrisk1: String? = nil, ufs: [uf]? = nil) {
+            self.sdsno = sdsno
+            self.synno = synno
+            self.company = company
+            self.issueDate = issueDate
+            self.prodname = prodname
+            self.prodtype = prodtype
+            self.ispartial = ispartial
+            self.ps = ps
+            self.unno = unno
+            self.subrisk1 = subrisk1
+            self.ufs = ufs
+        }
     }
     struct uf {
         var uftitle: String!
         var uftext: String!
+        
+        init(uftitle: String? = nil, uftext: String? = nil) {
+            self.uftitle = uftitle
+            self.uftext = uftext
+        }
     }
+    init(pcount: Int? = nil, ocount: Int? = nil, lcount: Int? = nil, pageno: Int? = nil, results: [item]? = nil) {
+        self.pcount = pcount
+        self.ocount = ocount
+        self.lcount = lcount
+        self.pageno = pageno
+//        self.results = results
+    }
+
     
     
     // old methods arrays
-    static var arrProductName: [String]!
-    static var arrCompanyName: [String]!
-    static var arrIssueDate: [String]!
-    static var arrDetail: [String]!
-    static var arrNo: [String]!
     static var details: String!
 }
 

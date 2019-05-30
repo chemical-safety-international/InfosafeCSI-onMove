@@ -17,6 +17,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
     @IBOutlet weak var pickerTextField: UITextField!
     @IBOutlet weak var thePicker: UIPickerView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var pickerBtn: UIButton!
     
     
     
@@ -39,6 +40,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
         pickerTextField.text = localcriteriainfo.pickerValue
         searchBar.text = localcriteriainfo.searchValue
         self.hideKeyboardWhenTappedAround()
+        self.tableDisplay.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,21 +55,11 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
         self.navigationController?.navigationBar.isHidden = false
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
         thePicker.isHidden = true
         pickerTextField.endEditing(true)
+        dropArrow()
 
     }
     
@@ -77,8 +69,6 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
         }
     }
     
-
-    
     @IBAction func sdsViewBtnTapped(_ sender: UIButton) {
         
         //get row number
@@ -86,8 +76,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
         
         let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
     
-        //csicurrentSDS.sdsNo = csiclientsearchinfo.arrNo[rowNo]
-        localcurrentSDS.sdsNo = localsearchinfo.arrNo[buttonRow]
+        localcurrentSDS.sdsNo = localsearchinfo.results[buttonRow].sdsno
         
         self.navigationController?.pushViewController(sdsJump!, animated: true)
     }
@@ -95,6 +84,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
     // search bar editing
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
+        self.view.endEditing(true)
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -124,6 +114,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
         localcriteriainfo.code = localcriteriainfo.arrCode[row]
         pickerTextField.endEditing(true)
         self.thePicker.isHidden = true
+        dropArrow()
         
     }
     
@@ -132,145 +123,89 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
         return localcriteriainfo.arrName[row]
     }
     
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var pickerLabel: UILabel? = (view as? UILabel)
+        if pickerLabel == nil {
+            pickerLabel = UILabel()
+            pickerLabel?.font = UIFont.systemFont(ofSize: 25, weight: UIFont.Weight.bold)
+            pickerLabel?.textAlignment = .center
+        }
+        pickerLabel?.text = localcriteriainfo.arrName[row]
+        return pickerLabel!
+    }
+    
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == self.pickerTextField {
-            self.thePicker.isHidden = false
+            if self.thePicker.isHidden == false {
+                self.thePicker.isHidden = true
+                dropArrow()
+            } else if thePicker.isHidden == true {
+                self.thePicker.isHidden = false
+                upArrow()
+            }
+            
             textField.endEditing(true)
         }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-
-         localsearchinfo.arrProductName = []
-         localsearchinfo.arrCompanyName = []
-         localsearchinfo.arrIssueDate = []
-         localsearchinfo.arrDetail = []
-         localsearchinfo.arrNo = []
-        //create empty arrays
+        self.showSpinner(onView: self.view)
         let searchInPut = searchBar.text!
         
-        let client = localclientinfo.clientid
-        let uid = localclientinfo.infosafeid
-        let c = localcriteriainfo.code
-        let p = 1
-        let psize = 50
-        let apptp = localclientinfo.apptype
-        
-//        localsearchinfo.init(pcount: <#T##Int?#>, ocount: <#T##Int?#>, lcount: <#T##Int?#>, pageno: <#T##Int?#>, item: <#T##[localsearchinfo.item]?#>)
-//        localsearchinfo.resutls = []
-        
-        //call search function
-        self.showSpinner(onView: self.view)
-        csiWCF_VM().callSearch(inputData: searchInPut, client: client!, uid: uid!, c: c!, p: p, psize:psize, apptp:apptp!) { (completionReturnData) in
-            
-            do {
-                let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
-                
-                print(jsonResponse!)
-                
-                var localresult = localsearchinfo.init()
-            
-                
-                if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
-                    
-                    jsonArr1.forEach { info in
-                        
-                        var ritem = localsearchinfo.item()
-                        var ritemuf = localsearchinfo.uf()
-                   
-                        
-                        if let prodname = info["name"] as? [String: Any] {
-                            localsearchinfo.arrProductName.append(prodname["value"] as! String)
-//                            localsearchinfo.resutls[0].sdsno.append(prodname["value"] as! String)
-                            ritem.prodname = prodname["value"] as? String
-                        }
-                        if let comname = info["com"] as? [String: Any] {
-                            localsearchinfo.arrCompanyName.append(comname["value"] as! String)
-                            ritem.company = comname["value"] as? String
-                        }
-                        
-                        if let no = info["no"] as? [String: Any] {
-                            localsearchinfo.arrNo.append(no["value"] as! String)
-                            ritem.sdsno = no["value"] as? String
-                        }
-                        if let issueData = info["issue"] as? [String: Any] {
-                            localsearchinfo.arrIssueDate.append(issueData["value"] as! String)
-                            ritem.issueDate = issueData["value"] as? Date
-                        }
-                        //hanlde user field
-                        //ritem.ufs.append(ritemuf)
-                        localresult.results.append(ritem)
-                    }
-                    print(localresult.results.count)
-                    print(localresult.results[0].company)
-                }
-                
-                //                if let jsonArr2 = jsonResponse!["no"] as? [String: Any] {
-                //                    jsonArr2.forEach { sdsno in
-                //                        localsearchinfo.item.init(sdsno: sdsno.value as! String)
-                //
-                //                    }
-                //
-                //                }
-                
-                
-                
-            } catch let parsingError {
-                print("Error", parsingError)
-            }
-//            print("Result: \(localsearchinfo.resutls[0])")
-            
-            //handle true or false for search function
-            DispatchQueue.main.async {
-                if localsearchinfo.arrNo != [] {
-                    
+        csiWCF_VM().callSearch(inputData: searchInPut) { (completionReturnData) in
+            if completionReturnData == true {
+                DispatchQueue.main.async {
                     self.removeSpinner()
                     self.tableDisplay.reloadData()
-                    
-                } else if localsearchinfo.arrNo == [] {
+                }
+            } else if completionReturnData == false{
+                DispatchQueue.main.async {
                     self.removeSpinner()
-                    let ac = UIAlertController(title: "Search Failed", message: "Please check the network and type the correct infomation search again.", preferredStyle: .alert)
-                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
-                    self.present(ac, animated: true)
-                }  else {
-                    self.removeSpinner()
-                    let ac = UIAlertController(title: "Failed", message: "Server is no response.", preferredStyle: .alert)
-                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
-                    self.present(ac, animated: true)
+                    self.showAlert(title: "Failed", message: "Cannot found the search results.")
                 }
             }
+            
         }
+        
     }
+    
     @IBAction func pickerBtnTapped(_ sender: Any) {
         if thePicker.isHidden == false {
             self.thePicker.isHidden = true
+            dropArrow()
         } else if thePicker.isHidden == true {
             self.thePicker.isHidden = false
+            upArrow()
         }
+    }
+    
+    func dropArrow() {
+        let image = UIImage(named: "drop arrow")
+        self.pickerBtn.setImage(image, for: .normal)
+    }
+    
+    func upArrow() {
+        let image = UIImage(named: "up arrow")
+        self.pickerBtn.setImage(image, for: .normal)
     }
     
 }
 
 
-
-
-
-
-
 extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     // non-expandable
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return localsearchinfo.arrCompanyName.count
+        return localsearchinfo.results.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
-        //csiclientsearchinfo.details = ("Issue date: \(csiclientsearchinfo.arrIssueDate[indexPath.row]) \n SDS No.: \(csiclientsearchinfo.arrNo[indexPath.row])")
-        localsearchinfo.details = ("SDS No.: \(localsearchinfo.arrNo[indexPath.row]) \nCompany Name: \(localsearchinfo.arrCompanyName[indexPath.row]) \nIssue Date: \(localsearchinfo.arrIssueDate[indexPath.row])")
+
+        localsearchinfo.details = ("SDS No.: \(localsearchinfo.results[indexPath.row].sdsno ?? "") \nCompany Name: \(localsearchinfo.results[indexPath.row].company ?? "") \nIssue Date: \( localsearchinfo.results[indexPath.row].issueDate ?? "")")
         
-        cell?.name.text = localsearchinfo.arrProductName[indexPath.row]
+        cell?.name.text = localsearchinfo.results[indexPath.row].prodname
         cell?.details.text = localsearchinfo.details
         
         //set row number of button that inside cell when tap
@@ -287,7 +222,7 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         
         rowNo = indexPath.row
         
-        localcurrentSDS.sdsNo = localsearchinfo.arrNo[rowNo]
+        localcurrentSDS.sdsNo = localsearchinfo.results[rowNo].sdsno
         let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
         self.navigationController?.pushViewController(sdsJump!, animated: true)
     }
@@ -302,9 +237,9 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     // swipe to delete the row function
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            localsearchinfo.arrCompanyName.remove(at: indexPath.row)
-            localsearchinfo.arrIssueDate.remove(at: indexPath.row)
-            localsearchinfo.arrNo.remove(at: indexPath.row)
+            localsearchinfo.results.remove(at: indexPath.row)
+//            localsearchinfo.arrIssueDate.remove(at: indexPath.row)
+//            localsearchinfo.arrNo.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view

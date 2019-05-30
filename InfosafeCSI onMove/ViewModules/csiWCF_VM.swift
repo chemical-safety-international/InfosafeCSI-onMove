@@ -26,23 +26,105 @@ class csiWCF_VM: UIViewController {
         }
     }
     
-    func callSearch(inputData:String, client: String, uid: String, c: String, p: Int, psize:Int, apptp: Int, completion:@escaping(Data) -> Void) {
+    func callSearch(inputData:String, completion:@escaping(Bool) -> Void) {
         
-        // call the search function in the WCF
-        csiWCF_GetSDSSearchResultsPage(inputData: inputData, client: client, uid: uid, c: c, p: p, psize: psize, apptp: apptp) {
-            (completionReturnData) in
+        localsearchinfo.details = ""
+        
+        //give values
+        
+        let client = localclientinfo.clientid
+        let uid = localclientinfo.infosafeid
+        let c = localcriteriainfo.code
+        let p = 1
+        let psize = 50
+        let apptp = localclientinfo.apptype
+        
+        
+        //call search function
+        
+        csiWCF_GetSDSSearchResultsPage(inputData: inputData, client: client!, uid: uid!, c: c!, p: p, psize:psize, apptp:apptp!) { (completionReturnData) in
             
-            completion(completionReturnData)
+            do {
+                let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
+                
+                //print(jsonResponse!)
+                
+                //var localresult = localsearchinfo()
+                localsearchinfo.results = []
+                
+                
+                if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
+                    
+                    jsonArr1.forEach { info in
+                        
+                        var ritem = localsearchinfo.item()
+                        //var ritemuf = localsearchinfo.uf()
+                        
+                        
+                        
+                        if let prodname = info["name"] as? [String: Any] {
+                            ritem.prodname = prodname["value"] as? String
+                        }
+                        if let comname = info["com"] as? [String: Any] {
+                            ritem.company = comname["value"] as? String
+                        }
+                        
+                        if let no = info["no"] as? [String: Any] {
+                            ritem.sdsno = no["value"] as? String
+                        }
+                        if let issueData = info["issue"] as? [String: Any] {
+                            ritem.issueDate = issueData["value"] as? String
+                        }
+                        //hanlde user field
+                        //ritem.ufs.append(ritemuf)
+                        //localresult.results.append(ritem)
+                        localsearchinfo.results.append(ritem)
+                    }
+                }
+                
+            } catch let parsingError {
+                print("Error", parsingError)
+            }
             
-//            if completionReturnData.contains("false") {
-//                completion("false")
-//            } else if completionReturnData.contains("true") {
+            if localsearchinfo.results != nil {
+                completion(true)
+            } else if localsearchinfo.results == nil {
+
+                completion(false)
+            }  else {
+                completion(false)
+            }
+//            //handle true or false for search function
+//            DispatchQueue.main.async {
+//                if localsearchinfo.results != nil {
 //
-//                completion("true")
-//            } else {
-//                completion("Error")
+//                    self.removeSpinner()
+//                    //                    self.tableDisplay.reloadData()
+//                    completion(true)
+//
+//                } else if localsearchinfo.results == nil {
+//                    self.removeSpinner()
+//                    let ac = UIAlertController(title: "Search Failed", message: "Please check the network and type the correct infomation search again.", preferredStyle: .alert)
+//                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
+//                    self.present(ac, animated: true)
+//                    completion(false)
+//                }  else {
+//                    self.removeSpinner()
+//                    let ac = UIAlertController(title: "Failed", message: "Server is no response.", preferredStyle: .alert)
+//                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
+//                    self.present(ac, animated: true)
+//                    completion(false)
+//                }
 //            }
         }
+        
+//        // call the search function in the WCF
+//        csiWCF_GetSDSSearchResultsPage(inputData: inputData, client: client, uid: uid, c: c, p: p, psize: psize, apptp: apptp) {
+//            (completionReturnData) in
+//
+//            completion(completionReturnData)
+//
+//        }
     }
     
     func callCriteriaList(completion:@escaping(String) -> Void) {
@@ -80,7 +162,7 @@ class csiWCF_VM: UIViewController {
                     </style>
                     </head>
                     <body>
-                    \(output.html)
+                    \(output.html ?? "")
                     </body>
                     </html>
                     """
