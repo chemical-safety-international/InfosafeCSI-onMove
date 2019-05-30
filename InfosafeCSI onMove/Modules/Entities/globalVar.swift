@@ -48,7 +48,7 @@ struct localcriteriainfo {
     static var searchValue: String!
 }
 
-var localresult: localsearchinfo!
+
 
 struct localsearchinfo {
      var pcount: Int!
@@ -72,7 +72,6 @@ struct localsearchinfo {
         var subrisk1: String!
         var ufs: [uf]!
     }
-    let item: [item]!
     struct uf {
         var uftitle: String!
         var uftext: String!

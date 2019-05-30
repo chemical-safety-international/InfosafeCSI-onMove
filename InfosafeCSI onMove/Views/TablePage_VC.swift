@@ -168,35 +168,43 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
                 
-                //print(jsonResponse!)
+                print(jsonResponse!)
                 
-                
-                
+                var localresult = localsearchinfo.init()
+            
                 
                 if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
                     
                     jsonArr1.forEach { info in
                         
+                        var ritem = localsearchinfo.item()
+                        var ritemuf = localsearchinfo.uf()
+                   
+                        
                         if let prodname = info["name"] as? [String: Any] {
                             localsearchinfo.arrProductName.append(prodname["value"] as! String)
 //                            localsearchinfo.resutls[0].sdsno.append(prodname["value"] as! String)
-                            
+                            ritem.prodname = prodname["value"] as? String
                         }
                         if let comname = info["com"] as? [String: Any] {
                             localsearchinfo.arrCompanyName.append(comname["value"] as! String)
-                            
+                            ritem.company = comname["value"] as? String
                         }
                         
                         if let no = info["no"] as? [String: Any] {
                             localsearchinfo.arrNo.append(no["value"] as! String)
+                            ritem.sdsno = no["value"] as? String
                         }
                         if let issueData = info["issue"] as? [String: Any] {
                             localsearchinfo.arrIssueDate.append(issueData["value"] as! String)
+                            ritem.issueDate = issueData["value"] as? Date
                         }
-                        
-                        
+                        //hanlde user field
+                        //ritem.ufs.append(ritemuf)
+                        localresult.results.append(ritem)
                     }
-                    
+                    print(localresult.results.count)
+                    print(localresult.results[0].company)
                 }
                 
                 //                if let jsonArr2 = jsonResponse!["no"] as? [String: Any] {
