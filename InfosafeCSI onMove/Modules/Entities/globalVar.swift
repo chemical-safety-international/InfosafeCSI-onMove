@@ -72,20 +72,24 @@ struct localsearchinfo {
         var subrisk1: String!
         var ufs: [uf]!
     }
+    let item: [item]!
     struct uf {
         var uftitle: String!
         var uftext: String!
     }
-    let item: [item]!
+    
     
     // old methods arrays
     static var arrProductName: [String]!
     static var arrCompanyName: [String]!
-    static var arrIssueDate: [Any]!
+    static var arrIssueDate: [String]!
     static var arrDetail: [String]!
     static var arrNo: [String]!
     static var details: String!
 }
+
+
+var resultData: localsearchinfo!
 
 struct localcurrentSDS {
     static var sdsNo: String!

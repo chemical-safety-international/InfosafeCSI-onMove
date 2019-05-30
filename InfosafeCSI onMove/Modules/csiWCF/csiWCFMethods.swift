@@ -71,77 +71,6 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
                 print(error?.localizedDescription ?? "Response Error")
                 return }
         completion(dataResponse)
-//        do{
-//
-//            //use JSONSerialization
-//            let jsonResponse = try JSONSerialization.jsonObject(with:
-//                dataResponse, options: []) as? [String: AnyObject]
-//
-//            print(jsonResponse!)
-//
-//
-//            if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
-//
-//                //print(jsonArr1)
-//
-//                jsonArr1.forEach { info in
-//                    if let com = info["com"] as? [String: Any] {
-//                        com.forEach { companyName in
-//
-//                            if companyName.key == "value"
-//                            {
-//                                localsearchinfo.arrCompanyName.append(companyName.value as! String)
-//                            }
-//                        }
-//                    }
-//
-////                    if let name = info["name"] as? [String: Any] {
-////                        name.forEach { pName in
-////                                if pName.key == "value"
-////                                {
-////                                    csiclientsearchinfo.arrProductName.append(pName.value as! String)
-////                                }
-////                            }
-////                        print(csiclientsearchinfo.arrProductName!)
-////                    }
-//                    if let no = info["no"] as? [String: Any] {
-//                        no.forEach { nocode in
-//                                if nocode.key == "value"
-//                                {
-//                                    localsearchinfo.arrNo.append(nocode.value as! String)
-//                                }
-//                            }
-//
-//                    }
-//
-////                    if let issue = info["issue"] as? [String: Any] {
-////                        issue.forEach { issueDate in
-////                                if issueDate.key == "value"
-////                                {
-////                                    if issueDate.value as? String != "" {
-////                                        print(issueDate.value)
-////                                        csiclientsearchinfo.arrIssueDate.append(issueDate.value as! String)
-////                                    } else if issueDate.value as? String == "" {
-////                                        csiclientsearchinfo.arrIssueDate.append(" ")
-////                                    }
-////
-////                                }
-////                            }
-////                    }
-//
-//                }
-//                if localsearchinfo.arrCompanyName != [] {
-//                    completion("true")
-//                } else {
-//                    completion("false")
-//                }
-//            }
-//
-//
-//
-//        } catch let parsingError {
-//            print("Error", parsingError)
-//        }
     }
     //start task
     task.resume()
@@ -231,6 +160,7 @@ func csiWCF_getSDS(clientid: String, uid: String, sdsNoGet: String, apptp : Stri
         do {
             let decoder = JSONDecoder()
             let model = try decoder.decode(outViewSDSData.self, from: dataResponse)
+
             completion(model)
 
         } catch let parsingError {

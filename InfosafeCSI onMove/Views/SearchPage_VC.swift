@@ -74,7 +74,9 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
         
         //create empty arrays
         let searchInPut = searchBar.text!
+        localsearchinfo.arrProductName = []
         localsearchinfo.arrCompanyName = []
+        localsearchinfo.arrIssueDate = []
         localsearchinfo.arrDetail = []
         localsearchinfo.arrNo = []
         
@@ -92,9 +94,8 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
         self.showSpinner(onView: self.view)
         csiWCF_VM().callSearch(inputData: searchInPut, client: client!, uid: uid!, c: c!, p: p, psize:psize, apptp:apptp!) { (completionReturnData) in
             
-//            var resultData: localsearchinfo!
-//
-//            resultData.results[0].sdsno = ""
+           // var resultData: localsearchinfo!
+//            var count1: Int = 0
             
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
@@ -102,41 +103,29 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
                 //print(jsonResponse!)
                 
                 if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
-                    
+        
                     jsonArr1.forEach { info in
-//                        if let prodname = info["name"] as? [String: Any] {
-//                            prodname.forEach { pn in
-//                                if pn.key == "value" {
-//                                    localsearchinfo.arrProductName.append(pn.value as! String)
-//                                }
-//
-//                            }
-//                        }
+                        
+                        if let prodname = info["name"] as? [String: Any] {
+                            localsearchinfo.arrProductName.append(prodname["value"] as! String)
+                        }
                         if let comname = info["com"] as? [String: Any] {
-                            comname.forEach { cn in
-                                if cn.key == "value" {
-                                    localsearchinfo.arrCompanyName.append(cn.value as! String)
-                                }
-                                
-                            }
+                            localsearchinfo.arrCompanyName.append(comname["value"] as! String)
                             
                         }
                         
                         if let no = info["no"] as? [String: Any] {
-                            no.forEach { nocode in
-                                    if nocode.key == "value"
-                                    {
-                                        localsearchinfo.arrNo.append(nocode.value as! String)
-                                    }
-                                }
+                            localsearchinfo.arrNo.append(no["value"] as! String)
+                        }
+                        
+                        if let issueData = info["issue"] as? [String: Any] {
+                            localsearchinfo.arrIssueDate.append(issueData["value"] as! String)
                         }
                         
                         
                     }
                     
                 }
-//                print(localsearchinfo.arrProductName!)
-//                print(localsearchinfo.arrCompanyName!)
                 
                 //                if let jsonArr2 = jsonResponse!["no"] as? [String: Any] {
                 //                    jsonArr2.forEach { sdsno in
@@ -185,6 +174,7 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
             DispatchQueue.main.async {
                 if completionReturnData.contains("true") {
                     self.cPickView.text = localcriteriainfo.arrName[0]
+                    localcriteriainfo.pickerValue = localcriteriainfo.arrName[0]
                     self.thePicker.reloadAllComponents()
                 } else if completionReturnData.contains("false") {
                     let ac = UIAlertController(title: "Failed", message: "Cannot get the criteria list!", preferredStyle: .alert)

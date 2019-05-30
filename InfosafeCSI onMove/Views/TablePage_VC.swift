@@ -142,7 +142,12 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        
+
+         localsearchinfo.arrProductName = []
+         localsearchinfo.arrCompanyName = []
+         localsearchinfo.arrIssueDate = []
+         localsearchinfo.arrDetail = []
+         localsearchinfo.arrNo = []
         //create empty arrays
         let searchInPut = searchBar.text!
         
@@ -153,6 +158,8 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
         let psize = 50
         let apptp = localclientinfo.apptype
         
+//        localsearchinfo.init(pcount: <#T##Int?#>, ocount: <#T##Int?#>, lcount: <#T##Int?#>, pageno: <#T##Int?#>, item: <#T##[localsearchinfo.item]?#>)
+        localsearchinfo.resutls = []
         
         //call search function
         self.showSpinner(onView: self.view)
@@ -161,47 +168,71 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
                 
+                //print(jsonResponse!)
                 
-                if let jsonArr1 = jsonResponse!["name"] as? [String: Any] {
-                    jsonArr1.forEach { productName in
-                        localsearchinfo.arrProductName.append(productName.value as! String)
+                
+                
+                
+                if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
+                    
+                    jsonArr1.forEach { info in
+                        
+                        if let prodname = info["name"] as? [String: Any] {
+                            localsearchinfo.arrProductName.append(prodname["value"] as! String)
+                            localsearchinfo.resutls[0].sdsno.append(prodname["value"] as! String)
+                            
+                        }
+                        if let comname = info["com"] as? [String: Any] {
+                            localsearchinfo.arrCompanyName.append(comname["value"] as! String)
+                            
+                        }
+                        
+                        if let no = info["no"] as? [String: Any] {
+                            localsearchinfo.arrNo.append(no["value"] as! String)
+                        }
+                        if let issueData = info["issue"] as? [String: Any] {
+                            localsearchinfo.arrIssueDate.append(issueData["value"] as! String)
+                        }
+                        
+                        
                     }
                     
                 }
-                print(localsearchinfo.arrProductName!)
                 
-//                if let jsonArr2 = jsonResponse!["no"] as? [String: Any] {
-//                    jsonArr2.forEach { sdsno in
-//                        localsearchinfo.item.init(sdsno: sdsno.value as! String)
-//                        
-//                    }
-//                    
-//                }
+                //                if let jsonArr2 = jsonResponse!["no"] as? [String: Any] {
+                //                    jsonArr2.forEach { sdsno in
+                //                        localsearchinfo.item.init(sdsno: sdsno.value as! String)
+                //
+                //                    }
+                //
+                //                }
                 
                 
                 
             } catch let parsingError {
                 print("Error", parsingError)
             }
+            print("Result: \(localsearchinfo.resutls[0])")
             
             //handle true or false for search function
-//            DispatchQueue.main.async {
-//                if completionReturnData.contains("true") {
-//                    self.removeSpinner()
-//                    self.tableDisplay.reloadData()
-//
-//                } else if completionReturnData.contains("false") {
-//                    self.removeSpinner()
-//                    let ac = UIAlertController(title: "Search Failed", message: "Please check the network and type the correct infomation search again.", preferredStyle: .alert)
-//                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
-//                    self.present(ac, animated: true)
-//                }  else if completionReturnData.contains("Error") {
-//                    self.removeSpinner()
-//                    let ac = UIAlertController(title: "Failed", message: "Server is no response.", preferredStyle: .alert)
-//                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
-//                    self.present(ac, animated: true)
-//                }
-//            }
+            DispatchQueue.main.async {
+                if localsearchinfo.arrNo != [] {
+                    
+                    self.removeSpinner()
+                    self.tableDisplay.reloadData()
+                    
+                } else if localsearchinfo.arrNo == [] {
+                    self.removeSpinner()
+                    let ac = UIAlertController(title: "Search Failed", message: "Please check the network and type the correct infomation search again.", preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
+                    self.present(ac, animated: true)
+                }  else {
+                    self.removeSpinner()
+                    let ac = UIAlertController(title: "Failed", message: "Server is no response.", preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
+                    self.present(ac, animated: true)
+                }
+            }
         }
     }
     @IBAction func pickerBtnTapped(_ sender: Any) {
@@ -229,9 +260,9 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
         //csiclientsearchinfo.details = ("Issue date: \(csiclientsearchinfo.arrIssueDate[indexPath.row]) \n SDS No.: \(csiclientsearchinfo.arrNo[indexPath.row])")
-        localsearchinfo.details = ("SDS No.: \(localsearchinfo.arrNo[indexPath.row])")
+        localsearchinfo.details = ("SDS No.: \(localsearchinfo.arrNo[indexPath.row]) \nCompany Name: \(localsearchinfo.arrCompanyName[indexPath.row]) \nIssue Date: \(localsearchinfo.arrIssueDate[indexPath.row])")
         
-        cell?.name.text = localsearchinfo.arrCompanyName[indexPath.row]
+        cell?.name.text = localsearchinfo.arrProductName[indexPath.row]
         cell?.details.text = localsearchinfo.details
         
         //set row number of button that inside cell when tap
