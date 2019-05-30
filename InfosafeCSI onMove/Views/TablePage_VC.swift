@@ -159,7 +159,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
         let apptp = localclientinfo.apptype
         
 //        localsearchinfo.init(pcount: <#T##Int?#>, ocount: <#T##Int?#>, lcount: <#T##Int?#>, pageno: <#T##Int?#>, item: <#T##[localsearchinfo.item]?#>)
-        localsearchinfo.resutls = []
+//        localsearchinfo.resutls = []
         
         //call search function
         self.showSpinner(onView: self.view)
@@ -179,7 +179,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
                         
                         if let prodname = info["name"] as? [String: Any] {
                             localsearchinfo.arrProductName.append(prodname["value"] as! String)
-                            localsearchinfo.resutls[0].sdsno.append(prodname["value"] as! String)
+//                            localsearchinfo.resutls[0].sdsno.append(prodname["value"] as! String)
                             
                         }
                         if let comname = info["com"] as? [String: Any] {
@@ -212,7 +212,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
             } catch let parsingError {
                 print("Error", parsingError)
             }
-            print("Result: \(localsearchinfo.resutls[0])")
+//            print("Result: \(localsearchinfo.resutls[0])")
             
             //handle true or false for search function
             DispatchQueue.main.async {
