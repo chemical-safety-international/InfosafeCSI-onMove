@@ -13,10 +13,11 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
     
 
     //IBOutlet
-    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var cPickView: UITextField!
     @IBOutlet weak var thePicker: UIPickerView!
     @IBOutlet weak var pickerBtn: UIButton!
+    @IBOutlet weak var searchbar: UISearchBar!
+    @IBOutlet weak var searchBtn: UIButton!
     
     
     override func viewDidLoad() {
@@ -24,9 +25,15 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
         
         self.callCriteriaList()
         // Do any additional setup after loading the view.
-        self.searchBar.delegate = self
+        self.searchbar.delegate = self
         thePicker.isHidden = true
         self.hideKeyboardWhenTappedAround()
+        thePicker.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
+    }
+    
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,33 +53,44 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
         self.cPickView.endEditing(true)
         thePicker.isHidden = true
         dropArrow()
+        self.searchBtn.isHidden = false
     }
     
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        searchBar.setShowsCancelButton(false, animated: true)
+        searchbar.resignFirstResponder()
+        searchbar.setShowsCancelButton(false, animated: true)
         self.view.endEditing(true)
+        self.searchBtn.isHidden = false
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(true, animated: true)
-        guard let firstSub = searchBar.subviews.first else {return}
+        searchbar.setShowsCancelButton(true, animated: true)
+        guard let firstSub = searchbar.subviews.first else {return}
         firstSub.subviews.forEach{
             ($0 as? UITextField)?.clearButtonMode = .never
         }
+        self.searchBtn.isHidden = true
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(false, animated: true)
-        searchBar.text = ""
-        searchBar.endEditing(true)
+        searchbar.setShowsCancelButton(false, animated: true)
+        searchbar.text = ""
+        searchbar.endEditing(true)
+        self.searchBtn.isHidden = false
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
+        searchbar.resignFirstResponder()
+        searchFunction()
+    }
+    @IBAction func searchBtnTapped(_ sender: Any) {
+        searchFunction()
+    }
+    
+    func searchFunction() {
         self.showSpinner(onView: self.view)
-        let searchInPut = searchBar.text!
+        let searchInPut = searchbar.text!
         localcriteriainfo.searchValue = searchInPut
         
         csiWCF_VM().callSearch(inputData: searchInPut) { (completionReturnData) in
@@ -88,10 +106,9 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
                     self.showAlert(title: "Failed", message: "Cannot found the search results.")
                 }
             }
-
+            
         }
     }
-    
     
 
     
@@ -136,7 +153,6 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        self.view.endEditing(true)
         return localcriteriainfo.arrName[row]
     }
     
@@ -160,11 +176,22 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
                 self.thePicker.isHidden = false
                 upArrow()
             }
-            
+
             textField.endEditing(true)
+            self.view.endEditing(true)
         }
-        
+
     }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return false
+    }
+    
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        self.view.endEditing(true)
+//        self.cPickView.resignFirstResponder()
+//        return false
+//    }
     
     func dropArrow() {
         let image = UIImage(named: "drop arrow")

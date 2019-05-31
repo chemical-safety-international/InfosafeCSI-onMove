@@ -47,9 +47,9 @@ class csiWCF_VM: UIViewController {
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
                 
-                //print(jsonResponse!)
+                print(jsonResponse!)
                 
-                //var localresult = localsearchinfo()
+                var localresult = localsearchinfo()
                 localsearchinfo.results = []
                 
                 
@@ -75,12 +75,26 @@ class csiWCF_VM: UIViewController {
                         if let issueData = info["issue"] as? [String: Any] {
                             ritem.issueDate = issueData["value"] as? String
                         }
+                        if let key = info["key"] as? [String: Any] {
+                            ritem.synno = key["value"] as? String
+                        }
+                        if let unno = info["unno"] as? [String: Any] {
+                            ritem.unno = unno["value"] as? String
+                        }
+                        if let prodtype = info["nametype"] as? [String: Any] {
+                            ritem.prodtype = prodtype["value"] as? String
+                        }
                         //hanlde user field
                         //ritem.ufs.append(ritemuf)
                         //localresult.results.append(ritem)
                         localsearchinfo.results.append(ritem)
                     }
-                }
+            }
+                localresult.pcount = jsonResponse!["pcount"] as? Int
+                localresult.pageno = jsonResponse!["no"] as? Int
+                localresult.lcount = jsonResponse!["lcount"] as? Int
+                localresult.ocount = jsonResponse!["ocount"] as? Int
+                localsearchinfo.pdetails = ("Pcount: \(localresult.pcount ?? 0), Page No.: \(localresult.pageno ?? 0), Lcount: \(localresult.lcount ?? 0), Ocount: \(localresult.ocount ?? 0)")
                 
             } catch let parsingError {
                 print("Error", parsingError)
@@ -94,37 +108,7 @@ class csiWCF_VM: UIViewController {
             }  else {
                 completion(false)
             }
-//            //handle true or false for search function
-//            DispatchQueue.main.async {
-//                if localsearchinfo.results != nil {
-//
-//                    self.removeSpinner()
-//                    //                    self.tableDisplay.reloadData()
-//                    completion(true)
-//
-//                } else if localsearchinfo.results == nil {
-//                    self.removeSpinner()
-//                    let ac = UIAlertController(title: "Search Failed", message: "Please check the network and type the correct infomation search again.", preferredStyle: .alert)
-//                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
-//                    self.present(ac, animated: true)
-//                    completion(false)
-//                }  else {
-//                    self.removeSpinner()
-//                    let ac = UIAlertController(title: "Failed", message: "Server is no response.", preferredStyle: .alert)
-//                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
-//                    self.present(ac, animated: true)
-//                    completion(false)
-//                }
-//            }
         }
-        
-//        // call the search function in the WCF
-//        csiWCF_GetSDSSearchResultsPage(inputData: inputData, client: client, uid: uid, c: c, p: p, psize: psize, apptp: apptp) {
-//            (completionReturnData) in
-//
-//            completion(completionReturnData)
-//
-//        }
     }
     
     func callCriteriaList(completion:@escaping(String) -> Void) {

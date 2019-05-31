@@ -26,13 +26,13 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         self.navigationController?.navigationBar.isHidden = true
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+
         self.navigationController?.navigationBar.isHidden = false
     }
     
@@ -40,48 +40,55 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == passwordTextField {
             textField.resignFirstResponder()
-            
-            //call the function with input from viewModule
-            let email = userIDTextField.text!
-            let password = passwordTextField.text!
-            
-            self.showSpinner(onView: self.view)
-            csiWCF_VM().callLogin(email: email, password: password) { (completion) in
-                
-                //here dataResponse received from a network request
-                do {
-                    //here dataResponse received from a network request
-                    let decoder = JSONDecoder()
-                    let model = try decoder.decode(outLoginData.self, from:
-                        completion) //Decode JSON Response Data
-                    localclientinfo.clientid = model.clientid
-                    localclientinfo.clientmemberid = model.clientmemberid
-                    localclientinfo.infosafeid = model.infosafeid
-                    localclientinfo.clientcode = model.clientcode
-                    localclientinfo.apptype = model.apptype
-                    localclientinfo.error = model.error
-        
-                    DispatchQueue.main.async {
-                        if model.passed == true {
-                            self.removeSpinner()
-                            let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
-                            self.navigationController?.pushViewController(loginJump!, animated: true)
-                        } else if model.passed == false {
-                            self.removeSpinner()
-                            self.showAlert(title: "Verify Failed", message: "Email or Password is invaild, please try again.")
-                            self.passwordTextField.text = ""
-                        } else {
-                            self.removeSpinner()
-                            self.showAlert(title: "Failed", message: "Server is no response.")
-                        }
-                    }
-                } catch let parsingError {
-                    print("Error", parsingError)
-                }
-            }
+            loginFunction()
             return false
         }
         return true
+    }
+    
+    @IBAction func loginBtnTapped(_ sender: Any) {
+        loginFunction()
+    }
+    
+    func loginFunction() {
+        //call the function with input from viewModule
+        let email = userIDTextField.text!
+        let password = passwordTextField.text!
+        
+        self.showSpinner(onView: self.view)
+        csiWCF_VM().callLogin(email: email, password: password) { (completion) in
+            
+            //here dataResponse received from a network request
+            do {
+                //here dataResponse received from a network request
+                let decoder = JSONDecoder()
+                let model = try decoder.decode(outLoginData.self, from:
+                    completion) //Decode JSON Response Data
+                localclientinfo.clientid = model.clientid
+                localclientinfo.clientmemberid = model.clientmemberid
+                localclientinfo.infosafeid = model.infosafeid
+                localclientinfo.clientcode = model.clientcode
+                localclientinfo.apptype = model.apptype
+                localclientinfo.error = model.error
+                
+                DispatchQueue.main.async {
+                    if model.passed == true {
+                        self.removeSpinner()
+                        let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
+                        self.navigationController?.pushViewController(loginJump!, animated: true)
+                    } else if model.passed == false {
+                        self.removeSpinner()
+                        self.showAlert(title: "Verify Failed", message: "Email or Password is invaild, please try again.")
+                        self.passwordTextField.text = ""
+                    } else {
+                        self.removeSpinner()
+                        self.showAlert(title: "Failed", message: "Server is no response.")
+                    }
+                }
+            } catch let parsingError {
+                print("Error", parsingError)
+            }
+        }
     }
 }
 

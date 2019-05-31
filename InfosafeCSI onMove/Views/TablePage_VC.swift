@@ -18,6 +18,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
     @IBOutlet weak var thePicker: UIPickerView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var pickerBtn: UIButton!
+    @IBOutlet weak var countLabel: UILabel!
     
     
     
@@ -33,27 +34,29 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
         self.tableDisplay.delegate = self
         self.tableDisplay.dataSource = self
-        tableDisplay.rowHeight = UITableView.automaticDimension
+        
 //        tableDisplay.estimatedRowHeight = 100
         thePicker.isHidden = true
-        
+//        tableDisplay.rowHeight = UITableView.automaticDimension
         pickerTextField.text = localcriteriainfo.pickerValue
         searchBar.text = localcriteriainfo.searchValue
         self.hideKeyboardWhenTappedAround()
+        self.countLabel.text = localsearchinfo.pdetails
         self.tableDisplay.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.navigationController?.navigationBar.isHidden = true
+//        super.viewWillAppear(animated)
+//        self.navigationController?.navigationBar.isHidden = true
+        tableDisplay.estimatedRowHeight = 145
+        tableDisplay.rowHeight = UITableView.automaticDimension
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        self.navigationController?.navigationBar.isHidden = false
-    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//
+//        self.navigationController?.navigationBar.isHidden = false
+//    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -158,6 +161,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
             if completionReturnData == true {
                 DispatchQueue.main.async {
                     self.removeSpinner()
+                    self.countLabel.text = localsearchinfo.pdetails
                     self.tableDisplay.reloadData()
                 }
             } else if completionReturnData == false{
@@ -203,7 +207,7 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
 
-        localsearchinfo.details = ("SDS No.: \(localsearchinfo.results[indexPath.row].sdsno ?? "") \nCompany Name: \(localsearchinfo.results[indexPath.row].company ?? "") \nIssue Date: \( localsearchinfo.results[indexPath.row].issueDate ?? "")")
+        localsearchinfo.details = ("SDS No.: \(localsearchinfo.results[indexPath.row].sdsno ?? "") \nCompany Name: \(localsearchinfo.results[indexPath.row].company ?? "") \nIssue Date: \( localsearchinfo.results[indexPath.row].issueDate ?? "") \nSynonyms No.: \(localsearchinfo.results[indexPath.row].synno ?? "") \nUNNo: \(localsearchinfo.results[indexPath.row].unno ?? "") \nName Type: \(localsearchinfo.results[indexPath.row].prodtype ?? "")")
         
         cell?.name.text = localsearchinfo.results[indexPath.row].prodname
         cell?.details.text = localsearchinfo.details
@@ -222,16 +226,16 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         
         rowNo = indexPath.row
         
-        localcurrentSDS.sdsNo = localsearchinfo.results[rowNo].sdsno
+        localcurrentSDS.sdsNo = localsearchinfo.results[rowNo].synno
         let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
         self.navigationController?.pushViewController(sdsJump!, animated: true)
     }
     
     // change the height to expand tableDisplay value
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        return 100
-        
+
+        return 135
+
     }
     
     // swipe to delete the row function

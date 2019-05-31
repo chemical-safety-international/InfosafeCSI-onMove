@@ -107,6 +107,7 @@ struct localsearchinfo {
     
     // old methods arrays
     static var details: String!
+    static var pdetails: String!
 }
 
 
