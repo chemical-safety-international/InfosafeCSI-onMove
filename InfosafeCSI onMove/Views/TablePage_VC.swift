@@ -79,7 +79,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
         
         let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
     
-        localcurrentSDS.sdsNo = localsearchinfo.results[buttonRow].sdsno
+        localcurrentSDS.sdsNo = localsearchinfo.results[buttonRow].synno
         
         self.navigationController?.pushViewController(sdsJump!, animated: true)
     }
