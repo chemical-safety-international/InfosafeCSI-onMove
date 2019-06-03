@@ -50,7 +50,7 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
  
     //create json data
     let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":c, "v":inputData, "p":p, "psize":psize]
-    print(json)
+    
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
     //setup url
@@ -89,7 +89,6 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, completion
     
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
-    print(json)
     //setup url
     let url = URL(string: csiWCF_URLHeader + "GetSearchCriteriaList")!
     
@@ -142,7 +141,7 @@ func csiWCF_getSDS(clientid: String, uid: String, sdsNoGet: String, apptp : Stri
     
     let json: [String: Any] = ["client":clientid, "apptp": apptp, "uid":uid, "sds": sdsNoGet, "rtype" : rtype, "regetFormat":"1", "f":"", "subf":""]
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
-    print(json)
+
     let url = URL(string: csiWCF_URLHeader + "ViewSDS")!
     
     var request = URLRequest(url:url)

@@ -121,13 +121,10 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
                     localcriteriainfo.pickerValue = localcriteriainfo.arrName[0]
                     self.thePicker.reloadAllComponents()
                 } else if completionReturnData.contains("false") {
-                    let ac = UIAlertController(title: "Failed", message: "Cannot get the criteria list!", preferredStyle: .alert)
-                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
-                    self.present(ac, animated: true)
+                    self.showAlert(title: "Failed", message: "Cannot get the criteria list!")
+                    
                 }  else if completionReturnData.contains("Error") {
-                    let ac = UIAlertController(title: "Failed", message: "Cannot get the criteria list!", preferredStyle: .alert)
-                    ac.addAction(UIAlertAction(title: "OK", style:  .default))
-                    self.present(ac, animated: true)
+                    self.showAlert(title: "Failed", message: "Cannot get the criteria list!")
                 }
             }
         }

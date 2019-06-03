@@ -51,10 +51,11 @@ struct localcriteriainfo {
 
 
 struct localsearchinfo {
-     var pcount: Int!
-     var ocount: Int!
-     var lcount: Int!
-     var pageno: Int!
+    var pcount: Int!
+    var ocount: Int!
+    var lcount: Int!
+    var pageno: Int!
+    var result: Bool!
     
     static var results: [item]!
     
@@ -95,11 +96,12 @@ struct localsearchinfo {
             self.uftext = uftext
         }
     }
-    init(pcount: Int? = nil, ocount: Int? = nil, lcount: Int? = nil, pageno: Int? = nil, results: [item]? = nil) {
+    init(pcount: Int? = nil, ocount: Int? = nil, lcount: Int? = nil, pageno: Int? = nil, result: Bool? = nil, results: [item]? = nil) {
         self.pcount = pcount
         self.ocount = ocount
         self.lcount = lcount
         self.pageno = pageno
+        self.result = result
 //        self.results = results
     }
 
@@ -111,7 +113,6 @@ struct localsearchinfo {
 }
 
 
-var resultData: localsearchinfo!
 
 struct localcurrentSDS {
     static var sdsNo: String!

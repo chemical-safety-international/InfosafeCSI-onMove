@@ -13,6 +13,7 @@ class TableViewCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var details: UITextView!
     @IBOutlet weak var sdsBtn: UIButton!
+    @IBOutlet weak var nameType: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

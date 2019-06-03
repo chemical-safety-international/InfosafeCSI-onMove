@@ -8,23 +8,19 @@
 
 import UIKit
 
-class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     
 
     @IBOutlet weak var tableDisplay: UITableView!
-    
-    
-    @IBOutlet weak var pickerTextField: UITextField!
-    @IBOutlet weak var thePicker: UIPickerView!
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var pickerBtn: UIButton!
+
     @IBOutlet weak var countLabel: UILabel!
     
     
     
     var selectedIndex:Bool = false;
     var select = -1
-    var rowNo = 0
+//    var rowNo = 0
+    var rowno = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,34 +32,19 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
         self.tableDisplay.dataSource = self
         
 //        tableDisplay.estimatedRowHeight = 100
-        thePicker.isHidden = true
 //        tableDisplay.rowHeight = UITableView.automaticDimension
-        pickerTextField.text = localcriteriainfo.pickerValue
-        searchBar.text = localcriteriainfo.searchValue
         self.hideKeyboardWhenTappedAround()
         self.countLabel.text = localsearchinfo.pdetails
-        self.tableDisplay.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        self.navigationController?.navigationBar.isHidden = true
         tableDisplay.estimatedRowHeight = 145
         tableDisplay.rowHeight = UITableView.automaticDimension
     }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//
-//        self.navigationController?.navigationBar.isHidden = false
-//    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
-        thePicker.isHidden = true
-        pickerTextField.endEditing(true)
-        dropArrow()
-
     }
     
     @objc func loadList(notification: NSNotification) {
@@ -84,118 +65,8 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate,
         self.navigationController?.pushViewController(sdsJump!, animated: true)
     }
     
-    // search bar editing
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(false, animated: true)
-        self.view.endEditing(true)
-    }
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(true, animated: true)
-        guard let firstSub = searchBar.subviews.first else {return}
-        firstSub.subviews.forEach{
-            ($0 as? UITextField)?.clearButtonMode = .never
-        }
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(false, animated: true)
-        searchBar.text = ""
-        searchBar.endEditing(true)
-    }
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return localcriteriainfo.arrName.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.pickerTextField.text = localcriteriainfo.arrName[row]
-        localcriteriainfo.code = localcriteriainfo.arrCode[row]
-        pickerTextField.endEditing(true)
-        self.thePicker.isHidden = true
-        dropArrow()
-        
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        self.view.endEditing(true)
-        return localcriteriainfo.arrName[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        var pickerLabel: UILabel? = (view as? UILabel)
-        if pickerLabel == nil {
-            pickerLabel = UILabel()
-            pickerLabel?.font = UIFont.systemFont(ofSize: 25, weight: UIFont.Weight.bold)
-            pickerLabel?.textAlignment = .center
-        }
-        pickerLabel?.text = localcriteriainfo.arrName[row]
-        return pickerLabel!
-    }
-    
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField == self.pickerTextField {
-            if self.thePicker.isHidden == false {
-                self.thePicker.isHidden = true
-                dropArrow()
-            } else if thePicker.isHidden == true {
-                self.thePicker.isHidden = false
-                upArrow()
-            }
-            
-            textField.endEditing(true)
-        }
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        self.showSpinner(onView: self.view)
-        let searchInPut = searchBar.text!
-        
-        csiWCF_VM().callSearch(inputData: searchInPut) { (completionReturnData) in
-            if completionReturnData == true {
-                DispatchQueue.main.async {
-                    self.removeSpinner()
-                    self.countLabel.text = localsearchinfo.pdetails
-                    self.tableDisplay.reloadData()
-                }
-            } else if completionReturnData == false{
-                DispatchQueue.main.async {
-                    self.removeSpinner()
-                    self.showAlert(title: "Failed", message: "Cannot found the search results.")
-                }
-            }
-            
-        }
-        
-    }
-    
-    @IBAction func pickerBtnTapped(_ sender: Any) {
-        if thePicker.isHidden == false {
-            self.thePicker.isHidden = true
-            dropArrow()
-        } else if thePicker.isHidden == true {
-            self.thePicker.isHidden = false
-            upArrow()
-        }
-    }
-    
-    func dropArrow() {
-        let image = UIImage(named: "drop arrow")
-        self.pickerBtn.setImage(image, for: .normal)
-    }
-    
-    func upArrow() {
-        let image = UIImage(named: "up arrow")
-        self.pickerBtn.setImage(image, for: .normal)
-    }
-    
 }
+    
 
 
 extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
@@ -207,7 +78,31 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
 
-        localsearchinfo.details = ("SDS No.: \(localsearchinfo.results[indexPath.row].sdsno ?? "") \nCompany Name: \(localsearchinfo.results[indexPath.row].company ?? "") \nIssue Date: \( localsearchinfo.results[indexPath.row].issueDate ?? "") \nSynonyms No.: \(localsearchinfo.results[indexPath.row].synno ?? "") \nUNNo: \(localsearchinfo.results[indexPath.row].unno ?? "") \nName Type: \(localsearchinfo.results[indexPath.row].prodtype ?? "")")
+        localsearchinfo.details = ("SDS No.: \(localsearchinfo.results[indexPath.row].sdsno ?? "") \nCompany Name: \(localsearchinfo.results[indexPath.row].company ?? "") \nIssue Date: \( localsearchinfo.results[indexPath.row].issueDate ?? "") \nUNNo: \(localsearchinfo.results[indexPath.row].unno ?? "")")
+        
+        //setup name type pic
+        if localsearchinfo.results[indexPath.row].prodtype == "P" {
+            cell?.nameType?.image = UIImage(named: "P")
+        } else if localsearchinfo.results[indexPath.row].prodtype == "O" {
+            cell?.nameType?.image = UIImage(named: "O")
+        } else if localsearchinfo.results[indexPath.row].prodtype == "L" {
+            cell?.nameType?.image = UIImage(named: "L")
+        }
+        
+        //setup cell color
+        
+        if rowno == 1 {
+            cell?.backgroundColor = UIColor.white
+            cell?.name.textColor = UIColor.black
+            cell?.details.textColor = UIColor.black
+            rowno = 0
+        } else if rowno == 0 {
+            cell?.backgroundColor = UIColor.lightGray
+            cell?.name.textColor = UIColor.white
+            cell?.details.textColor = UIColor.white
+            rowno = 1
+        }
+        
         
         cell?.name.text = localsearchinfo.results[indexPath.row].prodname
         cell?.details.text = localsearchinfo.details
@@ -224,9 +119,11 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         
         self.view.endEditing(true)
         
-        rowNo = indexPath.row
+//        rowNo = indexPath.row
+//
+//        localcurrentSDS.sdsNo = localsearchinfo.results[rowNo].synno
         
-        localcurrentSDS.sdsNo = localsearchinfo.results[rowNo].synno
+        localcurrentSDS.sdsNo = localsearchinfo.results[indexPath.row].synno
         let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
         self.navigationController?.pushViewController(sdsJump!, animated: true)
     }
@@ -242,8 +139,6 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             localsearchinfo.results.remove(at: indexPath.row)
-//            localsearchinfo.arrIssueDate.remove(at: indexPath.row)
-//            localsearchinfo.arrNo.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view

@@ -163,7 +163,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1e9-TH-Vzm">
-                                <rect key="frame" x="8" y="238" width="398" height="600"/>
+                                <rect key="frame" x="8" y="156" width="398" height="682"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -182,18 +182,21 @@
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="th5-7q-3fh">
                                                     <rect key="frame" x="0.0" y="46" width="398" height="99"/>
-                                                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pOM-mG-2GW">
-                                                    <rect key="frame" x="0.0" y="0.0" width="398" height="145"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="398" height="142"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <connections>
                                                         <action selector="sdsViewBtnTapped:" destination="t3O-3d-EwC" eventType="touchUpInside" id="svR-0Q-Y2j"/>
                                                     </connections>
                                                 </button>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="L" translatesAutoresizingMaskIntoConstraints="NO" id="QWH-dE-mbH">
+                                                    <rect key="frame" x="378" y="62" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="th5-7q-3fh" secondAttribute="trailing" id="46H-Zf-O9I"/>
@@ -209,6 +212,7 @@
                                         <connections>
                                             <outlet property="details" destination="th5-7q-3fh" id="Kv6-SP-0bs"/>
                                             <outlet property="name" destination="kRg-vn-c0d" id="HQ3-zi-x5C"/>
+                                            <outlet property="nameType" destination="QWH-dE-mbH" id="Tbf-uC-9PK"/>
                                             <outlet property="sdsBtn" destination="pOM-mG-2GW" id="sSi-W2-J65"/>
                                         </connections>
                                     </tableViewCell>
@@ -218,40 +222,10 @@
                                     <outlet property="delegate" destination="t3O-3d-EwC" id="a4y-AQ-SuB"/>
                                 </connections>
                             </tableView>
-                            <searchBar contentMode="redraw" fixedFrame="YES" searchBarStyle="minimal" placeholder="Enter search" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UyJ-2c-Woq">
-                                <rect key="frame" x="0.0" y="194" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="t3O-3d-EwC" id="2uh-bt-nWi"/>
-                                </connections>
-                            </searchBar>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dZK-xu-MS6">
-                                <rect key="frame" x="8" y="156" width="398" height="30"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CSI Logo" translatesAutoresizingMaskIntoConstraints="NO" id="drq-Ev-IYX">
+                                <rect key="frame" x="39" y="112" width="336" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="t3O-3d-EwC" id="tO4-ih-OuU"/>
-                                </connections>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqy-dp-pQY">
-                                <rect key="frame" x="375" y="156" width="31" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="drop arrow"/>
-                                <connections>
-                                    <action selector="pickerBtnTapped:" destination="t3O-3d-EwC" eventType="touchUpInside" id="WKa-AF-1hc"/>
-                                </connections>
-                            </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KPp-kj-NrX">
-                                <rect key="frame" x="8" y="88" width="59" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <segue destination="GdH-TU-FXW" kind="show" id="g5q-lG-KDM"/>
-                                </connections>
-                            </button>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Count: xxxx, Pcount: xxx, PageCount: xx, Ocount: xxx" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YS5-e2-OBC">
                                 <rect key="frame" x="8" y="846" width="398" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
@@ -259,30 +233,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <pickerView contentMode="bottom" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eMJ-Ji-Lwb">
-                                <rect key="frame" x="8" y="496" width="398" height="400"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="t3O-3d-EwC" id="pFn-dq-Zub"/>
-                                    <outlet property="delegate" destination="t3O-3d-EwC" id="KR9-nE-BK7"/>
-                                </connections>
-                            </pickerView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CSI Logo" translatesAutoresizingMaskIntoConstraints="NO" id="drq-Ev-IYX">
-                                <rect key="frame" x="39" y="112" width="336" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="AQm-xN-eEr"/>
                     </view>
                     <connections>
                         <outlet property="countLabel" destination="YS5-e2-OBC" id="eZS-f4-IL6"/>
-                        <outlet property="pickerBtn" destination="hqy-dp-pQY" id="yXy-nB-jI8"/>
-                        <outlet property="pickerTextField" destination="dZK-xu-MS6" id="1kL-X6-myP"/>
-                        <outlet property="searchBar" destination="UyJ-2c-Woq" id="5Zi-FN-2Gd"/>
                         <outlet property="tableDisplay" destination="1e9-TH-Vzm" id="ieW-HQ-fhE"/>
-                        <outlet property="thePicker" destination="eMJ-Ji-Lwb" id="von-yA-vtT"/>
                         <segue destination="PT5-on-lP4" kind="show" id="Tfa-Ee-GOB"/>
                     </connections>
                 </viewController>
@@ -386,11 +343,11 @@
     </scenes>
     <resources>
         <image name="CSI Logo" width="305" height="38"/>
+        <image name="L" width="40" height="38"/>
         <image name="StartScreen" width="375" height="812"/>
         <image name="drop arrow" width="296" height="171"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="g5q-lG-KDM"/>
         <segue reference="MuK-dy-WTs"/>
     </inferredMetricsTieBreakers>
 </document>

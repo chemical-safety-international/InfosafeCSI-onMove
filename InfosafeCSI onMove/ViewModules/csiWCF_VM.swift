@@ -29,9 +29,10 @@ class csiWCF_VM: UIViewController {
     func callSearch(inputData:String, completion:@escaping(Bool) -> Void) {
         
         localsearchinfo.details = ""
+        var localresult = localsearchinfo()
+        localsearchinfo.results = []
         
         //give values
-        
         let client = localclientinfo.clientid
         let uid = localclientinfo.infosafeid
         let c = localcriteriainfo.code
@@ -41,26 +42,18 @@ class csiWCF_VM: UIViewController {
         
         
         //call search function
-        
         csiWCF_GetSDSSearchResultsPage(inputData: inputData, client: client!, uid: uid!, c: c!, p: p, psize:psize, apptp:apptp!) { (completionReturnData) in
             
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
-                
                 print(jsonResponse!)
-                
-                var localresult = localsearchinfo()
-                localsearchinfo.results = []
-                
-                
                 if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
                     
                     jsonArr1.forEach { info in
                         
                         var ritem = localsearchinfo.item()
                         //var ritemuf = localsearchinfo.uf()
-                        
-                        
+ 
                         
                         if let prodname = info["name"] as? [String: Any] {
                             ritem.prodname = prodname["value"] as? String
@@ -90,6 +83,7 @@ class csiWCF_VM: UIViewController {
                         localsearchinfo.results.append(ritem)
                     }
             }
+                localresult.result = jsonResponse!["result"] as? Bool
                 localresult.pcount = jsonResponse!["pcount"] as? Int
                 localresult.pageno = jsonResponse!["no"] as? Int
                 localresult.lcount = jsonResponse!["lcount"] as? Int
@@ -100,9 +94,9 @@ class csiWCF_VM: UIViewController {
                 print("Error", parsingError)
             }
             
-            if localsearchinfo.results != nil {
+            if  localresult.pcount != 0 {
                 completion(true)
-            } else if localsearchinfo.results == nil {
+            } else if localresult.result == false || localresult.pcount == 0 {
 
                 completion(false)
             }  else {
