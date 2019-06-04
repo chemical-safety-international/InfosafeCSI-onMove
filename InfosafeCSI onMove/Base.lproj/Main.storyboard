@@ -35,7 +35,7 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="gL7-Cc-8gy"/>
                                 </connections>
                             </textField>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CSI Logo" translatesAutoresizingMaskIntoConstraints="NO" id="arA-dx-5Ii">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CSI-Logo" translatesAutoresizingMaskIntoConstraints="NO" id="arA-dx-5Ii">
                                 <rect key="frame" x="75" y="118" width="270" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -87,7 +87,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hra-tY-Bby">
                                 <rect key="frame" x="363" y="221" width="31" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="drop arrow"/>
+                                <state key="normal" image="combox-down-arrow"/>
                                 <connections>
                                     <action selector="pickerBtnTapped:" destination="GdH-TU-FXW" eventType="touchUpInside" id="jso-0k-TDH"/>
                                 </connections>
@@ -100,7 +100,7 @@
                                     <outlet property="delegate" destination="GdH-TU-FXW" id="dvt-YK-U54"/>
                                 </connections>
                             </searchBar>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CSI Logo" translatesAutoresizingMaskIntoConstraints="NO" id="sHI-X1-wdJ">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CSI-Logo" translatesAutoresizingMaskIntoConstraints="NO" id="sHI-X1-wdJ">
                                 <rect key="frame" x="87" y="71" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -193,7 +193,7 @@
                                                         <action selector="sdsViewBtnTapped:" destination="t3O-3d-EwC" eventType="touchUpInside" id="svR-0Q-Y2j"/>
                                                     </connections>
                                                 </button>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="L" translatesAutoresizingMaskIntoConstraints="NO" id="QWH-dE-mbH">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ProdNameType-Local" translatesAutoresizingMaskIntoConstraints="NO" id="QWH-dE-mbH">
                                                     <rect key="frame" x="378" y="73" width="20" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -222,7 +222,7 @@
                                     <outlet property="delegate" destination="t3O-3d-EwC" id="a4y-AQ-SuB"/>
                                 </connections>
                             </tableView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CSI Logo" translatesAutoresizingMaskIntoConstraints="NO" id="drq-Ev-IYX">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CSI-Logo" translatesAutoresizingMaskIntoConstraints="NO" id="drq-Ev-IYX">
                                 <rect key="frame" x="39" y="112" width="336" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -284,7 +284,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="StartScreen" translatesAutoresizingMaskIntoConstraints="NO" id="jCO-rV-l04">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CSI-StartScreen" translatesAutoresizingMaskIntoConstraints="NO" id="jCO-rV-l04">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="805"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -308,7 +308,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CSI Logo" translatesAutoresizingMaskIntoConstraints="NO" id="S0c-ya-int">
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CSI-Logo" translatesAutoresizingMaskIntoConstraints="NO" id="S0c-ya-int">
                                 <rect key="frame" x="0.0" y="153" width="414" height="173"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -342,10 +342,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="CSI Logo" width="305" height="38"/>
-        <image name="L" width="40" height="38"/>
-        <image name="StartScreen" width="375" height="812"/>
-        <image name="drop arrow" width="296" height="171"/>
+        <image name="CSI-Logo" width="305" height="38"/>
+        <image name="CSI-StartScreen" width="375" height="812"/>
+        <image name="ProdNameType-Local" width="40" height="38"/>
+        <image name="combox-down-arrow" width="296" height="171"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="MuK-dy-WTs"/>

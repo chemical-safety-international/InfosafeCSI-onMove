@@ -82,9 +82,9 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         
         //setup name type pic
         if localsearchinfo.results[indexPath.row].prodtype == "P" {
-            cell?.nameType?.image = UIImage(named: "P")
+            cell?.nameType?.image = UIImage(named: "ProdName-Type-Primary")
         } else if localsearchinfo.results[indexPath.row].prodtype == "O" {
-            cell?.nameType?.image = UIImage(named: "O")
+            cell?.nameType?.image = UIImage(named: "ProdName-Type-Other")
         } else if localsearchinfo.results[indexPath.row].prodtype == "L" {
             cell?.nameType?.image = UIImage(named: "ProdName-Type-Local")
         }
