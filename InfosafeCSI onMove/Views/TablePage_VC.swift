@@ -93,13 +93,10 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         
         if rowno == 1 {
             cell?.backgroundColor = UIColor.white
-            cell?.name.textColor = UIColor.black
-            cell?.details.textColor = UIColor.black
+
             rowno = 0
         } else if rowno == 0 {
-            cell?.backgroundColor = UIColor.lightGray
-            cell?.name.textColor = UIColor.white
-            cell?.details.textColor = UIColor.white
+            cell?.backgroundColor = UIColor.groupTableViewBackground
             rowno = 1
         }
         
