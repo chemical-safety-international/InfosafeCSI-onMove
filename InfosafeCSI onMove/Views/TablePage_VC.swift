@@ -86,7 +86,7 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         } else if localsearchinfo.results[indexPath.row].prodtype == "O" {
             cell?.nameType?.image = UIImage(named: "O")
         } else if localsearchinfo.results[indexPath.row].prodtype == "L" {
-            cell?.nameType?.image = UIImage(named: "L")
+            cell?.nameType?.image = UIImage(named: "ProdName-Type-Local")
         }
         
         //setup cell color
