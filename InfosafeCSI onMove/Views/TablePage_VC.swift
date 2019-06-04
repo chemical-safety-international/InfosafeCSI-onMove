@@ -15,6 +15,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var countLabel: UILabel!
     
+    @IBOutlet weak var menuView: UIView!
     
     
     var selectedIndex:Bool = false;
@@ -25,6 +26,8 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        self.menuView.isHidden = true
         // Do any additional setup after loading the view.
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
@@ -56,13 +59,15 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     @IBAction func sdsViewBtnTapped(_ sender: UIButton) {
         
         //get row number
-        let buttonRow = sender.tag
+//        let buttonRow = sender.tag
+//
+//        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
+//
+//        localcurrentSDS.sdsNo = localsearchinfo.results[buttonRow].synno
+//
+//        self.navigationController?.pushViewController(sdsJump!, animated: true)
         
-        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
-    
-        localcurrentSDS.sdsNo = localsearchinfo.results[buttonRow].synno
         
-        self.navigationController?.pushViewController(sdsJump!, animated: true)
     }
     
 }
@@ -78,7 +83,12 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
 
-        localsearchinfo.details = ("SDS No.: \(localsearchinfo.results[indexPath.row].sdsno ?? "") \nCompany Name: \(localsearchinfo.results[indexPath.row].company ?? "") \nIssue Date: \( localsearchinfo.results[indexPath.row].issueDate ?? "") \nUNNo: \(localsearchinfo.results[indexPath.row].unno ?? "")")
+//        localsearchinfo.details = ("SDS No.: \(localsearchinfo.results[indexPath.row].sdsno ?? "") \nCompany Name: \(localsearchinfo.results[indexPath.row].company ?? "") \nIssue Date: \( localsearchinfo.results[indexPath.row].issueDate ?? "") \nUNNo: \(localsearchinfo.results[indexPath.row].unno ?? "")")
+        
+        cell?.SDSNoLbl.text = localsearchinfo.results[indexPath.row].sdsno
+        cell?.SupplierLbl.text = localsearchinfo.results[indexPath.row].company
+        cell?.IssueDateLbl.text = localsearchinfo.results[indexPath.row].issueDate
+        cell?.UNNoLbl.text = localsearchinfo.results[indexPath.row].unno
         
         //setup name type pic
         if localsearchinfo.results[indexPath.row].prodtype == "P" {
@@ -102,7 +112,7 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         
         
         cell?.name.text = localsearchinfo.results[indexPath.row].prodname
-        cell?.details.text = localsearchinfo.details
+//        cell?.details.text = localsearchinfo.details
         
         //set row number of button that inside cell when tap
         cell?.sdsBtn.tag = indexPath.row
@@ -128,7 +138,7 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     // change the height to expand tableDisplay value
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
-        return 135
+        return 125
 
     }
     

@@ -13,11 +13,16 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
     //IBOutlet
     @IBOutlet weak var userIDTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var loginBtn: UIButton!
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //button style
+        loginBtn.layer.cornerRadius = 5
+        
         // Do any additional setup after loading the view.
         self.navigationController!.navigationBar.isHidden = false;
         self.hideKeyboardWhenTappedAround()

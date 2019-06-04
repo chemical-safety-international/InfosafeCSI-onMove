@@ -19,9 +19,16 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
     @IBOutlet weak var searchbar: UISearchBar!
     @IBOutlet weak var searchBtn: UIButton!
     
+    @IBOutlet weak var logoffBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        //button style
+        logoffBtn.layer.cornerRadius = 5
+        searchBtn.layer.cornerRadius = 5
+        pickerBtn.layer.cornerRadius = 5
         
         self.callCriteriaList()
         // Do any additional setup after loading the view.
