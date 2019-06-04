@@ -82,11 +82,11 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         
         //setup name type pic
         if localsearchinfo.results[indexPath.row].prodtype == "P" {
-            cell?.nameType?.image = UIImage(named: "ProdName-Type-Primary")
+            cell?.nameType?.image = UIImage(named: "ProdNameType-Primary")
         } else if localsearchinfo.results[indexPath.row].prodtype == "O" {
-            cell?.nameType?.image = UIImage(named: "ProdName-Type-Other")
+            cell?.nameType?.image = UIImage(named: "ProdNameType-Other")
         } else if localsearchinfo.results[indexPath.row].prodtype == "L" {
-            cell?.nameType?.image = UIImage(named: "ProdName-Type-Local")
+            cell?.nameType?.image = UIImage(named: "ProdNameType-Local")
         }
         
         //setup cell color
