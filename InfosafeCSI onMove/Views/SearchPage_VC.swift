@@ -191,12 +191,12 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
 //    }
     
     func dropArrow() {
-        let image = UIImage(named: "drop arrow")
+        let image = UIImage(named: "combox-down-arrow")
         self.pickerBtn.setImage(image, for: .normal)
     }
     
     func upArrow() {
-        let image = UIImage(named: "up arrow")
+        let image = UIImage(named: "combox-up-arrow")
         self.pickerBtn.setImage(image, for: .normal)
     }
     

@@ -96,6 +96,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		17687E5322A5FF3500BF000F /* subControllers */ = {
+			isa = PBXGroup;
+			children = (
+				57711F56228808300051E576 /* TableViewCell.swift */,
+			);
+			path = subControllers;
+			sourceTree = "<group>";
+		};
 		17818BAC22811A88000EAFF1 = {
 			isa = PBXGroup;
 			children = (
@@ -188,10 +196,10 @@
 		57C8B92922825D98004966C5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				17687E5322A5FF3500BF000F /* subControllers */,
 				17818BBA22811A88000EAFF1 /* LoginPage_VC.swift */,
 				577B1A582284059700E5C4AB /* SearchPage_VC.swift */,
 				577B1A5C2285195600E5C4AB /* TablePage_VC.swift */,
-				57711F56228808300051E576 /* TableViewCell.swift */,
 				AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */,
 				17A2683F228D04410039A798 /* Startup_VC.swift */,
 			);
