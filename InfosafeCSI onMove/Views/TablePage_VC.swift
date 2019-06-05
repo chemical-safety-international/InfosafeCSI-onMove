@@ -16,7 +16,6 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     @IBOutlet weak var countLabel: UILabel!
     
     @IBOutlet weak var menuView: UIView!
-    @IBOutlet weak var menuCloseBtn: UIButton!
     
     @IBOutlet weak var viewSdsBtn: UIButton!
     
@@ -40,6 +39,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
 //        tableDisplay.rowHeight = UITableView.automaticDimension
         
         viewSdsBtn.layer.cornerRadius = 10
+        menuView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
         
         self.hideKeyboardWhenTappedAround()
         self.countLabel.text = localsearchinfo.pdetails
@@ -65,13 +65,6 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     @IBAction func sdsViewBtnTapped(_ sender: UIButton) {
         
         //get row number
-//        let buttonRow = sender.tag
-//
-//        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
-//
-//        localcurrentSDS.sdsNo = localsearchinfo.results[buttonRow].synno
-//
-//        self.navigationController?.pushViewController(sdsJump!, animated: true)
         
         localcurrentSDS.sdsRowNo = sender.tag
         
@@ -124,8 +117,6 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
-
-//        localsearchinfo.details = ("SDS No.: \(localsearchinfo.results[indexPath.row].sdsno ?? "") \nCompany Name: \(localsearchinfo.results[indexPath.row].company ?? "") \nIssue Date: \( localsearchinfo.results[indexPath.row].issueDate ?? "") \nUNNo: \(localsearchinfo.results[indexPath.row].unno ?? "")")
         
         cell?.SDSNoLbl.text = localsearchinfo.results[indexPath.row].sdsno
         cell?.SupplierLbl.text = localsearchinfo.results[indexPath.row].company
@@ -169,8 +160,7 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         self.view.endEditing(true)
         
         localcurrentSDS.sdsNo = localsearchinfo.results[indexPath.row].synno
-//        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
-//        self.navigationController?.pushViewController(sdsJump!, animated: true)
+
     }
     
     // change the height to expand tableDisplay value
