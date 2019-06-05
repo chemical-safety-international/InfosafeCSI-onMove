@@ -29,14 +29,20 @@ class TableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         //name.layer.borderWidth = 0.5
-        sdslbl.layer.borderWidth = 0.5
-        supplbl.layer.borderWidth = 0.5
-        isslbl.layer.borderWidth = 0.5
-        unlbl.layer.borderWidth = 0.5
-        SDSNoLbl.layer.borderWidth = 0.5
-        SupplierLbl.layer.borderWidth = 0.5
-        IssueDateLbl.layer.borderWidth = 0.5
-        UNNoLbl.layer.borderWidth = 0.5
+//        sdslbl.layer.borderWidth = 0.5
+//        supplbl.layer.borderWidth = 0.5
+//        isslbl.layer.borderWidth = 0.5
+//        unlbl.layer.borderWidth = 0.5
+//        SDSNoLbl.layer.borderWidth = 0.5
+//        SupplierLbl.layer.borderWidth = 0.5
+//        IssueDateLbl.layer.borderWidth = 0.5
+//        UNNoLbl.layer.borderWidth = 0.5
+        name.font = UIFont.boldSystemFont(ofSize: 21)
+        
+        sdslbl.font = UIFont.boldSystemFont(ofSize: 14)
+        supplbl.font = UIFont.boldSystemFont(ofSize: 14)
+        isslbl.font = UIFont.boldSystemFont(ofSize: 14)
+        unlbl.font = UIFont.boldSystemFont(ofSize: 14)
         
     }
 

@@ -16,12 +16,14 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     @IBOutlet weak var countLabel: UILabel!
     
     @IBOutlet weak var menuView: UIView!
+    @IBOutlet weak var menuCloseBtn: UIButton!
     
+    @IBOutlet weak var viewSdsBtn: UIButton!
     
     var selectedIndex:Bool = false;
     var select = -1
-//    var rowNo = 0
-    var rowno = 1
+
+    var rowno = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +38,12 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         
 //        tableDisplay.estimatedRowHeight = 100
 //        tableDisplay.rowHeight = UITableView.automaticDimension
+        
+        viewSdsBtn.layer.cornerRadius = 10
+        
         self.hideKeyboardWhenTappedAround()
         self.countLabel.text = localsearchinfo.pdetails
+        menuView.center.x += view.bounds.width
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,7 +73,43 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
 //
 //        self.navigationController?.pushViewController(sdsJump!, animated: true)
         
+        localcurrentSDS.sdsRowNo = sender.tag
         
+        if self.menuView.isHidden == true {
+            menuAppear()
+            self.menuView.isHidden = false
+        } else if self.menuView.isHidden == false {
+            menuDisappear()
+            self.menuView.isHidden = true
+        }
+        
+        
+    }
+    
+    @IBAction func viewSdsBtnTapped(_ sender: Any) {
+
+        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
+
+        localcurrentSDS.sdsNo = localsearchinfo.results[localcurrentSDS.sdsRowNo].synno
+
+        self.navigationController?.pushViewController(sdsJump!, animated: true)
+    }
+    
+    @IBAction func menuCloseBtnTapped(_ sender: Any) {
+        
+        self.menuView.isHidden = true
+    }
+    
+    func menuAppear() {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.menuView.center.x -= self.view.bounds.width
+            }, completion: nil)
+    }
+    
+    func menuDisappear() {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.menuView.center.x += self.view.bounds.width
+        }, completion: nil)
     }
     
 }
@@ -126,13 +168,9 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         
         self.view.endEditing(true)
         
-//        rowNo = indexPath.row
-//
-//        localcurrentSDS.sdsNo = localsearchinfo.results[rowNo].synno
-        
         localcurrentSDS.sdsNo = localsearchinfo.results[indexPath.row].synno
-        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
-        self.navigationController?.pushViewController(sdsJump!, animated: true)
+//        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
+//        self.navigationController?.pushViewController(sdsJump!, animated: true)
     }
     
     // change the height to expand tableDisplay value
@@ -150,6 +188,14 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if self.menuView.isHidden == false {
+            menuDisappear()
+            self.menuView.isHidden = true
+        }
+
     }
     
     

@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "P20.png",
+      "filename" : "Class20.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "P40.png",
+      "filename" : "Class40.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "P60.png",
+      "filename" : "Class60.png",
       "scale" : "3x"
     }
   ],

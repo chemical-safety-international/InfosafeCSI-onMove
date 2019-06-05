@@ -77,6 +77,7 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
         firstSub.subviews.forEach{
             ($0 as? UITextField)?.clearButtonMode = .never
         }
+//        self.searchbar.size
         self.searchBtn.isHidden = true
     }
 
