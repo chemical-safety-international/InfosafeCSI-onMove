@@ -13,16 +13,22 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var tableDisplay: UITableView!
 
-    @IBOutlet weak var countLabel: UILabel!
+    @IBOutlet weak var primaryLbl: UILabel!
+    @IBOutlet weak var localLbl: UILabel!
+    @IBOutlet weak var otherLbl: UILabel!
+    @IBOutlet weak var pageNoLbl: UILabel!
     
     @IBOutlet weak var menuView: UIView!
     
     @IBOutlet weak var viewSdsBtn: UIButton!
+    @IBOutlet weak var closeBtn: UIButton!
+    
     
     var selectedIndex:Bool = false;
     var select = -1
 
     var rowno = 0
+    var selectedthecellno = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,21 +40,29 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
         self.tableDisplay.delegate = self
         self.tableDisplay.dataSource = self
+//        tableDisplay.layer.cornerRadius = 10
         
-//        tableDisplay.estimatedRowHeight = 100
-//        tableDisplay.rowHeight = UITableView.automaticDimension
         
         viewSdsBtn.layer.cornerRadius = 10
-        menuView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        
+        //side menu setup
+        menuView.layer.cornerRadius = 10
+        menuView.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
+        menuView.center.x += view.bounds.width
         
         self.hideKeyboardWhenTappedAround()
-        self.countLabel.text = localsearchinfo.pdetails
-        menuView.center.x += view.bounds.width
+        
+        // label setup
+        self.primaryLbl.text = localsearchinfo.pamount
+        self.localLbl.text = localsearchinfo.lamount
+        self.otherLbl.text = localsearchinfo.oamount
+        self.pageNoLbl.text = localsearchinfo.pagenoamount
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        tableDisplay.estimatedRowHeight = 145
-        tableDisplay.rowHeight = UITableView.automaticDimension
+//        tableDisplay.estimatedRowHeight = 145
+//        tableDisplay.rowHeight = UITableView.automaticDimension
     }
     
     
@@ -62,6 +76,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         }
     }
     
+    //currently not using
     @IBAction func sdsViewBtnTapped(_ sender: UIButton) {
         
         //get row number
@@ -88,21 +103,24 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         self.navigationController?.pushViewController(sdsJump!, animated: true)
     }
     
-    @IBAction func menuCloseBtnTapped(_ sender: Any) {
-        
+
+    @IBAction func closeBtnTapped(_ sender: Any) {
+        menuDisappear()
         self.menuView.isHidden = true
     }
     
     func menuAppear() {
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.8, animations: {
             self.menuView.center.x -= self.view.bounds.width
             }, completion: nil)
+        self.menuView.isHidden = false
     }
     
     func menuDisappear() {
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.4, animations: {
             self.menuView.center.x += self.view.bounds.width
         }, completion: nil)
+        self.menuView.isHidden = true
     }
     
 }
@@ -143,9 +161,8 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
             rowno = 1
         }
         
-        
+        cell?.layer.cornerRadius = 10
         cell?.name.text = localsearchinfo.results[indexPath.row].prodname
-//        cell?.details.text = localsearchinfo.details
         
         //set row number of button that inside cell when tap
         cell?.sdsBtn.tag = indexPath.row
@@ -157,11 +174,28 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        self.view.endEditing(true)
+//        self.view.endEditing(true)
         
         localcurrentSDS.sdsNo = localsearchinfo.results[indexPath.row].synno
+        if let selectedCell = tableView.cellForRow(at: indexPath) as? TableViewCell {
+
+            selectedCell.contentView.backgroundColor = UIColor.init(red: 0.98, green: 0.80, blue: 0.61, alpha: 1)
+           // selectedCell.contentView.backgroundColor = UIColor.init(red: 0.96, green: 0.70, blue: 0.42, alpha: 1)
+        }
+        
+        
+        if self.menuView.isHidden == true {
+            menuAppear()
+            self.menuView.isHidden = false
+            selectedthecellno = indexPath.row
+        }        else if self.menuView.isHidden == false && indexPath.row != selectedthecellno {
+            menuDisappear()
+            menuAppear()
+////            self.menuView.isHidden = true
+        }
 
     }
+    
     
     // change the height to expand tableDisplay value
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

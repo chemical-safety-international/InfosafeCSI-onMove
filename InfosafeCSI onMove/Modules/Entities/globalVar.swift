@@ -109,7 +109,10 @@ struct localsearchinfo {
     
     // old methods arrays
     static var details: String!
-    static var pdetails: String!
+    static var pamount: String!
+    static var lamount: String!
+    static var oamount: String!
+    static var pagenoamount: String!
 }
 
 

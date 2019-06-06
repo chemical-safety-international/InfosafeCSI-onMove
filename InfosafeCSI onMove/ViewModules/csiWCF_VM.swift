@@ -88,7 +88,11 @@ class csiWCF_VM: UIViewController {
                 localresult.pageno = jsonResponse!["no"] as? Int
                 localresult.lcount = jsonResponse!["lcount"] as? Int
                 localresult.ocount = jsonResponse!["ocount"] as? Int
-                localsearchinfo.pdetails = ("Pcount: \(localresult.pcount ?? 0), Page No.: \(localresult.pageno ?? 0), Lcount: \(localresult.lcount ?? 0), Ocount: \(localresult.ocount ?? 0)")
+//                localsearchinfo.pdetails = ("Pcount: \(localresult.pcount ?? 0), Page No.: \(localresult.pageno ?? 0), Lcount: \(localresult.lcount ?? 0), Ocount: \(localresult.ocount ?? 0)")
+                localsearchinfo.pamount = ("Primary: \(localresult.pcount ?? 0)")
+                localsearchinfo.lamount = ("Local: \(localresult.lcount ?? 0)")
+                localsearchinfo.oamount = ("Other: \(localresult.ocount ?? 0)")
+                localsearchinfo.pagenoamount = ("Page No.: \(localresult.pageno ?? 0)")
                 
             } catch let parsingError {
                 print("Error", parsingError)
