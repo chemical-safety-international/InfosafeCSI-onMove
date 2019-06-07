@@ -62,9 +62,9 @@ class csiWCF_VM: UIViewController {
                             ritem.company = comname["value"] as? String
                         }
                         
-                        if let no = info["no"] as? [String: Any] {
-                            ritem.sdsno = no["value"] as? String
-                        }
+//                        if let no = info["no"] as? [String: Any] {
+//                            ritem.sdsno = no["value"] as? String
+//                        }
                         if let issueData = info["issue"] as? [String: Any] {
                             ritem.issueDate = issueData["value"] as? String
                         }
@@ -76,6 +76,18 @@ class csiWCF_VM: UIViewController {
                         }
                         if let prodtype = info["nametype"] as? [String: Any] {
                             ritem.prodtype = prodtype["value"] as? String
+                        }
+                        if let pcode = info["code"] as? [String: Any] {
+                            ritem.prodcode = pcode["value"] as? String
+                        }
+                        if let dgclas = info["dgclass"] as? [String: Any] {
+                            ritem.dgclass = dgclas["value"] as? String
+                        }
+                        if let pscode = info["ps"] as? [String: Any] {
+                            ritem.ps = pscode["value"] as? String
+                        }
+                        if let hazCode = info["haz"] as? [String: Any] {
+                            ritem.haz = hazCode["value"] as? String
                         }
                         //hanlde user field
                         //ritem.ufs.append(ritemuf)

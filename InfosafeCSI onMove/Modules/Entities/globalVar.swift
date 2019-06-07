@@ -72,9 +72,12 @@ struct localsearchinfo {
         var ps: String!
         var unno: String!
         var subrisk1: String!
+        var prodcode: String!
+        var dgclass: String!
+        var haz: String!
         var ufs: [uf]!
         
-        init(sdsno: String? = nil, synno: String? = nil, company: String? = nil, issueDate: String? = nil, prodname: String? = nil, prodtype: String? = nil, ispartial: Bool? = nil, ps: String? = nil, unno: String? = nil, subrisk1: String? = nil, ufs: [uf]? = nil) {
+        init(sdsno: String? = nil, synno: String? = nil, company: String? = nil, issueDate: String? = nil, prodname: String? = nil, prodtype: String? = nil, ispartial: Bool? = nil, ps: String? = nil, unno: String? = nil, subrisk1: String? = nil, prodcode: String? = nil, dgclass: String? = nil, haz: String? = nil, ufs: [uf]? = nil) {
             self.sdsno = sdsno
             self.synno = synno
             self.company = company
@@ -85,6 +88,9 @@ struct localsearchinfo {
             self.ps = ps
             self.unno = unno
             self.subrisk1 = subrisk1
+            self.prodcode = prodcode
+            self.dgclass = dgclass
+            self.haz = haz
             self.ufs = ufs
         }
     }

@@ -11,38 +11,42 @@ import UIKit
 class TableViewCell: UITableViewCell {
 
     @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var details: UITextView!
     @IBOutlet weak var sdsBtn: UIButton!
     @IBOutlet weak var nameType: UIImageView!
     
-    @IBOutlet weak var sdslbl: UILabel!
     @IBOutlet weak var supplbl: UILabel!
     @IBOutlet weak var isslbl: UILabel!
     @IBOutlet weak var unlbl: UILabel!
+    @IBOutlet weak var dgcLbl: UILabel!
+    @IBOutlet weak var psLbl: UILabel!
+    @IBOutlet weak var hazLbl: UILabel!
     
-    @IBOutlet weak var SDSNoLbl: UILabel!
+    
+    @IBOutlet weak var prodCodeLbl: UILabel!
     @IBOutlet weak var SupplierLbl: UILabel!
     @IBOutlet weak var IssueDateLbl: UILabel!
     @IBOutlet weak var UNNoLbl: UILabel!
     
+    @IBOutlet weak var DGClassLbl: UILabel!
+    @IBOutlet weak var PoisonSLbl: UILabel!
+    @IBOutlet weak var HazardousLbl: UILabel!
+    
+    
+    @IBOutlet weak var prodCLbl: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        //name.layer.borderWidth = 0.5
-//        sdslbl.layer.borderWidth = 0.5
-//        supplbl.layer.borderWidth = 0.5
-//        isslbl.layer.borderWidth = 0.5
-//        unlbl.layer.borderWidth = 0.5
-//        SDSNoLbl.layer.borderWidth = 0.5
-//        SupplierLbl.layer.borderWidth = 0.5
-//        IssueDateLbl.layer.borderWidth = 0.5
-//        UNNoLbl.layer.borderWidth = 0.5
-        name.font = UIFont.boldSystemFont(ofSize: 21)
+        name.font = UIFont.boldSystemFont(ofSize: 18)
         
-        sdslbl.font = UIFont.boldSystemFont(ofSize: 14)
-        supplbl.font = UIFont.boldSystemFont(ofSize: 14)
-        isslbl.font = UIFont.boldSystemFont(ofSize: 14)
-        unlbl.font = UIFont.boldSystemFont(ofSize: 14)
+        supplbl.font = UIFont.boldSystemFont(ofSize: 13)
+        isslbl.font = UIFont.boldSystemFont(ofSize: 13)
+        unlbl.font = UIFont.boldSystemFont(ofSize: 13)
+        prodCodeLbl.font = UIFont.boldSystemFont(ofSize: 13)
+        DGClassLbl.font = UIFont.boldSystemFont(ofSize: 13)
+        PoisonSLbl.font = UIFont.boldSystemFont(ofSize: 13)
+        HazardousLbl.font = UIFont.boldSystemFont(ofSize: 13)
+        
         
     }
 

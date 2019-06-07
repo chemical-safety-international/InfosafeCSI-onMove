@@ -133,10 +133,14 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
         
-        cell?.SDSNoLbl.text = localsearchinfo.results[indexPath.row].sdsno
         cell?.SupplierLbl.text = localsearchinfo.results[indexPath.row].company
         cell?.IssueDateLbl.text = localsearchinfo.results[indexPath.row].issueDate
         cell?.UNNoLbl.text = localsearchinfo.results[indexPath.row].unno
+        cell?.prodCLbl.text = localsearchinfo.results[indexPath.row].prodcode
+        cell?.dgcLbl.text = localsearchinfo.results[indexPath.row].dgclass
+        cell?.psLbl.text = localsearchinfo.results[indexPath.row].ps
+        cell?.hazLbl.text = localsearchinfo.results[indexPath.row].haz
+        
         
         //setup name type pic
         if localsearchinfo.results[indexPath.row].prodtype == "P" {
