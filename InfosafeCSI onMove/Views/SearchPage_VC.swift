@@ -35,8 +35,23 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
         self.searchbar.delegate = self
         thePicker.isHidden = true
         self.hideKeyboardWhenTappedAround()
-        thePicker.delegate = self
+        
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
+        
+        //setup picker toolbar
+        thePicker.showsSelectionIndicator = true
+        thePicker.delegate = self
+        thePicker.dataSource = self
+        
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
+        toolBar.sizeToFit()
+        
+//        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem, target: self, action: "donePicker")
+//        let
+        
     }
     
     func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {

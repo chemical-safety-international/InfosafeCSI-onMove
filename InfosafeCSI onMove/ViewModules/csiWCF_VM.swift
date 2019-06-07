@@ -46,7 +46,7 @@ class csiWCF_VM: UIViewController {
             
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
-                print(jsonResponse!)
+                print(jsonResponse as Any)
                 if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
                     
                     jsonArr1.forEach { info in
@@ -88,11 +88,12 @@ class csiWCF_VM: UIViewController {
                 localresult.pageno = jsonResponse!["no"] as? Int
                 localresult.lcount = jsonResponse!["lcount"] as? Int
                 localresult.ocount = jsonResponse!["ocount"] as? Int
+                localresult.pagecount = jsonResponse!["pagecount"] as? Int
 //                localsearchinfo.pdetails = ("Pcount: \(localresult.pcount ?? 0), Page No.: \(localresult.pageno ?? 0), Lcount: \(localresult.lcount ?? 0), Ocount: \(localresult.ocount ?? 0)")
                 localsearchinfo.pamount = ("Primary: \(localresult.pcount ?? 0)")
                 localsearchinfo.lamount = ("Local: \(localresult.lcount ?? 0)")
                 localsearchinfo.oamount = ("Other: \(localresult.ocount ?? 0)")
-                localsearchinfo.pagenoamount = ("Page No.: \(localresult.pageno ?? 0)")
+                localsearchinfo.pagenoamount = ("\(localresult.pageno ?? 0) of \(localresult.pagecount ?? 0)")
                 
             } catch let parsingError {
                 print("Error", parsingError)

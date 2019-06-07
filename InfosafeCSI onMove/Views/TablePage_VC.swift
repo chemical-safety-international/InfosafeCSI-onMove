@@ -40,9 +40,9 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
         self.tableDisplay.delegate = self
         self.tableDisplay.dataSource = self
-//        tableDisplay.layer.cornerRadius = 10
+
         
-        
+        //button style setup
         viewSdsBtn.layer.cornerRadius = 10
         
         //side menu setup
@@ -60,10 +60,10 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-//        tableDisplay.estimatedRowHeight = 145
-//        tableDisplay.rowHeight = UITableView.automaticDimension
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+////        tableDisplay.estimatedRowHeight = 145
+////        tableDisplay.rowHeight = UITableView.automaticDimension
+//    }
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -76,7 +76,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         }
     }
     
-    //currently not using
+    //for the view sds button inside of cell (currently not using)
     @IBAction func sdsViewBtnTapped(_ sender: UIButton) {
         
         //get row number
@@ -97,9 +97,6 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     @IBAction func viewSdsBtnTapped(_ sender: Any) {
 
         let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
-
-        localcurrentSDS.sdsNo = localsearchinfo.results[localcurrentSDS.sdsRowNo].synno
-
         self.navigationController?.pushViewController(sdsJump!, animated: true)
     }
     
@@ -151,7 +148,6 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         }
         
         //setup cell color
-        
         if rowno == 1 {
             cell?.backgroundColor = UIColor.white
 
@@ -174,24 +170,23 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-//        self.view.endEditing(true)
-        
+        //pass the synno number
         localcurrentSDS.sdsNo = localsearchinfo.results[indexPath.row].synno
+        
+        //highlight the row
         if let selectedCell = tableView.cellForRow(at: indexPath) as? TableViewCell {
-
             selectedCell.contentView.backgroundColor = UIColor.init(red: 0.98, green: 0.80, blue: 0.61, alpha: 1)
-           // selectedCell.contentView.backgroundColor = UIColor.init(red: 0.96, green: 0.70, blue: 0.42, alpha: 1)
         }
         
-        
+        // controll the animation of side menu (click on the same row - no change)
         if self.menuView.isHidden == true {
             menuAppear()
             self.menuView.isHidden = false
             selectedthecellno = indexPath.row
-        }        else if self.menuView.isHidden == false && indexPath.row != selectedthecellno {
+        } else if self.menuView.isHidden == false && indexPath.row != selectedthecellno {
             menuDisappear()
             menuAppear()
-////            self.menuView.isHidden = true
+            selectedthecellno = indexPath.row
         }
 
     }
