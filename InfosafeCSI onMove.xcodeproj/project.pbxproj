@@ -24,6 +24,8 @@
 		577B1A5D2285195600E5C4AB /* TablePage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577B1A5C2285195600E5C4AB /* TablePage_VC.swift */; };
 		57C8B92822813EEC004966C5 /* csiWCFMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C8B92722813EEC004966C5 /* csiWCFMethods.swift */; };
 		57C8B92C22825DE4004966C5 /* csiWCF_VM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C8B92B22825DE4004966C5 /* csiWCF_VM.swift */; };
+		57E9578F22AF3F9A002828E7 /* SideMenu_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9578E22AF3F9A002828E7 /* SideMenu_VC.swift */; };
+		57E9579122AF4279002828E7 /* SideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9579022AF4279002828E7 /* SideMenuTableViewCell.swift */; };
 		AC9AB9DA2288DFA900C2C71E /* SDSView_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +70,8 @@
 		577B1A5C2285195600E5C4AB /* TablePage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TablePage_VC.swift; sourceTree = "<group>"; };
 		57C8B92722813EEC004966C5 /* csiWCFMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csiWCFMethods.swift; sourceTree = "<group>"; };
 		57C8B92B22825DE4004966C5 /* csiWCF_VM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csiWCF_VM.swift; sourceTree = "<group>"; };
+		57E9578E22AF3F9A002828E7 /* SideMenu_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu_VC.swift; sourceTree = "<group>"; };
+		57E9579022AF4279002828E7 /* SideMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewCell.swift; sourceTree = "<group>"; };
 		AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSView_VC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				57711F56228808300051E576 /* TableViewCell.swift */,
+				57E9579022AF4279002828E7 /* SideMenuTableViewCell.swift */,
 			);
 			path = subControllers;
 			sourceTree = "<group>";
@@ -202,6 +207,7 @@
 				577B1A5C2285195600E5C4AB /* TablePage_VC.swift */,
 				AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */,
 				17A2683F228D04410039A798 /* Startup_VC.swift */,
+				57E9578E22AF3F9A002828E7 /* SideMenu_VC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -345,10 +351,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57E9579122AF4279002828E7 /* SideMenuTableViewCell.swift in Sources */,
 				17818BBB22811A88000EAFF1 /* LoginPage_VC.swift in Sources */,
 				577B1A592284059700E5C4AB /* SearchPage_VC.swift in Sources */,
 				17818BED22815661000EAFF1 /* UserProfilesData.swift in Sources */,
 				17818BB922811A88000EAFF1 /* AppDelegate.swift in Sources */,
+				57E9578F22AF3F9A002828E7 /* SideMenu_VC.swift in Sources */,
 				17A26840228D04410039A798 /* Startup_VC.swift in Sources */,
 				AC9AB9DA2288DFA900C2C71E /* SDSView_VC.swift in Sources */,
 				57C8B92C22825DE4004966C5 /* csiWCF_VM.swift in Sources */,

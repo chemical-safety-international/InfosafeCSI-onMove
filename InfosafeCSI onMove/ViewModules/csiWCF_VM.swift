@@ -36,13 +36,13 @@ class csiWCF_VM: UIViewController {
         let client = localclientinfo.clientid
         let uid = localclientinfo.infosafeid
         let c = localcriteriainfo.code
-        let p = 1
-        let psize = 50
         let apptp = localclientinfo.apptype
         
+        let p = localsearchinfo.cpage
+        let psize = localsearchinfo.psize
         
         //call search function
-        csiWCF_GetSDSSearchResultsPage(inputData: inputData, client: client!, uid: uid!, c: c!, p: p, psize:psize, apptp:apptp!) { (completionReturnData) in
+        csiWCF_GetSDSSearchResultsPage(inputData: inputData, client: client!, uid: uid!, c: c!, p: p!, psize:psize!, apptp:apptp!) { (completionReturnData) in
             
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]

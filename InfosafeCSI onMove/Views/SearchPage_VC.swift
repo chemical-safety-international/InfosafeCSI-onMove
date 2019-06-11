@@ -52,6 +52,10 @@ class SearchPage_VC: UIViewController, UISearchBarDelegate, UIPickerViewDelegate
 //        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem, target: self, action: "donePicker")
 //        let
         
+        
+        localsearchinfo.cpage = 1
+        localsearchinfo.psize = 50
+        
     }
     
     func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {

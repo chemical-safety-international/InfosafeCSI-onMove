@@ -25,7 +25,6 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     
     
     var selectedIndex:Bool = false;
-    var select = -1
 
     var rowno = 0
     var selectedthecellno = 0
@@ -64,6 +63,13 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
 ////        tableDisplay.estimatedRowHeight = 145
 ////        tableDisplay.rowHeight = UITableView.automaticDimension
 //    }
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        DispatchQueue.main.async {
+
+            print("Height: \(self.view.bounds.size.height)")
+            print("Width: \(self.view.bounds.size.width)")
+        }
+    }
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -109,6 +115,8 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     func menuAppear() {
         UIView.animate(withDuration: 0.8, animations: {
             self.menuView.center.x -= self.view.bounds.width
+            print(self.view.bounds.width)
+
             }, completion: nil)
         self.menuView.isHidden = false
     }
@@ -116,6 +124,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     func menuDisappear() {
         UIView.animate(withDuration: 0.4, animations: {
             self.menuView.center.x += self.view.bounds.width
+
         }, completion: nil)
         self.menuView.isHidden = true
     }
@@ -204,14 +213,14 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     }
     
     // swipe to delete the row function
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            localsearchinfo.results.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
-    }
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            localsearchinfo.results.remove(at: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//        } else if editingStyle == .insert {
+//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//        }
+//    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if self.menuView.isHidden == false {
@@ -221,5 +230,26 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
 
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == localsearchinfo.results.count-1 {
+            self.showSpinner(onView: self.view)
+            localsearchinfo.cpage += 1
+            print(localsearchinfo.cpage!)
+            
+            csiWCF_VM().callSearch(inputData: localcriteriainfo.searchValue) { (completionReturnData) in
+                if completionReturnData == true {
+                    DispatchQueue.main.async {
+                        self.removeSpinner()
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.removeSpinner()
+                        self.showAlert(title: "Failed", message: "Cannot found the search results.")
+                    }
+                }
+                
+            }
+        }
+    }
     
 }
