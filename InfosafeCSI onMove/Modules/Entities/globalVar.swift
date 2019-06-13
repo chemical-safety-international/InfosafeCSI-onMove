@@ -121,6 +121,10 @@ struct localsearchinfo {
     static var lamount: String!
     static var oamount: String!
     static var pagenoamount: String!
+    
+    
+    static var psize: Int!
+    static var cpage: Int!
 }
 
 

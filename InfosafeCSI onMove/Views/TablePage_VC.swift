@@ -36,7 +36,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         self.menuView.isHidden = true
         // Do any additional setup after loading the view.
         
-        NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
         self.tableDisplay.delegate = self
         self.tableDisplay.dataSource = self
 
@@ -76,11 +76,11 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         self.view.endEditing(true)
     }
     
-    @objc func loadList(notification: NSNotification) {
-        DispatchQueue.main.async {
-            self.tableDisplay.reloadData()
-        }
-    }
+//    @objc func loadList(notification: NSNotification) {
+//        DispatchQueue.main.async {
+//            self.tableDisplay.reloadData()
+//        }
+//    }
     
     //for the view sds button inside of cell (currently not using)
     @IBAction func sdsViewBtnTapped(_ sender: UIButton) {
@@ -115,7 +115,6 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     func menuAppear() {
         UIView.animate(withDuration: 0.8, animations: {
             self.menuView.center.x -= self.view.bounds.width
-            print(self.view.bounds.width)
 
             }, completion: nil)
         self.menuView.isHidden = false
@@ -140,6 +139,8 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
         
         cell?.SupplierLbl.text = localsearchinfo.results[indexPath.row].company
@@ -230,16 +231,45 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
 
     }
     
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        print("1")
+//
+//        self.showSpinner(onView: self.view)
+//        localsearchinfo.cpage += 1
+//        localsearchinfo.results = []
+//        print(localsearchinfo.cpage!)
+//
+//        csiWCF_VM().callSearch(inputData: localcriteriainfo.searchValue) { (completionReturnData) in
+//            if completionReturnData == true {
+//                DispatchQueue.main.async {
+//                    self.removeSpinner()
+//                    self.tableDisplay.reloadData()
+//                    self.tableDisplay.setContentOffset(.zero, animated: true)
+//                }
+//            } else {
+//                DispatchQueue.main.async {
+//                    self.removeSpinner()
+//                    self.showAlert(title: "Failed", message: "Cannot found the search results.")
+//                }
+//            }
+//        }
+//    }
+
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == localsearchinfo.results.count-1 {
             self.showSpinner(onView: self.view)
             localsearchinfo.cpage += 1
+            localsearchinfo.results = []
             print(localsearchinfo.cpage!)
-            
+
             csiWCF_VM().callSearch(inputData: localcriteriainfo.searchValue) { (completionReturnData) in
                 if completionReturnData == true {
                     DispatchQueue.main.async {
+                        print("reach here")
                         self.removeSpinner()
+//                        self.tableDisplay.reloadData()
+                        self.pageNoLbl.text = localsearchinfo.pagenoamount
+                        self.tableDisplay.setContentOffset(.zero, animated: true)
                     }
                 } else {
                     DispatchQueue.main.async {
@@ -247,9 +277,32 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
                         self.showAlert(title: "Failed", message: "Cannot found the search results.")
                     }
                 }
-                
+
             }
         }
     }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        if indexPath.row == localsearchinfo.results.count-1 {
+//            self.showSpinner(onView: self.view)
+//            localsearchinfo.cpage += 1
+//            print(localsearchinfo.cpage!)
+//
+//            csiWCF_VM().callSearch(inputData: localcriteriainfo.searchValue) { (completionReturnData) in
+//                if completionReturnData == true {
+//                    DispatchQueue.main.async {
+//                        print("reach here")
+//                        self.removeSpinner()
+////                        self.tableDisplay.reloadData()
+//                    }
+//                } else {
+//                    DispatchQueue.main.async {
+//                        self.removeSpinner()
+//                        self.showAlert(title: "Failed", message: "Cannot found the search results.")
+//                    }
+//                }
+//
+//            }
+//        }
+//    }
     
 }

@@ -105,8 +105,9 @@ class csiWCF_VM: UIViewController {
                 localsearchinfo.pamount = ("Primary: \(localresult.pcount ?? 0)")
                 localsearchinfo.lamount = ("Local: \(localresult.lcount ?? 0)")
                 localsearchinfo.oamount = ("Other: \(localresult.ocount ?? 0)")
-                localsearchinfo.pagenoamount = ("\(localresult.pageno ?? 0) of \(localresult.pagecount ?? 0)")
+                localsearchinfo.pagenoamount = ("\(localresult.pageno ?? 0) / \(localresult.pagecount ?? 0)")
                 
+             print(localresult)
             } catch let parsingError {
                 print("Error", parsingError)
             }
