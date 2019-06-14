@@ -114,6 +114,8 @@ class SearchPage_VC: UIViewController {
         let searchInPut = searchbar.text!
         localcriteriainfo.searchValue = searchInPut
         
+        localsearchinfo.results = []
+        
         csiWCF_VM().callSearch(inputData: searchInPut) { (completionReturnData) in
             if completionReturnData == true {
                 DispatchQueue.main.async {
