@@ -15,6 +15,8 @@ class csiWCF_VM: UIViewController {
     //create var
     var loginDataSet: (String, String, String) = ("","","")
     
+    var localresult = localsearchinfo()
+    
     func callLogin(email: String, password: String, completions:@escaping(Data) -> Void) {
         
         let deviceid: String = ""
@@ -29,8 +31,10 @@ class csiWCF_VM: UIViewController {
     func callSearch(inputData:String, completion:@escaping(Bool) -> Void) {
         
         localsearchinfo.details = ""
-        var localresult = localsearchinfo()
-        localsearchinfo.results = []
+        
+//        var localresult = localsearchinfo()
+//        localsearchinfo.results = []
+        
         
         //give values
         let client = localclientinfo.clientid
@@ -46,7 +50,7 @@ class csiWCF_VM: UIViewController {
             
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
-                print(jsonResponse as Any)
+                
                 if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
                     
                     jsonArr1.forEach { info in
@@ -95,26 +99,26 @@ class csiWCF_VM: UIViewController {
                         localsearchinfo.results.append(ritem)
                     }
             }
-                localresult.result = jsonResponse!["result"] as? Bool
-                localresult.pcount = jsonResponse!["pcount"] as? Int
-                localresult.pageno = jsonResponse!["no"] as? Int
-                localresult.lcount = jsonResponse!["lcount"] as? Int
-                localresult.ocount = jsonResponse!["ocount"] as? Int
-                localresult.pagecount = jsonResponse!["pagecount"] as? Int
+                self.localresult.result = jsonResponse!["result"] as? Bool
+                self.localresult.pcount = jsonResponse!["pcount"] as? Int
+                self.localresult.pageno = jsonResponse!["no"] as? Int
+                self.localresult.lcount = jsonResponse!["lcount"] as? Int
+                self.localresult.ocount = jsonResponse!["ocount"] as? Int
+                self.localresult.pagecount = jsonResponse!["pagecount"] as? Int
 //                localsearchinfo.pdetails = ("Pcount: \(localresult.pcount ?? 0), Page No.: \(localresult.pageno ?? 0), Lcount: \(localresult.lcount ?? 0), Ocount: \(localresult.ocount ?? 0)")
-                localsearchinfo.pamount = ("Primary: \(localresult.pcount ?? 0)")
-                localsearchinfo.lamount = ("Local: \(localresult.lcount ?? 0)")
-                localsearchinfo.oamount = ("Other: \(localresult.ocount ?? 0)")
-                localsearchinfo.pagenoamount = ("\(localresult.pageno ?? 0) / \(localresult.pagecount ?? 0)")
+                localsearchinfo.pamount = ("Primary: \(self.localresult.pcount ?? 0)")
+                localsearchinfo.lamount = ("Local: \(self.localresult.lcount ?? 0)")
+                localsearchinfo.oamount = ("Other: \(self.localresult.ocount ?? 0)")
+                localsearchinfo.pagenoamount = ("\(self.localresult.pageno ?? 0) / \(self.localresult.pagecount ?? 0)")
+                localsearchinfo.totalPage = self.localresult.pagecount
                 
-             print(localresult)
             } catch let parsingError {
                 print("Error", parsingError)
             }
             
-            if  localresult.pcount != 0 {
+            if  self.localresult.pcount != 0 {
                 completion(true)
-            } else if localresult.result == false || localresult.pcount == 0 {
+            } else if self.localresult.result == false || self.localresult.pcount == 0 {
 
                 completion(false)
             }  else {

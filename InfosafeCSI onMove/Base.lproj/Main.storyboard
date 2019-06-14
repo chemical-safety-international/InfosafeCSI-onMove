@@ -187,7 +187,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1e9-TH-Vzm">
-                                <rect key="frame" x="5" y="156" width="401" height="687"/>
+                                <rect key="frame" x="5" y="156" width="401" height="672"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -350,7 +350,7 @@
                                     <outlet property="delegate" destination="t3O-3d-EwC" id="a4y-AQ-SuB"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AqA-yY-Ecl">
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AqA-yY-Ecl">
                                 <rect key="frame" x="284" y="170" width="90" height="640"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -482,8 +482,8 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sr0-Ok-w8y">
-                                <rect key="frame" x="200" y="210" width="90" height="520"/>
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sr0-Ok-w8y" userLabel="mv">
+                                <rect key="frame" x="283" y="203" width="90" height="520"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <segue destination="LCt-At-D12" kind="embed" id="wHQ-b0-gBi"/>
@@ -496,6 +496,7 @@
                     <connections>
                         <outlet property="closeBtn" destination="1HU-g8-1Zb" id="2rW-JH-vgS"/>
                         <outlet property="localLbl" destination="LCP-IT-tIJ" id="xOL-Q1-xOz"/>
+                        <outlet property="menu" destination="Sr0-Ok-w8y" id="rfl-tI-kLR"/>
                         <outlet property="menuView" destination="AqA-yY-Ecl" id="6Hh-2m-q6z"/>
                         <outlet property="otherLbl" destination="HlJ-uv-3qz" id="hEX-Nd-7ZJ"/>
                         <outlet property="pageNoLbl" destination="8jq-oV-nZl" id="Wzq-ad-DnQ"/>
@@ -522,7 +523,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MenuCell" rowHeight="100" id="5Su-lh-ZfX" customClass="MenuTableViewCell" customModule="InfosafeCSI_onMove" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MenuCell" rowHeight="100" id="5Su-lh-ZfX" customClass="MenuTableViewCell" customModule="InfosafeCSI_onMove" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="10" width="90" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5Su-lh-ZfX" id="eHt-1P-Hdk">
@@ -569,7 +570,7 @@
                                     <outlet property="delegate" destination="LCt-At-D12" id="2cr-VI-nFb"/>
                                 </connections>
                             </tableView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="combox-up-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="VoN-uv-0r1">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="menu-up-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="VoN-uv-0r1">
                                 <rect key="frame" x="0.0" y="0.0" width="90" height="10"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -589,7 +590,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K9r-wv-AYw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4013" y="362"/>
+            <point key="canvasLocation" x="4011.594202898551" y="361.60714285714283"/>
         </scene>
         <!--ViewVC-->
         <scene sceneID="3jr-l2-tWo">
@@ -697,7 +698,7 @@
         <image name="ProdNameType-Other" width="20" height="20"/>
         <image name="ProdNameType-Primary" width="20" height="20"/>
         <image name="combox-down-arrow" width="512" height="512"/>
-        <image name="combox-up-arrow" width="296" height="171"/>
+        <image name="menu-up-arrow" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="MuK-dy-WTs"/>

@@ -58,7 +58,7 @@ struct localsearchinfo {
     var result: Bool!
     var pagecount: Int!
     
-    static var results: [item]!
+    static var results: [item] = []
     
     struct item {
 
@@ -125,8 +125,9 @@ struct localsearchinfo {
     
     static var psize: Int!
     static var cpage: Int!
+    
+    static var totalPage: Int!
 }
-
 
 
 struct localcurrentSDS {

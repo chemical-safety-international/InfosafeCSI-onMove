@@ -19,6 +19,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     @IBOutlet weak var pageNoLbl: UILabel!
     
     @IBOutlet weak var menuView: UIView!
+    @IBOutlet weak var menu: UIView!
     
     @IBOutlet weak var viewSdsBtn: UIButton!
     @IBOutlet weak var closeBtn: UIButton!
@@ -34,6 +35,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
 
         
         self.menuView.isHidden = true
+        self.menu.isHidden = true
         // Do any additional setup after loading the view.
         
 //        NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
@@ -49,6 +51,9 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         menuView.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
         menuView.center.x += view.bounds.width
         
+        
+        menu.center.x += view.bounds.width
+        
         self.hideKeyboardWhenTappedAround()
         
         // label setup
@@ -57,6 +62,21 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         self.otherLbl.text = localsearchinfo.oamount
         self.pageNoLbl.text = localsearchinfo.pagenoamount
         
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(menuDis), name: NSNotification.Name(rawValue: "refresh"), object: nil)
+        
+    }
+    
+    @objc func menuDis() {
+        UIView.animate(withDuration: 0.4, animations: {
+            //            self.menuView.center.x += self.view.bounds.width
+            
+            self.menu.center.x += self.view.bounds.width
+            
+        }, completion: nil)
+        //        self.menuView.isHidden = true
+        
+        self.menu.isHidden = true
     }
     
 //    override func viewWillAppear(_ animated: Bool) {
@@ -73,6 +93,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        menuDisappear()
         self.view.endEditing(true)
     }
     
@@ -91,10 +112,10 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         
         if self.menuView.isHidden == true {
             menuAppear()
-            self.menuView.isHidden = false
+   
         } else if self.menuView.isHidden == false {
             menuDisappear()
-            self.menuView.isHidden = true
+
         }
         
         
@@ -114,18 +135,25 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     
     func menuAppear() {
         UIView.animate(withDuration: 0.8, animations: {
-            self.menuView.center.x -= self.view.bounds.width
-
+//            self.menuView.center.x -= self.view.bounds.width
+            
+            self.menu.center.x -= self.view.bounds.width
             }, completion: nil)
-        self.menuView.isHidden = false
+//        self.menuView.isHidden = false
+        
+        self.menu.isHidden = false
     }
     
     func menuDisappear() {
         UIView.animate(withDuration: 0.4, animations: {
-            self.menuView.center.x += self.view.bounds.width
+//            self.menuView.center.x += self.view.bounds.width
+            
+            self.menu.center.x += self.view.bounds.width
 
         }, completion: nil)
-        self.menuView.isHidden = true
+//        self.menuView.isHidden = true
+        
+        self.menu.isHidden = true
     }
     
 }
@@ -140,46 +168,54 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
-        
-        cell?.SupplierLbl.text = localsearchinfo.results[indexPath.row].company
-        cell?.IssueDateLbl.text = localsearchinfo.results[indexPath.row].issueDate
-        cell?.UNNoLbl.text = localsearchinfo.results[indexPath.row].unno
-        cell?.prodCLbl.text = localsearchinfo.results[indexPath.row].prodcode
-        cell?.dgcLbl.text = localsearchinfo.results[indexPath.row].dgclass
-        cell?.psLbl.text = localsearchinfo.results[indexPath.row].ps
-        cell?.hazLbl.text = localsearchinfo.results[indexPath.row].haz
-        
-        
-        //setup name type pic
-        if localsearchinfo.results[indexPath.row].prodtype == "P" {
-            cell?.nameType?.image = UIImage(named: "ProdNameType-Primary")
-        } else if localsearchinfo.results[indexPath.row].prodtype == "O" {
-            cell?.nameType?.image = UIImage(named: "ProdNameType-Other")
-        } else if localsearchinfo.results[indexPath.row].prodtype == "L" {
-            cell?.nameType?.image = UIImage(named: "ProdNameType-Local")
+        if localsearchinfo.results.isEmpty == true {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
+            cell?.SupplierLbl.text = "No result"
+            return cell!
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
+            
+            cell?.SupplierLbl.text = localsearchinfo.results[indexPath.row].company
+            cell?.IssueDateLbl.text = localsearchinfo.results[indexPath.row].issueDate
+            cell?.UNNoLbl.text = localsearchinfo.results[indexPath.row].unno
+            cell?.prodCLbl.text = localsearchinfo.results[indexPath.row].prodcode
+            cell?.dgcLbl.text = localsearchinfo.results[indexPath.row].dgclass
+            cell?.psLbl.text = localsearchinfo.results[indexPath.row].ps
+            cell?.hazLbl.text = localsearchinfo.results[indexPath.row].haz
+            
+            
+            //setup name type pic
+            if localsearchinfo.results[indexPath.row].prodtype == "P" {
+                cell?.nameType?.image = UIImage(named: "ProdNameType-Primary")
+            } else if localsearchinfo.results[indexPath.row].prodtype == "O" {
+                cell?.nameType?.image = UIImage(named: "ProdNameType-Other")
+            } else if localsearchinfo.results[indexPath.row].prodtype == "L" {
+                cell?.nameType?.image = UIImage(named: "ProdNameType-Local")
+            }
+            
+            //setup cell color
+            if rowno == 1 {
+                cell?.backgroundColor = UIColor.white
+                
+                rowno = 0
+            } else if rowno == 0 {
+                cell?.backgroundColor = UIColor.groupTableViewBackground
+                rowno = 1
+            }
+            
+            cell?.layer.cornerRadius = 10
+            cell?.name.text = localsearchinfo.results[indexPath.row].prodname
+            
+            //set row number of button that inside cell when tap
+            cell?.sdsBtn.tag = indexPath.row
+            cell?.sdsBtn.addTarget(self, action: #selector(sdsViewBtnTapped(_:)), for: .touchUpInside)
+            
+            
+            return cell!
         }
         
-        //setup cell color
-        if rowno == 1 {
-            cell?.backgroundColor = UIColor.white
 
-            rowno = 0
-        } else if rowno == 0 {
-            cell?.backgroundColor = UIColor.groupTableViewBackground
-            rowno = 1
-        }
-        
-        cell?.layer.cornerRadius = 10
-        cell?.name.text = localsearchinfo.results[indexPath.row].prodname
-        
-        //set row number of button that inside cell when tap
-        cell?.sdsBtn.tag = indexPath.row
-        cell?.sdsBtn.addTarget(self, action: #selector(sdsViewBtnTapped(_:)), for: .touchUpInside)
-        
-
-        return cell!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -193,11 +229,22 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         }
         
         // controll the animation of side menu (click on the same row - no change)
-        if self.menuView.isHidden == true {
+//        if self.menuView.isHidden == true {
+//            menuAppear()
+//            self.menuView.isHidden = false
+//            selectedthecellno = indexPath.row
+//        }
+//        else if self.menuView.isHidden == false && indexPath.row != selectedthecellno {
+//            menuDisappear()
+//            menuAppear()
+//            selectedthecellno = indexPath.row
+//        }
+        
+        if self.menu.isHidden == true {
             menuAppear()
-            self.menuView.isHidden = false
             selectedthecellno = indexPath.row
-        } else if self.menuView.isHidden == false && indexPath.row != selectedthecellno {
+        }
+        else if self.menu.isHidden == false && indexPath.row != selectedthecellno {
             menuDisappear()
             menuAppear()
             selectedthecellno = indexPath.row
@@ -222,65 +269,112 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
 //            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
 //        }
 //    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if self.menuView.isHidden == false {
-            menuDisappear()
-            self.menuView.isHidden = true
-        }
 
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if self.menuView.isHidden == false {
+//            menuDisappear()
+//            self.menuView.isHidden = true
+//        }
+        
+        if self.menu.isHidden == false {
+            menuDisappear()
+            self.menu.isHidden = true
+        }
+        
     }
     
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        print("1")
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        
+        let currentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+//        let minimumOffset: CGFloat = 0.0
+        
+        if (maximumOffset - currentOffset <= -80.0) {
+
+            if (localsearchinfo.cpage <= localsearchinfo.totalPage) {
+                self.showSpinner(onView: self.view)
+                localsearchinfo.cpage += 1
+                
+                
+                csiWCF_VM().callSearch(inputData: localcriteriainfo.searchValue) { (completionReturnData) in
+                    if completionReturnData == true {
+                        DispatchQueue.main.async {
+                            self.removeSpinner()
+                            self.pageNoLbl.text = localsearchinfo.pagenoamount
+//                            self.tableDisplay.setContentOffset(.zero, animated: true)
+                            self.tableDisplay.reloadData()
+                            print(localsearchinfo.results)
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            self.removeSpinner()
+                            self.showAlert(title: "Failed", message: "Cannot found the search results.")
+                        }
+                    }
+                }
+            } else {
+                
+            }
+        }
+        
+        
+//        if (currentOffset - minimumOffset <= -80.0 ) {
+//            if localsearchinfo.cpage <= 1 {
 //
-//        self.showSpinner(onView: self.view)
-//        localsearchinfo.cpage += 1
-//        localsearchinfo.results = []
-//        print(localsearchinfo.cpage!)
-//
-//        csiWCF_VM().callSearch(inputData: localcriteriainfo.searchValue) { (completionReturnData) in
-//            if completionReturnData == true {
-//                DispatchQueue.main.async {
-//                    self.removeSpinner()
-//                    self.tableDisplay.reloadData()
-//                    self.tableDisplay.setContentOffset(.zero, animated: true)
-//                }
 //            } else {
-//                DispatchQueue.main.async {
-//                    self.removeSpinner()
-//                    self.showAlert(title: "Failed", message: "Cannot found the search results.")
+//                self.showSpinner(onView: self.view)
+//                localsearchinfo.cpage -= 1
+//
+//
+//                csiWCF_VM().callSearch(inputData: localcriteriainfo.searchValue) { (completionReturnData) in
+//                    if completionReturnData == true {
+//                        DispatchQueue.main.async {
+//                            self.removeSpinner()
+//                            self.pageNoLbl.text = localsearchinfo.pagenoamount
+//                            self.tableDisplay.reloadData()
+//                            self.tableDisplay.setContentOffset(.zero, animated: false)
+//                        }
+//                    } else {
+//                        DispatchQueue.main.async {
+//                            self.removeSpinner()
+//                            self.showAlert(title: "Failed", message: "Cannot found the search results.")
+//                        }
+//                    }
 //                }
 //            }
 //        }
-//    }
-
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == localsearchinfo.results.count-1 {
-            self.showSpinner(onView: self.view)
-            localsearchinfo.cpage += 1
-            localsearchinfo.results = []
-            print(localsearchinfo.cpage!)
-
-            csiWCF_VM().callSearch(inputData: localcriteriainfo.searchValue) { (completionReturnData) in
-                if completionReturnData == true {
-                    DispatchQueue.main.async {
-                        print("reach here")
-                        self.removeSpinner()
-//                        self.tableDisplay.reloadData()
-                        self.pageNoLbl.text = localsearchinfo.pagenoamount
-                        self.tableDisplay.setContentOffset(.zero, animated: true)
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        self.removeSpinner()
-                        self.showAlert(title: "Failed", message: "Cannot found the search results.")
-                    }
-                }
-
-            }
-        }
+        
     }
+
+    // newest
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        if indexPath.row == localsearchinfo.results.count-1 {
+//            self.showSpinner(onView: self.view)
+//            localsearchinfo.cpage += 1
+//            localsearchinfo.results = []
+//            print(localsearchinfo.cpage!)
+//
+//            csiWCF_VM().callSearch(inputData: localcriteriainfo.searchValue) { (completionReturnData) in
+//                if completionReturnData == true {
+//                    DispatchQueue.main.async {
+//                        print("reach here")
+//                        self.removeSpinner()
+////                        self.tableDisplay.reloadData()
+//                        self.pageNoLbl.text = localsearchinfo.pagenoamount
+//                        self.tableDisplay.setContentOffset(.zero, animated: true)
+//                    }
+//                } else {
+//                    DispatchQueue.main.async {
+//                        self.removeSpinner()
+//                        self.showAlert(title: "Failed", message: "Cannot found the search results.")
+//                    }
+//                }
+//
+//            }
+//        }
+//    }
+    
+    
 //    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 //        if indexPath.row == localsearchinfo.results.count-1 {
 //            self.showSpinner(onView: self.view)

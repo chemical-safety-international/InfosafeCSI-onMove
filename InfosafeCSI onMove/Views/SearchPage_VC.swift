@@ -20,10 +20,9 @@ class SearchPage_VC: UIViewController {
     
     @IBOutlet weak var logoffBtn: UIButton!
     
+    // create picker view
     let criPicker = UIPickerView()
     
-
-    var defaultPicker: String!
     var selectedRow: Int = 0
     
     override func viewDidLoad() {
@@ -62,15 +61,17 @@ class SearchPage_VC: UIViewController {
         
     }
     
+    // custom picker view
     func createPicker() {
-//        let criPicker = UIPickerView()
+
         criPicker.delegate = self
         criPicker.dataSource = self
         cPickView.inputView = criPicker
-//        cPickView.addSubview(criPicker)
+
         
     }
     
+    //create & custom tool bar for picker view
     func createToolbar() {
         let toolBar = UIToolbar()
         toolBar.sizeToFit()
@@ -83,7 +84,6 @@ class SearchPage_VC: UIViewController {
         toolBar.isUserInteractionEnabled = true
         
         cPickView.inputAccessoryView = toolBar
-//        cPickView.addSubview(toolBar)
     }
     
     // disable swipe to go back
@@ -91,6 +91,7 @@ class SearchPage_VC: UIViewController {
         return false
     }
     
+    //hide the navigation bar
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -102,13 +103,6 @@ class SearchPage_VC: UIViewController {
         
         self.navigationController?.navigationBar.isHidden = false
     }
-    
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        self.view.endEditing(true)
-//        self.cPickView.endEditing(true)
-////        dropArrow()
-//        self.searchBtn.isHidden = false
-//    }
     
     
     @IBAction func searchBtnTapped(_ sender: Any) {
@@ -145,7 +139,6 @@ class SearchPage_VC: UIViewController {
             DispatchQueue.main.async {
                 if completionReturnData.contains("true") {
                     self.cPickView.text = localcriteriainfo.arrName[0]
-                    self.defaultPicker = localcriteriainfo.arrName[0]
                     localcriteriainfo.pickerValue = localcriteriainfo.arrName[0]
 
                 } else if completionReturnData.contains("false") {
@@ -195,20 +188,10 @@ class SearchPage_VC: UIViewController {
 
 
 extension SearchPage_VC: UITextFieldDelegate {
-    
+    // disable user to copy or paste in the text field
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        DispatchQueue.main.async {
-//            self.criPicker.selectRow(self.selectedRow, inComponent: 0, animated: true)
-//        }
-        
         return false
     }
-    
-//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-////        criPicker.selectRow(selectedRow, inComponent: 0, animated: true)
-//        criPicker.reloadAllComponents()
-//        return true
-//    }
     
 }
 
@@ -266,8 +249,10 @@ extension SearchPage_VC: UIPickerViewDelegate, UIPickerViewDataSource {
         localcriteriainfo.code = localcriteriainfo.arrCode[row]
         localcriteriainfo.pickerValue = localcriteriainfo.arrName[row]
         
-//        dropArrow()
+        // updating the attribute of selected row
+        criPicker.reloadAllComponents()
         
+//        dropArrow()
         
     }
     
@@ -279,29 +264,39 @@ extension SearchPage_VC: UIPickerViewDelegate, UIPickerViewDataSource {
         var pickerLabel: UILabel? = (view as? UILabel)
         if pickerLabel == nil {
             pickerLabel = UILabel()
-//            pickerLabel?.font = UIFont.systemFont(ofSize: 22, weight: UIFont.Weight.bold)
+
             pickerLabel?.textAlignment = .center
+            
+            // custom the text of selected row
+            if row == selectedRow {
+                pickerLabel?.font = UIFont.systemFont(ofSize: 22, weight: UIFont.Weight.bold)
+            } else {
+                pickerLabel?.font = UIFont.systemFont(ofSize: 20)
+            }
+            
         }
-        
+
         pickerLabel?.text = localcriteriainfo.arrName[row]
         return pickerLabel!
+        
+
     }
     
     @objc func donePick() {
-//        view.endEditing(true)
         
         self.cPickView.text = localcriteriainfo.arrName[selectedRow]
         localcriteriainfo.code = localcriteriainfo.arrCode[selectedRow]
         localcriteriainfo.pickerValue = localcriteriainfo.arrName[selectedRow]
-        defaultPicker = localcriteriainfo.arrName[selectedRow]
         self.cPickView.resignFirstResponder()
 
     }
     
     @objc func cancelPick() {
-        self.cPickView.text = defaultPicker
-//        criPicker.selectRow(selectedRow, inComponent: 0, animated: false)
-//        criPicker.reloadAllComponents()
+        
+        self.cPickView.text = localcriteriainfo.arrName[0]
+        selectedRow = 0
+        localcriteriainfo.code = localcriteriainfo.arrCode[0]
+        self.criPicker.selectRow(0, inComponent: 0, animated: false)
         self.cPickView.resignFirstResponder()
     }
     
