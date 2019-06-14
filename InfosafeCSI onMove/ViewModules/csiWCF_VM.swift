@@ -147,7 +147,13 @@ class csiWCF_VM: UIViewController {
 
         if rtype == "1" {
             csiWCF_getSDS(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: rtype) { (output) in
-                completion(output.html)
+                if output.pdfString != nil {
+                    completion(output.pdfString)
+                }
+                else
+                {
+                    completion(output.html)
+                }
             }
         }
         else if rtype == "2" {

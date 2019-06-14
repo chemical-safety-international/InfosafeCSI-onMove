@@ -150,6 +150,5 @@ struct outViewSDSData: Codable {
     var html_4: String!
     var html_1: String!
     var html_3: String!
-    var BinaryData: [UInt8]!
-    var Base64String: String!
+    var pdfString: String!
 }
