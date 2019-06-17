@@ -290,12 +290,12 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
 
         if (maximumOffset - currentOffset <= -80.0) {
 
-            if (localsearchinfo.cpage <= localsearchinfo.totalPage) {
+            if (localsearchinfo.cpage < localsearchinfo.totalPage) {
                 loadmoreLbl.isHidden = false
-                loadmoreLbl.text = "Drag to load more..."
-            } else {
+                loadmoreLbl.text = "Drop to load more..."
+            } else if (localsearchinfo.cpage >= localsearchinfo.totalPage) {
                 loadmoreLbl.isHidden = false
-                loadmoreLbl.text = "No more page to load..."
+                loadmoreLbl.text = "All data has been loaded."
             }
         } else {
             loadmoreLbl.isHidden = true
@@ -314,7 +314,7 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         //table bottom reload function setup
         if (maximumOffset - currentOffset <= -80.0) {
 
-            if (localsearchinfo.cpage <= localsearchinfo.totalPage) {
+            if (localsearchinfo.cpage < localsearchinfo.totalPage) {
                 
                 self.showSpinner(onView: self.view)
                 localsearchinfo.cpage += 1

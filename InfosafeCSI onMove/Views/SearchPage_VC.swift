@@ -115,6 +115,7 @@ class SearchPage_VC: UIViewController {
         localcriteriainfo.searchValue = searchInPut
         
         localsearchinfo.results = []
+        localsearchinfo.cpage = 1
         
         csiWCF_VM().callSearch(inputData: searchInPut) { (completionReturnData) in
             if completionReturnData == true {

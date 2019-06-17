@@ -80,9 +80,10 @@ extension Menu_VC : UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell", for: indexPath) as? MenuTableViewCell
         
         if buttonName[indexPath.row] == " " {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell", for: indexPath) as? MenuTableViewCell
+
             
             cell?.btnLbl.text = buttonName[indexPath.row]
             cell?.btnImg.image = UIImage(named: buttonImage[indexPath.row])
@@ -91,14 +92,16 @@ extension Menu_VC : UITableViewDelegate, UITableViewDataSource {
             
 //            cell?.btnLbl.textColor = UIColor.white
             cell?.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
+        } else {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell", for: indexPath) as? MenuTableViewCell
+            
+            cell?.btnLbl.text = buttonName[indexPath.row]
+            cell?.btnImg.image = UIImage(named: buttonImage[indexPath.row])
+            cell?.btnLbl.textColor = UIColor.white
+            cell?.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
         }
     
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell", for: indexPath) as? MenuTableViewCell
-        
-        cell?.btnLbl.text = buttonName[indexPath.row]
-        cell?.btnImg.image = UIImage(named: buttonImage[indexPath.row])
-        cell?.btnLbl.textColor = UIColor.white
-        cell?.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
+
         
         
         return cell!
