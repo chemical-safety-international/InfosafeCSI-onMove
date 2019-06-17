@@ -24,6 +24,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     @IBOutlet weak var viewSdsBtn: UIButton!
     @IBOutlet weak var closeBtn: UIButton!
     
+    @IBOutlet weak var loadmoreLbl: UILabel!
     
     var selectedIndex:Bool = false;
 
@@ -61,6 +62,9 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         self.localLbl.text = localsearchinfo.lamount
         self.otherLbl.text = localsearchinfo.oamount
         self.pageNoLbl.text = localsearchinfo.pagenoamount
+        
+        
+        loadmoreLbl.isHidden = true
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(menuDis), name: NSNotification.Name(rawValue: "refresh"), object: nil)
@@ -281,6 +285,22 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
             self.menu.isHidden = true
         }
         
+        let currentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+
+        if (maximumOffset - currentOffset <= -80.0) {
+
+            if (localsearchinfo.cpage <= localsearchinfo.totalPage) {
+                loadmoreLbl.isHidden = false
+                loadmoreLbl.text = "Drag to load more..."
+            } else {
+                loadmoreLbl.isHidden = false
+                loadmoreLbl.text = "No more page to load..."
+            }
+        } else {
+            loadmoreLbl.isHidden = true
+        }
+        
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -289,9 +309,13 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
 //        let minimumOffset: CGFloat = 0.0
         
+        loadmoreLbl.isHidden = true
+        
+        //table bottom reload function setup
         if (maximumOffset - currentOffset <= -80.0) {
 
             if (localsearchinfo.cpage <= localsearchinfo.totalPage) {
+                
                 self.showSpinner(onView: self.view)
                 localsearchinfo.cpage += 1
                 
@@ -303,7 +327,7 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
                             self.pageNoLbl.text = localsearchinfo.pagenoamount
 //                            self.tableDisplay.setContentOffset(.zero, animated: true)
                             self.tableDisplay.reloadData()
-                            print(localsearchinfo.results)
+
                         }
                     } else {
                         DispatchQueue.main.async {
@@ -317,7 +341,7 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
             }
         }
         
-        
+        //table top reload setup
 //        if (currentOffset - minimumOffset <= -80.0 ) {
 //            if localsearchinfo.cpage <= 1 {
 //
@@ -345,58 +369,5 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
 //        }
         
     }
-
-    // newest
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        if indexPath.row == localsearchinfo.results.count-1 {
-//            self.showSpinner(onView: self.view)
-//            localsearchinfo.cpage += 1
-//            localsearchinfo.results = []
-//            print(localsearchinfo.cpage!)
-//
-//            csiWCF_VM().callSearch(inputData: localcriteriainfo.searchValue) { (completionReturnData) in
-//                if completionReturnData == true {
-//                    DispatchQueue.main.async {
-//                        print("reach here")
-//                        self.removeSpinner()
-////                        self.tableDisplay.reloadData()
-//                        self.pageNoLbl.text = localsearchinfo.pagenoamount
-//                        self.tableDisplay.setContentOffset(.zero, animated: true)
-//                    }
-//                } else {
-//                    DispatchQueue.main.async {
-//                        self.removeSpinner()
-//                        self.showAlert(title: "Failed", message: "Cannot found the search results.")
-//                    }
-//                }
-//
-//            }
-//        }
-//    }
-    
-    
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        if indexPath.row == localsearchinfo.results.count-1 {
-//            self.showSpinner(onView: self.view)
-//            localsearchinfo.cpage += 1
-//            print(localsearchinfo.cpage!)
-//
-//            csiWCF_VM().callSearch(inputData: localcriteriainfo.searchValue) { (completionReturnData) in
-//                if completionReturnData == true {
-//                    DispatchQueue.main.async {
-//                        print("reach here")
-//                        self.removeSpinner()
-////                        self.tableDisplay.reloadData()
-//                    }
-//                } else {
-//                    DispatchQueue.main.async {
-//                        self.removeSpinner()
-//                        self.showAlert(title: "Failed", message: "Cannot found the search results.")
-//                    }
-//                }
-//
-//            }
-//        }
-//    }
     
 }

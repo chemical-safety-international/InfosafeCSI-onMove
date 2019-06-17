@@ -38,7 +38,7 @@ class Menu_VC: UIViewController {
         // Do any additional setup after loading the view.
         menuTable.reloadData()
         
-        downImg.isHidden = true
+        upImg.isHidden = true
     }
 
     /*
@@ -121,10 +121,10 @@ extension Menu_VC : UITableViewDelegate, UITableViewDataSource {
         let maxOffset = scrollView.contentSize.height - scrollView.frame.size.height
         let minOffset: CGFloat = 0.0
         
-        if (maxOffset - currentOffset <= -0.0) {
+        if (maxOffset - currentOffset <= 100.0) {
             downImg.isHidden = true
             upImg.isHidden = false
-        } else if (currentOffset - minOffset <= -0.0) {
+        } else if (currentOffset - minOffset <= 10.0) {
             downImg.isHidden = false
             upImg.isHidden = true
         }
