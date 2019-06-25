@@ -133,6 +133,7 @@ struct localsearchinfo {
 struct localcurrentSDS {
     static var sdsNo: String!
     static var sdsRowNo: Int!
+    static var pdfData: Data!
 }
 
 struct outViewSDSData: Codable {

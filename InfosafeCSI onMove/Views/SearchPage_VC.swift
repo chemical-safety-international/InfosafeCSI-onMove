@@ -20,6 +20,7 @@ class SearchPage_VC: UIViewController {
     
     @IBOutlet weak var logoffBtn: UIButton!
     
+    @IBOutlet weak var noSearchResultLbl: UILabel!
     // create picker view
     let criPicker = UIPickerView()
     
@@ -27,6 +28,9 @@ class SearchPage_VC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        noSearchResultLbl.isHidden = true
+        
         
         // load the criteria list for picker
         self.callCriteriaList()
@@ -60,6 +64,11 @@ class SearchPage_VC: UIViewController {
         localsearchinfo.psize = 50
         
     }
+    
+//    override func viewWillLayoutSubviews() {
+//        searchbar.sizeToFit()
+//        cPickView.sizeToFit()
+//    }
     
     // custom picker view
     func createPicker() {
@@ -110,28 +119,41 @@ class SearchPage_VC: UIViewController {
     }
     
     func searchFunction() {
-        self.showSpinner(onView: self.view)
-        let searchInPut = searchbar.text!
-        localcriteriainfo.searchValue = searchInPut
         
-        localsearchinfo.results = []
-        localsearchinfo.cpage = 1
-        
-        csiWCF_VM().callSearch(inputData: searchInPut) { (completionReturnData) in
-            if completionReturnData == true {
-                DispatchQueue.main.async {
-                    self.removeSpinner()
-                    let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "TablePage") as? TablePage_VC
-                    self.navigationController?.pushViewController(searchJump!, animated: true)
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.removeSpinner()
-                    self.showAlert(title: "Failed", message: "Cannot found the search results.")
-                }
-            }
+        if searchbar.text!.isEmpty {
+            self.removeSpinner()
+            self.showAlert(title: "Failed", message: "Search content empty.")
             
+        } else {
+            self.cPickView.endEditing(true)
+            self.showSpinner(onView: self.view)
+            let searchInPut = searchbar.text!
+            localcriteriainfo.searchValue = searchInPut
+            
+            noSearchResultLbl.isHidden = true
+            
+            localsearchinfo.results = []
+            localsearchinfo.cpage = 1
+            
+            csiWCF_VM().callSearch(inputData: searchInPut) { (completionReturnData) in
+                if completionReturnData == true {
+                    DispatchQueue.main.async {
+                        self.removeSpinner()
+                        let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "TablePage") as? TablePage_VC
+                        self.navigationController?.pushViewController(searchJump!, animated: true)
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.removeSpinner()
+//                        self.showAlert(title: "Failed", message: "Cannot found the search results.")
+                        self.noSearchResultLbl.isHidden = false
+                    }
+                    
+                }
+                
+            }
         }
+
     }
     
 

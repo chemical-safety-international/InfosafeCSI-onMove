@@ -11,15 +11,18 @@ import UIKit
 class Menu_VC: UIViewController {
     
     
-    var buttonName = [" ", "Core Info.", "Classification", "First Aid", "Transport", "View SDS"]
-    var buttonImage = ["menu-close-cross", "CSI-Core", "CSI-Class", "CSI-Aid", "CSI-Transport", "CSI-ViewSDS"]
+//    var buttonName = [" ", "Core Info.", "Classification", "First Aid", "Transport", "View SDS"]
+//    var buttonImage = ["menu-close-cross", "CSI-Core", "CSI-Class", "CSI-Aid", "CSI-Transport", "CSI-ViewSDS"]
     
-//    var buttonName = ["Core Info.", "Classification", "First Aid", "Transport", "View SDS"]
-//    var buttonImage = ["CSI-Core", "CSI-Class", "CSI-Aid", "CSI-Transport", "CSI-ViewSDS"]
+    var buttonName = ["View SDS", "Core Info.", "Classification", "First Aid", "Transport"]
+    var buttonImage = ["CSI-ViewSDS", "CSI-Core", "CSI-Class", "CSI-Aid", "CSI-Transport"]
 
     @IBOutlet weak var upImg: UIImageView!
     @IBOutlet weak var downImg: UIImageView!
     @IBOutlet weak var menuTable: UITableView!
+
+    
+    @IBOutlet weak var closeBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,17 +31,23 @@ class Menu_VC: UIViewController {
         self.menuTable.dataSource = self
         menuTable.separatorStyle = .none
         self.view.backgroundColor = UIColor.clear
-        upImg.layer.cornerRadius = 5
-        downImg.layer.cornerRadius = 5
-        menuTable.layer.cornerRadius = 5
-//        upImg.isHidden = true
-//        downImg.isHidden = true
 
+//        menuTable.layer.cornerRadius = 5
 
+        closeBtn.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
+//        upImg.layer.cornerRadius = 5
+//        downImg.layer.cornerRadius = 5
+//        upImg.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
+//        downImg.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
+//        closeBtn.layer.cornerRadius = 5
         // Do any additional setup after loading the view.
         menuTable.reloadData()
         
         upImg.isHidden = true
+        
+        if (menuTable.contentSize.height >= 250) {
+            downImg.isHidden = true
+        }
     }
 
     /*
@@ -57,12 +66,15 @@ class Menu_VC: UIViewController {
             self.navigationController?.pushViewController(sdsJump!, animated: true)
         }
         
-        if buttonName[index] == " " {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refresh"), object: nil)
-        }
+//        if buttonName[index] == " " {
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refresh"), object: nil)
+//        }
     }
     
-
+    @IBAction func closeBtnTapped(_ sender: Any) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refresh"), object: nil)
+    }
+    
 }
 
 
@@ -82,24 +94,24 @@ extension Menu_VC : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell", for: indexPath) as? MenuTableViewCell
         
-        if buttonName[indexPath.row] == " " {
+//        if buttonName[indexPath.row] == " " {
 
             
-            cell?.btnLbl.text = buttonName[indexPath.row]
-            cell?.btnImg.image = UIImage(named: buttonImage[indexPath.row])
-            let rect = CGRect.init(x: 30, y: 10, width: 30, height: 30)
-            cell?.btnImg.draw(rect)
-            
-//            cell?.btnLbl.textColor = UIColor.white
-            cell?.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
-        } else {
+//            cell?.btnLbl.text = buttonName[indexPath.row]
+//            cell?.btnImg.image = UIImage(named: buttonImage[indexPath.row])
+//            let rect = CGRect.init(x: 30, y: 10, width: 30, height: 30)
+//            cell?.btnImg.draw(rect)
+//
+////            cell?.btnLbl.textColor = UIColor.white
+//            cell?.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
+//        } else {
 //            let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell", for: indexPath) as? MenuTableViewCell
             
             cell?.btnLbl.text = buttonName[indexPath.row]
             cell?.btnImg.image = UIImage(named: buttonImage[indexPath.row])
             cell?.btnLbl.textColor = UIColor.white
             cell?.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
-        }
+//        }
     
 
         
@@ -116,21 +128,21 @@ extension Menu_VC : UITableViewDelegate, UITableViewDataSource {
 //        return downImg
 //    }
 //    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        return upImg
+//        return closeBtn
 //    }
     
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        let currentOffset = scrollView.contentOffset.y
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let maxOffset = scrollView.contentSize.height - scrollView.frame.size.height
-        let minOffset: CGFloat = 0.0
         
-        if (maxOffset - currentOffset <= 100.0) {
-            downImg.isHidden = true
-            upImg.isHidden = false
-        } else if (currentOffset - minOffset <= 10.0) {
+        if (scrollView.contentOffset.y <= 20) {
             downImg.isHidden = false
             upImg.isHidden = true
+        } else if scrollView.contentOffset.y >= maxOffset - 20 {
+            downImg.isHidden = true
+            upImg.isHidden = false
         }
+
     }
     
 }

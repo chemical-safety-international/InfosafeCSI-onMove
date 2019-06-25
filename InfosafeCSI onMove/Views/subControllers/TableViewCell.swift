@@ -37,7 +37,7 @@ class TableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        name.font = UIFont.boldSystemFont(ofSize: 18)
+        name.font = UIFont.boldSystemFont(ofSize: 15)
         
         supplbl.font = UIFont.boldSystemFont(ofSize: 13)
         isslbl.font = UIFont.boldSystemFont(ofSize: 13)
@@ -47,6 +47,10 @@ class TableViewCell: UITableViewCell {
         PoisonSLbl.font = UIFont.boldSystemFont(ofSize: 13)
         HazardousLbl.font = UIFont.boldSystemFont(ofSize: 13)
         
+        //display full text of product name
+        name.numberOfLines = 0
+        name.adjustsFontSizeToFitWidth = true
+        name.adjustsFontForContentSizeCategory = false
         
     }
 

@@ -25,11 +25,15 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     @IBOutlet weak var closeBtn: UIButton!
     
     @IBOutlet weak var loadmoreLbl: UILabel!
+    @IBOutlet weak var menuUIView: UIView!
     
     var selectedIndex:Bool = false;
 
     var rowno = 0
     var selectedthecellno = 0
+    
+    var screenHeight = 0
+    var screenWidth = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,17 +47,21 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         self.tableDisplay.delegate = self
         self.tableDisplay.dataSource = self
 
+//        menuUIView.layer.cornerRadius = 10
+//        menuUIView.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
         
         //button style setup
         viewSdsBtn.layer.cornerRadius = 10
         
         //side menu setup
-        menuView.layer.cornerRadius = 10
-        menuView.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
-        menuView.center.x += view.bounds.width
+//        menuView.layer.cornerRadius = 10
+//        menuView.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
+//        menuView.center.x += view.bounds.width
         
         
         menu.center.x += view.bounds.width
+        menu.layer.cornerRadius = 10
+        menu.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
         
         self.hideKeyboardWhenTappedAround()
         
@@ -73,27 +81,38 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     
     @objc func menuDis() {
         UIView.animate(withDuration: 0.4, animations: {
-            //            self.menuView.center.x += self.view.bounds.width
+                        //self.menuView.center.x += self.view.bounds.width
             
-            self.menu.center.x += self.view.bounds.width
+            self.menuDisappear()
+
             
         }, completion: nil)
         //        self.menuView.isHidden = true
         
-        self.menu.isHidden = true
     }
     
 //    override func viewWillAppear(_ animated: Bool) {
 ////        tableDisplay.estimatedRowHeight = 145
 ////        tableDisplay.rowHeight = UITableView.automaticDimension
 //    }
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        DispatchQueue.main.async {
+//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        DispatchQueue.main.async {
+//
+////            print("Height: \(self.view.bounds.size.height)")
+////            print("Width: \(self.view.bounds.size.width)")
+//            if self.view.bounds.width > self.view.bounds.height {
+//                self.menuView.center.x += self.view.bounds.width
+//                print("1Height: \(self.view.bounds.size.height)")
+//                print("1Width: \(self.view.bounds.size.width)")
+//            } else if self.view.bounds.height > self.view.bounds.width {
+//                self.menuView.center.x += self.view.bounds.height
+//                print("2Height: \(self.view.bounds.size.height)")
+//                print("2Width: \(self.view.bounds.size.width)")
+//            }
+//
+//        }
+//    }
 
-            print("Height: \(self.view.bounds.size.height)")
-            print("Width: \(self.view.bounds.size.width)")
-        }
-    }
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -141,7 +160,17 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         UIView.animate(withDuration: 0.8, animations: {
 //            self.menuView.center.x -= self.view.bounds.width
             
-            self.menu.center.x -= self.view.bounds.width
+//            self.menu.center.x -= self.view.bounds.width
+            
+            if self.view.bounds.width > self.view.bounds.height {
+                self.menu.center.x -=  (self.view.bounds.width + 120.0)
+                print("1Height: \(self.view.bounds.size.height)")
+                print("1Width: \(self.view.bounds.size.width)")
+            } else if self.view.bounds.height > self.view.bounds.width {
+                self.menu.center.x -= self.view.bounds.width
+                print("2Height: \(self.view.bounds.size.height)")
+                print("2Width: \(self.view.bounds.size.width)")
+            }
             }, completion: nil)
 //        self.menuView.isHidden = false
         
@@ -152,7 +181,17 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         UIView.animate(withDuration: 0.4, animations: {
 //            self.menuView.center.x += self.view.bounds.width
             
-            self.menu.center.x += self.view.bounds.width
+//            self.menu.center.x += self.view.bounds.width
+            
+            if self.view.bounds.width > self.view.bounds.height {
+                self.menu.center.x +=  (self.view.bounds.width + 120.0)
+                print("1Height: \(self.view.bounds.size.height)")
+                print("1Width: \(self.view.bounds.size.width)")
+            } else if self.view.bounds.height > self.view.bounds.width {
+                self.menu.center.x += self.view.bounds.width
+                print("2Height: \(self.view.bounds.size.height)")
+                print("2Width: \(self.view.bounds.size.width)")
+            }
 
         }, completion: nil)
 //        self.menuView.isHidden = true
