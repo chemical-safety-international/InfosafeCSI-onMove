@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct outLoginData: Codable {
     var apptype: Int!
@@ -129,6 +130,9 @@ struct localsearchinfo {
     static var totalPage: Int!
 }
 
+//struct localtablesize {
+//    static var tableHeight: CGFloat!
+//}
 
 struct localcurrentSDS {
     static var sdsNo: String!

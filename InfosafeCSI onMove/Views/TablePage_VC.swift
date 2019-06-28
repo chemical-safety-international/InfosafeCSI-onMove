@@ -18,11 +18,8 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     @IBOutlet weak var otherLbl: UILabel!
     @IBOutlet weak var pageNoLbl: UILabel!
     
-    @IBOutlet weak var menuView: UIView!
     @IBOutlet weak var menu: UIView!
     
-    @IBOutlet weak var viewSdsBtn: UIButton!
-    @IBOutlet weak var closeBtn: UIButton!
     
     @IBOutlet weak var loadmoreLbl: UILabel!
     @IBOutlet weak var menuUIView: UIView!
@@ -38,30 +35,13 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-        self.menuView.isHidden = true
-        self.menu.isHidden = true
+        menuDisappear()
         // Do any additional setup after loading the view.
         
 //        NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "load"), object: nil)
         self.tableDisplay.delegate = self
         self.tableDisplay.dataSource = self
 
-//        menuUIView.layer.cornerRadius = 10
-//        menuUIView.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
-        
-        //button style setup
-        viewSdsBtn.layer.cornerRadius = 10
-        
-        //side menu setup
-//        menuView.layer.cornerRadius = 10
-//        menuView.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
-//        menuView.center.x += view.bounds.width
-        
-        
-        menu.center.x += view.bounds.width
-        menu.layer.cornerRadius = 10
-        menu.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
         
         self.hideKeyboardWhenTappedAround()
         
@@ -74,129 +54,72 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         
         loadmoreLbl.isHidden = true
         
-        
         NotificationCenter.default.addObserver(self, selector: #selector(menuDis), name: NSNotification.Name(rawValue: "refresh"), object: nil)
+        
+//        NotificationCenter.default.post(name:NSNotification.Name(rawValue: "scroll"), object: nil)
+//        localtablesize.tableHeight = menu.frame.height
         
     }
     
     @objc func menuDis() {
-        UIView.animate(withDuration: 0.4, animations: {
-                        //self.menuView.center.x += self.view.bounds.width
-            
-            self.menuDisappear()
-
-            
-        }, completion: nil)
-        //        self.menuView.isHidden = true
-        
+        self.menuDisappear()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-////        tableDisplay.estimatedRowHeight = 145
-////        tableDisplay.rowHeight = UITableView.automaticDimension
-//    }
-//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-//        DispatchQueue.main.async {
-//
-////            print("Height: \(self.view.bounds.size.height)")
-////            print("Width: \(self.view.bounds.size.width)")
-//            if self.view.bounds.width > self.view.bounds.height {
-//                self.menuView.center.x += self.view.bounds.width
-//                print("1Height: \(self.view.bounds.size.height)")
-//                print("1Width: \(self.view.bounds.size.width)")
-//            } else if self.view.bounds.height > self.view.bounds.width {
-//                self.menuView.center.x += self.view.bounds.height
-//                print("2Height: \(self.view.bounds.size.height)")
-//                print("2Width: \(self.view.bounds.size.width)")
-//            }
-//
-//        }
-//    }
-
-    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        if (self.view.bounds.height > self.view.bounds.width) {
+            menuDisappear()
+        } else if (self.view.bounds.width > self.view.bounds.height) {
+            menuDisappear()
+        }
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         menuDisappear()
         self.view.endEditing(true)
     }
     
-//    @objc func loadList(notification: NSNotification) {
-//        DispatchQueue.main.async {
-//            self.tableDisplay.reloadData()
+    //for the view sds button inside of cell (currently not using)
+//    @IBAction func sdsViewBtnTapped(_ sender: UIButton) {
+//
+//        //get row number
+//
+//        localcurrentSDS.sdsRowNo = sender.tag
+//
+//        if self.menuView.isHidden == true {
+//            menuAppear()
+//
+//        } else if self.menuView.isHidden == false {
+//            menuDisappear()
+//
 //        }
 //    }
     
-    //for the view sds button inside of cell (currently not using)
-    @IBAction func sdsViewBtnTapped(_ sender: UIButton) {
-        
-        //get row number
-        
-        localcurrentSDS.sdsRowNo = sender.tag
-        
-        if self.menuView.isHidden == true {
-            menuAppear()
-   
-        } else if self.menuView.isHidden == false {
-            menuDisappear()
-
-        }
-        
-        
-    }
     
-    @IBAction func viewSdsBtnTapped(_ sender: Any) {
-
-        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
-        self.navigationController?.pushViewController(sdsJump!, animated: true)
-    }
-    
-
-    @IBAction func closeBtnTapped(_ sender: Any) {
-        menuDisappear()
-        self.menuView.isHidden = true
-    }
     
     func menuAppear() {
-        UIView.animate(withDuration: 0.8, animations: {
-//            self.menuView.center.x -= self.view.bounds.width
+
+        UIView.animate(withDuration: 0.5, animations:  {
             
-//            self.menu.center.x -= self.view.bounds.width
-            
-            if self.view.bounds.width > self.view.bounds.height {
-                self.menu.center.x -=  (self.view.bounds.width + 120.0)
-                print("1Height: \(self.view.bounds.size.height)")
-                print("1Width: \(self.view.bounds.size.width)")
-            } else if self.view.bounds.height > self.view.bounds.width {
-                self.menu.center.x -= self.view.bounds.width
-                print("2Height: \(self.view.bounds.size.height)")
-                print("2Width: \(self.view.bounds.size.width)")
+            self.menu.isHidden = false
+            if (self.view.bounds.width > 800) {
+                self.menu.frame.origin.x = self.view.bounds.width - 181
+            } else {
+                self.menu.frame.origin.x = self.view.bounds.width - 131
             }
-            }, completion: nil)
-//        self.menuView.isHidden = false
+            
+        }, completion: nil)
         
-        self.menu.isHidden = false
+        
     }
     
     func menuDisappear() {
-        UIView.animate(withDuration: 0.4, animations: {
-//            self.menuView.center.x += self.view.bounds.width
-            
-//            self.menu.center.x += self.view.bounds.width
-            
-            if self.view.bounds.width > self.view.bounds.height {
-                self.menu.center.x +=  (self.view.bounds.width + 120.0)
-                print("1Height: \(self.view.bounds.size.height)")
-                print("1Width: \(self.view.bounds.size.width)")
-            } else if self.view.bounds.height > self.view.bounds.width {
-                self.menu.center.x += self.view.bounds.width
-                print("2Height: \(self.view.bounds.size.height)")
-                print("2Width: \(self.view.bounds.size.width)")
-            }
 
-        }, completion: nil)
-//        self.menuView.isHidden = true
+        UIView.animate(withDuration: 0.2, animations: {
+            self.menu.isHidden = true
+            self.menu.frame.origin.x = self.view.bounds.width
+            }, completion: nil)
         
-        self.menu.isHidden = true
+        
     }
     
 }
@@ -251,8 +174,8 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
             cell?.name.text = localsearchinfo.results[indexPath.row].prodname
             
             //set row number of button that inside cell when tap
-            cell?.sdsBtn.tag = indexPath.row
-            cell?.sdsBtn.addTarget(self, action: #selector(sdsViewBtnTapped(_:)), for: .touchUpInside)
+//            cell?.sdsBtn.tag = indexPath.row
+//            cell?.sdsBtn.addTarget(self, action: #selector(sdsViewBtnTapped(_:)), for: .touchUpInside)
             
             
             return cell!
@@ -272,17 +195,6 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         }
         
         // controll the animation of side menu (click on the same row - no change)
-//        if self.menuView.isHidden == true {
-//            menuAppear()
-//            self.menuView.isHidden = false
-//            selectedthecellno = indexPath.row
-//        }
-//        else if self.menuView.isHidden == false && indexPath.row != selectedthecellno {
-//            menuDisappear()
-//            menuAppear()
-//            selectedthecellno = indexPath.row
-//        }
-        
         if self.menu.isHidden == true {
             menuAppear()
             selectedthecellno = indexPath.row
@@ -314,11 +226,7 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
 //    }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if self.menuView.isHidden == false {
-//            menuDisappear()
-//            self.menuView.isHidden = true
-//        }
-        
+
         if self.menu.isHidden == false {
             menuDisappear()
             self.menu.isHidden = true

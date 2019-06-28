@@ -16,59 +16,61 @@ class Menu_VC: UIViewController {
     
     var buttonName = ["View SDS", "Core Info.", "Classification", "First Aid", "Transport"]
     var buttonImage = ["CSI-ViewSDS", "CSI-Core", "CSI-Class", "CSI-Aid", "CSI-Transport"]
-
-    @IBOutlet weak var upImg: UIImageView!
-    @IBOutlet weak var downImg: UIImageView!
-    @IBOutlet weak var menuTable: UITableView!
-
     
+    var timerForShowScrollIndicator: Timer?
+
+    @IBOutlet weak var menuTable: UITableView!
     @IBOutlet weak var closeBtn: UIButton!
+    @IBOutlet weak var menuView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        menuView.layer.cornerRadius = 10
+        menuView.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
         
         self.menuTable.delegate = self
         self.menuTable.dataSource = self
         menuTable.separatorStyle = .none
         self.view.backgroundColor = UIColor.clear
 
-//        menuTable.layer.cornerRadius = 5
-
-        closeBtn.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
-//        upImg.layer.cornerRadius = 5
-//        downImg.layer.cornerRadius = 5
-//        upImg.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
-//        downImg.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
-//        closeBtn.layer.cornerRadius = 5
         // Do any additional setup after loading the view.
         menuTable.reloadData()
         
-        upImg.isHidden = true
-        
-        if (menuTable.contentSize.height >= 250) {
-            downImg.isHidden = true
+    }
+
+
+    override func viewDidAppear(_ animated: Bool) {
+        startTimerForShowScrollIndicator()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        stopTimerForShowScrollIndicator()
+    }
+    
+    @objc func showScrollIndicatorsInContacts() {
+        UIView.animate(withDuration: 0.001) {
+            self.menuTable.flashScrollIndicators()
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func startTimerForShowScrollIndicator() {
+        self.timerForShowScrollIndicator = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.showScrollIndicatorsInContacts), userInfo: nil, repeats: true)
     }
-    */
+    
+    func stopTimerForShowScrollIndicator() {
+        self.timerForShowScrollIndicator?.invalidate()
+        self.timerForShowScrollIndicator = nil
+    }
+    
+    
     
     func menuFunction(index: Int) {
         if buttonName[index] == "View SDS" {
             let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
             self.navigationController?.pushViewController(sdsJump!, animated: true)
         }
-        
-//        if buttonName[index] == " " {
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refresh"), object: nil)
-//        }
+    
     }
     
     @IBAction func closeBtnTapped(_ sender: Any) {
@@ -94,28 +96,11 @@ extension Menu_VC : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell", for: indexPath) as? MenuTableViewCell
         
-//        if buttonName[indexPath.row] == " " {
+        cell?.btnLbl.text = buttonName[indexPath.row]
+        cell?.btnImg.image = UIImage(named: buttonImage[indexPath.row])
+        cell?.btnLbl.textColor = UIColor.white
+        cell?.backgroundColor = UIColor.clear
 
-            
-//            cell?.btnLbl.text = buttonName[indexPath.row]
-//            cell?.btnImg.image = UIImage(named: buttonImage[indexPath.row])
-//            let rect = CGRect.init(x: 30, y: 10, width: 30, height: 30)
-//            cell?.btnImg.draw(rect)
-//
-////            cell?.btnLbl.textColor = UIColor.white
-//            cell?.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
-//        } else {
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell", for: indexPath) as? MenuTableViewCell
-            
-            cell?.btnLbl.text = buttonName[indexPath.row]
-            cell?.btnImg.image = UIImage(named: buttonImage[indexPath.row])
-            cell?.btnLbl.textColor = UIColor.white
-            cell?.backgroundColor = UIColor.init(red: 0.10, green: 0.10, blue: 0.10, alpha: 0.7)
-//        }
-    
-
-        
-        
         return cell!
     }
     
@@ -124,25 +109,11 @@ extension Menu_VC : UITableViewDelegate, UITableViewDataSource {
         menuFunction(index: indexPath.row)
     }
     
-//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        return downImg
-//    }
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        return closeBtn
-//    }
-    
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let maxOffset = scrollView.contentSize.height - scrollView.frame.size.height
-        
-        if (scrollView.contentOffset.y <= 20) {
-            downImg.isHidden = false
-            upImg.isHidden = true
-        } else if scrollView.contentOffset.y >= maxOffset - 20 {
-            downImg.isHidden = true
-            upImg.isHidden = false
-        }
-
+    func tableScrollDisable() {
+        menuTable.isScrollEnabled = false
+    }
+    func tableScrollEnable() {
+        menuTable.isScrollEnabled = true
     }
     
 }

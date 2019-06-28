@@ -10,6 +10,7 @@ import UIKit
 
 class Startup_VC: UIViewController {
 
+    @IBOutlet weak var startBtn: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 

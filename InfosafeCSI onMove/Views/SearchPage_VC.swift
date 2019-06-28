@@ -14,7 +14,6 @@ class SearchPage_VC: UIViewController {
 
     //IBOutlet
     @IBOutlet weak var cPickView: UITextField!
-    @IBOutlet weak var pickerBtn: UIButton!
     @IBOutlet weak var searchbar: UISearchBar!
     @IBOutlet weak var searchBtn: UIButton!
     
@@ -29,6 +28,7 @@ class SearchPage_VC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //setup no result label
         noSearchResultLbl.isHidden = true
         
         
@@ -38,25 +38,21 @@ class SearchPage_VC: UIViewController {
         //button style
         logoffBtn.layer.cornerRadius = 5
         searchBtn.layer.cornerRadius = 5
-        pickerBtn.layer.cornerRadius = 10
         cPickView.layer.cornerRadius = 10
-        
-        // change textfield height
-        var frame = self.cPickView.frame
-        frame.size.height = 35
-        self.cPickView.frame = frame
-        self.cPickView.delegate = self
-        
-        
-        
-        self.searchbar.delegate = self
     
-        
+        //enable the delegate
+        self.cPickView.delegate = self
+        self.searchbar.delegate = self
+
+        //setup navigation function
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
         
         //setup picker & toolbar
         createPicker()
         createToolbar()
+        
+        //setup text field right view
+        createArrow()
         
         hideKeyboard()
         
@@ -64,11 +60,6 @@ class SearchPage_VC: UIViewController {
         localsearchinfo.psize = 50
         
     }
-    
-//    override func viewWillLayoutSubviews() {
-//        searchbar.sizeToFit()
-//        cPickView.sizeToFit()
-//    }
     
     // custom picker view
     func createPicker() {
@@ -78,6 +69,14 @@ class SearchPage_VC: UIViewController {
         cPickView.inputView = criPicker
 
         
+    }
+    
+    func createArrow() {
+        cPickView.rightViewMode = UITextField.ViewMode.always
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        let image = UIImage(named: "combox-down-arrow")
+        imageView.image = image
+        cPickView.rightView = imageView
     }
     
     //create & custom tool bar for picker view
@@ -144,10 +143,17 @@ class SearchPage_VC: UIViewController {
                     }
                 } else {
                     DispatchQueue.main.async {
-                        self.removeSpinner()
-//                        self.showAlert(title: "Failed", message: "Cannot found the search results.")
-                        self.noSearchResultLbl.isHidden = false
+                        if (self.view.bounds.height <= 320) {
+//                            print(self.view.bounds.height)
+                                self.removeSpinner()
+                                self.showAlert(title: "", message: "No Search Result Find.")
+                        } else {
+//                            print(self.view.bounds.height)
+                                self.removeSpinner()
+                                self.noSearchResultLbl.isHidden = false
+                        }
                     }
+
                     
                 }
                 
@@ -174,29 +180,6 @@ class SearchPage_VC: UIViewController {
                 }
             }
         }
-    }
-    
-//    func dropArrow() {
-//        let image = UIImage(named: "combox-down-arrow")
-//        self.pickerBtn.setImage(image, for: .normal)
-//    }
-//
-//    func upArrow() {
-//        let image = UIImage(named: "combox-up-arrow")
-//        self.pickerBtn.setImage(image, for: .normal)
-//    }
-    
-    @IBAction func pickerBtnTapped(_ sender: Any) {
-//        if thePicker.isHidden == false {
-//            self.thePicker.isHidden = true
-//            dropArrow()
-//
-//
-//        } else if thePicker.isHidden == true {
-//            self.thePicker.isHidden = false
-//            upArrow()
-//
-//        }
     }
     
     func hideKeyboard() {
@@ -276,8 +259,6 @@ extension SearchPage_VC: UIPickerViewDelegate, UIPickerViewDataSource {
         
         // updating the attribute of selected row
         criPicker.reloadAllComponents()
-        
-//        dropArrow()
         
     }
     
