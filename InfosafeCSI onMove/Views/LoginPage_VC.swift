@@ -16,16 +16,37 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginBtn: UIButton!
     
     
+    @IBOutlet weak var remember: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //button style
-        loginBtn.layer.cornerRadius = 5
+        loginBtn.layer.cornerRadius = 18
+
+//        userIDTextField.layer.borderWidth = 1.0
+//        userIDTextField.layer.cornerRadius = 18
+//
+//        passwordTextField.layer.borderWidth = 1.0
+//        passwordTextField.layer.cornerRadius = 18
+        
         
         // Do any additional setup after loading the view.
         self.navigationController!.navigationBar.isHidden = false;
         self.hideKeyboardWhenTappedAround()
+        
+        let defaults = UserDefaults.standard
+        if (defaults.bool(forKey: "remeberstatus") == true) {
+            userIDTextField.text = defaults.string(forKey: localclientcoreData.username)
+            passwordTextField.text = defaults.string(forKey: localclientcoreData.password)
+            let image = UIImage(named: "login-ticked-box")
+            remember.setImage(image, for: .normal)
+        } else if (defaults.bool(forKey: "remeberstatus") == false) {
+            userIDTextField.text = ""
+            passwordTextField.text = ""
+            let image = UIImage(named: "login-unticked-box")
+            remember.setImage(image, for: .normal)
+        }
 
     }
     
@@ -55,10 +76,47 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
         loginFunction()
     }
     
+    @IBAction func remeberBtnTapped(_ sender: Any) {
+        if (userIDTextField.text! == "") {
+            showAlert(title: "Notice", message: "Username is empty!")
+        } else if (passwordTextField.text! == "") {
+            showAlert(title: "Notice", message: "Password is empty!")
+        } else {
+            let defaults = UserDefaults.standard
+            if (defaults.bool(forKey: "remeberstatus") == false) {
+                let defaults = UserDefaults.standard
+                defaults.set(userIDTextField.text!, forKey: localclientcoreData.username)
+                defaults.set(passwordTextField.text!, forKey: localclientcoreData.password)
+                let image = UIImage(named: "login-ticked-box")
+                remember.setImage(image, for: .normal)
+                defaults.set(true, forKey: "remeberstatus")
+
+            } else if (defaults.bool(forKey: "remeberstatus") == true) {
+                let defaults = UserDefaults.standard
+                defaults.set("", forKey: localclientcoreData.username)
+                defaults.set("", forKey: localclientcoreData.password)
+                let image = UIImage(named: "login-unticked-box")
+                remember.setImage(image, for: .normal)
+                defaults.set(false, forKey: "remeberstatus")
+            }
+        }
+    }
+    
     func loginFunction() {
         //call the function with input from viewModule
-        let email = userIDTextField.text!
-        let password = passwordTextField.text!
+        var email: String!
+        var password: String!
+        
+        let defaults = UserDefaults.standard
+        if (defaults.bool(forKey: "remeberstatus") == false) {
+            email = userIDTextField.text!
+            password = passwordTextField.text!
+        } else if (defaults.bool(forKey: "remeberstatus") == true) {
+            let defaults = UserDefaults.standard
+            email = defaults.string(forKey: localclientcoreData.username)
+            password = defaults.string(forKey: localclientcoreData.password)
+        }
+
         
         self.showSpinner(onView: self.view)
         csiWCF_VM().callLogin(email: email, password: password) { (completion) in

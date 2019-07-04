@@ -26,11 +26,11 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     
     var selectedIndex:Bool = false;
 
-    var rowno = 0
+//    var rowno = 0
     var selectedthecellno = 0
     
-    var screenHeight = 0
-    var screenWidth = 0
+//    var screenHeight = 0
+//    var screenWidth = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -161,14 +161,20 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
             }
             
             //setup cell color
-            if rowno == 1 {
-                cell?.backgroundColor = UIColor.white
-                
-                rowno = 0
-            } else if rowno == 0 {
+            
+            if indexPath.row % 2 == 0 {
+              cell?.backgroundColor = UIColor.white
+            } else {
                 cell?.backgroundColor = UIColor.groupTableViewBackground
-                rowno = 1
             }
+//            if rowno == 1 {
+//                cell?.backgroundColor = UIColor.white
+//
+//                rowno = 0
+//            } else if rowno == 0 {
+//                cell?.backgroundColor = UIColor.groupTableViewBackground
+//                rowno = 1
+//            }
             
             cell?.layer.cornerRadius = 10
             cell?.name.text = localsearchinfo.results[indexPath.row].prodname

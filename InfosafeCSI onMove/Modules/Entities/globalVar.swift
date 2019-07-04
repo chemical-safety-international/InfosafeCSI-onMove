@@ -33,6 +33,12 @@ struct localclientinfo {
     static var error: String!
 }
 
+struct localclientcoreData {
+    static var username: String = "Username"
+    static var password: String = "Password"
+    static var remeberstatus: Bool = false
+}
+
 struct outCriteriaData: Codable {
     struct items : Codable {
         let code: String

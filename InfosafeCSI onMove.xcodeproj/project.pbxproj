@@ -24,6 +24,7 @@
 		577B1A592284059700E5C4AB /* SearchPage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577B1A582284059700E5C4AB /* SearchPage_VC.swift */; };
 		577B1A5B228500BE00E5C4AB /* globalVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577B1A5A228500BE00E5C4AB /* globalVar.swift */; };
 		577B1A5D2285195600E5C4AB /* TablePage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577B1A5C2285195600E5C4AB /* TablePage_VC.swift */; };
+		57A8090722CDB20100CA4439 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A8090622CDB20100CA4439 /* WebKit.framework */; };
 		57C8B92822813EEC004966C5 /* csiWCFMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C8B92722813EEC004966C5 /* csiWCFMethods.swift */; };
 		57C8B92C22825DE4004966C5 /* csiWCF_VM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C8B92B22825DE4004966C5 /* csiWCF_VM.swift */; };
 		AC9AB9DA2288DFA900C2C71E /* SDSView_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */; };
@@ -70,6 +71,7 @@
 		577B1A582284059700E5C4AB /* SearchPage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPage_VC.swift; sourceTree = "<group>"; };
 		577B1A5A228500BE00E5C4AB /* globalVar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalVar.swift; sourceTree = "<group>"; };
 		577B1A5C2285195600E5C4AB /* TablePage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TablePage_VC.swift; sourceTree = "<group>"; };
+		57A8090622CDB20100CA4439 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		57C8B92722813EEC004966C5 /* csiWCFMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csiWCFMethods.swift; sourceTree = "<group>"; };
 		57C8B92B22825DE4004966C5 /* csiWCF_VM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csiWCF_VM.swift; sourceTree = "<group>"; };
 		AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSView_VC.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57A8090722CDB20100CA4439 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +119,7 @@
 				17818BCF22811A89000EAFF1 /* InfosafeCSI onMoveTests */,
 				17818BDA22811A89000EAFF1 /* InfosafeCSI onMoveUITests */,
 				17818BB622811A88000EAFF1 /* Products */,
+				57A8090522CDB20000CA4439 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -186,6 +190,14 @@
 				577B1A5A228500BE00E5C4AB /* globalVar.swift */,
 			);
 			path = Entities;
+			sourceTree = "<group>";
+		};
+		57A8090522CDB20000CA4439 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				57A8090622CDB20100CA4439 /* WebKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		57C8B92622813ECC004966C5 /* Modules */ = {
@@ -548,7 +560,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMove";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMov";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -566,7 +578,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMove";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMov";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
