@@ -37,6 +37,7 @@ class Menu_VC: UIViewController {
         // Do any additional setup after loading the view.
         menuTable.reloadData()
         
+        menuTable.indicatorStyle = UIScrollView.IndicatorStyle.white
     }
 
 
@@ -53,6 +54,11 @@ class Menu_VC: UIViewController {
             self.menuTable.flashScrollIndicators()
         }
     }
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        let verticalIndicator = scrollView.subviews.last as? UIImageView
+//        verticalIndicator?.backgroundColor = UIColor.white
+//    }
     
     func startTimerForShowScrollIndicator() {
         self.timerForShowScrollIndicator = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.showScrollIndicatorsInContacts), userInfo: nil, repeats: true)

@@ -58,6 +58,9 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         
 //        NotificationCenter.default.post(name:NSNotification.Name(rawValue: "scroll"), object: nil)
 //        localtablesize.tableHeight = menu.frame.height
+        if (menu.frame.height >= 580) {
+            menu.frame.size.height = 580
+        }
         
     }
     

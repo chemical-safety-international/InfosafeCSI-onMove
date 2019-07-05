@@ -67,14 +67,6 @@
                                     <action selector="remeberBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="l5l-qP-tiP"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3mM-4V-t85">
-                                <rect key="frame" x="20" y="866" width="366" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                                <state key="normal" title="2"/>
-                                <connections>
-                                    <segue destination="7Xn-hS-oNi" kind="show" id="z8x-Nk-nMA"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uvm-pw-6Ry">
                                 <rect key="frame" x="162" y="377" width="90" height="35"/>
                                 <color key="backgroundColor" red="1" green="0.62440943149999995" blue="0.2609370406" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -89,14 +81,6 @@
                                 </state>
                                 <connections>
                                     <action selector="loginBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gif-kS-Mnu"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5S7-7G-b3c">
-                                <rect key="frame" x="0.0" y="794" width="414" height="30"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="1"/>
-                                <connections>
-                                    <segue destination="Ip2-A1-alz" kind="show" id="zdF-v2-wd6"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -145,73 +129,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1957.9710144927537" y="137.94642857142856"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="6TQ-qA-dav">
-            <objects>
-                <viewController id="Ip2-A1-alz" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="VmM-sm-9ZQ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CSI-Logo" translatesAutoresizingMaskIntoConstraints="NO" id="J44-Qc-9Nw">
-                                <rect key="frame" x="87" y="87" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CSI-Logo" translatesAutoresizingMaskIntoConstraints="NO" id="71I-pb-eZx">
-                                <rect key="frame" x="20" y="223" width="374" height="45"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CSI-Logo" translatesAutoresizingMaskIntoConstraints="NO" id="ReB-TK-rq1">
-                                <rect key="frame" x="90" y="310" width="234" height="42"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="hcu-GV-Lc1"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1Jy-Pf-WRx" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1211.5942028985507" y="805.58035714285711"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="b8N-fw-EjN">
-            <objects>
-                <viewController id="7Xn-hS-oNi" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="fmy-OS-8OQ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CSI-Logo" translatesAutoresizingMaskIntoConstraints="NO" id="Hgi-im-PPt">
-                                <rect key="frame" x="36" y="102" width="336" height="38"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CSI-Logo" translatesAutoresizingMaskIntoConstraints="NO" id="DGP-0p-EE2">
-                                <rect key="frame" x="87" y="150" width="240" height="38"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CSI-Logo" translatesAutoresizingMaskIntoConstraints="NO" id="CEa-2X-NYz">
-                                <rect key="frame" x="87" y="54" width="240" height="38"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="Hgi-im-PPt" firstAttribute="top" secondItem="CEa-2X-NYz" secondAttribute="bottom" constant="10" id="54b-BR-f9w"/>
-                            <constraint firstItem="uEN-up-s0I" firstAttribute="trailing" secondItem="DGP-0p-EE2" secondAttribute="trailing" constant="87" id="Bhu-V6-xPh"/>
-                            <constraint firstItem="uEN-up-s0I" firstAttribute="trailing" secondItem="CEa-2X-NYz" secondAttribute="trailing" constant="87" id="GN4-gn-iH3"/>
-                            <constraint firstItem="DGP-0p-EE2" firstAttribute="leading" secondItem="uEN-up-s0I" secondAttribute="leading" constant="87" id="M0K-NP-I3r"/>
-                            <constraint firstItem="CEa-2X-NYz" firstAttribute="top" secondItem="uEN-up-s0I" secondAttribute="top" constant="10" id="VxQ-Cz-DeI"/>
-                            <constraint firstItem="uEN-up-s0I" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="DGP-0p-EE2" secondAttribute="bottom" constant="10" id="e1c-xl-GgN"/>
-                            <constraint firstItem="CEa-2X-NYz" firstAttribute="leading" secondItem="uEN-up-s0I" secondAttribute="leading" constant="87" id="op7-eA-XXA"/>
-                            <constraint firstItem="uEN-up-s0I" firstAttribute="trailing" secondItem="Hgi-im-PPt" secondAttribute="trailing" constant="42" id="saA-0d-pDb"/>
-                            <constraint firstItem="DGP-0p-EE2" firstAttribute="top" secondItem="Hgi-im-PPt" secondAttribute="bottom" constant="10" id="wPV-aT-d7h"/>
-                            <constraint firstItem="Hgi-im-PPt" firstAttribute="leading" secondItem="uEN-up-s0I" secondAttribute="leading" constant="36" id="x8u-f3-DrI"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="uEN-up-s0I"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ORJ-nE-u1t" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1957.9710144927537" y="827.67857142857144"/>
         </scene>
         <!--Search PageVC-->
         <scene sceneID="Oe3-Uv-Uua">
@@ -476,7 +393,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="PS:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Cs-AA-4j6">
                                                     <rect key="frame" x="2" y="105" width="81" height="25"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="81" id="4UN-cd-SNy"/>
+                                                        <constraint firstAttribute="width" constant="81" id="4UN-cd-SNy"/>
                                                         <constraint firstAttribute="height" constant="25" id="oUQ-Uo-f0i"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -486,7 +403,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rsu-nC-cEC">
                                                     <rect key="frame" x="83" y="105" width="50" height="25"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="nvm-Kd-XOR"/>
+                                                        <constraint firstAttribute="width" constant="50" id="nvm-Kd-XOR"/>
                                                         <constraint firstAttribute="height" constant="25" id="xbh-3m-sfQ"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -670,8 +587,8 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sr0-Ok-w8y" userLabel="mv">
-                                <rect key="frame" x="283" y="185" width="131" height="600"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="283" y="163" width="131" height="600"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <segue destination="LCt-At-D12" kind="embed" id="wHQ-b0-gBi"/>
                                 </connections>
@@ -766,7 +683,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sQx-Iy-POy">
                                                             <rect key="frame" x="0.0" y="70" width="90" height="19.666666666666671"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="90" id="GRj-n2-7FC"/>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="GRj-n2-7FC"/>
                                                                 <constraint firstAttribute="height" constant="19.5" id="pX1-5C-D2E"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
