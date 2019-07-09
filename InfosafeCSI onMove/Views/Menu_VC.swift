@@ -31,13 +31,18 @@ class Menu_VC: UIViewController {
         
         self.menuTable.delegate = self
         self.menuTable.dataSource = self
+        
+        //remove the line between each cell
         menuTable.separatorStyle = .none
         self.view.backgroundColor = UIColor.clear
+        
+        //change menu table indicator color
+        menuTable.indicatorStyle = UIScrollView.IndicatorStyle.white
 
         // Do any additional setup after loading the view.
         menuTable.reloadData()
         
-        menuTable.indicatorStyle = UIScrollView.IndicatorStyle.white
+
     }
 
 

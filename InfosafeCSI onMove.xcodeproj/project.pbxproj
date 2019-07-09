@@ -27,6 +27,7 @@
 		57A8090722CDB20100CA4439 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A8090622CDB20100CA4439 /* WebKit.framework */; };
 		57C8B92822813EEC004966C5 /* csiWCFMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C8B92722813EEC004966C5 /* csiWCFMethods.swift */; };
 		57C8B92C22825DE4004966C5 /* csiWCF_VM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C8B92B22825DE4004966C5 /* csiWCF_VM.swift */; };
+		57D80F0922D30AE9002C61B2 /* SplitView_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D80F0822D30AE9002C61B2 /* SplitView_VC.swift */; };
 		AC9AB9DA2288DFA900C2C71E /* SDSView_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		57A8090622CDB20100CA4439 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		57C8B92722813EEC004966C5 /* csiWCFMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csiWCFMethods.swift; sourceTree = "<group>"; };
 		57C8B92B22825DE4004966C5 /* csiWCF_VM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csiWCF_VM.swift; sourceTree = "<group>"; };
+		57D80F0822D30AE9002C61B2 /* SplitView_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitView_VC.swift; sourceTree = "<group>"; };
 		AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSView_VC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -220,6 +222,7 @@
 				AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */,
 				17A2683F228D04410039A798 /* Startup_VC.swift */,
 				5743492022B08C000036199E /* Menu_VC.swift */,
+				57D80F0822D30AE9002C61B2 /* SplitView_VC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 				5743492322B094F00036199E /* MenuTableViewCell.swift in Sources */,
 				57711F57228808300051E576 /* TableViewCell.swift in Sources */,
 				577B1A5D2285195600E5C4AB /* TablePage_VC.swift in Sources */,
+				57D80F0922D30AE9002C61B2 /* SplitView_VC.swift in Sources */,
 				17818BEF22815681000EAFF1 /* UserProfilesAccess.swift in Sources */,
 				57C8B92822813EEC004966C5 /* csiWCFMethods.swift in Sources */,
 				577B1A5B228500BE00E5C4AB /* globalVar.swift in Sources */,

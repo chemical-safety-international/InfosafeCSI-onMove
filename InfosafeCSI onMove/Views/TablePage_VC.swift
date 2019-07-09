@@ -24,6 +24,10 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     @IBOutlet weak var loadmoreLbl: UILabel!
     @IBOutlet weak var menuUIView: UIView!
     
+    @IBOutlet weak var splitView: UIView!
+    
+    @IBOutlet weak var tableTrailing: NSLayoutConstraint!
+    
     var selectedIndex:Bool = false;
 
 //    var rowno = 0
@@ -53,6 +57,7 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
         
         
         loadmoreLbl.isHidden = true
+        splitView.isHidden = true
         
         NotificationCenter.default.addObserver(self, selector: #selector(menuDis), name: NSNotification.Name(rawValue: "refresh"), object: nil)
         
@@ -60,7 +65,26 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
 //        localtablesize.tableHeight = menu.frame.height
         if (menu.frame.height >= 580) {
             menu.frame.size.height = 580
+        } else if (view.frame.height >= 800) {
+            menu.frame.size.height = 580
         }
+        
+
+        
+//        if (view.frame.width >= 1100) {
+//            tableDisplay.frame.size.width = view.frame.width/2
+//            tableDisplay.contentSize.width = view.frame.width/2
+//            tableTrailing.constant = view.frame.width/2
+//            splitView.frame.origin.y = tableDisplay.frame.origin.y
+//            splitView.frame.origin.x = tableDisplay.frame.size.width
+//            splitView.frame.size.width = tableDisplay.frame.width
+//            splitView.isHidden = false
+//        } else if (view.frame.width < 1100) {
+//            tableDisplay.frame.size.width = view.frame.width
+//            tableDisplay.contentSize.width = view.frame.width
+//            tableTrailing.constant = 7
+//            splitView.isHidden = true
+//        }
         
     }
     
@@ -69,10 +93,30 @@ class TablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        
+        print(view.frame.width)
+        print(view.frame.height)
+        
         if (self.view.bounds.height > self.view.bounds.width) {
             menuDisappear()
         } else if (self.view.bounds.width > self.view.bounds.height) {
             menuDisappear()
+        }
+        
+        if (view.frame.height >= 1024) {
+            tableDisplay.frame.size.width = view.frame.height/2
+//            tableDisplay.contentSize.width = view.frame.height/2
+            tableTrailing.constant = view.frame.height/2
+//            splitView.frame.origin.y = tableDisplay.frame.origin.y
+//            splitView.frame.origin.x = tableDisplay.frame.size.width
+//            splitView.frame.size.width = tableDisplay.frame.width
+//            splitView.frame.size.height = tableDisplay.frame.height
+            splitView.isHidden = false
+        } else if (view.frame.height < 1024) {
+            tableDisplay.frame.size.width = view.frame.width
+            tableDisplay.contentSize.width = view.frame.width
+            tableTrailing.constant = 7
+            splitView.isHidden = true
         }
     }
     
@@ -170,14 +214,6 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
             } else {
                 cell?.backgroundColor = UIColor.groupTableViewBackground
             }
-//            if rowno == 1 {
-//                cell?.backgroundColor = UIColor.white
-//
-//                rowno = 0
-//            } else if rowno == 0 {
-//                cell?.backgroundColor = UIColor.groupTableViewBackground
-//                rowno = 1
-//            }
             
             cell?.layer.cornerRadius = 10
             cell?.name.text = localsearchinfo.results[indexPath.row].prodname
@@ -244,7 +280,7 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         let currentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
 
-        if (maximumOffset - currentOffset <= -80.0) {
+        if (maximumOffset - currentOffset <= -70.0) {
 
             if (localsearchinfo.cpage < localsearchinfo.totalPage) {
                 loadmoreLbl.isHidden = false
@@ -268,7 +304,7 @@ extension TablePage_VC: UITableViewDelegate, UITableViewDataSource {
         loadmoreLbl.isHidden = true
         
         //table bottom reload function setup
-        if (maximumOffset - currentOffset <= -80.0) {
+        if (maximumOffset - currentOffset <= -70.0) {
 
             if (localsearchinfo.cpage < localsearchinfo.totalPage) {
                 

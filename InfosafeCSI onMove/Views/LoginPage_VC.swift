@@ -143,9 +143,24 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
                         self.removeSpinner()
                         self.showAlert(title: "Verify Failed", message: "Email or Password is invaild, please try again.")
                         self.passwordTextField.text = ""
+                        
+                        let defaults = UserDefaults.standard
+                        defaults.set("", forKey: localclientcoreData.username)
+                        defaults.set("", forKey: localclientcoreData.password)
+                        let image = UIImage(named: "login-unticked-box")
+                        self.remember.setImage(image, for: .normal)
+                        defaults.set(false, forKey: "remeberstatus")
+                        
                     } else {
                         self.removeSpinner()
                         self.showAlert(title: "Failed", message: "Server is no response.")
+                        
+                        let defaults = UserDefaults.standard
+                        defaults.set("", forKey: localclientcoreData.username)
+                        defaults.set("", forKey: localclientcoreData.password)
+                        let image = UIImage(named: "login-unticked-box")
+                        self.remember.setImage(image, for: .normal)
+                        defaults.set(false, forKey: "remeberstatus")
                     }
                 }
             } catch let parsingError {
