@@ -47,10 +47,12 @@ class TableViewCell: UITableViewCell {
         PoisonSLbl.font = UIFont.boldSystemFont(ofSize: 13)
         HazardousLbl.font = UIFont.boldSystemFont(ofSize: 13)
         
+        name.sizeToFit()
+        
         //display full text of product name
-        name.numberOfLines = 0
-        name.adjustsFontSizeToFitWidth = true
-        name.adjustsFontForContentSizeCategory = false
+//        name.numberOfLines = 0
+//        name.adjustsFontSizeToFitWidth = true
+//        name.adjustsFontForContentSizeCategory = false
         
     }
 

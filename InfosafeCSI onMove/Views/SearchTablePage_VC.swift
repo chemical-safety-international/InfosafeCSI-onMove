@@ -86,6 +86,9 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
 //            splitView.isHidden = true
 //        }
         
+        tableDisplay.estimatedRowHeight = 140
+        tableDisplay.rowHeight = UITableView.automaticDimension
+        
     }
     
     @objc func menuDis() {
@@ -104,13 +107,18 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         }
         
         if (view.frame.height >= 1024) {
-            tableDisplay.frame.size.width = view.frame.height/2
-//            tableDisplay.contentSize.width = view.frame.height/2
-            tableTrailing.constant = view.frame.height/2
-//            splitView.frame.origin.y = tableDisplay.frame.origin.y
-//            splitView.frame.origin.x = tableDisplay.frame.size.width
-//            splitView.frame.size.width = tableDisplay.frame.width
-//            splitView.frame.size.height = tableDisplay.frame.height
+//            tableDisplay.frame.size.width = view.frame.height/2
+////            tableDisplay.contentSize.width = view.frame.height/2
+//            tableTrailing.constant = view.frame.height/2
+////            splitView.frame.origin.y = tableDisplay.frame.origin.y
+////            splitView.frame.origin.x = tableDisplay.frame.size.width
+////            splitView.frame.size.width = tableDisplay.frame.width
+////            splitView.frame.size.height = tableDisplay.frame.height
+            
+            tableDisplay.frame.size.width = 350
+            tableTrailing.constant = 674
+            splitView.frame.size.width = 674
+            
             splitView.isHidden = false
         } else if (view.frame.height < 1024) {
             tableDisplay.frame.size.width = view.frame.width
@@ -254,11 +262,11 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
     
     
     // change the height to expand tableDisplay value
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
-        return 125
-
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//
+//        return 125
+//
+//    }
     
     // swipe to delete the row function
 //    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

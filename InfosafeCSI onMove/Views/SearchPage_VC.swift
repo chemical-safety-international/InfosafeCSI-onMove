@@ -138,7 +138,7 @@ class SearchPage_VC: UIViewController {
                 if completionReturnData == true {
                     DispatchQueue.main.async {
                         self.removeSpinner()
-                        let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "TablePage") as? TablePage_VC
+                        let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "TablePage") as? SearchTablePage_VC
                         self.navigationController?.pushViewController(searchJump!, animated: true)
                     }
                 } else {
