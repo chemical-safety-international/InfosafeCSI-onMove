@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Startup_VC: UIViewController {
+class StartupPage_VC: UIViewController {
 
     @IBOutlet weak var startBtn: UIButton!
     override func viewDidLoad() {

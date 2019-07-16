@@ -11,7 +11,7 @@ import WebKit
 
 import PDFKit
 
-class SDSView_VC: UIViewController {
+class SDSViewPage_VC: UIViewController {
 
     @IBOutlet weak var sdsDisplay: WKWebView?
     

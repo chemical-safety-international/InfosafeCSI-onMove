@@ -78,7 +78,7 @@ class SDSMenu_VC: UIViewController {
     
     func menuFunction(index: Int) {
         if buttonName[index] == "View SDS" {
-            let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSView_VC
+            let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSViewPage_VC
             self.navigationController?.pushViewController(sdsJump!, animated: true)
         }
     
