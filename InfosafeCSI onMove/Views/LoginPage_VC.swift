@@ -48,12 +48,12 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
             remember.setImage(image, for: .normal)
         }
         
-        let deviceType = UIDevice.current.model
-        let deviceType1 = UIDevice.current
-        let deviceType2 = UIDevice.current.localizedModel
-        print(deviceType)
-        print(deviceType1)
-        print(deviceType2)
+//        let deviceType = UIDevice.current.model
+//        let deviceType1 = UIDevice.current
+//        let deviceType2 = UIDevice.current.localizedModel
+//        print(deviceType)
+//        print(deviceType1)
+//        print(deviceType2)
 
     }
     

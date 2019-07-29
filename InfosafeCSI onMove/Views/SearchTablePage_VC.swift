@@ -97,8 +97,8 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
-        print(view.frame.width)
-        print(view.frame.height)
+//        print(view.frame.width)
+//        print(view.frame.height)
         
         if (self.view.bounds.height > self.view.bounds.width) {
             menuDisappear()

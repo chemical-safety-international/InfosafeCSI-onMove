@@ -16,21 +16,23 @@ class GalleryPage_VC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        getImage(imageName: "test.png")
+        getImage(imageName: "text.png")
     }
     
     func getImage(imageName: String) {
         let fileManager = FileManager.default
         let imagePath = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageName)
+//        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+//        let imagePath = paths.appending("/\(imageName)")
         
         print(imagePath)
         
-        self.imageView.image = UIImage(contentsOfFile: imagePath)
-//        if fileManager.fileExists(atPath: imagePath) {
-//            imageView.image = UIImage(contentsOfFile: imagePath)
-//        } else {
-//            print("No picture find.")
-//        }
+//        self.imageView.image = UIImage(contentsOfFile: imagePath)
+        if fileManager.fileExists(atPath: imagePath) {
+            imageView.image = UIImage(contentsOfFile: imagePath)
+        } else {
+            print("No picture find.")
+        }
     }
 
     @IBAction func callReload(_ sender: Any) {

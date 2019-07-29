@@ -28,7 +28,10 @@ class PhotoPage_VC: UIViewController, UIImagePickerControllerDelegate, UINavigat
     }
     
     @IBAction func savePhotoBtnTapped(_ sender: Any) {
+        //var photoNo = 0
+        //var photoName = "\(photoNo).png"
         saveImage(imageName: "text.png")
+        //present(<#T##viewControllerToPresent: UIViewController##UIViewController#>, animated: <#T##Bool#>, completion: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
     }
     
     @IBAction func goToGalleryBtnTapped(_ sender: Any) {
@@ -39,6 +42,7 @@ class PhotoPage_VC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         imagePickerController.dismiss(animated: true, completion: nil)
         
         imageView.image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+//        imageView.image = info[.originalImage] as? UIImage
     }
     
     func saveImage(imageName: String) {
@@ -47,6 +51,10 @@ class PhotoPage_VC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         
         //get the image path
         let imagePath = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageName)
+//        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+//        let imagePath = "\(paths)/\(imageName)"
+        
+//        let imagePath1 = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[1] as NSString).appendingPathComponent(imageName)
         
         //get the image we took with camera
         let image = imageView.image!
@@ -54,11 +62,17 @@ class PhotoPage_VC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         //get the PNG data for this image
         let imageData = image.pngData()
         
+        
         print(imagePath)
+//        print(imagePath1)
         print("Binary data is: \(String(describing: imageData))")
         
         //store it in the document directory
         fileManager.createFile(atPath: imagePath as String, contents: imageData, attributes: nil)
+        
+        if fileManager.fileExists(atPath: imagePath) {
+            showAlert(title: "", message: "Successed saved photo!")
+        }
     }
     /*
     // MARK: - Navigation
