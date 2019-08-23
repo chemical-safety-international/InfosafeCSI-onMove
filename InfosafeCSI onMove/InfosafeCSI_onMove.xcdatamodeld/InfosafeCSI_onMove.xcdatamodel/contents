@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="StoredImage" representedClassName="StoredImage" syncable="YES" codeGenerationType="class">
-        <attribute name="imageName" optional="YES" attributeType="String" syncable="YES"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18G87" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="SearchData" representedClassName="SearchData" syncable="YES" codeGenerationType="class">
+        <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dgclass" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="haz" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="issueDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prodcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prodname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prodtype" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ps" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sdsno" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unno" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="UserProfiles" representedClassName="UserProfiles" syncable="YES" codeGenerationType="class">
         <attribute name="authenticated" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -11,6 +20,6 @@
     </entity>
     <elements>
         <element name="UserProfiles" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="StoredImage" positionX="-63" positionY="9" width="128" height="60"/>
+        <element name="SearchData" positionX="-45" positionY="27" width="128" height="195"/>
     </elements>
 </model>

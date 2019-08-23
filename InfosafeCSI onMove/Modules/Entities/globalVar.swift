@@ -163,3 +163,43 @@ struct outViewSDSData: Codable {
     var html_3: String!
     var pdfString: String!
 }
+
+
+struct localSearchData {
+    
+    var company: String?
+    var issueDate: String?
+    var prodname: String?
+    var prodtype: String?
+
+    var ps: String?
+    var unno: String?
+
+    var prodcode: String?
+    var dgclass: String?
+    var haz: String?
+    
+    init() {
+        company = ""
+        issueDate = ""
+        prodcode = ""
+        prodname = ""
+        prodtype = ""
+        ps = ""
+        unno = ""
+        dgclass = ""
+        haz = ""
+    }
+    
+    init(company: String, issueDate: String, prodcode: String, prodname: String, prodtype: String, ps: String, unno: String, dgclass: String, haz: String){
+        self.company = company
+        self.issueDate = issueDate
+        self.prodcode = prodcode
+        self.prodtype = prodtype
+        self.prodname = prodname
+        self.ps = ps
+        self.unno = unno
+        self.dgclass = dgclass
+        self.haz = haz
+    }
+}

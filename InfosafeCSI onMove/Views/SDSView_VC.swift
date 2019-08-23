@@ -17,6 +17,8 @@ class SDSViewPage_VC: UIViewController {
     
     @IBOutlet weak var printBtn: UIButton!
     
+    @IBOutlet weak var shareBtn: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,6 +27,7 @@ class SDSViewPage_VC: UIViewController {
         self.sdsShow()
         printBtn.isHidden = true
     }
+    
     
     func sdsShow() {
         self.showSpinner(onView: self.view)
@@ -48,9 +51,21 @@ class SDSViewPage_VC: UIViewController {
             
         }
     }
+    
+    
     @IBAction func printBtnTapped(_ sender: Any) {
         printPDF(data: localcurrentSDS.pdfData)
     }
+    
+    
+    @IBAction func shareBtnTapped(_ sender: Any) {
+        let activityVC = UIActivityViewController(activityItems: [localcurrentSDS.pdfData!], applicationActivities: nil)
+        activityVC.popoverPresentationController?.sourceView = self.view
+        
+        self.present(activityVC, animated: true, completion: nil)
+        
+    }
+    
     
     func printPDF(data: Data) {
         

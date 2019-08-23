@@ -22,6 +22,9 @@
 		5743492122B08C000036199E /* SDSMenu_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743492022B08C000036199E /* SDSMenu_VC.swift */; };
 		5743492322B094F00036199E /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743492222B094F00036199E /* MenuTableViewCell.swift */; };
 		57711F57228808300051E576 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57711F56228808300051E576 /* TableViewCell.swift */; };
+		57727D2F230B765900734B43 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57727D2E230B765900734B43 /* CoreDataManager.swift */; };
+		57727D31230CC6D300734B43 /* LocalSearch_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57727D30230CC6D300734B43 /* LocalSearch_VC.swift */; };
+		57727D33230D0F3700734B43 /* LocalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57727D32230D0F3700734B43 /* LocalTableViewCell.swift */; };
 		577B1A592284059700E5C4AB /* SearchPage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577B1A582284059700E5C4AB /* SearchPage_VC.swift */; };
 		577B1A5B228500BE00E5C4AB /* globalVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577B1A5A228500BE00E5C4AB /* globalVar.swift */; };
 		577B1A5D2285195600E5C4AB /* SearchTablePage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577B1A5C2285195600E5C4AB /* SearchTablePage_VC.swift */; };
@@ -71,6 +74,9 @@
 		5743492022B08C000036199E /* SDSMenu_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSMenu_VC.swift; sourceTree = "<group>"; };
 		5743492222B094F00036199E /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		57711F56228808300051E576 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		57727D2E230B765900734B43 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		57727D30230CC6D300734B43 /* LocalSearch_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSearch_VC.swift; sourceTree = "<group>"; };
+		57727D32230D0F3700734B43 /* LocalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTableViewCell.swift; sourceTree = "<group>"; };
 		577B1A582284059700E5C4AB /* SearchPage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPage_VC.swift; sourceTree = "<group>"; };
 		577B1A5A228500BE00E5C4AB /* globalVar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalVar.swift; sourceTree = "<group>"; };
 		577B1A5C2285195600E5C4AB /* SearchTablePage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTablePage_VC.swift; sourceTree = "<group>"; };
@@ -205,6 +211,14 @@
 			path = Photo;
 			sourceTree = "<group>";
 		};
+		57727D2D230B726000734B43 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				57727D2E230B765900734B43 /* CoreDataManager.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		57A8090522CDB20000CA4439 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,6 +230,7 @@
 		57C8B92622813ECC004966C5 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				57727D2D230B726000734B43 /* CoreData */,
 				17818BEB2281563E000EAFF1 /* Entities */,
 				17818BEA22815524000EAFF1 /* UserProfile */,
 				17818BE9228152AA000EAFF1 /* csiWCF */,
@@ -226,6 +241,8 @@
 		57C8B92922825D98004966C5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				57727D32230D0F3700734B43 /* LocalTableViewCell.swift */,
+				57727D30230CC6D300734B43 /* LocalSearch_VC.swift */,
 				5720266222DD4ED5003E1C17 /* Photo */,
 				17687E5322A5FF3500BF000F /* subControllers */,
 				17818BBA22811A88000EAFF1 /* LoginPage_VC.swift */,
@@ -378,12 +395,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				17818BBB22811A88000EAFF1 /* LoginPage_VC.swift in Sources */,
+				57727D33230D0F3700734B43 /* LocalTableViewCell.swift in Sources */,
 				577B1A592284059700E5C4AB /* SearchPage_VC.swift in Sources */,
 				17818BED22815661000EAFF1 /* UserProfilesData.swift in Sources */,
 				17818BB922811A88000EAFF1 /* AppDelegate.swift in Sources */,
 				5743492122B08C000036199E /* SDSMenu_VC.swift in Sources */,
 				17A26840228D04410039A798 /* Startup_VC.swift in Sources */,
+				57727D2F230B765900734B43 /* CoreDataManager.swift in Sources */,
 				AC9AB9DA2288DFA900C2C71E /* SDSView_VC.swift in Sources */,
+				57727D31230CC6D300734B43 /* LocalSearch_VC.swift in Sources */,
 				57C8B92C22825DE4004966C5 /* csiWCF_VM.swift in Sources */,
 				57E1686122DD505C00CBD310 /* GalleryPage_VC.swift in Sources */,
 				17818BC122811A88000EAFF1 /* InfosafeCSI_onMove.xcdatamodeld in Sources */,
