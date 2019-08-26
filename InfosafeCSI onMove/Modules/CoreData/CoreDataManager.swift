@@ -74,6 +74,57 @@ class CoreDataManager: NSObject {
             return productArray
         }
     
+    
+    class func storePDF(sdsno: String, pdfdata: String){
+        
+        let context = getContext()
+        
+        let entity = NSEntityDescription.entity(forEntityName: "PDF", in: context)
+        
+        let manageObj = NSManagedObject(entity: entity!, insertInto: context)
+        
+        manageObj.setValue(sdsno, forKey: "sdsno")
+        manageObj.setValue(pdfdata, forKey: "pdfdata")
+        
+        do {
+            try context.save()
+            print("Saved successfully!")
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    
+    class func fetchPDF(targetText: String? = nil) -> [localPDF] {
+        
+        var pdfArray = [localPDF]()
+        
+        let fetchRequest: NSFetchRequest<PDF> = PDF.fetchRequest()
+        
+        if targetText != nil {
+            var filterKeyword = ""
+            filterKeyword = "sdsno"
+            
+            let predicate = NSPredicate(format: "\(filterKeyword) contains[c] %@", targetText!)
+            fetchRequest.predicate = predicate
+        }
+        
+        
+        do {
+            let fetchResult = try getContext().fetch(fetchRequest)
+            
+            for item in fetchResult {
+                let prod = localPDF(sdsno: item.sdsno!, pdfdata: item.pdfdata!)
+                pdfArray.append(prod)
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        return pdfArray
+    }
+
+    
     class func cleanCoreData() {
         
         let fetchRequest: NSFetchRequest<SearchData> = SearchData.fetchRequest()

@@ -98,9 +98,8 @@ class csiWCF_VM: UIViewController {
                         //localresult.results.append(ritem)
                         localsearchinfo.results.append(ritem)
                         print("\(String(describing: ritem.prodname))")
-                        CoreDataManager.storeObj(prodname: ritem.prodname ?? "", sdsno: ritem.sdsno ?? "", company: ritem.company ?? "", issueDate: ritem.issueDate ?? "", prodtype: ritem.prodtype ?? "", unno: ritem.unno ?? "", haz: ritem.haz ?? "", dgclass: ritem.dgclass ?? "", prodcode: ritem.prodcode ?? "", ps: ritem.ps ?? "")
+//                        CoreDataManager.storeObj(prodname: ritem.prodname ?? "", sdsno: ritem.sdsno ?? "", company: ritem.company ?? "", issueDate: ritem.issueDate ?? "", prodtype: ritem.prodtype ?? "", unno: ritem.unno ?? "", haz: ritem.haz ?? "", dgclass: ritem.dgclass ?? "", prodcode: ritem.prodcode ?? "", ps: ritem.ps ?? "")
                         
-//                        CoreDataManager.storeObj(prodname: String(describing:ritem.prodname), sdsno: String(describing:ritem.sdsno), company: String(describing:ritem.company), issueDate: String(describing:ritem.issueDate), prodtype: String(describing:ritem.prodtype), unno: String(describing:ritem.unno), haz: String(describing:ritem.haz), dgclass: String(describing:ritem.dgclass), prodcode: String(describing:ritem.prodcode), ps: String(describing:ritem.ps))
                     }
             }
                 self.localresult.result = jsonResponse!["result"] as? Bool
@@ -153,6 +152,7 @@ class csiWCF_VM: UIViewController {
             csiWCF_getSDS(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: rtype) { (output) in
                 if output.pdfString != nil {
                     completion(output.pdfString)
+                    CoreDataManager.storePDF(sdsno: localcurrentSDS.sdsNo, pdfdata: output.pdfString)
                 }
                 else
                 {

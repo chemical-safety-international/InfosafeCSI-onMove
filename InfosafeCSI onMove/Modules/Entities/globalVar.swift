@@ -203,3 +203,18 @@ struct localSearchData {
         self.haz = haz
     }
 }
+
+struct localPDF {
+    var sdsno: String?
+    var pdfdata: String?
+    
+    init() {
+        sdsno = ""
+        pdfdata = ""
+    }
+    
+    init(sdsno: String, pdfdata: String) {
+        self.sdsno = sdsno
+        self.pdfdata = pdfdata
+    }
+}

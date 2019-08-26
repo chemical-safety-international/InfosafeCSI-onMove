@@ -19,6 +19,8 @@ class SDSViewPage_VC: UIViewController {
     
     @IBOutlet weak var shareBtn: UIButton!
     
+    fileprivate var pdfArray = [localPDF]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,24 +33,36 @@ class SDSViewPage_VC: UIViewController {
     
     func sdsShow() {
         self.showSpinner(onView: self.view)
-        let rtype : String = "1"
-        csiWCF_VM().callSDS(rtype : rtype) { (completionReturnData) in
-            DispatchQueue.main.async {
-                self.removeSpinner()
-                
-                if rtype == "1" {
-                    //PDF return string must be base64string
-                    let decodeData = Data(base64Encoded: completionReturnData, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
-                    self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
-                    localcurrentSDS.pdfData = decodeData
-                    self.printBtn.isHidden = false
-                    
-                }
-                else if rtype == "2" {
-                    self.sdsDisplay!.loadHTMLString(String(describing: completionReturnData), baseURL: nil)
-                }
-            }
+        
+        let pdfArray = CoreDataManager.fetchPDF(targetText: localcurrentSDS.sdsNo)
+        
+        if pdfArray.count != 0 {
+            self.removeSpinner()
             
+            let decodeData = Data(base64Encoded: pdfArray[0].pdfdata!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+            self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
+            localcurrentSDS.pdfData = decodeData
+            self.printBtn.isHidden = false
+        } else {
+            let rtype : String = "1"
+            csiWCF_VM().callSDS(rtype : rtype) { (completionReturnData) in
+                DispatchQueue.main.async {
+                    self.removeSpinner()
+                    
+                    if rtype == "1" {
+                        //PDF return string must be base64string
+                        let decodeData = Data(base64Encoded: completionReturnData, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+                        self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
+                        localcurrentSDS.pdfData = decodeData
+                        self.printBtn.isHidden = false
+                        
+                    }
+                    else if rtype == "2" {
+                        self.sdsDisplay!.loadHTMLString(String(describing: completionReturnData), baseURL: nil)
+                    }
+                }
+                
+            }
         }
     }
     
