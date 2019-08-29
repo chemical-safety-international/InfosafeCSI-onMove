@@ -25,45 +25,57 @@ class SDSViewPage_VC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        //self.sdsShowPDF()
+
+        
         self.sdsShow()
         printBtn.isHidden = true
+        
+        if self.isMovingFromParent {
+            WKWebView.clean()
+        }
     }
     
     
     func sdsShow() {
-        self.showSpinner(onView: self.view)
-        
+//        self.showSpinner(onView: self.view)
+        print("reach here0")
         let pdfArray = CoreDataManager.fetchPDF(targetText: localcurrentSDS.sdsNo)
-        
+
         if pdfArray.count != 0 {
-            self.removeSpinner()
-            
-            let decodeData = Data(base64Encoded: pdfArray[0].pdfdata!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
-            self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
-            localcurrentSDS.pdfData = decodeData
-            self.printBtn.isHidden = false
+            DispatchQueue.main.async {
+
+                print("\(pdfArray[0].sdsno!)")
+                let decodeData = Data(base64Encoded: pdfArray[0].pdfdata!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+                self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
+                localcurrentSDS.pdfData = decodeData
+                self.printBtn.isHidden = false
+//                self.removeSpinner()
+            }
         } else {
+            print("reach here1")
             let rtype : String = "1"
             csiWCF_VM().callSDS(rtype : rtype) { (completionReturnData) in
                 DispatchQueue.main.async {
-                    self.removeSpinner()
-                    
+                    print("reach here 6")
                     if rtype == "1" {
                         //PDF return string must be base64string
                         let decodeData = Data(base64Encoded: completionReturnData, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
                         self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
                         localcurrentSDS.pdfData = decodeData
                         self.printBtn.isHidden = false
+//                        self.removeSpinner()
+                        CoreDataManager.storePDF(sdsno: localcurrentSDS.sdsNo, pdfdata: completionReturnData)
                         
                     }
                     else if rtype == "2" {
                         self.sdsDisplay!.loadHTMLString(String(describing: completionReturnData), baseURL: nil)
+//                        self.removeSpinner()
                     }
                 }
                 
             }
         }
+//        self.removeSpinner()
     }
     
     
@@ -171,7 +183,27 @@ class SplitView_VC: UIViewController {
     }
     
     @IBAction func viewSDSBtnTapped(_ sender: Any) {
-        self.sdsShow()
+//        self.sdsShow()
     }
     
+}
+
+
+
+
+extension WKWebView {
+    class func clean() {
+        guard #available(iOS 9.0, *) else {return}
+        
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        
+        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in records.forEach {
+            record in
+            WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+            #if DEBUG
+            print("WKWebsiteDataStore record deleted:", record)
+            #endif
+            }
+        }
+    }
 }

@@ -28,12 +28,13 @@ class SearchPage_VC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        self.removeSpinner()
         //setup no result label
         noSearchResultLbl.isHidden = true
         
         
         // load the criteria list for picker
-        self.callCriteriaList()
+        self.callCriteria()
         
         //button style
         logoffBtn.layer.cornerRadius = 5
@@ -125,7 +126,7 @@ class SearchPage_VC: UIViewController {
             
         } else {
             self.cPickView.endEditing(true)
-            self.showSpinner(onView: self.view)
+//            self.showSpinner(onView: self.view)
             let searchInPut = searchbar.text!
             localcriteriainfo.searchValue = searchInPut
             
@@ -159,13 +160,14 @@ class SearchPage_VC: UIViewController {
                 
             }
         }
+//        self.removeSpinner()
 
     }
     
 
     
     
-    func callCriteriaList() {
+    func callCriteria() {
         csiWCF_VM().callCriteriaList() { (completionReturnData) in
             DispatchQueue.main.async {
                 if completionReturnData.contains("true") {

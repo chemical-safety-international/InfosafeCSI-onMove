@@ -31,6 +31,7 @@
 		57A8090722CDB20100CA4439 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A8090622CDB20100CA4439 /* WebKit.framework */; };
 		57C8B92822813EEC004966C5 /* csiWCFMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C8B92722813EEC004966C5 /* csiWCFMethods.swift */; };
 		57C8B92C22825DE4004966C5 /* csiWCF_VM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C8B92B22825DE4004966C5 /* csiWCF_VM.swift */; };
+		57DF2CC2231396BE0044A96B /* StoredPDF_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DF2CC1231396BE0044A96B /* StoredPDF_VC.swift */; };
 		57E1686122DD505C00CBD310 /* GalleryPage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E1686022DD505C00CBD310 /* GalleryPage_VC.swift */; };
 		AC9AB9DA2288DFA900C2C71E /* SDSView_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */; };
 /* End PBXBuildFile section */
@@ -83,6 +84,7 @@
 		57A8090622CDB20100CA4439 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		57C8B92722813EEC004966C5 /* csiWCFMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csiWCFMethods.swift; sourceTree = "<group>"; };
 		57C8B92B22825DE4004966C5 /* csiWCF_VM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csiWCF_VM.swift; sourceTree = "<group>"; };
+		57DF2CC1231396BE0044A96B /* StoredPDF_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredPDF_VC.swift; sourceTree = "<group>"; };
 		57E1686022DD505C00CBD310 /* GalleryPage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryPage_VC.swift; sourceTree = "<group>"; };
 		AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSView_VC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -251,6 +253,7 @@
 				AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */,
 				17A2683F228D04410039A798 /* Startup_VC.swift */,
 				5743492022B08C000036199E /* SDSMenu_VC.swift */,
+				57DF2CC1231396BE0044A96B /* StoredPDF_VC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				17818BBB22811A88000EAFF1 /* LoginPage_VC.swift in Sources */,
+				57DF2CC2231396BE0044A96B /* StoredPDF_VC.swift in Sources */,
 				57727D33230D0F3700734B43 /* LocalTableViewCell.swift in Sources */,
 				577B1A592284059700E5C4AB /* SearchPage_VC.swift in Sources */,
 				17818BED22815661000EAFF1 /* UserProfilesData.swift in Sources */,
@@ -596,7 +600,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMove";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMov";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -614,7 +618,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMove";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMov";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -139,7 +139,7 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, completion
 }
 
 func csiWCF_getSDS(clientid: String, uid: String, sdsNoGet: String, apptp : String, rtype: String, completion:@escaping(outViewSDSData) -> Void) -> (Void) {
-    
+    print("reach here3")
     let json: [String: Any] = ["client":clientid, "apptp": apptp, "uid":uid, "sds": sdsNoGet, "rtype" : rtype, "regetFormat":"1", "f":"", "subf":""]
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
 

@@ -97,7 +97,9 @@ class csiWCF_VM: UIViewController {
                         //ritem.ufs.append(ritemuf)
                         //localresult.results.append(ritem)
                         localsearchinfo.results.append(ritem)
-                        print("\(String(describing: ritem.prodname))")
+//                        print("\(String(describing: ritem.prodname))")
+                        
+                        
 //                        CoreDataManager.storeObj(prodname: ritem.prodname ?? "", sdsno: ritem.sdsno ?? "", company: ritem.company ?? "", issueDate: ritem.issueDate ?? "", prodtype: ritem.prodtype ?? "", unno: ritem.unno ?? "", haz: ritem.haz ?? "", dgclass: ritem.dgclass ?? "", prodcode: ritem.prodcode ?? "", ps: ritem.ps ?? "")
                         
                     }
@@ -147,17 +149,27 @@ class csiWCF_VM: UIViewController {
     }
     
     func callSDS(rtype : String, completion:@escaping(String) -> Void ) {
-
+        print("reach here2")
+//        var stordata = ""
+//        var synno = "HYHWH00"
         if rtype == "1" {
             csiWCF_getSDS(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: rtype) { (output) in
                 if output.pdfString != nil {
                     completion(output.pdfString)
-                    CoreDataManager.storePDF(sdsno: localcurrentSDS.sdsNo, pdfdata: output.pdfString)
+//                    stordata = output.pdfString
+//                    CoreDataManager.storePDF(sdsno: localcurrentSDS.sdsNo, pdfdata: output.pdfString)
+                    print("reach here 4")
                 }
-                else
+                else if output.pdfString == nil
                 {
                     completion(output.html)
+//                    stordata = output.html
+//                    CoreDataManager.storePDF(sdsno: localcurrentSDS.sdsNo, pdfdata: output.html)
+                    print("reach here 5")
+
                 }
+
+                
             }
         }
         else if rtype == "2" {

@@ -11,8 +11,27 @@ import CoreData
 
 class CoreDataManager: NSObject {
     
+//    static var realDelegate: AppDelegate?
+//
+//    static var appDelegate: AppDelegate {
+//        if Thread.isMainThread {
+//            return UIApplication.shared.delegate as! AppDelegate
+//        }
+//
+//        let dg = DispatchGroup()
+//        dg.enter()
+//        DispatchQueue.main.async {
+//            realDelegate = UIApplication.shared.delegate as? AppDelegate
+//            dg.leave()
+//        }
+//        dg.wait()
+//        return realDelegate!
+//    }
+    
     private class func getContext() -> NSManagedObjectContext {
+
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
         return appDelegate.persistentContainer.viewContext
     }
     
@@ -36,7 +55,7 @@ class CoreDataManager: NSObject {
         manageObj.setValue(prodcode, forKey: "prodcode")
         manageObj.setValue(ps, forKey: "ps")
         
-        do {
+        do {            
             try context.save()
             print("Saved successfully!")
         } catch {
@@ -83,15 +102,22 @@ class CoreDataManager: NSObject {
         
         let manageObj = NSManagedObject(entity: entity!, insertInto: context)
         
-        manageObj.setValue(sdsno, forKey: "sdsno")
-        manageObj.setValue(pdfdata, forKey: "pdfdata")
+        let pdfArray = CoreDataManager.fetchPDF(targetText: localcurrentSDS.sdsNo)
         
-        do {
-            try context.save()
-            print("Saved successfully!")
-        } catch {
-            print(error.localizedDescription)
+        if pdfArray.isEmpty == false {
+            print("it already exist in core data")
+        } else {
+            manageObj.setValue(sdsno, forKey: "sdsno")
+            manageObj.setValue(pdfdata, forKey: "pdfdata")
+            
+            do {
+                try context.save()
+                print("Saved successfully!")
+            } catch {
+                print(error.localizedDescription)
+            }
         }
+
     }
     
     
@@ -104,7 +130,7 @@ class CoreDataManager: NSObject {
         if targetText != nil {
             var filterKeyword = ""
             filterKeyword = "sdsno"
-            
+
             let predicate = NSPredicate(format: "\(filterKeyword) contains[c] %@", targetText!)
             fetchRequest.predicate = predicate
         }
@@ -120,14 +146,29 @@ class CoreDataManager: NSObject {
         } catch {
             print(error.localizedDescription)
         }
-        
         return pdfArray
     }
 
     
-    class func cleanCoreData() {
+    class func cleanSearchCoreData() {
         
         let fetchRequest: NSFetchRequest<SearchData> = SearchData.fetchRequest()
+        
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
+        
+        do {
+            print("Deleting all data!")
+            try getContext().execute(deleteRequest)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        
+    }
+    
+    class func cleanPDFCoreData() {
+        
+        let fetchRequest: NSFetchRequest<PDF> = PDF.fetchRequest()
         
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
         
