@@ -82,7 +82,43 @@ struct localsearchinfo {
         var prodcode: String!
         var dgclass: String!
         var haz: String!
-        var ufs: [uf]!
+                var ufs: [uf]!
+        
+//        var fcode: String!
+//        var erg: String! //Int!
+//        var phealth: String!
+//        var dgclass: String!
+//        var hazchem: String!
+//        var barid: String!
+//        var cl: String!
+//        var com: String!
+//        var inventory: String!
+//        var subrisk1: String!
+//        var haz: String!
+//        var uf: String!
+//        var name: String!
+//        var key: String!
+//        var ufs1: String!
+//        var nametype: String!
+//        var no: String!
+//        var utf3: String!
+//        var format: String!
+//        var penviron: String!
+//        var ufs2: String!
+//        var epg: String!//Int
+//        var ufs0: String!
+//        var partial: String!
+//        var pphysical: String!
+//        var ps: String!
+//        var issue: String!
+//        var barcode: String!
+//        var att: String!
+//        var code: String!
+//        var hcc: String!
+//
+//
+
+//        init(sdsno: String? = nil, synno: String? = nil, company: String? = nil, issueDate: String? = nil, prodname: String? = nil, prodtype: String? = nil, ispartial: Bool? = nil, ps: String? = nil, unno: String? = nil, subrisk1: String? = nil, prodcode: String? = nil, dgclass: String? = nil, haz: String? = nil, ufs: [uf]? = nil)
         
         init(sdsno: String? = nil, synno: String? = nil, company: String? = nil, issueDate: String? = nil, prodname: String? = nil, prodtype: String? = nil, ispartial: Bool? = nil, ps: String? = nil, unno: String? = nil, subrisk1: String? = nil, prodcode: String? = nil, dgclass: String? = nil, haz: String? = nil, ufs: [uf]? = nil) {
             self.sdsno = sdsno

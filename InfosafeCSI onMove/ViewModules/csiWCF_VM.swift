@@ -29,8 +29,12 @@ class csiWCF_VM: UIViewController {
     }
     
     func callSearch(inputData:String, completion:@escaping(Bool) -> Void) {
-        
+        CoreDataManager.cleanSearchCoreData()
+        print("callsearch called successfully")
         localsearchinfo.details = ""
+        self.localresult.lcount = 0
+        self.localresult.ocount = 0
+        self.localresult.pcount = 0
         
 //        var localresult = localsearchinfo()
 //        localsearchinfo.results = []
@@ -52,7 +56,7 @@ class csiWCF_VM: UIViewController {
                 let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
                 
                 if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
-                    
+                    print(jsonArr1)
                     jsonArr1.forEach { info in
                         
                         var ritem = localsearchinfo.item()
@@ -80,6 +84,14 @@ class csiWCF_VM: UIViewController {
                         }
                         if let prodtype = info["nametype"] as? [String: Any] {
                             ritem.prodtype = prodtype["value"] as? String
+
+                            if ritem.prodtype == "P" {
+                                self.localresult.pcount += 1
+                            } else if ritem.prodtype == "L" {
+                                self.localresult.lcount += 1
+                            }else if ritem.prodtype == "O" {
+                                self.localresult.ocount += 1
+                            }
                         }
                         if let pcode = info["code"] as? [String: Any] {
                             ritem.prodcode = pcode["value"] as? String
@@ -99,18 +111,22 @@ class csiWCF_VM: UIViewController {
                         localsearchinfo.results.append(ritem)
 //                        print("\(String(describing: ritem.prodname))")
                         
+                        DispatchQueue.main.async {
+                            CoreDataManager.storeObj(prodname: ritem.prodname ?? "", sdsno: ritem.sdsno ?? "", company: ritem.company ?? "", issueDate: ritem.issueDate ?? "", prodtype: ritem.prodtype ?? "", unno: ritem.unno ?? "", haz: ritem.haz ?? "", dgclass: ritem.dgclass ?? "", prodcode: ritem.prodcode ?? "", ps: ritem.ps ?? "")
+                        }
                         
-//                        CoreDataManager.storeObj(prodname: ritem.prodname ?? "", sdsno: ritem.sdsno ?? "", company: ritem.company ?? "", issueDate: ritem.issueDate ?? "", prodtype: ritem.prodtype ?? "", unno: ritem.unno ?? "", haz: ritem.haz ?? "", dgclass: ritem.dgclass ?? "", prodcode: ritem.prodcode ?? "", ps: ritem.ps ?? "")
                         
                     }
             }
                 self.localresult.result = jsonResponse!["result"] as? Bool
-                self.localresult.pcount = jsonResponse!["pcount"] as? Int
+//                self.localresult.pcount = jsonResponse!["pcount"] as? Int
                 self.localresult.pageno = jsonResponse!["no"] as? Int
-                self.localresult.lcount = jsonResponse!["lcount"] as? Int
-                self.localresult.ocount = jsonResponse!["ocount"] as? Int
+//                self.localresult.lcount = jsonResponse!["lcount"] as? Int
+//                self.localresult.ocount = jsonResponse!["ocount"] as? Int
                 self.localresult.pagecount = jsonResponse!["pagecount"] as? Int
-//                localsearchinfo.pdetails = ("Pcount: \(localresult.pcount ?? 0), Page No.: \(localresult.pageno ?? 0), Lcount: \(localresult.lcount ?? 0), Ocount: \(localresult.ocount ?? 0)")
+                
+                
+
                 localsearchinfo.pamount = ("Primary: \(self.localresult.pcount ?? 0)")
                 localsearchinfo.lamount = ("Local: \(self.localresult.lcount ?? 0)")
                 localsearchinfo.oamount = ("Other: \(self.localresult.ocount ?? 0)")
@@ -120,8 +136,8 @@ class csiWCF_VM: UIViewController {
             } catch let parsingError {
                 print("Error", parsingError)
             }
-            
-            if  self.localresult.pcount != 0 {
+            print(self.localresult)
+            if  self.localresult.pagecount != 0 {
                 completion(true)
             } else if self.localresult.result == false || self.localresult.pcount == 0 {
 
@@ -149,24 +165,16 @@ class csiWCF_VM: UIViewController {
     }
     
     func callSDS(rtype : String, completion:@escaping(String) -> Void ) {
-        print("reach here2")
-//        var stordata = ""
-//        var synno = "HYHWH00"
+
+
         if rtype == "1" {
             csiWCF_getSDS(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: rtype) { (output) in
                 if output.pdfString != nil {
                     completion(output.pdfString)
-//                    stordata = output.pdfString
-//                    CoreDataManager.storePDF(sdsno: localcurrentSDS.sdsNo, pdfdata: output.pdfString)
-                    print("reach here 4")
                 }
                 else if output.pdfString == nil
                 {
                     completion(output.html)
-//                    stordata = output.html
-//                    CoreDataManager.storePDF(sdsno: localcurrentSDS.sdsNo, pdfdata: output.html)
-                    print("reach here 5")
-
                 }
 
                 

@@ -115,18 +115,30 @@ class SearchPage_VC: UIViewController {
     
     
     @IBAction func searchBtnTapped(_ sender: Any) {
-        searchFunction()
+        print("search button tapped")
+        self.searchData()
+
     }
     
-    func searchFunction() {
-        
+    func searchData() {
+        print("search Data called")
         if searchbar.text!.isEmpty {
             self.removeSpinner()
-            self.showAlert(title: "Failed", message: "Search content empty.")
+            searchbar.text = ""
+            self.showAlert(title: "Hi", message: "Search content empty.")
+            
+        } else if searchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+            self.removeSpinner()
+            searchbar.text = ""
+            self.showAlert(title: "Hi", message: "Search content empty.")
+        } else if searchbar.text!.count < 3 {
+            self.removeSpinner()
+            self.showAlert(title: "Hi", message: "Please enter more than 2 character!")
             
         } else {
+            print("Called call search")
             self.cPickView.endEditing(true)
-//            self.showSpinner(onView: self.view)
+            self.showSpinner(onView: self.view)
             let searchInPut = searchbar.text!
             localcriteriainfo.searchValue = searchInPut
             
@@ -160,8 +172,6 @@ class SearchPage_VC: UIViewController {
                 
             }
         }
-//        self.removeSpinner()
-
     }
     
 
@@ -235,7 +245,8 @@ extension SearchPage_VC: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchbar.resignFirstResponder()
-        searchFunction()
+        print("search bar return pressed")
+        self.searchData()
     }
 }
 

@@ -10,21 +10,23 @@ import UIKit
 
 class LocalSearch_VC: UIViewController {
     var count = 0
-    
+
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var cleanSearchDataBtn: UIButton!
     
+
     fileprivate var productItemArray = [localSearchData]()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        self.searchFunction()
+//        self.localSearch()
 //        CoreDataManager.cleanCoreData()
         self.updateData()
     }
-    
+
 
     /*
     // MARK: - Navigation
@@ -35,13 +37,13 @@ class LocalSearch_VC: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
+
     func updateData() {
         productItemArray = CoreDataManager.fetchObj()
     }
-    
-    func searchFunction() {
-        
+
+    func localSearch() {
+        print("local search function called")
 //        if searchbar.text!.isEmpty {
 //            self.removeSpinner()
 //            self.showAlert(title: "Failed", message: "Search content empty.")
@@ -53,7 +55,7 @@ class LocalSearch_VC: UIViewController {
 //            localcriteriainfo.searchValue = searchInPut
 //
 //            noSearchResultLbl.isHidden = true
-        
+
             localsearchinfo.results = []
             localsearchinfo.cpage = 1
 
@@ -85,25 +87,28 @@ class LocalSearch_VC: UIViewController {
         } else {
             print("Already stored in core data")
         }
-        
+
     }
 
+    @IBAction func cleanBtnTapped(_ sender: Any) {
+        CoreDataManager.cleanSearchCoreData()
+    }
 }
 
 extension LocalSearch_VC: UITableViewDelegate, UITableViewDataSource {
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return productItemArray.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "localcell", for: indexPath) as? LocalTableViewCell
-        
+
         let prodItem = productItemArray[indexPath.row]
-        
+
         cell?.prodname.text = "PN: \(prodItem.prodname!)"
         cell?.prodcode.text = " \(prodItem.prodcode!)"
         cell?.company.text = " \(prodItem.company!)"
@@ -113,7 +118,7 @@ extension LocalSearch_VC: UITableViewDelegate, UITableViewDataSource {
         cell?.issuedate.text = " \(prodItem.issueDate!)"
         cell?.haz.text = " \(prodItem.haz!)"
 //        cell?.prodname.text = "Product name: \(prodItem.prodname!)"
-        
+
         return cell!
     }
 }
@@ -122,23 +127,23 @@ extension LocalSearch_VC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else {
             productItemArray = CoreDataManager.fetchObj()
-            
+
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
             return
         }
-        
+
         productItemArray = CoreDataManager.fetchObj(targetText: searchText)
-        
+
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
     }
-    
+
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
         searchBar.resignFirstResponder()
         return true
     }
-    
+
 }

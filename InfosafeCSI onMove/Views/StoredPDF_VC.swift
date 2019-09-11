@@ -25,6 +25,7 @@ class StoredPDF_VC: UIViewController {
         for index in 0..<pdfArray.count {
             text += "SDS No.: \(pdfArray[index].sdsno!)\n"
         }
+        text += "Total: \(pdfArray.count)"
         textDisplay.text = text
     }
     
