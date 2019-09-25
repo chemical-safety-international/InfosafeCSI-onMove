@@ -54,6 +54,10 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
 //        print(deviceType)
 //        print(deviceType1)
 //        print(deviceType2)
+        
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .light
+        }
 
     }
     

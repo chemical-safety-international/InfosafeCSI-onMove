@@ -29,7 +29,7 @@ class csiWCF_VM: UIViewController {
     }
     
     func callSearch(inputData:String, completion:@escaping(Bool) -> Void) {
-        CoreDataManager.cleanSearchCoreData()
+//        CoreDataManager.cleanSearchCoreData()
         print("callsearch called successfully")
         localsearchinfo.details = ""
         self.localresult.lcount = 0
@@ -56,7 +56,7 @@ class csiWCF_VM: UIViewController {
                 let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
                 
                 if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
-                    print(jsonArr1)
+//                    print(jsonArr1)
                     jsonArr1.forEach { info in
                         
                         var ritem = localsearchinfo.item()
@@ -109,13 +109,14 @@ class csiWCF_VM: UIViewController {
                         //ritem.ufs.append(ritemuf)
                         //localresult.results.append(ritem)
                         localsearchinfo.results.append(ritem)
-//                        print("\(String(describing: ritem.prodname))")
-                        
+
+//                        for index in 1...50 {
                         DispatchQueue.main.async {
                             CoreDataManager.storeObj(prodname: ritem.prodname ?? "", sdsno: ritem.sdsno ?? "", company: ritem.company ?? "", issueDate: ritem.issueDate ?? "", prodtype: ritem.prodtype ?? "", unno: ritem.unno ?? "", haz: ritem.haz ?? "", dgclass: ritem.dgclass ?? "", prodcode: ritem.prodcode ?? "", ps: ritem.ps ?? "")
+//                            print(index)
                         }
-                        
-                        
+//                        }
+                    
                     }
             }
                 self.localresult.result = jsonResponse!["result"] as? Bool

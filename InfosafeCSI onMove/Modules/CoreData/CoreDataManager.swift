@@ -121,6 +121,30 @@ class CoreDataManager: NSObject {
     }
     
     
+    class func storePDFTest(sdsno: String, pdfdata: String){
+        
+        let context = getContext()
+        
+        let entity = NSEntityDescription.entity(forEntityName: "PDF", in: context)
+        
+        let manageObj = NSManagedObject(entity: entity!, insertInto: context)
+        
+        
+
+            manageObj.setValue(sdsno, forKey: "sdsno")
+            manageObj.setValue(pdfdata, forKey: "pdfdata")
+            
+            do {
+                try context.save()
+                print("Saved successfully!")
+            } catch {
+                print(error.localizedDescription)
+            }
+        
+        
+    }
+    
+    
     class func fetchPDF(targetText: String? = nil) -> [localPDF] {
         
         var pdfArray = [localPDF]()
@@ -163,8 +187,17 @@ class CoreDataManager: NSObject {
             print(error.localizedDescription)
         }
         
-        
     }
+    
+//    class func deleteData(_ entity: String) {
+//       let appdel = UIApplication.shared.delegate as! AppDelegate
+//       let context = appdel.persistentContainer.viewContext
+//
+//        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "PDF")
+//        let deleteRequest = NSBatchDeleteResult(fetchRequest: deleteFetch)
+//
+//        do
+//    }
     
     class func cleanPDFCoreData() {
         
@@ -182,9 +215,105 @@ class CoreDataManager: NSObject {
         
     }
     
+//    class func cleanTempData() {
+//        do {
+//            let content = try FileManager.default.contentsOfDirectory(atPath: NSTemporaryDirectory())
+//            for path in content {
+//                let filep = URL(
+//            }
+//
+//            for path in content {
+//                let fullPath = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(path)
+//                try FileManager.default.removeItem(at: fullPath!)
+//            }
+//
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//
+//    }
     
-    
-    
-    
-    }
+    class func appSize() {
+        var fileSize: UInt64 = 0
+        var budleSize: UInt64 = 0
+        var docSize: UInt64 = 0
+        var libSize: UInt64 = 0
+        var tempSize: UInt64 = 0
+        
+        //go through the app's bundle
+        do {
+            let bundlePath = Bundle.main.bundlePath as NSString
+            let bundleArray: NSArray = try FileManager.default.subpathsOfDirectory(atPath: bundlePath as String) as NSArray
+            let bundleEnumerator = bundleArray.objectEnumerator()
+            
+            while let fileName:String = bundleEnumerator.nextObject() as? String {
+                let fileDictionary: NSDictionary = try FileManager.default.attributesOfItem(atPath: bundlePath.appendingPathComponent(fileName)) as NSDictionary
+                fileSize += fileDictionary.fileSize()
+            }
+            budleSize = fileSize
+            print("budle size \(budleSize)\n")
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        //GO through the app's document directory
+        do {
+            let documentDirectory: NSArray = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, .userDomainMask, true) as NSArray
+            let documentDirectoryPath: NSString = documentDirectory[0] as! NSString
+            let documentDirectoryArray:NSArray = try FileManager.default.subpathsOfDirectory(atPath: documentDirectoryPath as String) as NSArray
+            let documentDirectoryEnumerator = documentDirectoryArray.objectEnumerator()
+            
+            while let file:String = documentDirectoryEnumerator.nextObject() as? String {
+                let attributes: NSDictionary = try FileManager.default.attributesOfItem(atPath: documentDirectoryPath.appendingPathComponent(file)) as NSDictionary
+                fileSize += attributes.fileSize()
+            }
+            docSize = fileSize - budleSize
+            print("document size \(docSize)\n")
+            
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        //go through the app's library directory
+        do {
+            let libraryDirectory: NSArray = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.libraryDirectory, .userDomainMask, true) as NSArray
+            let libraryDirectoryPath: NSString = libraryDirectory[0] as! NSString
+            let libraryDirectoryArray:NSArray = try FileManager.default.subpathsOfDirectory(atPath: libraryDirectoryPath as String) as NSArray
+            let libraryDirectoryEnumerator = libraryDirectoryArray.objectEnumerator()
+            
+            while let file:String = libraryDirectoryEnumerator.nextObject() as? String {
+                let attributes: NSDictionary = try FileManager.default.attributesOfItem(atPath: libraryDirectoryPath.appendingPathComponent(file)) as NSDictionary
+                fileSize += attributes.fileSize()
+            }
+            libSize = fileSize - budleSize - docSize
+            print("Library size \(libSize)\n")
+            
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        //go through the app's temp directory
+        do {
 
+            let tempDirectoryPath: NSString = NSTemporaryDirectory() as NSString
+            let tempDirectoryArray:NSArray = try FileManager.default.subpathsOfDirectory(atPath: tempDirectoryPath as String) as NSArray
+            let tempDirectoryEnumerator = tempDirectoryArray.objectEnumerator()
+            
+            while let file:String = tempDirectoryEnumerator.nextObject() as? String {
+                let attributes: NSDictionary = try FileManager.default.attributesOfItem(atPath: tempDirectoryPath.appendingPathComponent(file)) as NSDictionary
+                fileSize += attributes.fileSize()
+            }
+            tempSize = fileSize - budleSize - docSize - libSize
+            print("Temp size \(tempSize)\n")
+            
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        let fileSystemSizeInMegaBytes: Double = Double(fileSize)/1000000
+        print("Total App space: \(fileSystemSizeInMegaBytes)MB")
+        
+    }
+    
+    
+}

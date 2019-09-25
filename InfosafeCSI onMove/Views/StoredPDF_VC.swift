@@ -17,20 +17,24 @@ class StoredPDF_VC: UIViewController {
         self.callPDFFetch()
 
         // Do any additional setup after loading the view.
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .light
+        }
     }
     
     func callPDFFetch() {
         let pdfArray = CoreDataManager.fetchPDF()
-        var text = ""
+        var text = "Total: \(pdfArray.count)\n"
         for index in 0..<pdfArray.count {
             text += "SDS No.: \(pdfArray[index].sdsno!)\n"
         }
-        text += "Total: \(pdfArray.count)"
+//        text += "Total: \(pdfArray.count)"
         textDisplay.text = text
     }
     
     @IBAction func cleanBtn(_ sender: Any) {
         DispatchQueue.main.async {
+//            CoreDataManager.cleanTempData()
             CoreDataManager.cleanPDFCoreData()
             self.callPDFFetch()
         }

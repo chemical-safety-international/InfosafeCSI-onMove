@@ -15,6 +15,9 @@ class StartupPage_VC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .light
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

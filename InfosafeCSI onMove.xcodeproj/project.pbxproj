@@ -33,6 +33,7 @@
 		57C8B92C22825DE4004966C5 /* csiWCF_VM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C8B92B22825DE4004966C5 /* csiWCF_VM.swift */; };
 		57DF2CC2231396BE0044A96B /* StoredPDF_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DF2CC1231396BE0044A96B /* StoredPDF_VC.swift */; };
 		57E1686122DD505C00CBD310 /* GalleryPage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E1686022DD505C00CBD310 /* GalleryPage_VC.swift */; };
+		57E1A81D23348EC300072377 /* Update_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E1A81C23348EC300072377 /* Update_VC.swift */; };
 		AC9AB9DA2288DFA900C2C71E /* SDSView_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +87,7 @@
 		57C8B92B22825DE4004966C5 /* csiWCF_VM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csiWCF_VM.swift; sourceTree = "<group>"; };
 		57DF2CC1231396BE0044A96B /* StoredPDF_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredPDF_VC.swift; sourceTree = "<group>"; };
 		57E1686022DD505C00CBD310 /* GalleryPage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryPage_VC.swift; sourceTree = "<group>"; };
+		57E1A81C23348EC300072377 /* Update_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update_VC.swift; sourceTree = "<group>"; };
 		AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSView_VC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,6 +120,7 @@
 		17687E5322A5FF3500BF000F /* subControllers */ = {
 			isa = PBXGroup;
 			children = (
+				57727D32230D0F3700734B43 /* LocalTableViewCell.swift */,
 				57711F56228808300051E576 /* TableViewCell.swift */,
 				5743492222B094F00036199E /* MenuTableViewCell.swift */,
 			);
@@ -243,7 +246,7 @@
 		57C8B92922825D98004966C5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				57727D32230D0F3700734B43 /* LocalTableViewCell.swift */,
+				57E1A81C23348EC300072377 /* Update_VC.swift */,
 				57727D30230CC6D300734B43 /* LocalSearch_VC.swift */,
 				5720266222DD4ED5003E1C17 /* Photo */,
 				17687E5322A5FF3500BF000F /* subControllers */,
@@ -408,6 +411,7 @@
 				57727D2F230B765900734B43 /* CoreDataManager.swift in Sources */,
 				AC9AB9DA2288DFA900C2C71E /* SDSView_VC.swift in Sources */,
 				57727D31230CC6D300734B43 /* LocalSearch_VC.swift in Sources */,
+				57E1A81D23348EC300072377 /* Update_VC.swift in Sources */,
 				57C8B92C22825DE4004966C5 /* csiWCF_VM.swift in Sources */,
 				57E1686122DD505C00CBD310 /* GalleryPage_VC.swift in Sources */,
 				17818BC122811A88000EAFF1 /* InfosafeCSI_onMove.xcdatamodeld in Sources */,
@@ -594,8 +598,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ZT7UW87A6L;
+				DEVELOPMENT_TEAM = DQNS8CDPT5;
 				INFOPLIST_FILE = "InfosafeCSI onMove/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -612,8 +617,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ZT7UW87A6L;
+				DEVELOPMENT_TEAM = DQNS8CDPT5;
 				INFOPLIST_FILE = "InfosafeCSI onMove/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

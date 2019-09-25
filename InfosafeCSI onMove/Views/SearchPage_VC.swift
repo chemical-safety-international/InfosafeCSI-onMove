@@ -60,6 +60,10 @@ class SearchPage_VC: UIViewController {
         localsearchinfo.cpage = 1
         localsearchinfo.psize = 50
         
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .light
+        }
+        
     }
     
     // custom picker view
@@ -74,10 +78,14 @@ class SearchPage_VC: UIViewController {
     
     func createArrow() {
         cPickView.rightViewMode = UITextField.ViewMode.always
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        let image = UIImage(named: "combox-down-arrow")
-        imageView.image = image
-        cPickView.rightView = imageView
+        
+            // Fallback on earlier versions
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+            let image = UIImage(named: "combox-down-arrow")
+            imageView.image = image
+            cPickView.rightView = imageView
+
+
     }
     
     //create & custom tool bar for picker view

@@ -17,6 +17,10 @@ class GalleryPage_VC: UIViewController {
 
         // Do any additional setup after loading the view.
         getImage(imageName: "text.png")
+        
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .light
+        }
     }
     
     func getImage(imageName: String) {

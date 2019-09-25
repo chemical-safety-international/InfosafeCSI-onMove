@@ -29,11 +29,17 @@ class SDSViewPage_VC: UIViewController {
         
         self.sdsShow()
         printBtn.isHidden = true
-        
+        shareBtn.isHidden = true
         if self.isMovingFromParent {
             WKWebView.clean()
         }
+        
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .light
+        }
     }
+    
+    
     
     
     func sdsShow() {
@@ -49,6 +55,7 @@ class SDSViewPage_VC: UIViewController {
                 self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
                 localcurrentSDS.pdfData = decodeData
                 self.printBtn.isHidden = false
+                self.shareBtn.isHidden = false
                 self.removeSpinner()
             }
         } else {
@@ -63,12 +70,15 @@ class SDSViewPage_VC: UIViewController {
                         self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
                         localcurrentSDS.pdfData = decodeData
                         self.printBtn.isHidden = false
+                        self.shareBtn.isHidden = false
 
                         CoreDataManager.storePDF(sdsno: localcurrentSDS.sdsNo, pdfdata: completionReturnData)
                         self.removeSpinner()
                     }
                     else if rtype == "2" {
                         self.sdsDisplay!.loadHTMLString(String(describing: completionReturnData), baseURL: nil)
+                        self.printBtn.isHidden = false
+                        self.shareBtn.isHidden = false
                         self.removeSpinner()
                     }
                 }
@@ -172,7 +182,7 @@ class SplitView_VC: UIViewController {
                 let decodeData = Data(base64Encoded: pdfArray[0].pdfdata!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
                 self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
                 localcurrentSDS.pdfData = decodeData
-
+                
                 self.removeSpinner()
             }
         } else {

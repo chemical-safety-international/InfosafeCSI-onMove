@@ -14,8 +14,11 @@ class LocalSearch_VC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var cleanSearchDataBtn: UIButton!
-    
 
+    
+    @IBOutlet weak var sizeLbl: UILabel!
+
+    
     fileprivate var productItemArray = [localSearchData]()
 
     override func viewDidLoad() {
@@ -25,6 +28,11 @@ class LocalSearch_VC: UIViewController {
 //        self.localSearch()
 //        CoreDataManager.cleanCoreData()
         self.updateData()
+//        self.addPDFCopies()
+        
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .light
+        }
     }
 
 
@@ -40,6 +48,9 @@ class LocalSearch_VC: UIViewController {
 
     func updateData() {
         productItemArray = CoreDataManager.fetchObj()
+        
+        let text = "Total records: \(productItemArray.count)"
+        print(text)
     }
 
     func localSearch() {
@@ -89,10 +100,55 @@ class LocalSearch_VC: UIViewController {
         }
 
     }
-
-    @IBAction func cleanBtnTapped(_ sender: Any) {
-        CoreDataManager.cleanSearchCoreData()
+    
+    @IBAction func searchBtnTapped(_ sender: Any) {
+        let searchText = searchBar.text
+        print(searchText!)
+//        guard searchText!.isEmpty else {
+//            productItemArray = CoreDataManager.fetchObj()
+//            
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+//            return
+//        }
+//        
+        productItemArray = CoreDataManager.fetchObj(targetText: searchText)
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
+    
+    @IBAction func cleanBtnTapped(_ sender: Any) {
+        DispatchQueue.main.async {
+//            CoreDataManager.cleanTempData()
+            CoreDataManager.cleanSearchCoreData()
+        }
+        
+    }
+    
+    @IBAction func sizeBtnTapped(_ sender: Any) {
+        CoreDataManager.appSize()
+    }
+    
+    func addPDFCopies() {
+        let pdfA = CoreDataManager.fetchPDF(targetText: localcurrentSDS.sdsNo)
+        
+        if pdfA.count != 0 {
+            DispatchQueue.main.async {
+                
+                print("\(pdfA[0].sdsno!)")
+//                let decodeData = Data(base64Encoded: pdfA[0].pdfdata!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+        
+                for index in 1...10000 {
+                    print(index)
+                    CoreDataManager.storePDFTest(sdsno: String(index), pdfdata: pdfA[0].pdfdata!)
+                }
+            }
+        }
+    }
+
 }
 
 extension LocalSearch_VC: UITableViewDelegate, UITableViewDataSource {
@@ -125,20 +181,20 @@ extension LocalSearch_VC: UITableViewDelegate, UITableViewDataSource {
 
 extension LocalSearch_VC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard !searchText.isEmpty else {
-            productItemArray = CoreDataManager.fetchObj()
-
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-            return
-        }
-
-        productItemArray = CoreDataManager.fetchObj(targetText: searchText)
-
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+//        guard !searchText.isEmpty else {
+//            productItemArray = CoreDataManager.fetchObj()
+//
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+//            return
+//        }
+//
+//        productItemArray = CoreDataManager.fetchObj(targetText: searchText)
+//
+//        DispatchQueue.main.async {
+//            self.tableView.reloadData()
+//        }
     }
 
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {

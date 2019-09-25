@@ -14,8 +14,11 @@ class SDSMenu_VC: UIViewController {
 //    var buttonName = [" ", "Core Info.", "Classification", "First Aid", "Transport", "View SDS"]
 //    var buttonImage = ["menu-close-cross", "CSI-Core", "CSI-Class", "CSI-Aid", "CSI-Transport", "CSI-ViewSDS"]
     
-    var buttonName = ["View SDS", "Core Info.", "Classification", "First Aid", "Transport"]
-    var buttonImage = ["CSI-ViewSDS", "CSI-Core", "CSI-Class", "CSI-Aid", "CSI-Transport"]
+//    var buttonName = ["View SDS", "Core Info.", "Classification", "First Aid", "Transport"]
+//    var buttonImage = ["CSI-ViewSDS", "CSI-Core", "CSI-Class", "CSI-Aid", "CSI-Transport"]
+    
+    var buttonName = ["View SDS"]
+    var buttonImage = ["CSI-ViewSDS"]
     
     var timerForShowScrollIndicator: Timer?
 
@@ -42,7 +45,9 @@ class SDSMenu_VC: UIViewController {
         // Do any additional setup after loading the view.
         menuTable.reloadData()
         
-
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .light
+        }
     }
 
 

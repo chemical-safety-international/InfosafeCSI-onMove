@@ -22,7 +22,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     
     @IBOutlet weak var loadmoreLbl: UILabel!
-    @IBOutlet weak var menuUIView: UIView!
+
     
     @IBOutlet weak var splitView: UIView!
     
@@ -30,7 +30,6 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     var selectedIndex:Bool = false;
 
-//    var rowno = 0
     var selectedthecellno = 0
     
 //    var screenHeight = 0
@@ -61,13 +60,14 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         
         NotificationCenter.default.addObserver(self, selector: #selector(menuDis), name: NSNotification.Name(rawValue: "refresh"), object: nil)
         
-//        NotificationCenter.default.post(name:NSNotification.Name(rawValue: "scroll"), object: nil)
-//        localtablesize.tableHeight = menu.frame.height
-        if (menu.frame.height >= 580) {
-            menu.frame.size.height = 580
-        } else if (view.frame.height >= 800) {
-            menu.frame.size.height = 580
-        }
+
+   
+        //control side menu height when need to suit large screen (full side menu require)
+//        if (menu.frame.height >= 580) {
+//            menu.frame.size.height = 580
+//        } else if (view.frame.height >= 800) {
+//            menu.frame.size.height = 580
+//        }
         
 
         
@@ -89,6 +89,9 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         tableDisplay.estimatedRowHeight = 140
         tableDisplay.rowHeight = UITableView.automaticDimension
         
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .light
+        }
     }
     
     @objc func menuDis() {
@@ -203,6 +206,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             cell?.hazLbl.text = localsearchinfo.results[indexPath.row].haz
             
             
+            
             //setup name type pic
             if localsearchinfo.results[indexPath.row].prodtype == "P" {
                 cell?.nameType?.image = UIImage(named: "ProdNameType-Primary")
@@ -222,10 +226,15 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             
             cell?.layer.cornerRadius = 10
             cell?.name.text = localsearchinfo.results[indexPath.row].prodname
-            
+
             //set row number of button that inside cell when tap
 //            cell?.sdsBtn.tag = indexPath.row
 //            cell?.sdsBtn.addTarget(self, action: #selector(sdsViewBtnTapped(_:)), for: .touchUpInside)
+            
+            // set the selected cell background view in order to set background color
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = UIColor.init(red: 0.98, green: 0.80, blue: 0.61, alpha: 1)
+            cell?.selectedBackgroundView = backgroundView
             
             
             return cell!
@@ -238,11 +247,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
         
         //pass the synno number
         localcurrentSDS.sdsNo = localsearchinfo.results[indexPath.row].synno
-        
-        //highlight the row
-        if let selectedCell = tableView.cellForRow(at: indexPath) as? TableViewCell {
-            selectedCell.contentView.backgroundColor = UIColor.init(red: 0.98, green: 0.80, blue: 0.61, alpha: 1)
-        }
+
         
         // controll the animation of side menu (click on the same row - no change)
         if self.menu.isHidden == true {
@@ -255,11 +260,9 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             selectedthecellno = indexPath.row
         }
         
-        if splitView.isHidden == false {
-            
-        }
 
     }
+    
     
     
     // change the height to expand tableDisplay value
@@ -269,7 +272,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
 //
 //    }
     
-    // swipe to delete the row function
+    // swipe to delete the row function (or can add more function like like)
 //    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 //        if editingStyle == .delete {
 //            localsearchinfo.results.remove(at: indexPath.row)
