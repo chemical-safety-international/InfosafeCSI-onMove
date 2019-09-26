@@ -36,16 +36,6 @@ class LocalSearch_VC: UIViewController {
     }
 
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
     func updateData() {
         productItemArray = CoreDataManager.fetchObj()
         
@@ -76,8 +66,7 @@ class LocalSearch_VC: UIViewController {
                 if completionReturnData == true {
                     DispatchQueue.main.async {
                         self.removeSpinner()
-//                        let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "TablePage") as? SearchTablePage_VC
-//                        self.navigationController?.pushViewController(searchJump!, animated: true)
+
                         self.updateData()
                     }
                 } else {
