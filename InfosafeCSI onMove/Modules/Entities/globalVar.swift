@@ -13,6 +13,7 @@ struct outLoginData: Codable {
     var apptype: Int!
     var clientcode: String!
     var clientid: String!
+    var clientlogo: String!
     var clientmemberid: String!
     var error: String!
     var firstname: String!
@@ -24,6 +25,7 @@ struct outLoginData: Codable {
 struct localclientinfo {
     static var clientid: String!
     static var clientcode: String!
+    static var clientlogo: String!
     static var clientmemberid: String!
     static var infosafeid: String!
     static var clientfirstname: String!
@@ -176,6 +178,19 @@ struct localsearchinfo {
 //    static var tableHeight: CGFloat!
 //}
 
+//struct localErrorCheck {
+//    var searchReturn: Bool?
+//
+//    init() {
+//        searchReturn = false
+//    }
+//
+//    init(searchReturn: Bool) {
+//        self.searchReturn = searchReturn
+//    }
+//}
+
+
 struct localcurrentSDS {
     static var sdsNo: String!
     static var sdsRowNo: Int!
@@ -198,6 +213,36 @@ struct outViewSDSData: Codable {
     var html_1: String!
     var html_3: String!
     var pdfString: String!
+}
+
+struct localViewSDSCore {
+    static var company: String!
+    static var dg: String!
+    static var emcont: String!
+    static var expirydate: String!
+    static var hs: String!
+    static var issuedate: String!
+    static var prodcode: String!
+    static var prodname: String!
+    static var ps: String!
+    static var recomuse: String!
+    static var sds: String!
+    static var unno: String!
+}
+
+struct outViewSDSCore: Codable {
+    var company: String!
+    var dg: String!
+    var emcont: String!
+    var expirydate: String!
+    var hs: String!
+    var issuedate: String!
+    var prodcode: String!
+    var prodname: String!
+    var ps: String!
+    var recomuse: String!
+    var sds: String!
+    var unno: String!
 }
 
 

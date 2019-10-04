@@ -30,6 +30,8 @@ class SDSViewPage_VC: UIViewController {
         self.sdsShow()
         printBtn.isHidden = true
         shareBtn.isHidden = true
+        
+
         if self.isMovingFromParent {
             WKWebView.clean()
         }
@@ -37,9 +39,14 @@ class SDSViewPage_VC: UIViewController {
         if #available(iOS 13.0, *) {
             overrideUserInterfaceStyle = .light
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(errorHandle), name: NSNotification.Name("errorSDSView"), object: nil)
     }
     
-    
+    @objc private func errorHandle() {
+        self.removeSpinner()
+        self.showAlert(title: "Connection failure!", message: "Please check the connection and try again!")
+    }
     
     
     func sdsShow() {
@@ -140,6 +147,8 @@ class SplitView_VC: UIViewController {
     @IBOutlet weak var viewSDSBtn: UIButton!
     @IBOutlet weak var sdsDisplay: WKWebView!
     
+    @IBOutlet weak var splitPrintBtn: UIButton!
+    @IBOutlet weak var splitShareBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,9 +157,19 @@ class SplitView_VC: UIViewController {
         //        setUpImgforBtns()
         if localcurrentSDS.sdsNo != nil {
 //            self.spliteSDSShow()
+//            splitPrintBtn.isHidden = true
+//            splitShareBtn.isHidden = true
         }
+        splitPrintBtn.isHidden = true
+        splitShareBtn.isHidden = true
         
+//        NotificationCenter.default.addObserver(self, selector: #selector(errorHandle), name: NSNotification.Name("errorSplitSDSView"), object: nil)
     }
+    
+//    @objc private func errorHandle() {
+//        self.removeSpinner()
+//        self.showAlert(title: "Connection failure!", message: "Please check the connection and try again!")
+//    }
     
     //    func setUpImgforBtns() {
     //        let img = UIImage(named: "CSI-ViewSDS")
@@ -183,6 +202,8 @@ class SplitView_VC: UIViewController {
                 self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
                 localcurrentSDS.pdfData = decodeData
                 
+                self.splitPrintBtn.isHidden = false
+                self.splitShareBtn.isHidden = false
                 self.removeSpinner()
             }
         } else {
@@ -198,10 +219,16 @@ class SplitView_VC: UIViewController {
                         localcurrentSDS.pdfData = decodeData
                         
                         CoreDataManager.storePDF(sdsno: localcurrentSDS.sdsNo, pdfdata: completionReturnData)
+                        
+                        self.splitPrintBtn.isHidden = false
+                        self.splitShareBtn.isHidden = false
                         self.removeSpinner()
                     }
                     else if rtype == "2" {
                         self.sdsDisplay!.loadHTMLString(String(describing: completionReturnData), baseURL: nil)
+                        
+                        self.splitPrintBtn.isHidden = false
+                        self.splitShareBtn.isHidden = false
                         self.removeSpinner()
                     }
                 }
@@ -215,6 +242,16 @@ class SplitView_VC: UIViewController {
         }
     }
     
+    @IBAction func splitPrintBtnTapped(_ sender: Any) {
+        SDSViewPage_VC().printPDF(data: localcurrentSDS.pdfData)
+    }
+        
+    @IBAction func splitShareBtnTapped(_ sender: Any) {
+        let activityVC = UIActivityViewController(activityItems: [localcurrentSDS.pdfData!], applicationActivities: nil)
+        activityVC.popoverPresentationController?.sourceView = self.view
+        
+        self.present(activityVC, animated: true, completion: nil)
+    }
 }
 
 

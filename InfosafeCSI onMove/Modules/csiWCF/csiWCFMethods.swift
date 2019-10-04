@@ -8,8 +8,8 @@
 
 import Foundation
 
-var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
-//var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
+//var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
+var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
 
 
 // Call the WCF function: 'loginbyEami' with email, password, deviceid, devicemac and return the data from WCF
@@ -39,11 +39,19 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
         guard let dataResponse = data,
             error == nil else {
                 print(error?.localizedDescription ?? "Response Error")
+                
+                DispatchQueue.main.async {
+                    //send the notification to searchPage_VC
+                    NotificationCenter.default.post(name: Notification.Name("errorLogin"), object: nil)
+                }
+                
                 return }
         completion(dataResponse)
     }
     task.resume()
 }
+
+
 
 //Call the WCF function: 'GetSDSSearchResultsPageEx' with input data
 func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: String, c:String, p : Int, psize : Int, apptp: Int, completion:@escaping(Data) -> Void) -> (Void) {
@@ -69,10 +77,16 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
         guard let dataResponse = data,
             error == nil else {
                 print(error?.localizedDescription ?? "Response Error")
-                print("Here")
+                
+                DispatchQueue.main.async {
+                    //send the notification to searchPage_VC
+                    NotificationCenter.default.post(name: Notification.Name("errorSearch"), object: nil)
+                }
+
                 return }
         completion(dataResponse)
     }
+
     //start task
     task.resume()
     
@@ -155,6 +169,10 @@ func csiWCF_getSDS(clientid: String, uid: String, sdsNoGet: String, apptp : Stri
         guard let dataResponse = data,
             error == nil else {
                 print(error?.localizedDescription ?? "Response Error")
+                DispatchQueue.main.async {
+                    //send the notification to searchPage_VC
+                    NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
+                }
                 return }
 
         do {
@@ -172,5 +190,43 @@ func csiWCF_getSDS(clientid: String, uid: String, sdsNoGet: String, apptp : Stri
     task.resume()
 }
 
+func csiWCF_getCoreInfo(clientid: String, uid: String, sdsNoGet: String, apptp : String, rtype: String, completion:@escaping(outViewSDSCore) -> Void) -> (Void) {
 
+    let json: [String: Any] = ["client":clientid, "apptp": apptp, "uid":uid, "sds": sdsNoGet, "rtype" : rtype, "regetFormat":"1", "f":"", "subf":""]
+    let jsonData = try? JSONSerialization.data(withJSONObject: json)
+
+    let url = URL(string: csiWCF_URLHeader + "ViewSDS_Core")!
+    
+    var request = URLRequest(url:url)
+    request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+    request.httpMethod = "POST"
+    
+    request.httpBody = jsonData
+    
+    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        guard let dataResponse = data,
+            error == nil else {
+                print(error?.localizedDescription ?? "Response Error")
+//                DispatchQueue.main.async {
+//                    //send the notification to searchPage_VC
+//                    NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
+//                }
+                return }
+
+        do {
+            let str = String.init(data: dataResponse, encoding: .utf8)
+            print(str as Any)
+            let decoder = JSONDecoder()
+            let cModel = try decoder.decode(outViewSDSCore.self, from: dataResponse)
+
+            completion(cModel)
+
+        } catch let parsingError {
+            print("Error", parsingError)
+        }
+        
+        
+    }
+    task.resume()
+}
 

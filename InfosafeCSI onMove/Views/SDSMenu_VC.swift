@@ -14,11 +14,11 @@ class SDSMenu_VC: UIViewController {
 //    var buttonName = [" ", "Core Info.", "Classification", "First Aid", "Transport", "View SDS"]
 //    var buttonImage = ["menu-close-cross", "CSI-Core", "CSI-Class", "CSI-Aid", "CSI-Transport", "CSI-ViewSDS"]
     
-//    var buttonName = ["View SDS", "Core Info.", "Classification", "First Aid", "Transport"]
-//    var buttonImage = ["CSI-ViewSDS", "CSI-Core", "CSI-Class", "CSI-Aid", "CSI-Transport"]
+    var buttonName = ["View SDS", "Core Info.", "Classification", "First Aid", "Transport"]
+    var buttonImage = ["CSI-ViewSDS", "CSI-Core", "CSI-Class", "CSI-Aid", "CSI-Transport"]
     
-    var buttonName = ["View SDS"]
-    var buttonImage = ["CSI-ViewSDS"]
+//    var buttonName = ["View SDS"]
+//    var buttonImage = ["CSI-ViewSDS"]
     
     var timerForShowScrollIndicator: Timer?
 
@@ -85,6 +85,15 @@ class SDSMenu_VC: UIViewController {
         if buttonName[index] == "View SDS" {
             let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSViewPage_VC
             self.navigationController?.pushViewController(sdsJump!, animated: true)
+        }
+        
+        if buttonName[index] == "Core Info." {
+//            csiWCF_getCoreInfo(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
+//                print(output)
+//            }
+            let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSCore") as? SDSViewCore_VC
+            self.navigationController?.pushViewController(sdsJump!, animated: true)
+
         }
     
     }

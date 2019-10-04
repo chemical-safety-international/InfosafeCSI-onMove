@@ -51,10 +51,10 @@ class csiWCF_VM: UIViewController {
         
         //call search function
         csiWCF_GetSDSSearchResultsPage(inputData: inputData, client: client!, uid: uid!, c: c!, p: p!, psize:psize!, apptp:apptp!) { (completionReturnData) in
-            
+
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
-                
+                print(jsonResponse as Any)
                 if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
 //                    print(jsonArr1)
                     jsonArr1.forEach { info in
@@ -199,6 +199,35 @@ class csiWCF_VM: UIViewController {
                     """
                     completion(strForWeb)
             }
+        }
+    }
+    
+    func callSDS_Core(completion:@escaping(String) -> Void) {
+        
+        csiWCF_getCoreInfo(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
+//            print(output)
+            
+            if output.sds != nil {
+                localViewSDSCore.prodname = output.prodname
+                localViewSDSCore.company = output.company
+                localViewSDSCore.dg = output.dg
+                localViewSDSCore.emcont = output.emcont
+                localViewSDSCore.expirydate = output.expirydate
+                localViewSDSCore.hs = output.hs
+                localViewSDSCore.issuedate = output.issuedate
+                localViewSDSCore.ps = output.ps
+                localViewSDSCore.prodcode = output.prodcode
+                localViewSDSCore.recomuse = output.recomuse
+                localViewSDSCore.sds = output.sds
+                localViewSDSCore.unno = output.unno
+                    
+                completion("true")
+
+            } else {
+                completion("false")
+            }
+    
+    
         }
     }
     

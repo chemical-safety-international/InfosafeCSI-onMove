@@ -58,7 +58,14 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
         if #available(iOS 13.0, *) {
             overrideUserInterfaceStyle = .light
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(errorHandle), name: NSNotification.Name("errorLogin"), object: nil)
 
+    }
+    
+    @objc private func errorHandle() {
+        self.removeSpinner()
+        self.showAlert(title: "Connection failure!", message: "Please check the connection and try again!")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -138,12 +145,15 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
                 let decoder = JSONDecoder()
                 let model = try decoder.decode(outLoginData.self, from:
                     completion) //Decode JSON Response Data
+
                 localclientinfo.clientid = model.clientid
                 localclientinfo.clientmemberid = model.clientmemberid
                 localclientinfo.infosafeid = model.infosafeid
                 localclientinfo.clientcode = model.clientcode
+                localclientinfo.clientlogo = model.clientlogo
                 localclientinfo.apptype = model.apptype
                 localclientinfo.error = model.error
+
                 
                 DispatchQueue.main.async {
                     if model.passed == true {
@@ -221,6 +231,15 @@ extension UIViewController {
         let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style:  .default))
         self.present(ac, animated: true)
+    }
+}
+
+extension String {
+    func toImage() -> UIImage? {
+        if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters) {
+            return UIImage(data: data)
+        }
+        return nil
     }
 }
 

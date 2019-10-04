@@ -18,6 +18,8 @@ class SearchPage_VC: UIViewController {
     @IBOutlet weak var searchBtn: UIButton!
     
     @IBOutlet weak var logoffBtn: UIButton!
+    @IBOutlet weak var companyLogo: UIImageView!
+    
     
     @IBOutlet weak var noSearchResultLbl: UILabel!
     // create picker view
@@ -30,16 +32,17 @@ class SearchPage_VC: UIViewController {
         
 //        self.removeSpinner()
         //setup no result label
-        noSearchResultLbl.isHidden = true
+        self.noSearchResultLbl.isHidden = true
+
         
         
         // load the criteria list for picker
         self.callCriteria()
         
         //button style
-        logoffBtn.layer.cornerRadius = 5
-        searchBtn.layer.cornerRadius = 5
-        cPickView.layer.cornerRadius = 10
+        self.logoffBtn.layer.cornerRadius = 5
+        self.searchBtn.layer.cornerRadius = 5
+        self.cPickView.layer.cornerRadius = 10
     
         //enable the delegate
         self.cPickView.delegate = self
@@ -49,13 +52,13 @@ class SearchPage_VC: UIViewController {
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
         
         //setup picker & toolbar
-        createPicker()
-        createToolbar()
+        self.createPicker()
+        self.createToolbar()
         
         //setup text field right view
-        createArrow()
+        self.createArrow()
         
-        hideKeyboard()
+        self.hideKeyboard()
         
         localsearchinfo.cpage = 1
         localsearchinfo.psize = 50
@@ -64,7 +67,18 @@ class SearchPage_VC: UIViewController {
             overrideUserInterfaceStyle = .light
         }
         
+        //revieve the notification from the action
+        NotificationCenter.default.addObserver(self, selector: #selector(errorHandle), name: NSNotification.Name("errorSearch"), object: nil)
+        
+        //get company logo and show in the UIImage
+        if localclientinfo.clientlogo != nil {
+            let comLogo = localclientinfo.clientlogo.toImage()
+            companyLogo.image = comLogo
+//            print(comLogo!.size.height)
+//            print(comLogo!.size.width)
+        }
     }
+    
     
     // custom picker view
     func createPicker() {
@@ -101,6 +115,12 @@ class SearchPage_VC: UIViewController {
         toolBar.isUserInteractionEnabled = true
         
         cPickView.inputAccessoryView = toolBar
+    }
+    
+    //notification function
+    @objc private func errorHandle() {
+        self.removeSpinner()
+        self.showAlert(title: "Connection failure!", message: "Please check the connection and try again!")
     }
     
     // disable swipe to go back
@@ -174,10 +194,7 @@ class SearchPage_VC: UIViewController {
                                 self.noSearchResultLbl.isHidden = false
                         }
                     }
-
-                    
                 }
-                
             }
         }
     }

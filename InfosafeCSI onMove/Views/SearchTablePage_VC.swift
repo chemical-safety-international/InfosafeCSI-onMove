@@ -28,6 +28,8 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     @IBOutlet weak var tableTrailing: NSLayoutConstraint!
     
+    @IBOutlet weak var companyLogo: UIImageView!
+    
     var selectedIndex:Bool = false;
 
     var selectedthecellno = 0
@@ -63,11 +65,11 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
 
    
         //control side menu height when need to suit large screen (full side menu require)
-//        if (menu.frame.height >= 580) {
-//            menu.frame.size.height = 580
-//        } else if (view.frame.height >= 800) {
-//            menu.frame.size.height = 580
-//        }
+        if (menu.frame.height >= 580) {
+            menu.frame.size.height = 580
+        } else if (view.frame.height >= 800) {
+            menu.frame.size.height = 580
+        }
         
 
         
@@ -91,6 +93,11 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         
         if #available(iOS 13.0, *) {
             overrideUserInterfaceStyle = .light
+        }
+        
+        if localclientinfo.clientlogo != nil {
+            let comLogo = localclientinfo.clientlogo.toImage()
+            companyLogo.image = comLogo
         }
     }
     
