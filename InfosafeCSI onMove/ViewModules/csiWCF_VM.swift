@@ -30,7 +30,7 @@ class csiWCF_VM: UIViewController {
     
     func callSearch(inputData:String, completion:@escaping(Bool) -> Void) {
 //        CoreDataManager.cleanSearchCoreData()
-        print("callsearch called successfully")
+//        print("callsearch called successfully")
         localsearchinfo.details = ""
         self.localresult.lcount = 0
         self.localresult.ocount = 0
@@ -54,9 +54,9 @@ class csiWCF_VM: UIViewController {
 
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
-                print(jsonResponse as Any)
+//                print(jsonResponse as Any)
                 if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
-//                    print(jsonArr1)
+
                     jsonArr1.forEach { info in
                         
                         var ritem = localsearchinfo.item()
@@ -110,12 +110,11 @@ class csiWCF_VM: UIViewController {
                         //localresult.results.append(ritem)
                         localsearchinfo.results.append(ritem)
 
-//                        for index in 1...50 {
-                        DispatchQueue.main.async {
-                            CoreDataManager.storeObj(prodname: ritem.prodname ?? "", sdsno: ritem.sdsno ?? "", company: ritem.company ?? "", issueDate: ritem.issueDate ?? "", prodtype: ritem.prodtype ?? "", unno: ritem.unno ?? "", haz: ritem.haz ?? "", dgclass: ritem.dgclass ?? "", prodcode: ritem.prodcode ?? "", ps: ritem.ps ?? "")
-//                            print(index)
-                        }
+// save search data to the core data
+//                        DispatchQueue.main.async {
+//                            CoreDataManager.storeObj(prodname: ritem.prodname ?? "", sdsno: ritem.sdsno ?? "", company: ritem.company ?? "", issueDate: ritem.issueDate ?? "", prodtype: ritem.prodtype ?? "", unno: ritem.unno ?? "", haz: ritem.haz ?? "", dgclass: ritem.dgclass ?? "", prodcode: ritem.prodcode ?? "", ps: ritem.ps ?? "")
 //                        }
+
                     
                     }
             }
@@ -137,7 +136,7 @@ class csiWCF_VM: UIViewController {
             } catch let parsingError {
                 print("Error", parsingError)
             }
-            print(self.localresult)
+//            print(self.localresult)
             if  self.localresult.pagecount != 0 {
                 completion(true)
             } else if self.localresult.result == false || self.localresult.pcount == 0 {
@@ -205,16 +204,27 @@ class csiWCF_VM: UIViewController {
     func callSDS_Core(completion:@escaping(String) -> Void) {
         
         csiWCF_getCoreInfo(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
-//            print(output)
-            
             if output.sds != nil {
+                
+                // change string to date format
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+
+                let issueD = dateFormatter.date(from: output.issuedate)
+                let expirD = dateFormatter.date(from: output.expirydate)
+                
+                //convert date to string with current local timezone
+                let issueDat = DateFormatter.localizedString(from: issueD!, dateStyle: .medium, timeStyle: .none)
+                let expirDat = DateFormatter.localizedString(from: expirD!, dateStyle: .medium, timeStyle: .none)
+                
+                //store data to local
                 localViewSDSCore.prodname = output.prodname
                 localViewSDSCore.company = output.company
                 localViewSDSCore.dg = output.dg
                 localViewSDSCore.emcont = output.emcont
-                localViewSDSCore.expirydate = output.expirydate
+                localViewSDSCore.expirydate = expirDat
                 localViewSDSCore.hs = output.hs
-                localViewSDSCore.issuedate = output.issuedate
+                localViewSDSCore.issuedate = issueDat
                 localViewSDSCore.ps = output.ps
                 localViewSDSCore.prodcode = output.prodcode
                 localViewSDSCore.recomuse = output.recomuse
@@ -226,8 +236,121 @@ class csiWCF_VM: UIViewController {
             } else {
                 completion("false")
             }
+        }
+    }
+    
+    func callSDS_GHS(completion:@escaping(String) -> Void) {
+
+        csiWCF_getClassification(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
+            if output.sds != nil {
+                localViewSDSGHS.formatcode = output.formatcode
+                localViewSDSGHS.picArray = []
+//                print(localViewSDSGHS.picArray.count)
+                if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
+                    
+                    localViewSDSGHS.classification = output.classification
+                    localViewSDSGHS.dg = output.dg
+                    localViewSDSGHS.hstate = output.hstate
+                    localViewSDSGHS.ps = output.hstate
+                    localViewSDSGHS.pstate = output.pstate
+                    localViewSDSGHS.pic = output.pic
+                    localViewSDSGHS.rphrase = output.rphrase
+                    localViewSDSGHS.sds = output.sds
+                    localViewSDSGHS.sphrase = output.sphrase
+                    
+                    if (localViewSDSGHS.pic.isEmpty == false) {
+                        localViewSDSGHS.picArray = localViewSDSGHS.pic.components(separatedBy: ",")
+//                        localViewSDSGHS.picArray = ["Flame", "Flame", "Flame", "Flame", "Flame"]
+//                        print(localViewSDSGHS.pic as Any)
+//                        print(localViewSDSGHS.picArray!)
+                    }
+
+                    
+                    
+                } else {
+                    localViewSDSCF.classification = output.classification
+                    localViewSDSCF.dg = output.dg
+                    localViewSDSCF.hstate = output.hstate
+                    localViewSDSCF.pic = output.pic
+                    localViewSDSCF.ps = output.ps
+                    localViewSDSCF.sds = output.sds
+                    localViewSDSCF.sphrase = output.sphrase
+                    localViewSDSCF.rphrase = output.rphrase
+                }
+                
+                completion("true")
+            } else {
+                
+                
+                completion("false")
+            }
+        }
+    }
     
     
+    func callSDS_FA(completion:@escaping(String) -> Void) {
+        
+        csiWCF_getFirstAid(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
+            if output.sds != nil {
+                
+                
+                //store data to local
+                localViewSDSFA.sds = output.sds
+                localViewSDSFA.inhalation = output.inhalation
+                localViewSDSFA.ingestion = output.ingestion
+                localViewSDSFA.skin = output.skin
+                localViewSDSFA.eye = output.eye
+                localViewSDSFA.fafacilities = output.fafacilities
+                localViewSDSFA.advdoctor = output.advdoctor
+                    
+                completion("true")
+
+            } else {
+                completion("false")
+            }
+        }
+    }
+    
+    func callSDS_Trans(completion:@escaping(String) -> Void) {
+        
+        csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
+            if output.sds != nil {
+                
+                
+                //store data to local
+                //ADG
+                localViewSDSTIADG.road_unno = output.road_unno
+                localViewSDSTIADG.road_dgclass = output.road_dgclass
+                localViewSDSTIADG.road_subrisks = output.road_subrisks
+                localViewSDSTIADG.road_packgrp = output.road_packgrp
+                localViewSDSTIADG.road_psn = output.road_psn
+                localViewSDSTIADG.road_hazchem = output.road_hazchem
+                localViewSDSTIADG.road_epg = output.road_epg
+                localViewSDSTIADG.road_ierg = output.road_ierg
+                localViewSDSTIADG.road_packmethod = output.road_packmethod
+                //IMDG
+                localViewSDSTIIMDG.imdg_unno = output.imdg_unno
+                localViewSDSTIIMDG.imdg_dgclass = output.imdg_dgclass
+                localViewSDSTIIMDG.imdg_subrisks = output.imdg_subrisks
+                localViewSDSTIIMDG.imdg_packgrp = output.imdg_packgrp
+                localViewSDSTIIMDG.imdg_psn = output.imdg_psn
+                localViewSDSTIIMDG.imdg_ems = output.imdg_ems
+                localViewSDSTIIMDG.imdg_mp = output.imdg_mp
+                //IATA
+                localViewSDSTIIATA.iata_unno = output.iata_unno
+                localViewSDSTIIATA.iata_dgclass = output.iata_dgclass
+                localViewSDSTIIATA.iata_subrisks = output.iata_subrisks
+                localViewSDSTIIATA.iata_packgrp = output.iata_packgrp
+                localViewSDSTIIATA.iata_psn = output.iata_psn
+                localViewSDSTIIATA.iata_symbol = output.iata_symbol
+                
+
+                    
+                completion("true")
+
+            } else {
+                completion("false")
+            }
         }
     }
     

@@ -197,55 +197,6 @@ struct localcurrentSDS {
     static var pdfData: Data!
 }
 
-struct outViewSDSData: Codable {
-    var result: Bool!
-    var CanPDF: Bool!
-    var CanExcel: Bool!
-    var html: String!
-    var title: String!
-    var format: String!
-    var subResults: Bool!
-    var hasSummary: Bool!
-    var message: String!
-    var html_0: String!
-    var html_2: String!
-    var html_4: String!
-    var html_1: String!
-    var html_3: String!
-    var pdfString: String!
-}
-
-struct localViewSDSCore {
-    static var company: String!
-    static var dg: String!
-    static var emcont: String!
-    static var expirydate: String!
-    static var hs: String!
-    static var issuedate: String!
-    static var prodcode: String!
-    static var prodname: String!
-    static var ps: String!
-    static var recomuse: String!
-    static var sds: String!
-    static var unno: String!
-}
-
-struct outViewSDSCore: Codable {
-    var company: String!
-    var dg: String!
-    var emcont: String!
-    var expirydate: String!
-    var hs: String!
-    var issuedate: String!
-    var prodcode: String!
-    var prodname: String!
-    var ps: String!
-    var recomuse: String!
-    var sds: String!
-    var unno: String!
-}
-
-
 struct localSearchData {
     
     var company: String?
@@ -298,4 +249,172 @@ struct localPDF {
         self.sdsno = sdsno
         self.pdfdata = pdfdata
     }
+}
+
+struct outViewSDSData: Codable {
+    var result: Bool!
+    var CanPDF: Bool!
+    var CanExcel: Bool!
+    var html: String!
+    var title: String!
+    var format: String!
+    var subResults: Bool!
+    var hasSummary: Bool!
+    var message: String!
+    var html_0: String!
+    var html_2: String!
+    var html_4: String!
+    var html_1: String!
+    var html_3: String!
+    var pdfString: String!
+}
+
+struct localViewSDSCore {
+    static var company: String!
+    static var dg: String!
+    static var emcont: String!
+    static var expirydate: String!
+    static var hs: String!
+    static var issuedate: String!
+    static var prodcode: String!
+    static var prodname: String!
+    static var ps: String!
+    static var recomuse: String!
+    static var sds: String!
+    static var unno: String!
+}
+
+struct outViewSDSCore: Codable {
+    var company: String!
+    var dg: String!
+    var emcont: String!
+    var expirydate: String!
+    var hs: String!
+    var issuedate: String!
+    var prodcode: String!
+    var prodname: String!
+    var ps: String!
+    var recomuse: String!
+    var sds: String!
+    var unno: String!
+}
+
+struct localViewSDSGHS {
+    static var classification: String!
+    static var dg: String!
+    static var formatcode: String!
+    static var hstate: String!
+    static var ps: String!
+    static var pstate: String!
+    static var pic: String!
+    static var rphrase: String!
+    static var sds: String!
+    static var sphrase: String!
+    static var picArray: Array<Any>!
+}
+
+struct localViewSDSCF {
+    static var classification: String!
+    static var dg: String!
+    static var formatcode: String!
+    static var hstate: String!
+    static var pic: String!
+    static var ps: String!
+    static var rphrase: String!
+    static var sds: String!
+    static var sphrase: String!
+}
+
+struct outViewSDSGHS: Codable {
+    var classification: String!
+    var dg: String!
+    var formatcode: String!
+    var hstate: String!
+    var ps: String!
+    var pstate: String!
+    var pic: String!
+    var rphrase: String!
+    var sds: String!
+    var sphrase: String!
+}
+
+struct localViewSDSFA {
+    static var sds: String!
+    static var inhalation: String!
+    static var ingestion: String!
+    static var skin: String!
+    static var eye: String!
+    static var fafacilities: String!
+    static var advdoctor: String!
+}
+
+struct outViewSDSFA: Codable {
+    var sds: String!
+    var inhalation: String!
+    var ingestion: String!
+    var skin: String!
+    var eye: String!
+    var fafacilities: String!
+    var advdoctor: String!
+}
+
+struct localViewSDSTIADG {
+    static var road_unno: String!
+    static var road_dgclass: String!
+    static var road_subrisks: String!
+    static var road_packgrp: String!
+    static var road_psn: String!
+    static var road_hazchem: String!
+    static var road_epg: String!
+    static var road_ierg: String!
+    static var road_packmethod: String!
+}
+
+struct localViewSDSTIIMDG {
+    static var imdg_unno: String!
+    static var imdg_dgclass: String!
+    static var imdg_subrisks: String!
+    static var imdg_packgrp: String!
+    static var imdg_psn: String!
+    static var imdg_ems: String!
+    static var imdg_mp: String!
+}
+
+struct localViewSDSTIIATA {
+    static var iata_unno: String!
+    static var iata_dgclass: String!
+    static var iata_subrisks: String!
+    static var iata_packgrp: String!
+    static var iata_psn: String!
+    static var iata_symbol: String!
+}
+
+struct outViewSDSTI: Codable {
+    var sds: String!
+    
+    var road_unno: String!
+    var road_dgclass: String!
+    var road_subrisks: String!
+    var road_packgrp: String!
+    var road_psn: String!
+    var road_hazchem: String!
+    var road_epg: String!
+    var road_ierg: String!
+    var road_packmethod: String!
+    
+    var imdg_unno: String!
+    var imdg_dgclass: String!
+    var imdg_subrisks: String!
+    var imdg_packgrp: String!
+    var imdg_psn: String!
+    var imdg_ems: String!
+    var imdg_mp: String!
+    
+    var iata_unno: String!
+    var iata_dgclass: String!
+    var iata_subrisks: String!
+    var iata_packgrp: String!
+    var iata_psn: String!
+    var iata_symbol: String!
+   
 }

@@ -214,8 +214,7 @@ func csiWCF_getCoreInfo(clientid: String, uid: String, sdsNoGet: String, apptp :
                 return }
 
         do {
-            let str = String.init(data: dataResponse, encoding: .utf8)
-            print(str as Any)
+//            let str = String.init(data: dataResponse, encoding: .utf8)
             let decoder = JSONDecoder()
             let cModel = try decoder.decode(outViewSDSCore.self, from: dataResponse)
 
@@ -230,3 +229,120 @@ func csiWCF_getCoreInfo(clientid: String, uid: String, sdsNoGet: String, apptp :
     task.resume()
 }
 
+func csiWCF_getClassification(clientid: String, uid: String, sdsNoGet: String, apptp : String, rtype: String, completion:@escaping(outViewSDSGHS) -> Void) -> (Void) {
+
+    let json: [String: Any] = ["client":clientid, "apptp": apptp, "uid":uid, "sds": sdsNoGet, "rtype" : rtype, "regetFormat":"1", "f":"", "subf":""]
+    let jsonData = try? JSONSerialization.data(withJSONObject: json)
+
+    let url = URL(string: csiWCF_URLHeader + "ViewSDS_Classification")!
+    
+    var request = URLRequest(url:url)
+    request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+    request.httpMethod = "POST"
+    
+    request.httpBody = jsonData
+    
+    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        guard let dataResponse = data,
+            error == nil else {
+                print(error?.localizedDescription ?? "Response Error")
+//                DispatchQueue.main.async {
+//                    //send the notification to searchPage_VC
+//                    NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
+//                }
+                return }
+
+        do {
+            let str = String.init(data: dataResponse, encoding: .utf8)
+            let decoder = JSONDecoder()
+            let cModel = try decoder.decode(outViewSDSGHS.self, from: dataResponse)
+            print(str as Any)
+            completion(cModel)
+
+        } catch let parsingError {
+            print("Error", parsingError)
+        }
+        
+        
+    }
+    task.resume()
+}
+
+func csiWCF_getFirstAid(clientid: String, uid: String, sdsNoGet: String, apptp : String, rtype: String, completion:@escaping(outViewSDSFA) -> Void) -> (Void) {
+
+    let json: [String: Any] = ["client":clientid, "apptp": apptp, "uid":uid, "sds": sdsNoGet, "rtype" : rtype, "regetFormat":"1", "f":"", "subf":""]
+    let jsonData = try? JSONSerialization.data(withJSONObject: json)
+
+    let url = URL(string: csiWCF_URLHeader + "ViewSDS_FirstAid")!
+    
+    var request = URLRequest(url:url)
+    request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+    request.httpMethod = "POST"
+    
+    request.httpBody = jsonData
+    
+    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        guard let dataResponse = data,
+            error == nil else {
+                print(error?.localizedDescription ?? "Response Error")
+//                DispatchQueue.main.async {
+//                    //send the notification to searchPage_VC
+//                    NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
+//                }
+                return }
+
+        do {
+//            let str = String.init(data: dataResponse, encoding: .utf8)
+            let decoder = JSONDecoder()
+            let cModel = try decoder.decode(outViewSDSFA.self, from: dataResponse)
+//            print(str as Any)
+            completion(cModel)
+
+        } catch let parsingError {
+            print("Error", parsingError)
+        }
+        
+        
+    }
+    task.resume()
+}
+
+
+func csiWCF_getTransport(clientid: String, uid: String, sdsNoGet: String, apptp : String, rtype: String, completion:@escaping(outViewSDSTI) -> Void) -> (Void) {
+
+    let json: [String: Any] = ["client":clientid, "apptp": apptp, "uid":uid, "sds": sdsNoGet, "rtype" : rtype, "regetFormat":"1", "f":"", "subf":""]
+    let jsonData = try? JSONSerialization.data(withJSONObject: json)
+
+    let url = URL(string: csiWCF_URLHeader + "ViewSDS_Transport")!
+    
+    var request = URLRequest(url:url)
+    request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+    request.httpMethod = "POST"
+    
+    request.httpBody = jsonData
+    
+    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        guard let dataResponse = data,
+            error == nil else {
+                print(error?.localizedDescription ?? "Response Error")
+//                DispatchQueue.main.async {
+//                    //send the notification to searchPage_VC
+//                    NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
+//                }
+                return }
+
+        do {
+            let str = String.init(data: dataResponse, encoding: .utf8)
+            let decoder = JSONDecoder()
+            let cModel = try decoder.decode(outViewSDSTI.self, from: dataResponse)
+            print(str as Any)
+            completion(cModel)
+
+        } catch let parsingError {
+            print("Error", parsingError)
+        }
+        
+        
+    }
+    task.resume()
+}

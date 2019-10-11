@@ -143,13 +143,13 @@ class SearchPage_VC: UIViewController {
     
     
     @IBAction func searchBtnTapped(_ sender: Any) {
-        print("search button tapped")
+//        print("search button tapped")
         self.searchData()
 
     }
     
     func searchData() {
-        print("search Data called")
+//        print("search Data called")
         if searchbar.text!.isEmpty {
             self.removeSpinner()
             searchbar.text = ""
@@ -164,7 +164,7 @@ class SearchPage_VC: UIViewController {
             self.showAlert(title: "Hi", message: "Please enter more than 2 character!")
             
         } else {
-            print("Called call search")
+//            print("Called call search")
             self.cPickView.endEditing(true)
             self.showSpinner(onView: self.view)
             let searchInPut = searchbar.text!
@@ -270,7 +270,7 @@ extension SearchPage_VC: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchbar.resignFirstResponder()
-        print("search bar return pressed")
+//        print("search bar return pressed")
         self.searchData()
     }
 }

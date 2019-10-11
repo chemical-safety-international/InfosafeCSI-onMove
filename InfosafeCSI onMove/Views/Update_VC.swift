@@ -32,7 +32,7 @@ class Update_VC: UIViewController {
             
             guard self.progress.isFinished == false else {
                 timer.invalidate()
-                print("Finished.")
+//                print("Finished.")
                 return
             }
             

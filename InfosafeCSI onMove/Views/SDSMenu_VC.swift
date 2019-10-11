@@ -95,6 +95,38 @@ class SDSMenu_VC: UIViewController {
             self.navigationController?.pushViewController(sdsJump!, animated: true)
 
         }
+        
+        if buttonName[index] == "Classification" {
+
+            csiWCF_VM().callSDS_GHS() { (output) in
+                if output.contains("true") {
+                    DispatchQueue.main.async {
+                        if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
+                            let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHS") as? SDSViewCFGHS_VC
+                            self.navigationController?.pushViewController(sdsJump!, animated: true)
+                        } else {
+                            let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSCF") as? SDSViewCF_VC
+                            self.navigationController?.pushViewController(sdsJump!, animated: true)
+                        }
+                    }
+                }
+            }
+        }
+        
+        if buttonName[index] == "First Aid" {
+            let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSFA") as? SDSViewFA_VC
+            self.navigationController?.pushViewController(sdsJump!, animated: true)
+        }
+        
+        if buttonName[index] == "Transport" {
+//            csiWCF_VM()
+            csiWCF_VM().callSDS_Trans() { (output) in
+ 
+            }
+            let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSTI") as? SDSViewTI_VC
+             self.navigationController?.pushViewController(sdsJump!, animated: true)
+            
+        }
     
     }
     

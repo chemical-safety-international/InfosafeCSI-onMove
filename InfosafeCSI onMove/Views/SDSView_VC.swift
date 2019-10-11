@@ -57,7 +57,7 @@ class SDSViewPage_VC: UIViewController {
         if pdfArray.count != 0 {
             DispatchQueue.main.async {
 
-                print("\(pdfArray[0].sdsno!)")
+//                print("\(pdfArray[0].sdsno!)")
                 let decodeData = Data(base64Encoded: pdfArray[0].pdfdata!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
                 self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
                 localcurrentSDS.pdfData = decodeData
@@ -149,6 +149,8 @@ class SplitView_VC: UIViewController {
     
     @IBOutlet weak var splitPrintBtn: UIButton!
     @IBOutlet weak var splitShareBtn: UIButton!
+    
+    @IBOutlet weak var coreInfoBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -251,6 +253,11 @@ class SplitView_VC: UIViewController {
         activityVC.popoverPresentationController?.sourceView = self.view
         
         self.present(activityVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func coreInfoBtnTapped(_ sender: Any) {
+        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSCore") as? SDSViewCore_VC
+        self.navigationController?.pushViewController(sdsJump!, animated: true)
     }
 }
 
