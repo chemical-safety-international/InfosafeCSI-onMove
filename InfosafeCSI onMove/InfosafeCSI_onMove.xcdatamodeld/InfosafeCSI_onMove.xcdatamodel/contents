@@ -1,31 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14903" systemVersion="18G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="PDF" representedClassName="PDF" syncable="YES" codeGenerationType="class">
-        <attribute name="issuedate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="pdfdata" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sdsno" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="issuedate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="pdfdata" optional="YES" attributeType="String"/>
+        <attribute name="sdsno" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="PicToGram" representedClassName="PicToGram" syncable="YES" codeGenerationType="class">
+        <attribute name="corrosion" optional="YES" attributeType="String"/>
+        <attribute name="environment" optional="YES" attributeType="String"/>
+        <attribute name="exclamationmark" optional="YES" attributeType="String"/>
+        <attribute name="explodingbomb" optional="YES" attributeType="String"/>
+        <attribute name="flame" optional="YES" attributeType="String"/>
+        <attribute name="flameovercircle" optional="YES" attributeType="String"/>
+        <attribute name="gascylinder" optional="YES" attributeType="String"/>
+        <attribute name="healthhazard" optional="YES" attributeType="String"/>
+        <attribute name="skullandcrossbones" optional="YES" attributeType="String"/>
     </entity>
     <entity name="SearchData" representedClassName="SearchData" syncable="YES" codeGenerationType="class">
-        <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="dgclass" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="haz" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="issueDate" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="prodcode" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="prodname" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="prodtype" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="ps" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sdsno" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="unno" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="company" optional="YES" attributeType="String"/>
+        <attribute name="dgclass" optional="YES" attributeType="String"/>
+        <attribute name="haz" optional="YES" attributeType="String"/>
+        <attribute name="issueDate" optional="YES" attributeType="String"/>
+        <attribute name="prodcode" optional="YES" attributeType="String"/>
+        <attribute name="prodname" optional="YES" attributeType="String"/>
+        <attribute name="prodtype" optional="YES" attributeType="String"/>
+        <attribute name="ps" optional="YES" attributeType="String"/>
+        <attribute name="sdsno" optional="YES" attributeType="String"/>
+        <attribute name="unno" optional="YES" attributeType="String"/>
     </entity>
     <entity name="UserProfiles" representedClassName="UserProfiles" syncable="YES" codeGenerationType="class">
-        <attribute name="authenticated" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="authexpiredate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="authenticated" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="authexpiredate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="userid" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="PDF" positionX="-45" positionY="90" width="128" height="90"/>
-        <element name="SearchData" positionX="-45" positionY="27" width="128" height="195"/>
-        <element name="UserProfiles" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="PDF" positionX="165.76953125" positionY="86.49609375" width="128" height="90"/>
+        <element name="SearchData" positionX="-55.921875" positionY="-92" width="128" height="43"/>
+        <element name="UserProfiles" positionX="-245.33984375" positionY="-121.328125" width="128" height="105"/>
+        <element name="PicToGram" positionX="126.79296875" positionY="-71.63671875" width="128" height="178"/>
     </elements>
 </model>

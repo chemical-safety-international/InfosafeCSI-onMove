@@ -251,7 +251,7 @@ class csiWCF_VM: UIViewController {
                     localViewSDSGHS.classification = output.classification
                     localViewSDSGHS.dg = output.dg
                     localViewSDSGHS.hstate = output.hstate
-                    localViewSDSGHS.ps = output.hstate
+                    localViewSDSGHS.ps = output.ps
                     localViewSDSGHS.pstate = output.pstate
                     localViewSDSGHS.pic = output.pic
                     localViewSDSGHS.rphrase = output.rphrase
@@ -260,13 +260,8 @@ class csiWCF_VM: UIViewController {
                     
                     if (localViewSDSGHS.pic.isEmpty == false) {
                         localViewSDSGHS.picArray = localViewSDSGHS.pic.components(separatedBy: ",")
-//                        localViewSDSGHS.picArray = ["Flame", "Flame", "Flame", "Flame", "Flame"]
-//                        print(localViewSDSGHS.pic as Any)
-//                        print(localViewSDSGHS.picArray!)
-                    }
 
-                    
-                    
+                    }
                 } else {
                     localViewSDSCF.classification = output.classification
                     localViewSDSCF.dg = output.dg

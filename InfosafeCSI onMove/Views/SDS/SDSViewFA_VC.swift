@@ -37,6 +37,7 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
         FAT.font = UIFont.boldSystemFont(ofSize: 25)
         INHT.font = UIFont.boldSystemFont(ofSize: 16)
         INGT.font = UIFont.boldSystemFont(ofSize: 16)
@@ -84,10 +85,12 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
     }
     
     func callFA() {
+        self.showSpinner(onView: self.view)
         csiWCF_VM().callSDS_FA() { (output) in
             if output.contains("true") {
 
                 self.getValue()
+                self.removeSpinner()
             }else {
                 print("Something wrong!")
             }
@@ -128,12 +131,12 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
         let cont2 = FAFT.frame.height + ATDT.frame.height + inh.frame.height + ing.frame.height
         let cont3 = skin.frame.height + eye.frame.height + faf.frame.height + atd.frame.height
         
-        let conT = cont1 + cont2 + cont3
+        let conT = cont1 + cont2 + cont3 + 70
 
-//        print(contentView.frame.height)
-//        print(FAScrollView.frame.height)
-//        print(conT)
-//        print("\n")
+        print(contentView.frame.height)
+        print(FAScrollView.frame.height)
+        print(conT)
+        print("\n")
         
         //check if the real content height is over or less the content view height
         if (contentView.frame.height > FAScrollView.frame.height) {
@@ -144,9 +147,9 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
             if (FAScrollView.frame.height < conT) {
                 self.viewMoreLbl.isHidden = false
                 self.scrollDownArrow.isHidden = false
-//            } else if (FAScrollView.frame.height - conT <= 50.0) {
-//                self.viewMoreLbl.isHidden = false
-//                self.scrollDownArrow.isHidden = false
+            } else if (FAScrollView.frame.height - conT <= 50.0) {
+                self.viewMoreLbl.isHidden = false
+                self.scrollDownArrow.isHidden = false
             } else {
                 self.viewMoreLbl.isHidden = true
                 self.scrollDownArrow.isHidden = true

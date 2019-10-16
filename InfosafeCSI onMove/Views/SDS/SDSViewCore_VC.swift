@@ -82,10 +82,12 @@ class SDSViewCore_VC: UIViewController, UIScrollViewDelegate {
 
     // call the WCF
     func callSDSCore() {
+        self.showSpinner(onView: self.view)
         csiWCF_VM().callSDS_Core() { (output) in
             if output.contains("true") {
 //                print("Successfully called Core info.!")
                 self.getValue()
+                self.removeSpinner()
             } else {
                 print("Something missing!")
             }
@@ -177,13 +179,13 @@ class SDSViewCore_VC: UIViewController, UIScrollViewDelegate {
         let cont7 = self.unnoT.frame.height + self.EmerT.frame.height
         let cont8 = self.emcont.frame.height + self.recoT.frame.height + self.recomuse.frame.height
                 
-        let conT = cont1 + cont2 + cont3 + cont4 + cont5 + cont6 + cont7 + cont8
+        let conT = cont1 + cont2 + cont3 + cont4 + cont5 + cont6 + cont7 + cont8 + 130
         
 //        print("content view: \(contentView.frame.height)")
 //        print("Scroll view: \(SDSCoreScrolView.frame.height)")
 //        print("total: \(conT)\n")
+//        print("cont1: \(cont1), cont2: \(cont2), cont3: \(cont3), cont4: \(cont4), cont5: \(cont5), cont6: \(cont6), cont7: \(cont7), cont8: \(cont8)\n" )
         
-        //check if the real content height is over or less the content view height
         if (contentView.frame.height > SDSCoreScrolView.frame.height) {
 
             self.viewMoreLbl.isHidden = false
@@ -192,11 +194,21 @@ class SDSViewCore_VC: UIViewController, UIScrollViewDelegate {
             if (SDSCoreScrolView.frame.height < conT) {
                 self.viewMoreLbl.isHidden = false
                 self.scrollDownArrow.isHidden = false
+            } else if (SDSCoreScrolView.frame.height - conT <= 50.0) {
+                self.viewMoreLbl.isHidden = false
+                self.scrollDownArrow.isHidden = false
             } else {
                 self.viewMoreLbl.isHidden = true
                 self.scrollDownArrow.isHidden = true
             }
-            
+        } else if (contentView.frame.height == SDSCoreScrolView.frame.height) {
+            if (SDSCoreScrolView.frame.height < conT) {
+                self.viewMoreLbl.isHidden = false
+                self.scrollDownArrow.isHidden = false
+            } else {
+                self.viewMoreLbl.isHidden = true
+                self.scrollDownArrow.isHidden = true
+            }
         }
 
     }

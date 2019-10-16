@@ -83,6 +83,7 @@ class SDSMenu_VC: UIViewController {
     
     func menuFunction(index: Int) {
         if buttonName[index] == "View SDS" {
+ 
             let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSViewPage_VC
             self.navigationController?.pushViewController(sdsJump!, animated: true)
         }
@@ -91,20 +92,25 @@ class SDSMenu_VC: UIViewController {
 //            csiWCF_getCoreInfo(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
 //                print(output)
 //            }
+
             let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSCore") as? SDSViewCore_VC
             self.navigationController?.pushViewController(sdsJump!, animated: true)
 
         }
         
-        if buttonName[index] == "Classification" {
 
+        if buttonName[index] == "Classification" {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
+            
             csiWCF_VM().callSDS_GHS() { (output) in
                 if output.contains("true") {
                     DispatchQueue.main.async {
                         if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
-                            let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHS") as? SDSViewCFGHS_VC
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
+                            let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC
                             self.navigationController?.pushViewController(sdsJump!, animated: true)
                         } else {
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
                             let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSCF") as? SDSViewCF_VC
                             self.navigationController?.pushViewController(sdsJump!, animated: true)
                         }
@@ -114,15 +120,14 @@ class SDSMenu_VC: UIViewController {
         }
         
         if buttonName[index] == "First Aid" {
+            
             let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSFA") as? SDSViewFA_VC
             self.navigationController?.pushViewController(sdsJump!, animated: true)
         }
         
         if buttonName[index] == "Transport" {
 //            csiWCF_VM()
-            csiWCF_VM().callSDS_Trans() { (output) in
- 
-            }
+            
             let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSTI") as? SDSViewTI_VC
              self.navigationController?.pushViewController(sdsJump!, animated: true)
             

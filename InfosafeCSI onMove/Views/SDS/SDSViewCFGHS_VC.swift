@@ -32,10 +32,9 @@ class SDSViewCFGHS_VC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var viewMoreLbl: UILabel!
     @IBOutlet weak var scrollDownArrow: UIImageView!
     
+    @IBOutlet weak var collectionCV: UIView!
     @IBOutlet weak var GHSCollectionView: UICollectionView!
     
-    let testLabel = ["1","2","3"]
-    var buttonImage = ["CSI-ViewSDS", "CSI-Core", "CSI-Class", "CSI-Aid", "CSI-Transport"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,30 +57,13 @@ class SDSViewCFGHS_VC: UIViewController, UIScrollViewDelegate {
         viewMoreLbl.isHidden = true
         scrollDownArrow.isHidden = true
         
+
         callSDSGHS()
 
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     func callSDSGHS() {
-//        csiWCF_VM().callSDS_GHS() { (output) in
-//            if output.contains("true") {
-//                print("Successfullt called Class!")
-//                self.getValue()
-//            } else {
-//                print("Something missing!")
-//            }
-//        }
         
         getValue()
     }
@@ -97,6 +79,12 @@ class SDSViewCFGHS_VC: UIViewController, UIScrollViewDelegate {
             
             
             self.viewMore()
+            //set the collection view height same as it expanded
+            self.GHSCollectionView.sizeToFit()
+            NSLayoutConstraint.activate([
+                self.collectionCV.heightAnchor.constraint(equalToConstant: self.GHSCollectionView.contentSize.height)
+            ])
+            self.collectionCV.layoutIfNeeded()
             self.GHSScrollView.isHidden = false
 
             self.GHSCollectionView.reloadData()
@@ -182,16 +170,20 @@ class SDSViewCFGHS_VC: UIViewController, UIScrollViewDelegate {
     }
 }
 
+
+
 extension SDSViewCFGHS_VC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
         return localViewSDSGHS.picArray.count
+        
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = GHSCollectionView.dequeueReusableCell(withReuseIdentifier: "GHSCell", for: indexPath) as? GHSCollectionViewCell
  
-        
+
         if localViewSDSGHS.picArray.count > 0 {
             
             let imgName = localViewSDSGHS.picArray![indexPath.row]
@@ -227,10 +219,10 @@ extension SDSViewCFGHS_VC: UICollectionViewDelegate, UICollectionViewDataSource 
                cell?.gramImage.image = UIImage(named: Bundle.main.path(forResource: imgCode, ofType: "png")!)
             }
         }
+
         
         return cell!
         
     }
-    
-    
+   
 }

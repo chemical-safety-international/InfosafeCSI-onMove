@@ -8,8 +8,8 @@
 
 import Foundation
 
-//var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
-var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
+var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
+//var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
 
 
 // Call the WCF function: 'loginbyEami' with email, password, deviceid, devicemac and return the data from WCF
@@ -332,10 +332,10 @@ func csiWCF_getTransport(clientid: String, uid: String, sdsNoGet: String, apptp 
                 return }
 
         do {
-            let str = String.init(data: dataResponse, encoding: .utf8)
+//            let str = String.init(data: dataResponse, encoding: .utf8)
             let decoder = JSONDecoder()
             let cModel = try decoder.decode(outViewSDSTI.self, from: dataResponse)
-            print(str as Any)
+//            print(str as Any)
             completion(cModel)
 
         } catch let parsingError {

@@ -311,6 +311,7 @@ struct localViewSDSGHS {
     static var sds: String!
     static var sphrase: String!
     static var picArray: Array<Any>!
+
 }
 
 struct localViewSDSCF {

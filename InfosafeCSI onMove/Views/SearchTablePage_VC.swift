@@ -62,6 +62,9 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         
         NotificationCenter.default.addObserver(self, selector: #selector(menuDis), name: NSNotification.Name(rawValue: "refresh"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(loadingSprin), name: NSNotification.Name(rawValue: "startSpin"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(removeSprin), name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
+        
         
    
         //control side menu height when need to suit large screen (full side menu require)
@@ -109,6 +112,13 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     @objc func menuDis() {
         self.menuDisappear()
+    }
+    
+    @objc func loadingSprin() {
+        self.showSpinner(onView: self.view)
+    }
+    @objc func removeSprin() {
+        self.removeSpinner()
     }
     
     //handle the screen size when did rotation

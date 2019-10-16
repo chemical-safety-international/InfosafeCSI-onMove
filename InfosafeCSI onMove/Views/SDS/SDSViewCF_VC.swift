@@ -29,6 +29,9 @@ class SDSViewCF_VC: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
+        
         CLST.font = UIFont.boldSystemFont(ofSize: 25)
         HAZT.font = UIFont.boldSystemFont(ofSize: 16)
         RIST.font = UIFont.boldSystemFont(ofSize: 16)
@@ -56,6 +59,7 @@ class SDSViewCF_VC: UIViewController, UIScrollViewDelegate {
     
     func callCF() {
         getValue()
+        self.removeSpinner()
     }
     
     func getValue() {
@@ -112,7 +116,7 @@ class SDSViewCF_VC: UIViewController, UIScrollViewDelegate {
         let cont1 = HAZT.frame.height + RIST.frame.height + SAFT.frame.height
         let cont2 = haz.frame.height + risk.frame.height + safety.frame.height
         
-        let conT = cont1 + cont2
+        let conT = cont1 + cont2 + 40
         
         //check if the real content height is over or less the content view height
          if (contentView.frame.height > CFScrollView.frame.height) {

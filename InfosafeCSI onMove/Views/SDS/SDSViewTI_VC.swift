@@ -53,6 +53,8 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var subRiskImg1: UIImageView!
     @IBOutlet weak var subRiskImg2: UIImageView!
     
+    @IBOutlet weak var dgCLbl: UILabel!
+    @IBOutlet weak var subRiskLbl: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,8 +98,9 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
-        let bottomEdge = TIScrollView.contentOffset.y + TIScrollView.frame.size.height
         TIScrollView.sizeToFit()
+        let bottomEdge = TIScrollView.contentOffset.y + TIScrollView.frame.size.height
+
         DispatchQueue.main.async {
             if (bottomEdge >= self.TIScrollView.contentSize.height - 10) {
                 self.viewMoreLbl.isHidden = true
@@ -118,10 +121,14 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
     
     
     func callTI() {
+        
+        self.showSpinner(onView: self.view)
+        
         csiWCF_VM().callSDS_Trans() { (output) in
             if output.contains("true") {
 
                 self.getValue()
+                self.removeSpinner()
             }else {
                 print("Something wrong!")
             }
@@ -145,6 +152,17 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             self.subRiskImg1.image = nil
             self.subRiskImg2.image = nil
             
+            self.dgCLbl.text = ""
+            self.subRiskLbl.text = ""
+            
+//            self.SYMBT.text = ""
+//            self.EMST.text = ""
+//            self.MPT.text = ""
+//            
+//            self.HCT.text = "HAZCHEM CODE"
+//            self.EPGT.text = "EPG NUMBER"
+//            self.IERGT.text = "IERG NUMBER"
+//            self.PMT.text = "PACKAGING METHOD"
             
             var fixStr = ""
             var fixSubStr1 = ""
@@ -152,49 +170,87 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             var fixSubArray: Array<String> = []
             
             if (localViewSDSTIADG.road_dgclass.isEmpty == false) {
-                if (localViewSDSTIADG.road_dgclass.contains(".")) {
-                    fixStr = localViewSDSTIADG.road_dgclass.replacingOccurrences(of: ".", with: "")
-
+                if (localViewSDSTIADG.road_dgclass.contains("None")) {
+                    self.dgCLbl.text = localViewSDSTIADG.road_dgclass
                 } else {
-                    
-                    fixStr = localViewSDSTIADG.road_dgclass
- 
+                   if (localViewSDSTIADG.road_dgclass.contains(".")) {
+                       fixStr = localViewSDSTIADG.road_dgclass.replacingOccurrences(of: ".", with: "")
+
+                   } else {
+                       
+                       fixStr = localViewSDSTIADG.road_dgclass
+    
+                   }
+                   self.dgClassImage.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
                 }
-                self.dgClassImage.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
+
+
+            } else {
+                self.dgCLbl.text = ""
             }
             
             
             if (localViewSDSTIADG.road_subrisks.isEmpty == false) {
-                fixSubArray = localViewSDSTIADG.road_subrisks.components(separatedBy: ",")
-                print("Array: \(fixSubArray.count)")
-                print(fixSubArray)
-                if (fixSubArray.count == 2) {
-                    print("here1")
-                    fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
-                    fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
-                    
-                    self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
-                    self.subRiskImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
-                } else if (fixSubArray.count == 1 ) {
-                    print("here2")
-                    fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ",", with: "")
-                    print(fixSubStr1)
-                    self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+                
+                if localViewSDSTIADG.road_subrisks.contains("None") {
+                    self.subRiskLbl.text = localViewSDSTIADG.road_subrisks
                 } else {
-                    self.subRiskImg1.image = nil
-                    self.subRiskImg2.image = nil
+                    fixSubArray = localViewSDSTIADG.road_subrisks.components(separatedBy: " ")
+    //                print("Array: \(fixSubArray.count)")
+//                    print(fixSubArray)
+                    if (fixSubArray.count == 2) {
+    //                    print("here1")
+                        fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
+                        fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
+                        
+                        self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+                        self.subRiskImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
+                    } else if (fixSubArray.count == 1 ) {
+    //                    print("here2")
+                        fixSubStr1 = fixSubArray[0].replacingOccurrences(of: " ", with: "")
+
+                        self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+
+                    } else {
+                        self.subRiskImg1.image = nil
+                        self.subRiskImg2.image = nil
+                    }
                 }
+
+            } else {
+                self.subRiskLbl.text = ""
             }
 
 
-            
-            self.viewMore()
+            self.TIScrollView.sizeToFit()
+            let bottomEdge = self.TIScrollView.contentOffset.y + self.TIScrollView.frame.size.height
+
+            DispatchQueue.main.async {
+                if (bottomEdge >= self.TIScrollView.contentSize.height - 10) {
+                    self.viewMoreLbl.isHidden = true
+                    self.scrollDownArrow.isHidden = true
+                } else if (bottomEdge < self.TIScrollView.contentSize.height - 10)
+                {
+                    self.viewMore()
+                }
+            }
+//            self.viewMore()
             self.TIScrollView.isHidden = false
             self.btnView.isHidden = false
             
-            self.ADGBtn.backgroundColor = UIColor(red:0.28, green:0.34, blue:0.52, alpha:1.0)
-            self.IMDGBtn.backgroundColor = UIColor.clear
-            self.IATABtn.backgroundColor = UIColor.clear
+            self.ADGBtn.setTitleColor(UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0), for: .normal)
+            self.IMDGBtn.setTitleColor(UIColor.white, for: .normal)
+            self.IATABtn.setTitleColor(UIColor.white, for: .normal)
+//            self.ADGBtn.backgroundColor = UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0)
+//            self.IMDGBtn.backgroundColor = UIColor.clear
+//            self.IATABtn.backgroundColor = UIColor.clear
+            
+            if (localViewSDSTIIMDG.imdg_unno.isEmpty == true) {
+                self.IMDGBtn.isHidden = true
+            }
+            if (localViewSDSTIIATA.iata_unno.isEmpty == true) {
+                self.IATABtn.isHidden = true
+            }
         }
     }
     
@@ -225,17 +281,21 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
         ierg.sizeToFit()
         pm.sizeToFit()
         
+        dgCLbl.sizeToFit()
+        subRiskLbl.sizeToFit()
+        
         contentView.sizeToFit()
         TIScrollView.sizeToFit()
         
         let cont1 = UNNOT.frame.height + DGCLT.frame.height + SUBRT.frame.height + PACKT.frame.height
         let cont2 = PSNT.frame.height + SYMBT.frame.height + EMST.frame.height + MPT.frame.height
         let cont3 = HCT.frame.height + EPGT.frame.height + IERGT.frame.height + PMT.frame.height
-        let cont4 = unno.frame.height + dgClassImage.frame.height + subRiskImg1.frame.height + pg.frame.height
+        let cont4 = unno.frame.height + 90 + 90 + pg.frame.height
         let cont5 = psn.frame.height + symb.frame.height + ems.frame.height + mp.frame.height
         let cont6 = hc.frame.height + epg.frame.height + ierg.frame.height + pm.frame.height
+        let cont7 = dgCLbl.frame.height + subRiskLbl.frame.height
         
-        let conT = cont1 + cont2 + cont3 + cont4 + cont5 + cont6
+        let conT = cont1 + cont2 + cont3 + cont4 + cont5 + cont6 + 150 + cont7
         
         
 //        print("content View \(contentView.frame.height)")
@@ -249,11 +309,12 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                 self.viewMoreLbl.isHidden = false
                 self.scrollDownArrow.isHidden = false
                 TIScrollView.isScrollEnabled = true
-            } else if (TIScrollView.frame.height - conT <= 50.0) {
+            } else if (TIScrollView.frame.height - conT <= 100.0) {
                 self.viewMoreLbl.isHidden = false
                 self.scrollDownArrow.isHidden = false
                 TIScrollView.isScrollEnabled = true
             } else {
+
                 self.viewMoreLbl.isHidden = true
                 self.scrollDownArrow.isHidden = true
                 TIScrollView.isScrollEnabled = false
@@ -268,6 +329,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                 self.scrollDownArrow.isHidden = false
                 TIScrollView.isScrollEnabled = true
             } else {
+
                 self.viewMoreLbl.isHidden = true
                 self.scrollDownArrow.isHidden = true
                 TIScrollView.isScrollEnabled = false
@@ -278,6 +340,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                 self.scrollDownArrow.isHidden = false
                 TIScrollView.isScrollEnabled = true
             } else {
+
                 self.viewMoreLbl.isHidden = true
                 self.scrollDownArrow.isHidden = true
                 TIScrollView.isScrollEnabled = false
@@ -286,6 +349,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
         
     }
     @IBAction func adgBtnTapped(_ sender: Any) {
+        
         getValue()
 
         
@@ -309,48 +373,92 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             self.subRiskImg1.image = nil
             self.subRiskImg2.image = nil
             
+            self.dgCLbl.text = ""
+            self.subRiskLbl.text = ""
+            
+//            self.SYMBT.text = ""
+//            self.HCT.text = ""
+//            self.EPGT.text = ""
+//            self.IERGT.text = ""
+//            self.PMT.text = ""
+//            
+//            self.MPT.text = "MARINE POLLUTANT"
+//            self.EMST.text = "EMS"
+            
            var fixStr = ""
            var fixSubStr1 = ""
            var fixSubStr2 = ""
            var fixSubArray: Array<String> = []
            
-            if (localViewSDSTIIMDG.imdg_dgclass.isEmpty == false) {
-               if (localViewSDSTIIMDG.imdg_dgclass.contains(".")) {
-                   fixStr = localViewSDSTIIMDG.imdg_dgclass.replacingOccurrences(of: ".", with: "")
+            if localViewSDSTIIMDG.imdg_dgclass.contains("None") {
+                self.dgCLbl.text = localViewSDSTIIMDG.imdg_dgclass
+            } else {
+                 if (localViewSDSTIIMDG.imdg_dgclass.isEmpty == false) {
+                    if (localViewSDSTIIMDG.imdg_dgclass.contains(".")) {
+                        fixStr = localViewSDSTIIMDG.imdg_dgclass.replacingOccurrences(of: ".", with: "")
 
-               } else {
-                   
-                   fixStr = localViewSDSTIIMDG.imdg_dgclass
+                    } else {
+                        
+                        fixStr = localViewSDSTIIMDG.imdg_dgclass
 
-               }
-               self.dgClassImage.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
-           }
-           
-           
-            if (localViewSDSTIIMDG.imdg_subrisks.isEmpty == false) {
-                fixSubArray = localViewSDSTIIMDG.imdg_subrisks.components(separatedBy: ",")
-                print("Array: \(fixSubArray.count)")
-                if (fixSubArray.count == 2) {
-                    
-                    fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
-                    fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
-                    
-                    self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
-                    self.subRiskImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
-                } else if (fixSubArray.count == 1 ) {
-                    fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ",", with: "")
-                    self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+                    }
+                    self.dgClassImage.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
+                 } else {
+                    self.dgCLbl.text = ""
                 }
+                
+                if localViewSDSTIIMDG.imdg_subrisks.contains("None") {
+                    self.subRiskLbl.text = localViewSDSTIIMDG.imdg_subrisks
+                } else {
+                     if (localViewSDSTIIMDG.imdg_subrisks.isEmpty == false) {
+                         fixSubArray = localViewSDSTIIMDG.imdg_subrisks.components(separatedBy: " ")
+//                         print("Array: \(fixSubArray.count)")
+                         if (fixSubArray.count == 2) {
+                             
+                             fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
+                             fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
+                             
+                             self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+                             self.subRiskImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
+                         } else if (fixSubArray.count == 1 ) {
+                             if fixSubStr1.contains("None") {
+                                 self.subRiskLbl.text = fixSubStr1
+                             } else {
+                                 
+                                 fixSubStr1 = fixSubArray[0].replacingOccurrences(of: " ", with: "")
+                                 self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+                             }
+                         }
+                     } else {
+                        self.subRiskLbl.text = ""
+                    }
+                }
+
+
             }
 
-            
-            self.viewMore()
+            self.TIScrollView.sizeToFit()
+            let bottomEdge = self.TIScrollView.contentOffset.y + self.TIScrollView.frame.size.height
+
+            DispatchQueue.main.async {
+                if (bottomEdge >= self.TIScrollView.contentSize.height - 10) {
+                    self.viewMoreLbl.isHidden = true
+                    self.scrollDownArrow.isHidden = true
+                } else if (bottomEdge < self.TIScrollView.contentSize.height - 10)
+                {
+                    self.viewMore()
+                }
+            }
+//            self.viewMore()
             self.TIScrollView.isHidden = false
             self.btnView.isHidden = false
             
-            self.ADGBtn.backgroundColor = UIColor.clear
-            self.IMDGBtn.backgroundColor = UIColor(red:0.28, green:0.34, blue:0.52, alpha:1.0)
-            self.IATABtn.backgroundColor = UIColor.clear
+//            self.ADGBtn.backgroundColor = UIColor.clear
+//            self.IMDGBtn.backgroundColor = UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0)
+//            self.IATABtn.backgroundColor = UIColor.clear
+            self.ADGBtn.setTitleColor(UIColor.white, for: .normal)
+            self.IMDGBtn.setTitleColor(UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0), for: .normal)
+            self.IATABtn.setTitleColor(UIColor.white, for: .normal)
         }
     }
     @IBAction func iataBtnTapped(_ sender: Any) {
@@ -372,49 +480,93 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             self.subRiskImg1.image = nil
             self.subRiskImg2.image = nil
             
+            self.dgCLbl.text = ""
+            self.subRiskLbl.text = ""
+            
+//            self.EMST.text = ""
+//            self.MPT.text = ""
+//            self.HCT.text = ""
+//            self.EPGT.text = ""
+//            self.IERGT.text = ""
+//            self.PMT.text = ""
+//            
+//            self.SYMBT.text = "SYMBOL"
+            
             var fixStr = ""
             var fixSubStr1 = ""
                var fixSubStr2 = ""
                var fixSubArray: Array<String> = []
-               
-            if (localViewSDSTIIATA.iata_dgclass.isEmpty == false) {
-                   if (localViewSDSTIIATA.iata_dgclass.contains(".")) {
-                       fixStr = localViewSDSTIIATA.iata_dgclass.replacingOccurrences(of: ".", with: "")
+            if localViewSDSTIIATA.iata_dgclass.contains("None") {
+                self.dgCLbl.text = localViewSDSTIIATA.iata_dgclass
+            } else {
+                if (localViewSDSTIIATA.iata_dgclass.isEmpty == false) {
+                       if (localViewSDSTIIATA.iata_dgclass.contains(".")) {
+                           fixStr = localViewSDSTIIATA.iata_dgclass.replacingOccurrences(of: ".", with: "")
 
-                   } else {
-                       
-                       fixStr = localViewSDSTIIATA.iata_dgclass
+                       } else {
+                           
+                           fixStr = localViewSDSTIIATA.iata_dgclass
 
-                   }
-                   self.dgClassImage.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
-               }
-               
-               
-            if (localViewSDSTIIATA.iata_subrisks.isEmpty == false) {
-                fixSubArray = localViewSDSTIIATA.iata_subrisks.components(separatedBy: ",")
-                  print("Array: \(fixSubArray.count)")
-                  if (fixSubArray.count == 2) {
-                      
-                      fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
-                      fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
-                      
-                      self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
-                      self.subRiskImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
-                  } else if (fixSubArray.count == 1 ) {
-                      fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ",", with: "")
-                      self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
-                  }
+                       }
+                       self.dgClassImage.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
+                } else {
+                    self.dgCLbl.text = ""
+                }
             }
+
+               
+            if localViewSDSTIIATA.iata_subrisks.contains("None") {
+                self.subRiskLbl.text = localViewSDSTIIATA.iata_subrisks
+            } else {
+                if (localViewSDSTIIATA.iata_subrisks.isEmpty == false) {
+                    fixSubArray = localViewSDSTIIATA.iata_subrisks.components(separatedBy: " ")
+//                      print("Array: \(fixSubArray.count)")
+                      if (fixSubArray.count == 2) {
+                          
+                          fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
+                          fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
+                          
+                          self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+                          self.subRiskImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
+                      } else if (fixSubArray.count == 1 ) {
+                        
+                        if fixSubStr1.contains("None") {
+                            self.subRiskLbl.text = fixSubStr1
+                        } else {
+
+                            fixSubStr1 = fixSubArray[0].replacingOccurrences(of: " ", with: "")
+                            self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+                        }
+                      }
+                } else {
+                    self.subRiskLbl.text = ""
+                }
+            }
+
   
             
-            
-            self.viewMore()
+            self.TIScrollView.sizeToFit()
+            let bottomEdge = self.TIScrollView.contentOffset.y + self.TIScrollView.frame.size.height
+
+            DispatchQueue.main.async {
+                if (bottomEdge >= self.TIScrollView.contentSize.height - 10) {
+                    self.viewMoreLbl.isHidden = true
+                    self.scrollDownArrow.isHidden = true
+                } else if (bottomEdge < self.TIScrollView.contentSize.height - 10)
+                {
+                    self.viewMore()
+                }
+            }
+//            self.viewMore()
             self.TIScrollView.isHidden = false
             self.btnView.isHidden = false
             
-            self.ADGBtn.backgroundColor = UIColor.clear
-            self.IMDGBtn.backgroundColor = UIColor.clear
-            self.IATABtn.backgroundColor = UIColor(red:0.28, green:0.34, blue:0.52, alpha:1.0)
+//            self.ADGBtn.backgroundColor = UIColor.clear
+//            self.IMDGBtn.backgroundColor = UIColor.clear
+//            self.IATABtn.backgroundColor = UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0)
+            self.ADGBtn.setTitleColor(UIColor.white, for: .normal)
+            self.IMDGBtn.setTitleColor(UIColor.white, for: .normal)
+            self.IATABtn.setTitleColor(UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0), for: .normal)
         }
     }
     
