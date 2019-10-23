@@ -26,20 +26,18 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     @IBOutlet weak var splitView: UIView!
     
-    @IBOutlet weak var tableTrailing: NSLayoutConstraint!
-    
     @IBOutlet weak var companyLogo: UIImageView!
     
     var selectedIndex:Bool = false;
 
     var selectedthecellno = 0
     
-//    var screenHeight = 0
-//    var screenWidth = 0
+    @IBOutlet weak var tabTrailing: NSLayoutConstraint!
+    @IBOutlet weak var splitLeading: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         menuDisappear()
         // Do any additional setup after loading the view.
         
@@ -85,29 +83,49 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         }
         
         //setup the company logo
-        if localclientinfo.clientlogo != nil {
+        if (localclientinfo.clientlogo != "") {
+
+            
             let comLogo = localclientinfo.clientlogo.toImage()
-            companyLogo.image = comLogo
+            let wd = (comLogo?.size.width)!
+            let ht = (comLogo?.size.height)!
+            
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: wd, height: ht))
+            imageView.contentMode = .scaleAspectFit
+            
+            imageView.image = comLogo
+            navigationItem.titleView?.backgroundColor = UIColor.clear
+            navigationItem.titleView = imageView
+
+            
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "    ", style: .plain, target: self, action: .none)
+            
+            
+            
+        } else {
+            let comLogo = UIImage(named: "CSI-Logo")
+            navigationItem.titleView = UIImageView(image: comLogo)
         }
         
+ 
+        
         // detect the screen size to setup the split screen
-
         view.sizeToFit()
-        if (view.frame.height >= 1024) {
-
-            tableDisplay.frame.size.width = 400
-            tableTrailing.constant = 724
-            splitView.frame.size.width = 724
-
-            splitView.isHidden = false
-            menu.isHidden = true
-        } else if (view.frame.height < 1024) {
-            tableDisplay.frame.size.width = view.frame.width
-            tableDisplay.contentSize.width = view.frame.width
-            tableTrailing.constant = 7
+        if (view.frame.width >= 1024) {
+//            print("\n\n view width: \(view.frame.width) \(view.frame.height)\n\ntable Trailing: \(self.view.frame.width*2/3)\n\n")
+             self.tabTrailing.constant = self.view.frame.width*2/3
+             self.splitLeading.constant = self.view.frame.width/3
+            
+            
+             splitView.isHidden = false
+             menu.isHidden = true
+        } else {
+            self.tabTrailing.constant = 7
+ 
             splitView.isHidden = true
             menu.isHidden = false
         }
+        
     }
     
     @objc func menuDis() {
@@ -123,34 +141,12 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     //handle the screen size when did rotation
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        splitViewSetup()
         
         if (self.view.bounds.height > self.view.bounds.width) {
             menuDisappear()
         } else if (self.view.bounds.width > self.view.bounds.height) {
             menuDisappear()
-        }
-        
-        if (view.frame.height >= 1024) {
-//            tableDisplay.frame.size.width = view.frame.height/2
-////            tableDisplay.contentSize.width = view.frame.height/2
-//            tableTrailing.constant = view.frame.height/2
-////            splitView.frame.origin.y = tableDisplay.frame.origin.y
-////            splitView.frame.origin.x = tableDisplay.frame.size.width
-////            splitView.frame.size.width = tableDisplay.frame.width
-////            splitView.frame.size.height = tableDisplay.frame.height
-            
-            tableDisplay.frame.size.width = 400
-            tableTrailing.constant = 724
-            splitView.frame.size.width = 724
-            
-            splitView.isHidden = false
-            menu.isHidden = true
-        } else if (view.frame.height < 1024) {
-            tableDisplay.frame.size.width = view.frame.width
-            tableDisplay.contentSize.width = view.frame.width
-            tableTrailing.constant = 7
-            splitView.isHidden = true
-            menu.isHidden = false
         }
     }
     
@@ -175,6 +171,26 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
 //        }
 //    }
     
+    func splitViewSetup() {
+        view.sizeToFit()
+        if (view.frame.height >= 1024) {
+            print("\n\n view width: \(view.frame.width) \(view.frame.height)\n\ntable Trailing: \(self.view.frame.width*2/3)\n\n")
+             self.tabTrailing.constant = self.view.frame.height*2/3
+             self.splitLeading.constant = self.view.frame.height/3
+            
+//            tableDisplay.updateConstraints()
+//            splitView.updateConstraints()
+            
+             splitView.isHidden = false
+             menu.isHidden = true
+        } else {
+            self.tabTrailing.constant = 7
+//            tableDisplay.updateConstraints()
+//            splitView.updateConstraints()
+            splitView.isHidden = true
+            menu.isHidden = false
+        }
+    }
     
     
     func menuAppear() {
@@ -261,7 +277,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             let backgroundView = UIView()
             backgroundView.backgroundColor = UIColor.init(red: 0.98, green: 0.80, blue: 0.61, alpha: 1)
             cell?.selectedBackgroundView = backgroundView
-            
+                
             
             return cell!
         }
@@ -276,12 +292,17 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
         view.sizeToFit()
         
         // controll the animation of side menu (click on the same row - no change)
-        if (view.frame.height >= 1024) {
+        if (view.frame.width >= 1024) {
 
             menu.isHidden = true
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hideContainer"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showSDS"), object: nil)
+
+                
             
             
-        } else if (view.frame.height < 1024) {
+        } else if (view.frame.width < 1024) {
 
 
             if self.menu.isHidden == true {

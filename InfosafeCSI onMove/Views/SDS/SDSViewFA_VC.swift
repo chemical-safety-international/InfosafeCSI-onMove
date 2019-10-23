@@ -33,6 +33,8 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var viewMoreLbl: UILabel!
     @IBOutlet weak var scrollDownArrow: UIImageView!
     
+    private var lastContentOffset: CGFloat = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,18 +65,38 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
 //    }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        
-        let bottomEdge = FAScrollView.contentOffset.y + FAScrollView.frame.size.height
         FAScrollView.sizeToFit()
+        let bottomEdge = FAScrollView.contentOffset.y + FAScrollView.frame.size.height
+        
         DispatchQueue.main.async {
             if (bottomEdge >= self.FAScrollView.contentSize.height - 10) {
                 self.viewMoreLbl.isHidden = true
                 self.scrollDownArrow.isHidden = true
-            } else if (bottomEdge < self.FAScrollView.contentSize.height - 10)
-            {
-                self.viewMore()
+//            } else if (bottomEdge < self.FAScrollView.contentSize.height - 10)
+//            {
+//                self.viewMore()
             }
         }
+    }
+ 
+    // control scroll down label to display when going up
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        print("last: \(lastContentOffset)")
+//        print(scrollView.contentOffset.y)
+        
+        if (self.lastContentOffset > scrollView.contentOffset.y) {
+//            print("going up")
+           let bottomEdge = FAScrollView.contentOffset.y + FAScrollView.frame.size.height
+            DispatchQueue.main.async {
+                if (bottomEdge <= self.FAScrollView.contentSize.height - 10)
+                {
+                    self.viewMoreLbl.isHidden = false
+                    self.scrollDownArrow.isHidden = false
+                }
+            }
+        }
+        
+        self.lastContentOffset = scrollView.contentOffset.y
     }
     
     //detect the rotation
@@ -85,12 +107,12 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
     }
     
     func callFA() {
-        self.showSpinner(onView: self.view)
+
         csiWCF_VM().callSDS_FA() { (output) in
             if output.contains("true") {
 
                 self.getValue()
-                self.removeSpinner()
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
             }else {
                 print("Something wrong!")
             }
@@ -133,10 +155,10 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
         
         let conT = cont1 + cont2 + cont3 + 70
 
-        print(contentView.frame.height)
-        print(FAScrollView.frame.height)
-        print(conT)
-        print("\n")
+//        print(contentView.frame.height)
+//        print(FAScrollView.frame.height)
+//        print(conT)
+//        print("\n")
         
         //check if the real content height is over or less the content view height
         if (contentView.frame.height > FAScrollView.frame.height) {

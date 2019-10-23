@@ -1,0 +1,11 @@
+﻿[
+    {"SdsCFPictogram_ID": "11939685-3776-45F9-9E2C-8D42F6DF59BE", "Pictogram_Name": "Flame over circle", "Pictogram_Code": "GHS03"},
+    {"SdsCFPictogram_ID": "4C208378-5FFB-4D7A-9B36-9720429D9D24", "Pictogram_Name": "Exclamation mark", "Pictogram_Code": "GHS07"},
+    {"SdsCFPictogram_ID": "6980B947-D9C9-498F-968A-45A589DB95C4", "Pictogram_Name": "Environment", "Pictogram_Code": "GHS09"},
+    {"SdsCFPictogram_ID": "74A25818-643D-49EF-B40B-B3BBB785D0B9", "Pictogram_Name": "Health hazard", "Pictogram_Code": "GHS08"},
+    {"SdsCFPictogram_ID": "8305BDF6-C132-4D43-B0D7-F7DDDE6FDF10", "Pictogram_Name": "Corrosion", "Pictogram_Code": "GHS05"},
+    {"SdsCFPictogram_ID": "CE99673D-B77E-440B-B7ED-260E8D62CD40", "Pictogram_Name": "Flame", "Pictogram_Code": "GHS02"},
+    {"SdsCFPictogram_ID": "D6BD853B-F865-4B00-B5C4-E56371771013", "Pictogram_Name": "Skull and crossbones", "Pictogram_Code": "GHS06"},
+    {"SdsCFPictogram_ID": "E30AC79D-3A5C-42A6-BFA5-CFFA30E2E384", "Pictogram_Name": "Gas cylinder", "Pictogram_Code": "GHS04"},
+    {"SdsCFPictogram_ID": "F31D8643-3D30-4CB5-A099-C879C7FFEAEF", "Pictogram_Name": "Exploding bomb", "Pictogram_Code": "GHS01"}
+]

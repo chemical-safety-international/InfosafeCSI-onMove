@@ -26,6 +26,7 @@ class SDSViewCF_VC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var viewMoreLbl: UILabel!
     @IBOutlet weak var scrollDownArrow: UIImageView!
     
+    private var lastContentOffset: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +60,7 @@ class SDSViewCF_VC: UIViewController, UIScrollViewDelegate {
     
     func callCF() {
         getValue()
-        self.removeSpinner()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
     }
     
     func getValue() {
@@ -87,11 +88,31 @@ class SDSViewCF_VC: UIViewController, UIScrollViewDelegate {
             if (bottomEdge >= self.CFScrollView.contentSize.height - 10) {
                 self.viewMoreLbl.isHidden = true
                 self.scrollDownArrow.isHidden = true
-            } else if (bottomEdge < self.CFScrollView.contentSize.height - 10)
-            {
-                self.viewMore()
+//            } else if (bottomEdge < self.CFScrollView.contentSize.height - 10)
+//            {
+//                self.viewMore()
             }
         }
+    }
+    
+    // control scroll down label to display when going up
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        print("last: \(lastContentOffset)")
+//        print(scrollView.contentOffset.y)
+        
+        if (self.lastContentOffset > scrollView.contentOffset.y) {
+//            print("going up")
+           let bottomEdge = CFScrollView.contentOffset.y + CFScrollView.frame.size.height
+            DispatchQueue.main.async {
+                if (bottomEdge <= self.CFScrollView.contentSize.height - 10)
+                {
+                    self.viewMoreLbl.isHidden = false
+                    self.scrollDownArrow.isHidden = false
+                }
+            }
+        }
+        
+        self.lastContentOffset = scrollView.contentOffset.y
     }
     
     //detect the rotation

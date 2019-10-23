@@ -6,6 +6,10 @@
 //  Copyright © 2019 Chemical Safety International. All rights reserved.
 //
 
+//**********
+//This one is currently not use, please see SDSViewCFGHSN_VC.swift
+//**********
+
 import UIKit
 
 class SDSViewCFGHS_VC: UIViewController, UIScrollViewDelegate {

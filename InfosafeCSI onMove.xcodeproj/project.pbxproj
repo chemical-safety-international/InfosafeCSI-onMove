@@ -29,6 +29,7 @@
 		577B1A592284059700E5C4AB /* SearchPage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577B1A582284059700E5C4AB /* SearchPage_VC.swift */; };
 		577B1A5B228500BE00E5C4AB /* globalVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577B1A5A228500BE00E5C4AB /* globalVar.swift */; };
 		577B1A5D2285195600E5C4AB /* SearchTablePage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577B1A5C2285195600E5C4AB /* SearchTablePage_VC.swift */; };
+		578B9E6E23600F9200AB1475 /* Pictograms.txt in Resources */ = {isa = PBXBuildFile; fileRef = 578B9E6D23600F9100AB1475 /* Pictograms.txt */; };
 		578F6B94234D52FC00CCDFC9 /* SDSViewFA_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578F6B93234D52FC00CCDFC9 /* SDSViewFA_VC.swift */; };
 		57A46680234FF36A007B810D /* GHSCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A4667F234FF36A007B810D /* GHSCollectionViewCell.swift */; };
 		57A8090722CDB20100CA4439 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A8090622CDB20100CA4439 /* WebKit.framework */; };
@@ -248,6 +249,7 @@
 		577B1A582284059700E5C4AB /* SearchPage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPage_VC.swift; sourceTree = "<group>"; };
 		577B1A5A228500BE00E5C4AB /* globalVar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalVar.swift; sourceTree = "<group>"; };
 		577B1A5C2285195600E5C4AB /* SearchTablePage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTablePage_VC.swift; sourceTree = "<group>"; };
+		578B9E6D23600F9100AB1475 /* Pictograms.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Pictograms.txt; sourceTree = "<group>"; };
 		578F6B93234D52FC00CCDFC9 /* SDSViewFA_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSViewFA_VC.swift; sourceTree = "<group>"; };
 		57A4667F234FF36A007B810D /* GHSCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GHSCollectionViewCell.swift; sourceTree = "<group>"; };
 		57A8090622CDB20100CA4439 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -491,6 +493,7 @@
 				17818BC222811A89000EAFF1 /* Assets.xcassets */,
 				17818BC422811A89000EAFF1 /* LaunchScreen.storyboard */,
 				17818BC722811A89000EAFF1 /* Info.plist */,
+				578B9E6D23600F9100AB1475 /* Pictograms.txt */,
 				17818BBF22811A88000EAFF1 /* InfosafeCSI_onMove.xcdatamodeld */,
 			);
 			path = "InfosafeCSI onMove";
@@ -1051,6 +1054,7 @@
 				57AAA7ED23508D0600FAD796 /* R6EN42.png in Resources */,
 				57AAA7BA23508D0600FAD796 /* 62_sr.png in Resources */,
 				57AAA7AE23508D0600FAD796 /* 41_sr.png in Resources */,
+				578B9E6E23600F9200AB1475 /* Pictograms.txt in Resources */,
 				57AAA79E23508D0600FAD796 /* 15.png in Resources */,
 				57AAA7A723508D0600FAD796 /* 22.png in Resources */,
 			);
@@ -1289,7 +1293,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.18;
+				MARKETING_VERSION = 1.19;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMove";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1309,7 +1313,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.18;
+				MARKETING_VERSION = 1.19;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMove";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

@@ -38,6 +38,7 @@ struct localclientinfo {
 struct localclientcoreData {
     static var username: String = "Username"
     static var password: String = "Password"
+    static var image: String = "Image"
     static var remeberstatus: Bool = false
 }
 

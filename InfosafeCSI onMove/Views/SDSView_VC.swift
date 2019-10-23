@@ -144,13 +144,25 @@ extension String {
 class SplitView_VC: UIViewController {
     
     @IBOutlet weak var menuView: UIView!
-    @IBOutlet weak var viewSDSBtn: UIButton!
+    @IBOutlet weak var ciBtn: UIButton!
     @IBOutlet weak var sdsDisplay: WKWebView!
     
     @IBOutlet weak var splitPrintBtn: UIButton!
     @IBOutlet weak var splitShareBtn: UIButton!
     
-    @IBOutlet weak var coreInfoBtn: UIButton!
+    @IBOutlet weak var cfBtn: UIButton!
+    @IBOutlet weak var faBtn: UIButton!
+    @IBOutlet weak var tiBtn: UIButton!
+    @IBOutlet weak var viewSDSBtn: UIButton!
+    
+    @IBOutlet weak var ciLbl: UILabel!
+    @IBOutlet weak var cfLbl: UILabel!
+    @IBOutlet weak var faLbl: UILabel!
+    @IBOutlet weak var tiLbl: UILabel!
+    @IBOutlet weak var vsLbl: UILabel!
+    
+
+    @IBOutlet weak var containerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -164,8 +176,29 @@ class SplitView_VC: UIViewController {
         }
         splitPrintBtn.isHidden = true
         splitShareBtn.isHidden = true
+        containerView.isHidden = true
         
+        ciBtn.isHidden = true
+        cfBtn.isHidden = true
+        faBtn.isHidden = true
+        tiBtn.isHidden = true
+        viewSDSBtn.isHidden = true
+        
+        ciLbl.isHidden = true
+        cfLbl.isHidden = true
+        faLbl.isHidden = true
+        tiLbl.isHidden = true
+        vsLbl.isHidden = true
+        
+        menuView.layer.cornerRadius = 15
+        sdsDisplay.layer.cornerRadius = 15
+        view.layer.cornerRadius = 15
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(showSDS), name: NSNotification.Name(rawValue: "showSDS"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideContainer), name: NSNotification.Name(rawValue: "hideContainer"), object: nil)
 //        NotificationCenter.default.addObserver(self, selector: #selector(errorHandle), name: NSNotification.Name("errorSplitSDSView"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(splitLoading), name: NSNotification.Name(rawValue: "splitLoading"), object: nil)
     }
     
 //    @objc private func errorHandle() {
@@ -178,7 +211,16 @@ class SplitView_VC: UIViewController {
     //        viewSDSBtn.setImage(img, for: .normal)
     //        viewSDSBtn.imageView?.contentMode = .scaleAspectFill
     //    }
+    @objc private func showSDS() {
+        spliteSDSShow()
+    }
     
+    @objc private func hideContainer() {
+        containerView.isHidden = true
+    }
+    @objc private func splitLoading() {
+        self.showSpinner(onView: self.view)
+    }
     
     /*
      // MARK: - Navigation
@@ -191,22 +233,35 @@ class SplitView_VC: UIViewController {
      */
     
     func spliteSDSShow() {
-        print("reach spliteSDSShow()")
-        self.showSpinner(onView: self.view)
+//        print("reach spliteSDSShow()")
+//        self.showSpinner(onView: self.view)
         
         let pdfArray = CoreDataManager.fetchPDF(targetText: localcurrentSDS.sdsNo)
         
         if pdfArray.count != 0 {
             DispatchQueue.main.async {
                 
-                print("\(pdfArray[0].sdsno!)")
+//                print("\(pdfArray[0].sdsno!)")
                 let decodeData = Data(base64Encoded: pdfArray[0].pdfdata!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
                 self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
                 localcurrentSDS.pdfData = decodeData
                 
                 self.splitPrintBtn.isHidden = false
                 self.splitShareBtn.isHidden = false
-                self.removeSpinner()
+                
+                self.ciBtn.isHidden = false
+                self.cfBtn.isHidden = false
+                self.faBtn.isHidden = false
+                self.tiBtn.isHidden = false
+                self.viewSDSBtn.isHidden = false
+                
+                self.vsLbl.isHidden = false
+                self.ciLbl.isHidden = false
+                self.cfLbl.isHidden = false
+                self.faLbl.isHidden = false
+                self.tiLbl.isHidden = false
+//                self.removeSpinner()
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
             }
         } else {
             
@@ -220,18 +275,44 @@ class SplitView_VC: UIViewController {
                         self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
                         localcurrentSDS.pdfData = decodeData
                         
-                        CoreDataManager.storePDF(sdsno: localcurrentSDS.sdsNo, pdfdata: completionReturnData)
+//                        CoreDataManager.storePDF(sdsno: localcurrentSDS.sdsNo, pdfdata: completionReturnData)
                         
                         self.splitPrintBtn.isHidden = false
                         self.splitShareBtn.isHidden = false
-                        self.removeSpinner()
+                        
+                        self.ciBtn.isHidden = false
+                        self.cfBtn.isHidden = false
+                        self.faBtn.isHidden = false
+                        self.tiBtn.isHidden = false
+                        self.viewSDSBtn.isHidden = false
+                        
+                        self.vsLbl.isHidden = false
+                        self.ciLbl.isHidden = false
+                        self.cfLbl.isHidden = false
+                        self.faLbl.isHidden = false
+                        self.tiLbl.isHidden = false
+//                        self.removeSpinner()
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
                     }
                     else if rtype == "2" {
                         self.sdsDisplay!.loadHTMLString(String(describing: completionReturnData), baseURL: nil)
                         
                         self.splitPrintBtn.isHidden = false
                         self.splitShareBtn.isHidden = false
-                        self.removeSpinner()
+                        
+                        self.ciBtn.isHidden = false
+                        self.cfBtn.isHidden = false
+                        self.faBtn.isHidden = false
+                        self.tiBtn.isHidden = false
+                        self.viewSDSBtn.isHidden = false
+                        
+                        self.vsLbl.isHidden = false
+                        self.ciLbl.isHidden = false
+                        self.cfLbl.isHidden = false
+                        self.faLbl.isHidden = false
+                        self.tiLbl.isHidden = false
+//                        self.removeSpinner()
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
                     }
                 }
             }
@@ -239,11 +320,85 @@ class SplitView_VC: UIViewController {
     }
     
     @IBAction func viewSDSBtnTapped(_ sender: Any) {
-        if localcurrentSDS.sdsNo != nil {
-            self.spliteSDSShow()
+//        if localcurrentSDS.sdsNo != nil {
+////            self.spliteSDSShow()
+//            let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSCore") as? SDSViewCore_VC
+//            self.navigationController?.pushViewController(sdsJump!, animated: true)
+//        } else {
+//            showAlert(title: "Select product.", message: "Please select product first!")
+//        }
+        
+        containerView.isHidden = false
+        
+        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSCore") as? SDSViewCore_VC
+
+        addChild(sdsJump!)
+        sdsJump!.view.frame = CGRect(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
+        containerView.addSubview(sdsJump!.view)
+
+        sdsJump!.didMove(toParent: self)
+    }
+    
+    @IBAction func cfBtnTapped(_ sender: Any) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
+        containerView.isHidden = false
+
+        csiWCF_VM().callSDS_GHS() { (output) in
+            if output.contains("true") {
+                DispatchQueue.main.async {
+                    if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
+                        let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC
+//                        self.navigationController?.pushViewController(sdsJump!, animated: true)
+                        
+                        self.addChild(sdsJump!)
+                        sdsJump!.view.frame = CGRect(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
+                        self.containerView.addSubview(sdsJump!.view)
+
+                        sdsJump!.didMove(toParent: self)
+                    } else {
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
+                        let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSCF") as? SDSViewCF_VC
+//                        self.navigationController?.pushViewController(sdsJump!, animated: true)
+                        
+                        self.addChild(sdsJump!)
+                        sdsJump!.view.frame = CGRect(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
+                        self.containerView.addSubview(sdsJump!.view)
+                    }
+                }
+            }
         }
     }
     
+    @IBAction func faBtnTapped(_ sender: Any) {
+        containerView.isHidden = false
+        
+        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSFA") as? SDSViewFA_VC
+//        self.navigationController?.pushViewController(sdsJump!, animated: true)
+        addChild(sdsJump!)
+        sdsJump!.view.frame = CGRect(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
+        containerView.addSubview(sdsJump!.view)
+
+        sdsJump!.didMove(toParent: self)
+    }
+    
+    @IBAction func tiBtnTapped(_ sender: Any) {
+        
+        containerView.isHidden = false
+        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSTI") as? SDSViewTI_VC
+//         self.navigationController?.pushViewController(sdsJump!, animated: true)
+        
+        addChild(sdsJump!)
+        sdsJump!.view.frame = CGRect(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
+        containerView.addSubview(sdsJump!.view)
+
+        sdsJump!.didMove(toParent: self)
+    }
+    
+    @IBAction func vsBtnTapped(_ sender: Any) {
+        
+        containerView.isHidden = true
+    }
     @IBAction func splitPrintBtnTapped(_ sender: Any) {
         SDSViewPage_VC().printPDF(data: localcurrentSDS.pdfData)
     }

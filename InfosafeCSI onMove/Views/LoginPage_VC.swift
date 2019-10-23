@@ -15,20 +15,17 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginBtn: UIButton!
     
+    @IBOutlet weak var loginLogo: UIImageView!
     
     @IBOutlet weak var remember: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        textTest()
+        
         //button style
         loginBtn.layer.cornerRadius = 18
-
-//        userIDTextField.layer.borderWidth = 1.0
-//        userIDTextField.layer.cornerRadius = 18
-//
-//        passwordTextField.layer.borderWidth = 1.0
-//        passwordTextField.layer.cornerRadius = 18
         
         
         // Do any additional setup after loading the view.
@@ -41,19 +38,25 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
             passwordTextField.text = defaults.string(forKey: localclientcoreData.password)
             let image = UIImage(named: "login-ticked-box")
             remember.setImage(image, for: .normal)
+            
+            let imageStr = defaults.string(forKey: localclientcoreData.image)
+            if (imageStr != "") {
+                let image = imageStr!.toImage()
+                loginLogo.image = image
+            } else {
+                let image = UIImage(named: "CSI-Logo")
+                loginLogo.image = image
+            }
+            
         } else if (defaults.bool(forKey: "remeberstatus") == false) {
             userIDTextField.text = ""
             passwordTextField.text = ""
+            let logo = UIImage(named: "CSI-Logo")
+            loginLogo.image = logo
             let image = UIImage(named: "login-unticked-box")
             remember.setImage(image, for: .normal)
         }
         
-//        let deviceType = UIDevice.current.model
-//        let deviceType1 = UIDevice.current
-//        let deviceType2 = UIDevice.current.localizedModel
-//        print(deviceType)
-//        print(deviceType1)
-//        print(deviceType2)
         
         if #available(iOS 13.0, *) {
             overrideUserInterfaceStyle = .light
@@ -113,6 +116,7 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
                 let defaults = UserDefaults.standard
                 defaults.set("", forKey: localclientcoreData.username)
                 defaults.set("", forKey: localclientcoreData.password)
+                defaults.set("", forKey: localclientcoreData.image)
                 let image = UIImage(named: "login-unticked-box")
                 remember.setImage(image, for: .normal)
                 defaults.set(false, forKey: "remeberstatus")
@@ -158,6 +162,11 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
                 DispatchQueue.main.async {
                     if model.passed == true {
                         self.removeSpinner()
+                        if (localclientinfo.clientlogo != "") {
+                            let defaults = UserDefaults.standard
+                            defaults.set(localclientinfo.clientlogo, forKey: localclientcoreData.image)
+                        }
+
                         let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
                         self.navigationController?.pushViewController(loginJump!, animated: true)
                     } else if model.passed == false {
@@ -168,6 +177,7 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
                         let defaults = UserDefaults.standard
                         defaults.set("", forKey: localclientcoreData.username)
                         defaults.set("", forKey: localclientcoreData.password)
+                        defaults.set("", forKey: localclientcoreData.image)
                         let image = UIImage(named: "login-unticked-box")
                         self.remember.setImage(image, for: .normal)
                         defaults.set(false, forKey: "remeberstatus")
@@ -179,6 +189,7 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
                         let defaults = UserDefaults.standard
                         defaults.set("", forKey: localclientcoreData.username)
                         defaults.set("", forKey: localclientcoreData.password)
+                        defaults.set("", forKey: localclientcoreData.image)
                         let image = UIImage(named: "login-unticked-box")
                         self.remember.setImage(image, for: .normal)
                         defaults.set(false, forKey: "remeberstatus")
@@ -188,6 +199,13 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
                 print("Error", parsingError)
             }
         }
+    }
+    
+    func textTest() {
+        let path = NSString(string: "~/Pictograms.txt").expandingTildeInPath
+        let fileContent = try?NSString(contentsOfFile: path, encoding: String.Encoding.utf8.rawValue)
+        print(fileContent)
+        
     }
 }
 

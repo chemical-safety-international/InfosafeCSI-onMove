@@ -202,7 +202,7 @@ class csiWCF_VM: UIViewController {
     }
     
     func callSDS_Core(completion:@escaping(String) -> Void) {
-        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
         csiWCF_getCoreInfo(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
             if output.sds != nil {
                 
@@ -284,7 +284,7 @@ class csiWCF_VM: UIViewController {
     
     
     func callSDS_FA(completion:@escaping(String) -> Void) {
-        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
         csiWCF_getFirstAid(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
             if output.sds != nil {
                 
@@ -307,11 +307,12 @@ class csiWCF_VM: UIViewController {
     }
     
     func callSDS_Trans(completion:@escaping(String) -> Void) {
-        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
+//       NotificationCenter.default.post(name: NSNotification.Name(rawValue: "splitLoading"), object: nil)
         csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
             if output.sds != nil {
                 
-                
+                print(output)
                 //store data to local
                 //ADG
                 localViewSDSTIADG.road_unno = output.road_unno

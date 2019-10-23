@@ -46,6 +46,7 @@ class SDSViewCore_VC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var viewMoreLbl: UILabel!
     @IBOutlet weak var scrollDownArrow: UIImageView!
     
+    private var lastContentOffset: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,12 +83,12 @@ class SDSViewCore_VC: UIViewController, UIScrollViewDelegate {
 
     // call the WCF
     func callSDSCore() {
-        self.showSpinner(onView: self.view)
+
         csiWCF_VM().callSDS_Core() { (output) in
             if output.contains("true") {
 //                print("Successfully called Core info.!")
                 self.getValue()
-                self.removeSpinner()
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
             } else {
                 print("Something missing!")
             }
@@ -130,11 +131,31 @@ class SDSViewCore_VC: UIViewController, UIScrollViewDelegate {
             if (bottomEdge >= self.SDSCoreScrolView.contentSize.height - 10) {
                 self.viewMoreLbl.isHidden = true
                 self.scrollDownArrow.isHidden = true
-            } else if (bottomEdge < self.SDSCoreScrolView.contentSize.height - 10)
-            {
-                self.viewMore()
+//            } else if (bottomEdge < self.SDSCoreScrolView.contentSize.height - 10)
+//            {
+//                self.viewMore()
             }
         }
+    }
+    
+    // control scroll down label to display when going up
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        print("last: \(lastContentOffset)")
+//        print(scrollView.contentOffset.y)
+        
+        if (self.lastContentOffset > scrollView.contentOffset.y) {
+//            print("going up")
+           let bottomEdge = SDSCoreScrolView.contentOffset.y + SDSCoreScrolView.frame.size.height
+            DispatchQueue.main.async {
+                if (bottomEdge <= self.SDSCoreScrolView.contentSize.height - 10)
+                {
+                    self.viewMoreLbl.isHidden = false
+                    self.scrollDownArrow.isHidden = false
+                }
+            }
+        }
+        
+        self.lastContentOffset = scrollView.contentOffset.y
     }
     
     //detect the rotation
@@ -187,17 +208,21 @@ class SDSViewCore_VC: UIViewController, UIScrollViewDelegate {
 //        print("cont1: \(cont1), cont2: \(cont2), cont3: \(cont3), cont4: \(cont4), cont5: \(cont5), cont6: \(cont6), cont7: \(cont7), cont8: \(cont8)\n" )
         
         if (contentView.frame.height > SDSCoreScrolView.frame.height) {
-
+ //           print("1")
             self.viewMoreLbl.isHidden = false
             self.scrollDownArrow.isHidden = false
         } else if (contentView.frame.height < SDSCoreScrolView.frame.height) {
+ //           print("2")
             if (SDSCoreScrolView.frame.height < conT) {
+ //               print("2.1")
                 self.viewMoreLbl.isHidden = false
                 self.scrollDownArrow.isHidden = false
-            } else if (SDSCoreScrolView.frame.height - conT <= 50.0) {
+            } else if (SDSCoreScrolView.frame.height - conT <= 150.0) {
+//                print("2.2")
                 self.viewMoreLbl.isHidden = false
                 self.scrollDownArrow.isHidden = false
             } else {
+//                print("2.3")
                 self.viewMoreLbl.isHidden = true
                 self.scrollDownArrow.isHidden = true
             }

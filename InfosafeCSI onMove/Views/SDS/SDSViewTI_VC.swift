@@ -56,6 +56,25 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var dgCLbl: UILabel!
     @IBOutlet weak var subRiskLbl: UILabel!
     
+    
+    @IBOutlet weak var dgImgHeight: NSLayoutConstraint!
+    @IBOutlet weak var DgImgWidth: NSLayoutConstraint!
+    @IBOutlet weak var subImgHeight: NSLayoutConstraint!
+    @IBOutlet weak var subImgWidth: NSLayoutConstraint!
+    
+    
+    @IBOutlet weak var psnSymGap: NSLayoutConstraint!
+    @IBOutlet weak var symEMSGap: NSLayoutConstraint!
+    @IBOutlet weak var emsMPGap: NSLayoutConstraint!
+    @IBOutlet weak var mpHCGap: NSLayoutConstraint!
+    @IBOutlet weak var hcEPGGap: NSLayoutConstraint!
+    @IBOutlet weak var epgIERGap: NSLayoutConstraint!
+    @IBOutlet weak var ierPMGap: NSLayoutConstraint!
+    
+    
+    
+    private var lastContentOffset: CGFloat = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -90,12 +109,8 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
         callTI()
     }
     
-    //when user scrolling hide the label
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        self.viewMoreLbl.isHidden = true
-//        self.scrollDownArrow.isHidden = true
-//    }
-    
+
+    //control the scroll bar and image
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
         TIScrollView.sizeToFit()
@@ -105,11 +120,28 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             if (bottomEdge >= self.TIScrollView.contentSize.height - 10) {
                 self.viewMoreLbl.isHidden = true
                 self.scrollDownArrow.isHidden = true
-            } else if (bottomEdge < self.TIScrollView.contentSize.height - 10)
-            {
-                self.viewMore()
+
             }
         }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        print("last: \(lastContentOffset)")
+//        print(scrollView.contentOffset.y)
+        
+        if (self.lastContentOffset > scrollView.contentOffset.y) {
+//            print("going up")
+           let bottomEdge = TIScrollView.contentOffset.y + TIScrollView.frame.size.height
+            DispatchQueue.main.async {
+                if (bottomEdge <= self.TIScrollView.contentSize.height - 10)
+                {
+                    self.viewMoreLbl.isHidden = false
+                    self.scrollDownArrow.isHidden = false
+                }
+            }
+        }
+        
+        self.lastContentOffset = scrollView.contentOffset.y
     }
     
     //detect the rotation
@@ -121,14 +153,15 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
     
     
     func callTI() {
-        
-        self.showSpinner(onView: self.view)
-        
+
         csiWCF_VM().callSDS_Trans() { (output) in
             if output.contains("true") {
 
                 self.getValue()
-                self.removeSpinner()
+
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
+
+  
             }else {
                 print("Something wrong!")
             }
@@ -155,21 +188,32 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             self.dgCLbl.text = ""
             self.subRiskLbl.text = ""
             
-//            self.SYMBT.text = ""
-//            self.EMST.text = ""
-//            self.MPT.text = ""
-//            
-//            self.HCT.text = "HAZCHEM CODE"
-//            self.EPGT.text = "EPG NUMBER"
-//            self.IERGT.text = "IERG NUMBER"
-//            self.PMT.text = "PACKAGING METHOD"
+            self.SYMBT.text = ""
+            self.EMST.text = ""
+            self.MPT.text = ""
             
+            self.HCT.text = "HAZCHEM CODE"
+            self.EPGT.text = "EPG NUMBER"
+            self.IERGT.text = "IERG NUMBER"
+            self.PMT.text = "PACKAGING METHOD"
+            
+            self.dgImgHeight.constant = 0
+            self.subImgHeight.constant = 0
+            self.psnSymGap.constant = 0
+            self.symEMSGap.constant = 0
+            self.emsMPGap.constant = 0
+            self.mpHCGap.constant = 10
+            self.hcEPGGap.constant = 10
+            self.epgIERGap.constant = 10
+            self.ierPMGap.constant = 10
+            
+//            print(self.subImgHeight.constant)
             var fixStr = ""
             var fixSubStr1 = ""
             var fixSubStr2 = ""
             var fixSubArray: Array<String> = []
             
-            if (localViewSDSTIADG.road_dgclass.isEmpty == false) {
+            if (localViewSDSTIADG.road_dgclass != "") {
                 if (localViewSDSTIADG.road_dgclass.contains("None")) {
                     self.dgCLbl.text = localViewSDSTIADG.road_dgclass
                 } else {
@@ -181,6 +225,8 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                        fixStr = localViewSDSTIADG.road_dgclass
     
                    }
+                    self.dgImgHeight.constant = 90
+
                    self.dgClassImage.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
                 }
 
@@ -190,11 +236,12 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             }
             
             
-            if (localViewSDSTIADG.road_subrisks.isEmpty == false) {
+            if (localViewSDSTIADG.road_subrisks != "") {
                 
                 if localViewSDSTIADG.road_subrisks.contains("None") {
                     self.subRiskLbl.text = localViewSDSTIADG.road_subrisks
                 } else {
+                    self.subImgHeight.constant = 90
                     fixSubArray = localViewSDSTIADG.road_subrisks.components(separatedBy: " ")
     //                print("Array: \(fixSubArray.count)")
 //                    print(fixSubArray)
@@ -219,6 +266,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
 
             } else {
                 self.subRiskLbl.text = ""
+                self.subImgHeight.constant = 0
             }
 
 
@@ -239,8 +287,14 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             self.btnView.isHidden = false
             
             self.ADGBtn.setTitleColor(UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0), for: .normal)
+            self.ADGBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+            
             self.IMDGBtn.setTitleColor(UIColor.white, for: .normal)
+            self.IMDGBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+            
             self.IATABtn.setTitleColor(UIColor.white, for: .normal)
+            self.IATABtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+            
 //            self.ADGBtn.backgroundColor = UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0)
 //            self.IMDGBtn.backgroundColor = UIColor.clear
 //            self.IATABtn.backgroundColor = UIColor.clear
@@ -252,6 +306,8 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                 self.IATABtn.isHidden = true
             }
         }
+        
+//        print(subImgHeight.constant)
     }
     
     func viewMore() {
@@ -281,6 +337,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
         ierg.sizeToFit()
         pm.sizeToFit()
         
+        
         dgCLbl.sizeToFit()
         subRiskLbl.sizeToFit()
         
@@ -290,12 +347,15 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
         let cont1 = UNNOT.frame.height + DGCLT.frame.height + SUBRT.frame.height + PACKT.frame.height
         let cont2 = PSNT.frame.height + SYMBT.frame.height + EMST.frame.height + MPT.frame.height
         let cont3 = HCT.frame.height + EPGT.frame.height + IERGT.frame.height + PMT.frame.height
-        let cont4 = unno.frame.height + 90 + 90 + pg.frame.height
+        let cont4 = unno.frame.height + dgImgHeight.constant + subImgHeight.constant + pg.frame.height
         let cont5 = psn.frame.height + symb.frame.height + ems.frame.height + mp.frame.height
         let cont6 = hc.frame.height + epg.frame.height + ierg.frame.height + pm.frame.height
-        let cont7 = dgCLbl.frame.height + subRiskLbl.frame.height
+        let cont7 = dgCLbl.frame.height + subRiskLbl.frame.height + psnSymGap.constant + symEMSGap.constant
+        let cont8 = emsMPGap.constant + mpHCGap.constant + hcEPGGap.constant + epgIERGap.constant + ierPMGap.constant
         
-        let conT = cont1 + cont2 + cont3 + cont4 + cont5 + cont6 + 150 + cont7
+        
+        
+        let conT = cont1 + cont2 + cont3 + cont4 + cont5 + cont6 + cont7 + cont8 + 60
         
         
 //        print("content View \(contentView.frame.height)")
@@ -376,14 +436,24 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             self.dgCLbl.text = ""
             self.subRiskLbl.text = ""
             
-//            self.SYMBT.text = ""
-//            self.HCT.text = ""
-//            self.EPGT.text = ""
-//            self.IERGT.text = ""
-//            self.PMT.text = ""
-//            
-//            self.MPT.text = "MARINE POLLUTANT"
-//            self.EMST.text = "EMS"
+            self.SYMBT.text = ""
+            self.HCT.text = ""
+            self.EPGT.text = ""
+            self.IERGT.text = ""
+            self.PMT.text = ""
+            
+            self.MPT.text = "MARINE POLLUTANT"
+            self.EMST.text = "EMS"
+            
+            self.dgImgHeight.constant = 0
+            self.subImgHeight.constant = 0
+            self.psnSymGap.constant = 0
+            self.symEMSGap.constant = 10
+            self.emsMPGap.constant = 10
+            self.mpHCGap.constant = 0
+            self.hcEPGGap.constant = 0
+            self.epgIERGap.constant = 0
+            self.ierPMGap.constant = 0
             
            var fixStr = ""
            var fixSubStr1 = ""
@@ -402,6 +472,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                         fixStr = localViewSDSTIIMDG.imdg_dgclass
 
                     }
+                    self.dgImgHeight.constant = 90
                     self.dgClassImage.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
                  } else {
                     self.dgCLbl.text = ""
@@ -411,6 +482,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                     self.subRiskLbl.text = localViewSDSTIIMDG.imdg_subrisks
                 } else {
                      if (localViewSDSTIIMDG.imdg_subrisks.isEmpty == false) {
+                        self.subImgHeight.constant = 90
                          fixSubArray = localViewSDSTIIMDG.imdg_subrisks.components(separatedBy: " ")
 //                         print("Array: \(fixSubArray.count)")
                          if (fixSubArray.count == 2) {
@@ -431,6 +503,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                          }
                      } else {
                         self.subRiskLbl.text = ""
+                        self.subImgHeight.constant = 0
                     }
                 }
 
@@ -456,9 +529,15 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
 //            self.ADGBtn.backgroundColor = UIColor.clear
 //            self.IMDGBtn.backgroundColor = UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0)
 //            self.IATABtn.backgroundColor = UIColor.clear
+            
             self.ADGBtn.setTitleColor(UIColor.white, for: .normal)
+            self.ADGBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+            
             self.IMDGBtn.setTitleColor(UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0), for: .normal)
+            self.IMDGBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+            
             self.IATABtn.setTitleColor(UIColor.white, for: .normal)
+            self.IATABtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         }
     }
     @IBAction func iataBtnTapped(_ sender: Any) {
@@ -483,14 +562,24 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             self.dgCLbl.text = ""
             self.subRiskLbl.text = ""
             
-//            self.EMST.text = ""
-//            self.MPT.text = ""
-//            self.HCT.text = ""
-//            self.EPGT.text = ""
-//            self.IERGT.text = ""
-//            self.PMT.text = ""
-//            
-//            self.SYMBT.text = "SYMBOL"
+            self.EMST.text = ""
+            self.MPT.text = ""
+            self.HCT.text = ""
+            self.EPGT.text = ""
+            self.IERGT.text = ""
+            self.PMT.text = ""
+            
+            self.SYMBT.text = "SYMBOL"
+            
+            self.dgImgHeight.constant = 0
+            self.subImgHeight.constant = 0
+            self.psnSymGap.constant = 10
+            self.symEMSGap.constant = 0
+            self.emsMPGap.constant = 0
+            self.mpHCGap.constant = 0
+            self.hcEPGGap.constant = 0
+            self.epgIERGap.constant = 0
+            self.ierPMGap.constant = 0
             
             var fixStr = ""
             var fixSubStr1 = ""
@@ -508,6 +597,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                            fixStr = localViewSDSTIIATA.iata_dgclass
 
                        }
+                        self.dgImgHeight.constant = 90
                        self.dgClassImage.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
                 } else {
                     self.dgCLbl.text = ""
@@ -519,6 +609,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                 self.subRiskLbl.text = localViewSDSTIIATA.iata_subrisks
             } else {
                 if (localViewSDSTIIATA.iata_subrisks.isEmpty == false) {
+                    self.subImgHeight.constant = 90
                     fixSubArray = localViewSDSTIIATA.iata_subrisks.components(separatedBy: " ")
 //                      print("Array: \(fixSubArray.count)")
                       if (fixSubArray.count == 2) {
@@ -540,6 +631,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                       }
                 } else {
                     self.subRiskLbl.text = ""
+                    self.subImgHeight.constant = 0
                 }
             }
 
@@ -565,8 +657,13 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
 //            self.IMDGBtn.backgroundColor = UIColor.clear
 //            self.IATABtn.backgroundColor = UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0)
             self.ADGBtn.setTitleColor(UIColor.white, for: .normal)
+            self.ADGBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+            
             self.IMDGBtn.setTitleColor(UIColor.white, for: .normal)
+            self.IMDGBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+            
             self.IATABtn.setTitleColor(UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0), for: .normal)
+            self.IATABtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         }
     }
     

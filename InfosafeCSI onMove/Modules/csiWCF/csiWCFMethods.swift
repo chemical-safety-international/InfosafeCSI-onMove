@@ -71,8 +71,9 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
     
     request.httpBody = jsonData
     
+//    print(json)
+    
     //create task
-
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
@@ -84,6 +85,9 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
                 }
 
                 return }
+        
+//        let str = String.init(data: dataResponse, encoding: .utf8)
+//        print(str as Any)
         completion(dataResponse)
     }
 
@@ -178,7 +182,10 @@ func csiWCF_getSDS(clientid: String, uid: String, sdsNoGet: String, apptp : Stri
         do {
             let decoder = JSONDecoder()
             let model = try decoder.decode(outViewSDSData.self, from: dataResponse)
-
+            
+//            let str = String.init(data: dataResponse, encoding: .utf8)
+//            print(str as Any)
+            
             completion(model)
 
         } catch let parsingError {
@@ -253,10 +260,10 @@ func csiWCF_getClassification(clientid: String, uid: String, sdsNoGet: String, a
                 return }
 
         do {
-            let str = String.init(data: dataResponse, encoding: .utf8)
+//            let str = String.init(data: dataResponse, encoding: .utf8)
             let decoder = JSONDecoder()
             let cModel = try decoder.decode(outViewSDSGHS.self, from: dataResponse)
-            print(str as Any)
+//            print(str as Any)
             completion(cModel)
 
         } catch let parsingError {
