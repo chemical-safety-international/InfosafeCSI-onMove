@@ -201,12 +201,12 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func textTest() {
-        let path = NSString(string: "~/Pictograms.txt").expandingTildeInPath
-        let fileContent = try?NSString(contentsOfFile: path, encoding: String.Encoding.utf8.rawValue)
-        print(fileContent)
-        
-    }
+//    func textTest() {
+//        let path = NSString(string: "~/Pictograms.txt").expandingTildeInPath
+//        let fileContent = try?NSString(contentsOfFile: path, encoding: String.Encoding.utf8.rawValue)
+//        print(fileContent)
+//        
+//    }
 }
 
 //create a spinner for ViewController
