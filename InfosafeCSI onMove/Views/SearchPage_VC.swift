@@ -159,9 +159,9 @@ class SearchPage_VC: UIViewController {
             self.removeSpinner()
             searchbar.text = ""
             self.showAlert(title: "Hi", message: "Search content empty.")
-        } else if searchbar.text!.count < 3 {
-            self.removeSpinner()
-            self.showAlert(title: "Hi", message: "Please enter more than 2 character!")
+//        } else if searchbar.text!.count < 3 {
+//            self.removeSpinner()
+//            self.showAlert(title: "Hi", message: "Please enter more than 2 character!")
             
         } else {
 //            print("Called call search")
@@ -244,29 +244,29 @@ extension SearchPage_VC: UITextFieldDelegate {
 extension SearchPage_VC: UISearchBarDelegate {
     
     //Search bar setup
-
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchbar.resignFirstResponder()
-        searchbar.setShowsCancelButton(false, animated: true)
-        self.view.endEditing(true)
-        self.searchBtn.isHidden = false
-    }
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchbar.setShowsCancelButton(true, animated: true)
-        guard let firstSub = searchbar.subviews.first else {return}
-        firstSub.subviews.forEach{
-            ($0 as? UITextField)?.clearButtonMode = .never
-        }
-        self.searchBtn.isHidden = true
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchbar.setShowsCancelButton(false, animated: true)
-        searchbar.text = ""
-        searchbar.endEditing(true)
-        self.searchBtn.isHidden = false
-    }
+   // control cancel showing in the search bar
+//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+//        searchbar.resignFirstResponder()
+//        searchbar.setShowsCancelButton(false, animated: true)
+//        self.view.endEditing(true)
+//        self.searchBtn.isHidden = false
+//    }
+//
+//    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+//        searchbar.setShowsCancelButton(true, animated: true)
+//        guard let firstSub = searchbar.subviews.first else {return}
+//        firstSub.subviews.forEach{
+//            ($0 as? UITextField)?.clearButtonMode = .never
+//        }
+//        self.searchBtn.isHidden = true
+//    }
+//
+//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//        searchbar.setShowsCancelButton(false, animated: true)
+//        searchbar.text = ""
+//        searchbar.endEditing(true)
+//        self.searchBtn.isHidden = false
+//    }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchbar.resignFirstResponder()

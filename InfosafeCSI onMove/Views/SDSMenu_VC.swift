@@ -105,10 +105,27 @@ class SDSMenu_VC: UIViewController {
             csiWCF_VM().callSDS_GHS() { (output) in
                 if output.contains("true") {
                     DispatchQueue.main.async {
+                        
                         if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
-                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
-                            let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC
-                            self.navigationController?.pushViewController(sdsJump!, animated: true)
+                            
+                            csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
+                            if output.sds != nil {
+                                localViewSDSTIADG.road_unno = output.road_unno
+                                localViewSDSTIADG.road_dgclass = output.road_dgclass
+                                localViewSDSTIADG.road_packgrp = output.road_packgrp
+                                localViewSDSTIADG.road_psn = output.road_psn
+                                localViewSDSTIADG.road_hazchem = output.road_hazchem
+                                
+                                DispatchQueue.main.async {
+                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
+                                    let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC
+                                    self.navigationController?.pushViewController(sdsJump!, animated: true)
+                                }
+
+                                }
+                            }
+//                            csiWCF_VM().callSDS_Trans() { (output)}
+
                         } else {
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
                             let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSCF") as? SDSViewCF_VC

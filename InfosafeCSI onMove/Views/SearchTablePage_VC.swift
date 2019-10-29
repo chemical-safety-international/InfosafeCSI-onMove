@@ -126,6 +126,8 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
             menu.isHidden = false
         }
         
+        setNavBar()
+        
     }
     
     @objc func menuDis() {
@@ -155,6 +157,10 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         self.view.endEditing(true)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        setNavBar()
+    }
+    
     //for the view sds button inside of cell (currently not using)
 //    @IBAction func sdsViewBtnTapped(_ sender: UIButton) {
 //
@@ -170,6 +176,14 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
 //
 //        }
 //    }
+    
+    func setNavBar() {
+        //change background color
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barTintColor = UIColor.white
+        navigationController?.navigationBar.tintColor = UIColor.black
+
+    }
     
     func splitViewSetup() {
         view.sizeToFit()

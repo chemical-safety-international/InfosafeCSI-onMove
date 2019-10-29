@@ -54,7 +54,7 @@ class csiWCF_VM: UIViewController {
 
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
-//                print(jsonResponse as Any)
+                print(jsonResponse as Any)
                 if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
 
                     jsonArr1.forEach { info in
@@ -312,7 +312,7 @@ class csiWCF_VM: UIViewController {
         csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
             if output.sds != nil {
                 
-                print(output)
+//                print(output)
                 //store data to local
                 //ADG
                 localViewSDSTIADG.road_unno = output.road_unno

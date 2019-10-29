@@ -9,7 +9,8 @@
 import UIKit
 
 class StartupPage_VC: UIViewController {
-
+    @IBOutlet weak var textLbl: UILabel!
+    
     @IBOutlet weak var startBtn: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,18 +19,36 @@ class StartupPage_VC: UIViewController {
         if #available(iOS 13.0, *) {
             overrideUserInterfaceStyle = .light
         }
+        textLbl.font = UIFont.italicSystemFont(ofSize: 25)
+        textLbl.font = UIFont.boldSystemFont(ofSize: 25)
+        setNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationBar.isHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         self.navigationController?.navigationBar.isHidden = false
+    }
+    
+    func setNavigationBar() {
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barTintColor = UIColor(red:0.76, green:0.75, blue:0.75, alpha:1.0)
+        self.navigationItem.hidesBackButton = true
+        
+        
+        let image1 = UIImage(named: "CSI-Logo")
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+        imageView.contentMode = .scaleAspectFit
+        
+        imageView.image = image1
+        navigationItem.titleView?.backgroundColor = UIColor.clear
+        navigationItem.titleView = imageView
     }
 
     /*

@@ -201,12 +201,28 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
         }
     }
     
-//    func textTest() {
+    func textTest() {
 //        let path = NSString(string: "~/Pictograms.txt").expandingTildeInPath
 //        let fileContent = try?NSString(contentsOfFile: path, encoding: String.Encoding.utf8.rawValue)
 //        print(fileContent)
-//        
-//    }
+        
+        var items = localpictograms()
+        let bundle = Bundle(for: type(of: self))
+        if let path = bundle.path(forResource: "Pictograms", ofType: "txt") {
+            let contentStr = try? NSString(contentsOfFile: path, encoding: String.Encoding.utf8.rawValue)
+            let contentDat = contentStr?.data(using: String.Encoding.utf8.rawValue)
+            let contentDic = try? JSONSerialization.jsonObject(with: contentDat!, options: [])
+            print(contentDic!)
+            
+            let jsonArr = contentDic as? [String: Any]
+            jsonArr!.forEach { info in
+                
+            }
+//            contentData.forEach
+        } else {
+            print("failed")
+        }
+    }
 }
 
 //create a spinner for ViewController
@@ -259,5 +275,35 @@ extension String {
         }
         return nil
     }
+}
+
+extension CALayer {
+    func addBorder(edge: UIRectEdge, color: UIColor, thickness: CGFloat) {
+        let border = CALayer()
+ 
+        switch edge {
+        case UIRectEdge.top:
+//            border.frame = CGRect(x: 0, y: 0, width: self.frame.height, height: thickness)
+            border.frame = CGRect(x: 0, y: -2, width: self.frame.width, height: thickness)
+            break
+        case UIRectEdge.bottom:
+//            border.frame = CGRect(x: 0, y: self.frame.height - thickness, width: self.frame.width, height: thickness)
+            border.frame = CGRect(x: 0, y: self.bounds.height + 2 , width: self.bounds.width, height: thickness)
+            break
+        case UIRectEdge.left:
+            border.frame = CGRect(x: 0, y: 0, width: thickness, height: self.frame.height)
+            break
+        case UIRectEdge.right:
+            border.frame = CGRect(x: self.frame.width - thickness, y: 0, width: thickness, height: self.frame.height)
+            break
+        default:
+            break
+        }
+        
+        border.backgroundColor = color.cgColor
+        
+        self.addSublayer(border)
+    }
+    
 }
 

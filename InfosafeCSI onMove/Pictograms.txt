@@ -1,4 +1,4 @@
-﻿[
+[
     {"SdsCFPictogram_ID": "11939685-3776-45F9-9E2C-8D42F6DF59BE", "Pictogram_Name": "Flame over circle", "Pictogram_Code": "GHS03"},
     {"SdsCFPictogram_ID": "4C208378-5FFB-4D7A-9B36-9720429D9D24", "Pictogram_Name": "Exclamation mark", "Pictogram_Code": "GHS07"},
     {"SdsCFPictogram_ID": "6980B947-D9C9-498F-968A-45A589DB95C4", "Pictogram_Name": "Environment", "Pictogram_Code": "GHS09"},

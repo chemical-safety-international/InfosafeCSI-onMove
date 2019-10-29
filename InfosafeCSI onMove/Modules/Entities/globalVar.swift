@@ -59,7 +59,6 @@ struct localcriteriainfo {
 }
 
 
-
 struct localsearchinfo {
     var pcount: Int!
     var ocount: Int!
@@ -419,4 +418,16 @@ struct outViewSDSTI: Codable {
     var iata_psn: String!
     var iata_symbol: String!
    
+}
+
+struct localpictograms {
+    var picID: String!
+    var picName: String!
+    var picCode: String!
+    
+    init(picID: String? = nil, picName: String? = nil, picCode: String? = nil) {
+        self.picID = picID
+        self.picName = picName
+        self.picCode = picCode
+    }
 }
