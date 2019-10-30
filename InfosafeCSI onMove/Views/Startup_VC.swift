@@ -21,13 +21,13 @@ class StartupPage_VC: UIViewController {
         }
         textLbl.font = UIFont.italicSystemFont(ofSize: 25)
         textLbl.font = UIFont.boldSystemFont(ofSize: 25)
-        setNavigationBar()
+//        setNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -38,13 +38,15 @@ class StartupPage_VC: UIViewController {
     
     func setNavigationBar() {
         navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barTintColor = UIColor(red:0.76, green:0.75, blue:0.75, alpha:1.0)
+//        navigationController?.navigationBar.barTintColor = UIColor(red:0.76, green:0.75, blue:0.75, alpha:1.0)
+        navigationController?.navigationBar.barTintColor = UIColor.black
         self.navigationItem.hidesBackButton = true
         
         
-        let image1 = UIImage(named: "CSI-Logo")
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
-        imageView.contentMode = .scaleAspectFit
+        let image1 = UIImage(named: "CSI-Logo1")
+        let imageView = UIImageView(frame: CGRect(x: 0, y: -5, width: 80, height: 30))
+        //imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleToFill
         
         imageView.image = image1
         navigationItem.titleView?.backgroundColor = UIColor.clear

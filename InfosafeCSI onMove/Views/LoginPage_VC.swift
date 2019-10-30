@@ -38,20 +38,20 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
             passwordTextField.text = defaults.string(forKey: localclientcoreData.password)
             let image = UIImage(named: "login-ticked-box")
             remember.setImage(image, for: .normal)
-            
+
             let imageStr = defaults.string(forKey: localclientcoreData.image)
             if (imageStr != "") {
                 let image = imageStr!.toImage()
                 loginLogo.image = image
             } else {
-                let image = UIImage(named: "CSI-Logo")
+                let image = UIImage(named: "CSI-Logo1")
                 loginLogo.image = image
             }
-            
+
         } else if (defaults.bool(forKey: "remeberstatus") == false) {
             userIDTextField.text = ""
             passwordTextField.text = ""
-            let logo = UIImage(named: "CSI-Logo")
+            let logo = UIImage(named: "CSI-Logo1")
             loginLogo.image = logo
             let image = UIImage(named: "login-unticked-box")
             remember.setImage(image, for: .normal)
@@ -61,6 +61,9 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
         if #available(iOS 13.0, *) {
             overrideUserInterfaceStyle = .light
         }
+        
+//        self.view.backgroundColor = UIColor(red:0.76, green:0.75, blue:0.75, alpha:1.0)
+//        self.view.backgroundColor = UIColor.black
         
         NotificationCenter.default.addObserver(self, selector: #selector(errorHandle), name: NSNotification.Name("errorLogin"), object: nil)
 

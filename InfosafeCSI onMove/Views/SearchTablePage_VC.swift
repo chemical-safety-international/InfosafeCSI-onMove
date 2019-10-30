@@ -38,6 +38,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = UIColor(red:0.11, green:0.15, blue:0.18, alpha:1.0)
         menuDisappear()
         // Do any additional setup after loading the view.
         
@@ -80,31 +81,6 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         //check the iOS version
         if #available(iOS 13.0, *) {
             overrideUserInterfaceStyle = .light
-        }
-        
-        //setup the company logo
-        if (localclientinfo.clientlogo != "") {
-
-            
-            let comLogo = localclientinfo.clientlogo.toImage()
-            let wd = (comLogo?.size.width)!
-            let ht = (comLogo?.size.height)!
-            
-            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: wd, height: ht))
-            imageView.contentMode = .scaleAspectFit
-            
-            imageView.image = comLogo
-            navigationItem.titleView?.backgroundColor = UIColor.clear
-            navigationItem.titleView = imageView
-
-            
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "    ", style: .plain, target: self, action: .none)
-            
-            
-            
-        } else {
-            let comLogo = UIImage(named: "CSI-Logo")
-            navigationItem.titleView = UIImageView(image: comLogo)
         }
         
  
@@ -152,6 +128,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         }
     }
     
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         menuDisappear()
         self.view.endEditing(true)
@@ -182,6 +159,34 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = UIColor.white
         navigationController?.navigationBar.tintColor = UIColor.black
+        
+                //setup the company logo
+                if (localclientinfo.clientlogo != "") {
+
+                    
+        //            let comLogo = localclientinfo.clientlogo.toImage()
+        //            let wd = (comLogo?.size.width)!
+        //            let ht = (comLogo?.size.height)!
+                    
+        //            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: wd, height: ht))
+        //            imageView.contentMode = .scaleAspectFit
+                    
+        //            imageView.image = comLogo
+        //            navigationItem.titleView?.backgroundColor = UIColor.clear
+        //            navigationItem.titleView = imageView
+                    
+                    navigationItem.title = "SEARCH RESULT"
+                    navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25), .foregroundColor: UIColor.black]
+
+                    
+                    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "    ", style: .plain, target: self, action: .none)
+                    
+                    
+                    
+                } else {
+                    let comLogo = UIImage(named: "CSI-Logo")
+                    navigationItem.titleView = UIImageView(image: comLogo)
+                }
 
     }
     
@@ -274,12 +279,14 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             
             //setup cell color
             
-            if indexPath.row % 2 == 0 {
-              cell?.backgroundColor = UIColor.white
-            } else {
-                cell?.backgroundColor = UIColor.groupTableViewBackground
-            }
-            
+//            if indexPath.row % 2 == 0 {
+//              //cell?.backgroundColor = UIColor.white
+////            cell?.backgroundColor = UIColor.darkGray
+//                cell?.backgroundColor = UIColor(red:0.11, green:0.15, blue:0.18, alpha:1.0)
+//            } else {
+//                cell?.backgroundColor = UIColor.groupTableViewBackground
+//            }
+            cell?.backgroundColor = UIColor(red:0.11, green:0.15, blue:0.18, alpha:1.0)
             cell?.layer.cornerRadius = 10
             cell?.name.text = localsearchinfo.results[indexPath.row].prodname
 

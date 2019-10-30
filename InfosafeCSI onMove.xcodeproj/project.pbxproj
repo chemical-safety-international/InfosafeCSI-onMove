@@ -1286,7 +1286,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DQNS8CDPT5;
 				INFOPLIST_FILE = "InfosafeCSI onMove/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1295,7 +1295,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.19;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMov";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMove";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1307,7 +1307,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DQNS8CDPT5;
 				INFOPLIST_FILE = "InfosafeCSI onMove/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1316,7 +1316,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.19;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMov";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMove";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

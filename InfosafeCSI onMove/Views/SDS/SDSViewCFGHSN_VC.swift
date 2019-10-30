@@ -601,7 +601,6 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         
         let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSViewPage_VC
         self.navigationController?.pushViewController(sdsJump!, animated: true)
-    }
-    
+    }    
     
 }
