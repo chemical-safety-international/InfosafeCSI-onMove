@@ -71,6 +71,10 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var viewSDSBTn: UIButton!
     
+    @IBOutlet weak var dgBtn: UIButton!
+    
+    @IBOutlet weak var containerView: UIView!
+    
     private var lastContentOffset: CGFloat = 0
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -151,7 +155,8 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
 //            }
 
             
-            
+            self.GHSScrollView.isHidden = false
+            self.containerView.isHidden = true
             
             
             self.ghsclass.text = localViewSDSGHS.classification
@@ -603,4 +608,19 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         self.navigationController?.pushViewController(sdsJump!, animated: true)
     }    
     
+    @IBAction func dgBtnTapped(_ sender: Any) {
+        
+        GHSScrollView.isHidden = true
+        containerView.isHidden = false
+        
+
+        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSTI") as? SDSViewTI_VC
+//         self.navigationController?.pushViewController(sdsJump!, animated: true)
+        
+        addChild(sdsJump!)
+        sdsJump!.view.frame = CGRect(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
+        containerView.addSubview(sdsJump!.view)
+
+        sdsJump!.didMove(toParent: self)
+    }
 }

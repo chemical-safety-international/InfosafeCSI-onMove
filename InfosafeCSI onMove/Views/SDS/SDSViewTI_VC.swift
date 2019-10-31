@@ -10,7 +10,6 @@ import UIKit
 
 class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
 
-    @IBOutlet weak var TIT: UILabel!
     
     @IBOutlet weak var UNNOT: UILabel!
     @IBOutlet weak var DGCLT: UILabel!
@@ -57,13 +56,9 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var subRiskLbl: UILabel!
     
     
-    @IBOutlet weak var dgImgHeight: NSLayoutConstraint!
-    @IBOutlet weak var DgImgWidth: NSLayoutConstraint!
-    @IBOutlet weak var subImgHeight: NSLayoutConstraint!
-    @IBOutlet weak var subImgWidth: NSLayoutConstraint!
     
     
-    @IBOutlet weak var psnSymGap: NSLayoutConstraint!
+
     @IBOutlet weak var symEMSGap: NSLayoutConstraint!
     @IBOutlet weak var emsMPGap: NSLayoutConstraint!
     @IBOutlet weak var mpHCGap: NSLayoutConstraint!
@@ -72,6 +67,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var ierPMGap: NSLayoutConstraint!
     
     
+    @IBOutlet weak var bcImg: UIImageView!
     
     private var lastContentOffset: CGFloat = 0
     
@@ -84,20 +80,19 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
         IATABtn.layer.cornerRadius = 15
         
         // Do any additional setup after loading the view.
-        TIT.font = UIFont.boldSystemFont(ofSize: 25)
         
-        UNNOT.font = UIFont.boldSystemFont(ofSize: 16)
-        DGCLT.font = UIFont.boldSystemFont(ofSize: 16)
-        SUBRT.font = UIFont.boldSystemFont(ofSize: 16)
-        PACKT.font = UIFont.boldSystemFont(ofSize: 16)
-        PSNT.font = UIFont.boldSystemFont(ofSize: 16)
-        SYMBT.font = UIFont.boldSystemFont(ofSize: 16)
-        EMST.font = UIFont.boldSystemFont(ofSize: 16)
-        MPT.font = UIFont.boldSystemFont(ofSize: 16)
-        HCT.font = UIFont.boldSystemFont(ofSize: 16)
-        EPGT.font = UIFont.boldSystemFont(ofSize: 16)
-        IERGT.font = UIFont.boldSystemFont(ofSize: 16)
-        PMT.font = UIFont.boldSystemFont(ofSize: 16)
+        UNNOT.font = UIFont.boldSystemFont(ofSize: 20)
+        DGCLT.font = UIFont.boldSystemFont(ofSize: 20)
+        SUBRT.font = UIFont.boldSystemFont(ofSize: 20)
+        PACKT.font = UIFont.boldSystemFont(ofSize: 20)
+        PSNT.font = UIFont.boldSystemFont(ofSize: 20)
+        SYMBT.font = UIFont.boldSystemFont(ofSize: 20)
+        EMST.font = UIFont.boldSystemFont(ofSize: 20)
+        MPT.font = UIFont.boldSystemFont(ofSize: 20)
+        HCT.font = UIFont.boldSystemFont(ofSize: 20)
+        EPGT.font = UIFont.boldSystemFont(ofSize: 20)
+        IERGT.font = UIFont.boldSystemFont(ofSize: 20)
+        PMT.font = UIFont.boldSystemFont(ofSize: 20)
         
         TIScrollView.delegate = self
         
@@ -105,6 +100,10 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
         btnView.isHidden = true
         viewMoreLbl.isHidden = true
         scrollDownArrow.isHidden = true
+        
+        ADGBtn.layer.cornerRadius = 15
+        IMDGBtn.layer.cornerRadius = 15
+        IATABtn.layer.cornerRadius = 15
         
         callTI()
     }
@@ -185,7 +184,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             self.subRiskImg1.image = nil
             self.subRiskImg2.image = nil
             
-            self.dgCLbl.text = ""
+            self.dgCLbl.text = localViewSDSTIADG.road_dgclass
             self.subRiskLbl.text = ""
             
             self.SYMBT.text = ""
@@ -197,15 +196,15 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             self.IERGT.text = "IERG NUMBER"
             self.PMT.text = "PACKAGING METHOD"
             
-            self.dgImgHeight.constant = 0
-            self.subImgHeight.constant = 0
-            self.psnSymGap.constant = 0
-            self.symEMSGap.constant = 0
-            self.emsMPGap.constant = 0
-            self.mpHCGap.constant = 10
-            self.hcEPGGap.constant = 10
-            self.epgIERGap.constant = 10
-            self.ierPMGap.constant = 10
+//            self.dgImgHeight.constant = 0
+//            self.subImgHeight.constant = 0
+//            self.psnSymGap.constant = 0
+//            self.symEMSGap.constant = 0
+//            self.emsMPGap.constant = 0
+//            self.mpHCGap.constant = 10
+//            self.hcEPGGap.constant = 10
+//            self.epgIERGap.constant = 10
+//            self.ierPMGap.constant = 10
             
 //            print(self.subImgHeight.constant)
             var fixStr = ""
@@ -225,7 +224,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                        fixStr = localViewSDSTIADG.road_dgclass
     
                    }
-                    self.dgImgHeight.constant = 90
+//                    self.dgImgHeight.constant = 90
 
                    self.dgClassImage.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
                 }
@@ -241,7 +240,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                 if localViewSDSTIADG.road_subrisks.contains("None") {
                     self.subRiskLbl.text = localViewSDSTIADG.road_subrisks
                 } else {
-                    self.subImgHeight.constant = 90
+//                    self.subImgHeight.constant = 90
                     fixSubArray = localViewSDSTIADG.road_subrisks.components(separatedBy: " ")
     //                print("Array: \(fixSubArray.count)")
 //                    print(fixSubArray)
@@ -254,8 +253,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                         self.subRiskImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
                     } else if (fixSubArray.count == 1 ) {
     //                    print("here2")
-                        fixSubStr1 = fixSubArray[0].replacingOccurrences(of: " ", with: "")
-
+                        fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
                         self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
 
                     } else {
@@ -266,7 +264,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
 
             } else {
                 self.subRiskLbl.text = ""
-                self.subImgHeight.constant = 0
+//                self.subImgHeight.constant = 0
             }
 
 
@@ -286,18 +284,25 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             self.TIScrollView.isHidden = false
             self.btnView.isHidden = false
             
-            self.ADGBtn.setTitleColor(UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0), for: .normal)
+//            self.ADGBtn.setTitleColor(UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0), for: .normal)
+
+            
+            
             self.ADGBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
             
-            self.IMDGBtn.setTitleColor(UIColor.white, for: .normal)
+//            self.IMDGBtn.setTitleColor(UIColor.white, for: .normal)
             self.IMDGBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             
-            self.IATABtn.setTitleColor(UIColor.white, for: .normal)
+//            self.IATABtn.setTitleColor(UIColor.white, for: .normal)
             self.IATABtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             
 //            self.ADGBtn.backgroundColor = UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0)
 //            self.IMDGBtn.backgroundColor = UIColor.clear
 //            self.IATABtn.backgroundColor = UIColor.clear
+            
+            self.setRoadBtnColor()
+            
+            self.setRoadBackground()
             
             if (localViewSDSTIIMDG.imdg_unno.isEmpty == true) {
                 self.IMDGBtn.isHidden = true
@@ -347,10 +352,10 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
         let cont1 = UNNOT.frame.height + DGCLT.frame.height + SUBRT.frame.height + PACKT.frame.height
         let cont2 = PSNT.frame.height + SYMBT.frame.height + EMST.frame.height + MPT.frame.height
         let cont3 = HCT.frame.height + EPGT.frame.height + IERGT.frame.height + PMT.frame.height
-        let cont4 = unno.frame.height + dgImgHeight.constant + subImgHeight.constant + pg.frame.height
+        let cont4 = unno.frame.height + pg.frame.height
         let cont5 = psn.frame.height + symb.frame.height + ems.frame.height + mp.frame.height
         let cont6 = hc.frame.height + epg.frame.height + ierg.frame.height + pm.frame.height
-        let cont7 = dgCLbl.frame.height + subRiskLbl.frame.height + psnSymGap.constant + symEMSGap.constant
+        let cont7 = dgCLbl.frame.height + subRiskLbl.frame.height
         let cont8 = emsMPGap.constant + mpHCGap.constant + hcEPGGap.constant + epgIERGap.constant + ierPMGap.constant
         
         
@@ -445,15 +450,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             self.MPT.text = "MARINE POLLUTANT"
             self.EMST.text = "EMS"
             
-            self.dgImgHeight.constant = 0
-            self.subImgHeight.constant = 0
-            self.psnSymGap.constant = 0
-            self.symEMSGap.constant = 10
-            self.emsMPGap.constant = 10
-            self.mpHCGap.constant = 0
-            self.hcEPGGap.constant = 0
-            self.epgIERGap.constant = 0
-            self.ierPMGap.constant = 0
+
             
            var fixStr = ""
            var fixSubStr1 = ""
@@ -472,7 +469,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                         fixStr = localViewSDSTIIMDG.imdg_dgclass
 
                     }
-                    self.dgImgHeight.constant = 90
+ 
                     self.dgClassImage.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
                  } else {
                     self.dgCLbl.text = ""
@@ -482,7 +479,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                     self.subRiskLbl.text = localViewSDSTIIMDG.imdg_subrisks
                 } else {
                      if (localViewSDSTIIMDG.imdg_subrisks.isEmpty == false) {
-                        self.subImgHeight.constant = 90
+
                          fixSubArray = localViewSDSTIIMDG.imdg_subrisks.components(separatedBy: " ")
 //                         print("Array: \(fixSubArray.count)")
                          if (fixSubArray.count == 2) {
@@ -503,7 +500,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                          }
                      } else {
                         self.subRiskLbl.text = ""
-                        self.subImgHeight.constant = 0
+ 
                     }
                 }
 
@@ -530,14 +527,22 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
 //            self.IMDGBtn.backgroundColor = UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0)
 //            self.IATABtn.backgroundColor = UIColor.clear
             
-            self.ADGBtn.setTitleColor(UIColor.white, for: .normal)
+//            self.ADGBtn.setTitleColor(UIColor.white, for: .normal)
             self.ADGBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             
-            self.IMDGBtn.setTitleColor(UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0), for: .normal)
+//            self.IMDGBtn.setTitleColor(UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0), for: .normal)
             self.IMDGBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
             
-            self.IATABtn.setTitleColor(UIColor.white, for: .normal)
+//            self.IATABtn.setTitleColor(UIColor.white, for: .normal)
             self.IATABtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+            
+            
+
+            
+            self.setSeaBtnColor()
+            
+            self.setSeaBackground()
+           
         }
     }
     @IBAction func iataBtnTapped(_ sender: Any) {
@@ -571,15 +576,6 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             
             self.SYMBT.text = "SYMBOL"
             
-            self.dgImgHeight.constant = 0
-            self.subImgHeight.constant = 0
-            self.psnSymGap.constant = 10
-            self.symEMSGap.constant = 0
-            self.emsMPGap.constant = 0
-            self.mpHCGap.constant = 0
-            self.hcEPGGap.constant = 0
-            self.epgIERGap.constant = 0
-            self.ierPMGap.constant = 0
             
             var fixStr = ""
             var fixSubStr1 = ""
@@ -597,7 +593,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                            fixStr = localViewSDSTIIATA.iata_dgclass
 
                        }
-                        self.dgImgHeight.constant = 90
+  
                        self.dgClassImage.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
                 } else {
                     self.dgCLbl.text = ""
@@ -609,7 +605,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                 self.subRiskLbl.text = localViewSDSTIIATA.iata_subrisks
             } else {
                 if (localViewSDSTIIATA.iata_subrisks.isEmpty == false) {
-                    self.subImgHeight.constant = 90
+
                     fixSubArray = localViewSDSTIIATA.iata_subrisks.components(separatedBy: " ")
 //                      print("Array: \(fixSubArray.count)")
                       if (fixSubArray.count == 2) {
@@ -631,7 +627,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                       }
                 } else {
                     self.subRiskLbl.text = ""
-                    self.subImgHeight.constant = 0
+
                 }
             }
 
@@ -653,18 +649,52 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             self.TIScrollView.isHidden = false
             self.btnView.isHidden = false
             
-//            self.ADGBtn.backgroundColor = UIColor.clear
-//            self.IMDGBtn.backgroundColor = UIColor.clear
-//            self.IATABtn.backgroundColor = UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0)
-            self.ADGBtn.setTitleColor(UIColor.white, for: .normal)
+            
+//            self.ADGBtn.setTitleColor(UIColor.white, for: .normal)
             self.ADGBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             
-            self.IMDGBtn.setTitleColor(UIColor.white, for: .normal)
+//            self.IMDGBtn.setTitleColor(UIColor.white, for: .normal)
             self.IMDGBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             
-            self.IATABtn.setTitleColor(UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0), for: .normal)
+//            self.IATABtn.setTitleColor(UIColor(red:0.94, green:0.45, blue:0.23, alpha:1.0), for: .normal)
             self.IATABtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+            
+            
+            
+            self.setAirBtnColor()
+            
+            self.setAirBackground()
         }
+    }
+    
+    func setRoadBackground() {
+        bcImg.image = UIImage(named: "CSI-Road")
+    }
+    
+    func setSeaBackground() {
+        bcImg.image = UIImage(named: "CSI-Sea")
+    }
+    
+    func setAirBackground() {
+        bcImg.image = UIImage(named: "CSI-Air")
+    }
+    
+    func setRoadBtnColor() {
+        ADGBtn.backgroundColor = UIColor.orange
+        IMDGBtn.backgroundColor = UIColor.darkGray
+        IATABtn.backgroundColor = UIColor.darkGray
+    }
+    
+    func setSeaBtnColor() {
+        ADGBtn.backgroundColor = UIColor.darkGray
+        IMDGBtn.backgroundColor = UIColor.orange
+        IATABtn.backgroundColor = UIColor.darkGray
+    }
+    
+    func setAirBtnColor() {
+        ADGBtn.backgroundColor = UIColor.darkGray
+        IMDGBtn.backgroundColor = UIColor.darkGray
+        IATABtn.backgroundColor = UIColor.orange
     }
     
 }
