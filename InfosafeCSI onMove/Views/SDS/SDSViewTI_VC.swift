@@ -349,68 +349,68 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
         contentView.sizeToFit()
         TIScrollView.sizeToFit()
         
-        let cont1 = UNNOT.frame.height + DGCLT.frame.height + SUBRT.frame.height + PACKT.frame.height
-        let cont2 = PSNT.frame.height + SYMBT.frame.height + EMST.frame.height + MPT.frame.height
-        let cont3 = HCT.frame.height + EPGT.frame.height + IERGT.frame.height + PMT.frame.height
-        let cont4 = unno.frame.height + pg.frame.height
-        let cont5 = psn.frame.height + symb.frame.height + ems.frame.height + mp.frame.height
-        let cont6 = hc.frame.height + epg.frame.height + ierg.frame.height + pm.frame.height
-        let cont7 = dgCLbl.frame.height + subRiskLbl.frame.height
-        let cont8 = emsMPGap.constant + mpHCGap.constant + hcEPGGap.constant + epgIERGap.constant + ierPMGap.constant
-        
-        
-        
-        let conT = cont1 + cont2 + cont3 + cont4 + cont5 + cont6 + cont7 + cont8 + 60
-        
-        
-//        print("content View \(contentView.frame.height)")
-//        print("TIScroll View \(TIScrollView.frame.height)")
-//        print("Real View \(conT)")
-        
-        //check if the real content height is over or less the content view height
-        if (contentView.frame.height > TIScrollView.frame.height) {
-
-            if (TIScrollView.frame.height < conT) {
-                self.viewMoreLbl.isHidden = false
-                self.scrollDownArrow.isHidden = false
-                TIScrollView.isScrollEnabled = true
-            } else if (TIScrollView.frame.height - conT <= 100.0) {
-                self.viewMoreLbl.isHidden = false
-                self.scrollDownArrow.isHidden = false
-                TIScrollView.isScrollEnabled = true
-            } else {
-
-                self.viewMoreLbl.isHidden = true
-                self.scrollDownArrow.isHidden = true
-                TIScrollView.isScrollEnabled = false
-            }
-        } else if (contentView.frame.height < TIScrollView.frame.height) {
-            if (TIScrollView.frame.height < conT) {
-                self.viewMoreLbl.isHidden = false
-                self.scrollDownArrow.isHidden = false
-                TIScrollView.isScrollEnabled = true
-            } else if (TIScrollView.frame.height - conT <= 50.0) {
-                self.viewMoreLbl.isHidden = false
-                self.scrollDownArrow.isHidden = false
-                TIScrollView.isScrollEnabled = true
-            } else {
-
-                self.viewMoreLbl.isHidden = true
-                self.scrollDownArrow.isHidden = true
-                TIScrollView.isScrollEnabled = false
-            }
-        } else if (contentView.frame.height == TIScrollView.frame.height) {
-            if (TIScrollView.frame.height < conT) {
-                self.viewMoreLbl.isHidden = false
-                self.scrollDownArrow.isHidden = false
-                TIScrollView.isScrollEnabled = true
-            } else {
-
-                self.viewMoreLbl.isHidden = true
-                self.scrollDownArrow.isHidden = true
-                TIScrollView.isScrollEnabled = false
-            }
-        }
+//        let cont1 = UNNOT.frame.height + DGCLT.frame.height + SUBRT.frame.height + PACKT.frame.height
+//        let cont2 = PSNT.frame.height + SYMBT.frame.height + EMST.frame.height + MPT.frame.height
+//        let cont3 = HCT.frame.height + EPGT.frame.height + IERGT.frame.height + PMT.frame.height
+//        let cont4 = unno.frame.height + pg.frame.height
+//        let cont5 = psn.frame.height + symb.frame.height + ems.frame.height + mp.frame.height
+//        let cont6 = hc.frame.height + epg.frame.height + ierg.frame.height + pm.frame.height
+//        let cont7 = dgCLbl.frame.height + subRiskLbl.frame.height
+//        let cont8 = emsMPGap.constant + mpHCGap.constant + hcEPGGap.constant + epgIERGap.constant + ierPMGap.constant
+//        
+//        
+//        
+//        let conT = cont1 + cont2 + cont3 + cont4 + cont5 + cont6 + cont7 + cont8 + 60
+//        
+//        
+////        print("content View \(contentView.frame.height)")
+////        print("TIScroll View \(TIScrollView.frame.height)")
+////        print("Real View \(conT)")
+//        
+//        //check if the real content height is over or less the content view height
+//        if (contentView.frame.height > TIScrollView.frame.height) {
+//
+//            if (TIScrollView.frame.height < conT) {
+//                self.viewMoreLbl.isHidden = false
+//                self.scrollDownArrow.isHidden = false
+//                TIScrollView.isScrollEnabled = true
+//            } else if (TIScrollView.frame.height - conT <= 100.0) {
+//                self.viewMoreLbl.isHidden = false
+//                self.scrollDownArrow.isHidden = false
+//                TIScrollView.isScrollEnabled = true
+//            } else {
+//
+//                self.viewMoreLbl.isHidden = true
+//                self.scrollDownArrow.isHidden = true
+//                TIScrollView.isScrollEnabled = false
+//            }
+//        } else if (contentView.frame.height < TIScrollView.frame.height) {
+//            if (TIScrollView.frame.height < conT) {
+//                self.viewMoreLbl.isHidden = false
+//                self.scrollDownArrow.isHidden = false
+//                TIScrollView.isScrollEnabled = true
+//            } else if (TIScrollView.frame.height - conT <= 50.0) {
+//                self.viewMoreLbl.isHidden = false
+//                self.scrollDownArrow.isHidden = false
+//                TIScrollView.isScrollEnabled = true
+//            } else {
+//
+//                self.viewMoreLbl.isHidden = true
+//                self.scrollDownArrow.isHidden = true
+//                TIScrollView.isScrollEnabled = false
+//            }
+//        } else if (contentView.frame.height == TIScrollView.frame.height) {
+//            if (TIScrollView.frame.height < conT) {
+//                self.viewMoreLbl.isHidden = false
+//                self.scrollDownArrow.isHidden = false
+//                TIScrollView.isScrollEnabled = true
+//            } else {
+//
+//                self.viewMoreLbl.isHidden = true
+//                self.scrollDownArrow.isHidden = true
+//                TIScrollView.isScrollEnabled = false
+//            }
+//        }
         
     }
     @IBAction func adgBtnTapped(_ sender: Any) {

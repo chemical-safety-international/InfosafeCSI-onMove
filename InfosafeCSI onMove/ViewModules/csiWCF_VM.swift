@@ -32,9 +32,11 @@ class csiWCF_VM: UIViewController {
 //        CoreDataManager.cleanSearchCoreData()
 //        print("callsearch called successfully")
         localsearchinfo.details = ""
+        
         self.localresult.lcount = 0
         self.localresult.ocount = 0
         self.localresult.pcount = 0
+        self.localresult.totalcount = 0
         
 //        var localresult = localsearchinfo()
 //        localsearchinfo.results = []
@@ -127,11 +129,18 @@ class csiWCF_VM: UIViewController {
                 
                 
 
+//                localsearchinfo.pamount = ("Primary: \(self.localresult.pcount ?? 0)")
+//                localsearchinfo.lamount = ("Local: \(self.localresult.lcount ?? 0)")
+//                localsearchinfo.oamount = ("Other: \(self.localresult.ocount ?? 0)")
                 localsearchinfo.pamount = ("Primary: \(self.localresult.pcount ?? 0)")
                 localsearchinfo.lamount = ("Local: \(self.localresult.lcount ?? 0)")
                 localsearchinfo.oamount = ("Other: \(self.localresult.ocount ?? 0)")
                 localsearchinfo.pagenoamount = ("\(self.localresult.pageno ?? 0) / \(self.localresult.pagecount ?? 0)")
                 localsearchinfo.totalPage = self.localresult.pagecount
+                
+
+
+                
                 
             } catch let parsingError {
                 print("Error", parsingError)

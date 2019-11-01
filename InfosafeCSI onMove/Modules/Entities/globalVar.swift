@@ -66,6 +66,7 @@ struct localsearchinfo {
     var pageno: Int!
     var result: Bool!
     var pagecount: Int!
+    var totalcount: Int!
     
     static var results: [item] = []
     
@@ -148,13 +149,14 @@ struct localsearchinfo {
             self.uftext = uftext
         }
     }
-    init(pcount: Int? = nil, ocount: Int? = nil, lcount: Int? = nil, pageno: Int? = nil, result: Bool? = nil, pagecount: Int? = nil, results: [item]? = nil) {
+    init(pcount: Int? = nil, ocount: Int? = nil, lcount: Int? = nil, pageno: Int? = nil, result: Bool? = nil, pagecount: Int? = nil, totalcount: Int? = nil, results: [item]? = nil) {
         self.pcount = pcount
         self.ocount = ocount
         self.lcount = lcount
         self.pageno = pageno
         self.result = result
         self.pagecount = pagecount
+        self.totalcount = totalcount
 //        self.results = results
     }
 
@@ -166,6 +168,8 @@ struct localsearchinfo {
     static var lamount: String!
     static var oamount: String!
     static var pagenoamount: String!
+    
+    static var totalamount: String!
     
     
     static var psize: Int!

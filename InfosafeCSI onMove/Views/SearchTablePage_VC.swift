@@ -31,6 +31,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     var selectedIndex:Bool = false;
 
     var selectedthecellno = 0
+    var testrow = 0
     
     @IBOutlet weak var tabTrailing: NSLayoutConstraint!
     @IBOutlet weak var splitLeading: NSLayoutConstraint!
@@ -73,7 +74,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
             menu.frame.size.height = 580
         }
         
-
+//        tableDisplay.separatorColor = UIColor.orange
         
         tableDisplay.estimatedRowHeight = 140
         tableDisplay.rowHeight = UITableView.automaticDimension
@@ -96,7 +97,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
              splitView.isHidden = false
              menu.isHidden = true
         } else {
-            self.tabTrailing.constant = 7
+//            self.tabTrailing.constant = 7
  
             splitView.isHidden = true
             menu.isHidden = false
@@ -176,7 +177,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         //            navigationItem.titleView = imageView
                     
                     navigationItem.title = "SEARCH RESULT"
-                    navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25), .foregroundColor: UIColor.black]
+                    navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20), .foregroundColor: UIColor.black]
 
                     
                     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "    ", style: .plain, target: self, action: .none)
@@ -262,9 +263,9 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             cell?.IssueDateLbl.text = localsearchinfo.results[indexPath.row].issueDate
             cell?.UNNoLbl.text = localsearchinfo.results[indexPath.row].unno
             cell?.prodCLbl.text = localsearchinfo.results[indexPath.row].prodcode
-            cell?.dgcLbl.text = localsearchinfo.results[indexPath.row].dgclass
-            cell?.psLbl.text = localsearchinfo.results[indexPath.row].ps
-            cell?.hazLbl.text = localsearchinfo.results[indexPath.row].haz
+//            cell?.dgcLbl.text = localsearchinfo.results[indexPath.row].dgclass
+//            cell?.psLbl.text = localsearchinfo.results[indexPath.row].ps
+//            cell?.hazLbl.text = localsearchinfo.results[indexPath.row].haz
             
             
             
@@ -277,6 +278,38 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                 cell?.nameType?.image = UIImage(named: "ProdNameType-Local")
             }
             
+//            var imageView =
+//            if testrow == 0 {
+//                let image = UIImage(named: "row1")
+//                let imageView = UIImageView(image: image)
+//                cell?.backgroundView = imageView
+//                testrow += 1
+//            } else if testrow == 1 {
+//                let image = UIImage(named: "row2")
+//                let imageView = UIImageView(image: image)
+//                cell?.backgroundView = imageView
+//                testrow += 1
+//            } else if testrow == 2 {
+//                let image = UIImage(named: "row3")
+//                let imageView = UIImageView(image: image)
+//                cell?.backgroundView = imageView
+//                testrow += 1
+//            } else if testrow == 3 {
+//                let image = UIImage(named: "row4")
+//                let imageView = UIImageView(image: image)
+//                cell?.backgroundView = imageView
+//                testrow = 0
+//            }
+            
+            let image = UIImage(named: "CSI-CFBC")
+            let imageView = UIImageView(image: image)
+            cell?.backgroundView = imageView
+            cell?.backgroundColor = UIColor.clear
+            
+            
+            
+            
+            
             //setup cell color
             
 //            if indexPath.row % 2 == 0 {
@@ -286,7 +319,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
 //            } else {
 //                cell?.backgroundColor = UIColor.groupTableViewBackground
 //            }
-            cell?.backgroundColor = UIColor(red:0.11, green:0.15, blue:0.18, alpha:1.0)
+//            cell?.backgroundColor = UIColor(red:0.11, green:0.15, blue:0.18, alpha:1.0)
             cell?.layer.cornerRadius = 10
             cell?.name.text = localsearchinfo.results[indexPath.row].prodname
 
@@ -295,9 +328,9 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
 //            cell?.sdsBtn.addTarget(self, action: #selector(sdsViewBtnTapped(_:)), for: .touchUpInside)
             
             // set the selected cell background view in order to set background color
-            let backgroundView = UIView()
-            backgroundView.backgroundColor = UIColor.init(red: 0.98, green: 0.80, blue: 0.61, alpha: 1)
-            cell?.selectedBackgroundView = backgroundView
+//            let backgroundView = UIView()
+//            backgroundView.backgroundColor = UIColor.init(red: 0.98, green: 0.80, blue: 0.61, alpha: 1)
+//            cell?.selectedBackgroundView = backgroundView
                 
             
             return cell!
@@ -306,11 +339,21 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
 
     }
     
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 50
+//    }
+    
+//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        return 50
+//    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         
         //pass the synno number
         localcurrentSDS.sdsNo = localsearchinfo.results[indexPath.row].synno
         view.sizeToFit()
+        
         
         // controll the animation of side menu (click on the same row - no change)
         if (view.frame.width >= 1024) {
@@ -325,20 +368,57 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             
         } else if (view.frame.width < 1024) {
 
+            // call the menu
+//            if self.menu.isHidden == true {
+//
+//                menuAppear()
+//                selectedthecellno = indexPath.row
+//            }
+//            else if self.menu.isHidden == false && indexPath.row != selectedthecellno {
+//
+//                menuDisappear()
+//                menuAppear()
+//                selectedthecellno = indexPath.row
+//            } else if self.menu.isHidden == false && indexPath.row == selectedthecellno {
+//
+//                menuAppear()
+//            }
+            
+            
+            //directly call the CF page
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
+            
+            csiWCF_VM().callSDS_GHS() { (output) in
+                if output.contains("true") {
+                    DispatchQueue.main.async {
+                        
+                        if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
+                            
+                            csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
+                            if output.sds != nil {
+                                localViewSDSTIADG.road_unno = output.road_unno
+                                localViewSDSTIADG.road_dgclass = output.road_dgclass
+                                localViewSDSTIADG.road_packgrp = output.road_packgrp
+                                localViewSDSTIADG.road_psn = output.road_psn
+                                localViewSDSTIADG.road_hazchem = output.road_hazchem
+                                
+                                DispatchQueue.main.async {
+                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
+                                    let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC
+                                    self.navigationController?.pushViewController(sdsJump!, animated: true)
+                                }
 
-            if self.menu.isHidden == true {
+                                }
+                            }
+//                            csiWCF_VM().callSDS_Trans() { (output)}
 
-                menuAppear()
-                selectedthecellno = indexPath.row
-            }
-            else if self.menu.isHidden == false && indexPath.row != selectedthecellno {
-
-                menuDisappear()
-                menuAppear()
-                selectedthecellno = indexPath.row
-            } else if self.menu.isHidden == false && indexPath.row == selectedthecellno {
-
-                menuAppear()
+                        } else {
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
+                            let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSCF") as? SDSViewCF_VC
+                            self.navigationController?.pushViewController(sdsJump!, animated: true)
+                        }
+                    }
+                }
             }
         }
 

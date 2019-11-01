@@ -14,12 +14,12 @@ class TableViewCell: UITableViewCell {
     @IBOutlet weak var sdsBtn: UIButton!
     @IBOutlet weak var nameType: UIImageView!
     
-    @IBOutlet weak var supplbl: UILabel!
+
     @IBOutlet weak var isslbl: UILabel!
     @IBOutlet weak var unlbl: UILabel!
-    @IBOutlet weak var dgcLbl: UILabel!
+
     @IBOutlet weak var psLbl: UILabel!
-    @IBOutlet weak var hazLbl: UILabel!
+
     
     
     @IBOutlet weak var prodCodeLbl: UILabel!
@@ -27,9 +27,9 @@ class TableViewCell: UITableViewCell {
     @IBOutlet weak var IssueDateLbl: UILabel!
     @IBOutlet weak var UNNoLbl: UILabel!
     
-    @IBOutlet weak var DGClassLbl: UILabel!
+
     @IBOutlet weak var PoisonSLbl: UILabel!
-    @IBOutlet weak var HazardousLbl: UILabel!
+
     
     
     @IBOutlet weak var prodCLbl: UILabel!
@@ -39,13 +39,12 @@ class TableViewCell: UITableViewCell {
         // Initialization code
         name.font = UIFont.boldSystemFont(ofSize: 15)
         
-        supplbl.font = UIFont.boldSystemFont(ofSize: 13)
+
         isslbl.font = UIFont.boldSystemFont(ofSize: 13)
         unlbl.font = UIFont.boldSystemFont(ofSize: 13)
         prodCodeLbl.font = UIFont.boldSystemFont(ofSize: 13)
-        DGClassLbl.font = UIFont.boldSystemFont(ofSize: 13)
-        PoisonSLbl.font = UIFont.boldSystemFont(ofSize: 13)
-        HazardousLbl.font = UIFont.boldSystemFont(ofSize: 13)
+
+
         
         name.sizeToFit()
         
@@ -61,5 +60,11 @@ class TableViewCell: UITableViewCell {
         // Configure the view for the selected state
 
     }
+    
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        
+//        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0))
+//    }
     
 }

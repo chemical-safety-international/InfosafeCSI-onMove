@@ -21,6 +21,9 @@ class StartupPage_VC: UIViewController {
         }
         textLbl.font = UIFont.italicSystemFont(ofSize: 25)
         textLbl.font = UIFont.boldSystemFont(ofSize: 25)
+        
+//        let image = UIImage(named: "button")
+//        startBtn.setImage(image, for: .normal)
 //        setNavigationBar()
     }
     

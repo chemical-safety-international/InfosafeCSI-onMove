@@ -22,7 +22,6 @@
 		5743492122B08C000036199E /* SDSMenu_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743492022B08C000036199E /* SDSMenu_VC.swift */; };
 		5743492322B094F00036199E /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743492222B094F00036199E /* MenuTableViewCell.swift */; };
 		574D034A234D909900B93F7C /* SDSViewTI_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574D0349234D909900B93F7C /* SDSViewTI_VC.swift */; };
-		576098F0236A572D00CB11DE /* TestImage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576098EF236A572D00CB11DE /* TestImage_VC.swift */; };
 		57711F57228808300051E576 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57711F56228808300051E576 /* TableViewCell.swift */; };
 		57727D2F230B765900734B43 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57727D2E230B765900734B43 /* CoreDataManager.swift */; };
 		57727D31230CC6D300734B43 /* LocalSearch_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57727D30230CC6D300734B43 /* LocalSearch_VC.swift */; };
@@ -243,7 +242,6 @@
 		5743492022B08C000036199E /* SDSMenu_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSMenu_VC.swift; sourceTree = "<group>"; };
 		5743492222B094F00036199E /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		574D0349234D909900B93F7C /* SDSViewTI_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSViewTI_VC.swift; sourceTree = "<group>"; };
-		576098EF236A572D00CB11DE /* TestImage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestImage_VC.swift; sourceTree = "<group>"; };
 		57711F56228808300051E576 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		57727D2E230B765900734B43 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		57727D30230CC6D300734B43 /* LocalSearch_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSearch_VC.swift; sourceTree = "<group>"; };
@@ -768,7 +766,6 @@
 				17A2683F228D04410039A798 /* Startup_VC.swift */,
 				5743492022B08C000036199E /* SDSMenu_VC.swift */,
 				57DF2CC1231396BE0044A96B /* StoredPDF_VC.swift */,
-				576098EF236A572D00CB11DE /* TestImage_VC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1098,7 +1095,6 @@
 				57727D2F230B765900734B43 /* CoreDataManager.swift in Sources */,
 				AC9AB9DA2288DFA900C2C71E /* SDSView_VC.swift in Sources */,
 				57727D31230CC6D300734B43 /* LocalSearch_VC.swift in Sources */,
-				576098F0236A572D00CB11DE /* TestImage_VC.swift in Sources */,
 				57F4C2C5234D402900647559 /* SDSViewCF_VC.swift in Sources */,
 				57E1A81D23348EC300072377 /* Update_VC.swift in Sources */,
 				57C8B92C22825DE4004966C5 /* csiWCF_VM.swift in Sources */,

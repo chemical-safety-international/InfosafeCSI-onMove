@@ -97,7 +97,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         viewMoreLbl.isHidden = true
         scrollDownArrow.isHidden = true
         
-        self.view.backgroundColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
+//        self.view.backgroundColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
         
         setCFTIValue()
 
@@ -130,8 +130,8 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     
     func getValue() {
         DispatchQueue.main.async {
-            let unStr = "UNNO "
-            let pgStr = "Packaging Group "
+            let unStr = "UNNO: "
+            let pgStr = "PG: "
             let hcStr = "Hazchem Code "
             let psnStr = "Proper Shipping Name "
             
@@ -169,7 +169,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             self.unPgGap.constant = 5
             self.pgHcGap.constant = 5
             self.hcProGap.constant = 5
-            self.proPsGap.constant = 20
+//            self.proPsGap.constant = 20
             
             self.unno.text = unStr + localViewSDSTIADG.road_unno
             self.pg.text = pgStr + localViewSDSTIADG.road_packgrp
@@ -288,22 +288,22 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     
 
         
-        let cont1 = GHSClassT.frame.height + HazardST.frame.height + PercauT.frame.height
-        let cont2 = PST.frame.height + ghsclass.frame.height + TIT.frame.height
-        let cont3 = haz.frame.height + pstate.frame.height + ps.frame.height
-        var cont4 = unno.frame.height + pg.frame.height + hc.frame.height + psn.frame.height
-        let cont5 = img1.frame.height + img6.frame.height/2 + ghsImgGap2.constant
-        let cont6 = imgGhsGap.constant + ghsHazGap.constant + hazPreGap.constant
-        let cont7 = preTiGap.constant + tiDgimgGap.constant + proPsGap.constant
+//        let cont1 = GHSClassT.frame.height + HazardST.frame.height + PercauT.frame.height
+//        let cont2 = PST.frame.height + ghsclass.frame.height + TIT.frame.height
+//        let cont3 = haz.frame.height + pstate.frame.height + ps.frame.height
+//        var cont4 = unno.frame.height + pg.frame.height + hc.frame.height + psn.frame.height
+//        let cont5 = img1.frame.height + img6.frame.height/2 + ghsImgGap2.constant
+//        let cont6 = imgGhsGap.constant + ghsHazGap.constant + hazPreGap.constant
+//        let cont7 = preTiGap.constant + tiDgimgGap.constant + proPsGap.constant
         
-        if cont4 != 0{
-            if (cont4 < 90) {
-                cont4 = 90
-            }
-        }
+//        if cont4 != 0{
+//            if (cont4 < 90) {
+//                cont4 = 90
+//            }
+//        }
 
         
-        let conT = cont1 + cont2 + cont3 + cont4 + cont5 + cont6 + cont7 + 15
+//        let conT = cont1 + cont2 + cont3 + cont4 + cont5 + cont6 + cont7 + 15
         
         
         
@@ -311,33 +311,33 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
 //        print("cont1 : \(cont1)\ncont2 : \(cont2)\ncont3 : \(cont3)\ncont4 : \(cont4)\ncont5 : \(cont5)\ncont6 : \(cont6)\ncont7 : \(cont7)\n")
         
         //check if the real content height is over or less the content view height
-        if (contentView.frame.height > GHSScrollView.frame.height) {
-            if (GHSScrollView.frame.height < conT) {
-                self.viewMoreLbl.isHidden = false
-                self.scrollDownArrow.isHidden = false
-            } else {
-               self.viewMoreLbl.isHidden = true
-                self.scrollDownArrow.isHidden = true
-            }
-
-        } else if (contentView.frame.height < GHSScrollView.frame.height) {
-            if (GHSScrollView.frame.height < conT) {
-                self.viewMoreLbl.isHidden = false
-                self.scrollDownArrow.isHidden = false
-            } else {
-                self.viewMoreLbl.isHidden = true
-                self.scrollDownArrow.isHidden = true
-            }
-        } else if (contentView.frame.height == GHSScrollView.frame.height) {
-            if (GHSScrollView.frame.height < conT) {
-                self.viewMoreLbl.isHidden = false
-                self.scrollDownArrow.isHidden = false
-            } else {
-                self.viewMoreLbl.isHidden = true
-                self.scrollDownArrow.isHidden = true
-            }
-        }
-        view.reloadInputViews()
+//        if (contentView.frame.height > GHSScrollView.frame.height) {
+//            if (GHSScrollView.frame.height < conT) {
+//                self.viewMoreLbl.isHidden = false
+//                self.scrollDownArrow.isHidden = false
+//            } else {
+//               self.viewMoreLbl.isHidden = true
+//                self.scrollDownArrow.isHidden = true
+//            }
+//
+//        } else if (contentView.frame.height < GHSScrollView.frame.height) {
+//            if (GHSScrollView.frame.height < conT) {
+//                self.viewMoreLbl.isHidden = false
+//                self.scrollDownArrow.isHidden = false
+//            } else {
+//                self.viewMoreLbl.isHidden = true
+//                self.scrollDownArrow.isHidden = true
+//            }
+//        } else if (contentView.frame.height == GHSScrollView.frame.height) {
+//            if (GHSScrollView.frame.height < conT) {
+//                self.viewMoreLbl.isHidden = false
+//                self.scrollDownArrow.isHidden = false
+//            } else {
+//                self.viewMoreLbl.isHidden = true
+//                self.scrollDownArrow.isHidden = true
+//            }
+//        }
+//        view.reloadInputViews()
     }
     
     func setImage() {
@@ -493,20 +493,20 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
 
 
         
-        ghsImgGap.constant = 0
-        ghsImgGap2.constant = 0
-        imgGhsGap.constant = 0
-        ghsHazGap.constant = 0
-        hazPreGap.constant = 0
-        
-        self.preTiGap.constant = 0
-        self.tiDgimgGap.constant = 0
-        self.unPgGap.constant = 0
-        self.pgHcGap.constant = 0
-        self.hcProGap.constant = 0
-        self.proPsGap.constant = 0
-        
-        self.dgImgHeight.constant = 0
+//        ghsImgGap.constant = 0
+//        ghsImgGap2.constant = 0
+//        imgGhsGap.constant = 0
+//        ghsHazGap.constant = 0
+//        hazPreGap.constant = 0
+//        
+//        self.preTiGap.constant = 0
+//        self.tiDgimgGap.constant = 0
+//        self.unPgGap.constant = 0
+//        self.pgHcGap.constant = 0
+//        self.hcProGap.constant = 0
+//        self.proPsGap.constant = 0
+//        
+//        self.dgImgHeight.constant = 0
         
         self.unno.text = ""
         self.pg.text = ""
@@ -548,8 +548,8 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     img7.image = nil
     dgImg.image = nil
          
-        imgHeight.constant = 0
-        imgWidth.constant = 0
+//        imgHeight.constant = 0
+//        imgWidth.constant = 0
          
 
         GHSClassT.text = ""
@@ -565,20 +565,20 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         self.ps.text = ""
 
         
-        ghsImgGap.constant = 0
-        ghsImgGap2.constant = 0
-        imgGhsGap.constant = 0
-        ghsHazGap.constant = 0
-        hazPreGap.constant = 0
-        
-        self.preTiGap.constant = 0
-        self.tiDgimgGap.constant = 0
-        self.unPgGap.constant = 0
-        self.pgHcGap.constant = 0
-        self.hcProGap.constant = 0
-        self.proPsGap.constant = 0
-        
-        self.dgImgHeight.constant = 0
+//        ghsImgGap.constant = 0
+//        ghsImgGap2.constant = 0
+//        imgGhsGap.constant = 0
+//        ghsHazGap.constant = 0
+//        hazPreGap.constant = 0
+//        
+//        self.preTiGap.constant = 0
+//        self.tiDgimgGap.constant = 0
+//        self.unPgGap.constant = 0
+//        self.pgHcGap.constant = 0
+//        self.hcProGap.constant = 0
+//        self.proPsGap.constant = 0
+//        
+//        self.dgImgHeight.constant = 0
         
         self.unno.text = ""
         self.pg.text = ""
