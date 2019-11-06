@@ -10,7 +10,7 @@ import UIKit
 
 class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
 
-    @IBOutlet weak var FAT: UILabel!
+
     @IBOutlet weak var INHT: UILabel!
     @IBOutlet weak var INGT: UILabel!
     @IBOutlet weak var SKINT: UILabel!
@@ -40,7 +40,6 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
 
         
-        FAT.font = UIFont.boldSystemFont(ofSize: 25)
         INHT.font = UIFont.boldSystemFont(ofSize: 16)
         INGT.font = UIFont.boldSystemFont(ofSize: 16)
         SKINT.font = UIFont.boldSystemFont(ofSize: 16)
@@ -55,6 +54,7 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
         scrollDownArrow.isHidden = true
         
         callFA()
+        setTitlesLayout()
         // Do any additional setup after loading the view.
     }
     
@@ -153,7 +153,7 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
         let cont2 = FAFT.frame.height + ATDT.frame.height + inh.frame.height + ing.frame.height
         let cont3 = skin.frame.height + eye.frame.height + faf.frame.height + atd.frame.height
         
-        let conT = cont1 + cont2 + cont3 + 70
+        let conT = cont1 + cont2 + cont3 + 180
 
 //        print(contentView.frame.height)
 //        print(FAScrollView.frame.height)
@@ -185,6 +185,32 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
                 self.scrollDownArrow.isHidden = true
             }
         }
+    }
+    
+    func setTitlesLayout() {
+        INHT.layer.masksToBounds = true
+        INHT.backgroundColor = UIColor(red:0.04, green:0.56, blue:0.13, alpha:1.0)
+        INHT.layer.cornerRadius = 8
+        
+        INGT.layer.masksToBounds = true
+        INGT.backgroundColor = UIColor(red:0.04, green:0.56, blue:0.13, alpha:1.0)
+        INGT.layer.cornerRadius = 8
+        
+        SKINT.layer.masksToBounds = true
+        SKINT.backgroundColor = UIColor(red:0.04, green:0.56, blue:0.13, alpha:1.0)
+        SKINT.layer.cornerRadius = 8
+        
+        EYET.layer.masksToBounds = true
+        EYET.backgroundColor = UIColor(red:0.04, green:0.56, blue:0.13, alpha:1.0)
+        EYET.layer.cornerRadius = 8
+        
+        FAFT.layer.masksToBounds = true
+        FAFT.backgroundColor = UIColor(red:0.04, green:0.56, blue:0.13, alpha:1.0)
+        FAFT.layer.cornerRadius = 8
+        
+        ATDT.layer.masksToBounds = true
+        ATDT.backgroundColor = UIColor(red:0.04, green:0.56, blue:0.13, alpha:1.0)
+        ATDT.layer.cornerRadius = 8
     }
 
 

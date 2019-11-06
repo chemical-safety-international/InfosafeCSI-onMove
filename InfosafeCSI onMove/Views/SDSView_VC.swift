@@ -26,6 +26,8 @@ class SDSViewPage_VC: UIViewController {
 
         // Do any additional setup after loading the view.
 
+        navigationItem.title = "VIEW SDS"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25), .foregroundColor: UIColor.white]
         
         self.sdsShow()
         printBtn.isHidden = true

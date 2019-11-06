@@ -16,26 +16,25 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var PST: UILabel!
     @IBOutlet weak var TIT: UILabel!
     
-
+    @IBOutlet weak var UNNOT: UILabel!
+    @IBOutlet weak var DGCT: UILabel!
+    @IBOutlet weak var SUBRT: UILabel!
+    @IBOutlet weak var PGT: UILabel!
+    @IBOutlet weak var HCT: UILabel!
+    @IBOutlet weak var PSNT: UILabel!
+    
     
     @IBOutlet weak var ghsclass: UILabel!
     @IBOutlet weak var haz: UILabel!
     @IBOutlet weak var pstate: UILabel!
     @IBOutlet weak var ps: UILabel!
-
     @IBOutlet weak var unno: UILabel!
     @IBOutlet weak var pg: UILabel!
     @IBOutlet weak var hc: UILabel!
     @IBOutlet weak var psn: UILabel!
-    @IBOutlet weak var dgImg: UIImageView!
+    @IBOutlet weak var dgclass: UILabel!
+    @IBOutlet weak var subrisk: UILabel!
     
-        
-        
-    @IBOutlet weak var GHSScrollView: UIScrollView!
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var viewMoreLbl: UILabel!
-    @IBOutlet weak var scrollDownArrow: UIImageView!
-        
     @IBOutlet weak var img1: UIImageView!
     @IBOutlet weak var img2: UIImageView!
     @IBOutlet weak var img3: UIImageView!
@@ -44,52 +43,66 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var img6: UIImageView!
     @IBOutlet weak var img7: UIImageView!
     
-    @IBOutlet weak var imgHeight: NSLayoutConstraint!
-    @IBOutlet weak var imgWidth: NSLayoutConstraint!
-    
-    @IBOutlet weak var all: UIButton!
-    @IBOutlet weak var hazBtn: UIButton!
-    @IBOutlet weak var preBtn: UIButton!
-
-    
-    
-
-    @IBOutlet weak var ghsImgGap: NSLayoutConstraint!
-    @IBOutlet weak var imgGhsGap: NSLayoutConstraint!
-    @IBOutlet weak var ghsImgGap2: NSLayoutConstraint!
-    @IBOutlet weak var ghsHazGap: NSLayoutConstraint!
-    @IBOutlet weak var hazPreGap: NSLayoutConstraint!
-    
-    @IBOutlet weak var preTiGap: NSLayoutConstraint!
-    @IBOutlet weak var tiDgimgGap: NSLayoutConstraint!
-    @IBOutlet weak var unPgGap: NSLayoutConstraint!
-    @IBOutlet weak var pgHcGap: NSLayoutConstraint!
-    @IBOutlet weak var hcProGap: NSLayoutConstraint!
-    @IBOutlet weak var proPsGap: NSLayoutConstraint!
-    
-    @IBOutlet weak var dgImgHeight: NSLayoutConstraint!
-    
+    @IBOutlet weak var dgImg: UIImageView!
+    @IBOutlet weak var subImg1: UIImageView!
+    @IBOutlet weak var subImg2: UIImageView!
+  
     @IBOutlet weak var viewSDSBTn: UIButton!
-    
+    @IBOutlet weak var preVBtn: UIButton!
     @IBOutlet weak var dgBtn: UIButton!
+    @IBOutlet weak var ghsBtn: UIButton!
+    @IBOutlet weak var faBtn: UIButton!
     
+    
+    @IBOutlet weak var viewMoreLbl: UILabel!
+    
+
+    
+    @IBOutlet weak var btnView: UIView!
+    @IBOutlet weak var GHSScrollView: UIScrollView!
+    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var scrollDownArrow: UIImageView!
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var hpView: UIView!
+    @IBOutlet weak var tiVIew: UIView!
+    
+    @IBOutlet weak var img1Height: NSLayoutConstraint!
+    @IBOutlet weak var img6Height: NSLayoutConstraint!
+    
+    @IBOutlet weak var ghsImg1Gap: NSLayoutConstraint!
+    @IBOutlet weak var ghsImg6Gap: NSLayoutConstraint!
+    @IBOutlet weak var ghsHPVGap: NSLayoutConstraint!
+//    @IBOutlet weak var hpvTIVGap: NSLayoutConstraint!
+    
+    @IBOutlet weak var hpHeight: NSLayoutConstraint!
+    @IBOutlet weak var tiHeight: NSLayoutConstraint!
+    
+    
+    @IBOutlet weak var img6GHSGap: UIView!
+    
+    
+    
+    
+    
     
     private var lastContentOffset: CGFloat = 0
+    
+    
+
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         self.removeSpinner()
         
+//        self.view.layoutIfNeeded()
         //set the bold text for title texts
-        GHSClassT.font = UIFont.boldSystemFont(ofSize: 16)
-        HazardST.font = UIFont.boldSystemFont(ofSize: 16)
-        PercauT.font = UIFont.boldSystemFont(ofSize: 16)
-        PST.font = UIFont.boldSystemFont(ofSize: 16)
-        TIT.font = UIFont.boldSystemFont(ofSize: 16)
+        setTitleBold()
 
-
+        //set title style
+        setTitleStyle()
         
         GHSScrollView.delegate = self
         
@@ -97,11 +110,16 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         viewMoreLbl.isHidden = true
         scrollDownArrow.isHidden = true
         
-//        self.view.backgroundColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
-        
         setCFTIValue()
+        
 
     }
+    
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        self.view.layoutIfNeeded()
+//
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         setNavBar()
@@ -114,7 +132,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         navigationController?.navigationBar.tintColor = UIColor.white
         
         //change navigation bar text color and font
-        navigationItem.title = "CLASSIFICATION"
+//        navigationItem.title = "CLASSIFICATION"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25), .foregroundColor: UIColor.white]
         
         //remove border for navigation bar
@@ -130,84 +148,49 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     
     func getValue() {
         DispatchQueue.main.async {
-            let unStr = "UNNO: "
-            let pgStr = "PG: "
-            let hcStr = "Hazchem Code "
-            let psnStr = "Proper Shipping Name "
-            
-            self.GHSClassT.text = "GHS CLASSFICATION"
-            self.PST.text = "POISONS SCHEDULE"
-            self.TIT.text = "DANGEROUS GOODS"
-            self.PST.text = "POISON SCHEDULE"
-            
-            self.HazardST.text = ""
-            self.PercauT.text = ""
-            
-            self.ghsHazGap.constant = 0
-            self.hazPreGap.constant = 0
-            
-//            if (self.img1.image != nil) {
-                if (self.img6.image == nil) {
-                    self.ghsImgGap2.constant = 10
-                } else {
-                   self.ghsImgGap2.constant = 58
-                }
-//            }
-
             
             self.GHSScrollView.isHidden = false
             self.containerView.isHidden = true
             
-            
             self.ghsclass.text = localViewSDSGHS.classification
-            self.haz.text = ""
-            self.pstate.text = ""
             self.ps.text = localViewSDSGHS.ps
+            self.unno.text = localViewSDSTIADG.road_unno
+            self.pg.text = localViewSDSTIADG.road_packgrp
+            self.hc.text = localViewSDSTIADG.road_hazchem
+            self.psn.text = localViewSDSTIADG.road_psn
+            self.dgclass.text = localViewSDSTIADG.road_dgclass
+            self.subrisk.text = localViewSDSTIADG.road_subrisks
             
-            self.preTiGap.constant = 20
-            self.tiDgimgGap.constant = 20
-            self.unPgGap.constant = 5
-            self.pgHcGap.constant = 5
-            self.hcProGap.constant = 5
-//            self.proPsGap.constant = 20
-            
-            self.unno.text = unStr + localViewSDSTIADG.road_unno
-            self.pg.text = pgStr + localViewSDSTIADG.road_packgrp
-            self.hc.text = hcStr + localViewSDSTIADG.road_hazchem
-            self.psn.text = psnStr + localViewSDSTIADG.road_psn
+            self.UNNOT.text = "UNNO:"
+            self.DGCT.text = "DG CLASS:"
+            self.SUBRT.text = "SUB RISK(S)"
+            self.PGT.text = "PACKAGING GROUP"
+            self.HCT.text = "HAZCHEM CODE:"
+            self.PSNT.text = "PROPER SHIPPING NAME:"
+            self.PST.text = "POISONS SCHEDULE"
 
+            
+            self.HazardST.text = ""
+            self.PercauT.text = ""
+            self.haz.text = localViewSDSGHS.hstate
+            self.pstate.text = localViewSDSGHS.pstate
+            
             
             self.viewMore()
             //set the collection view height same as it expanded
-            self.imgHeight.constant = 90
-            self.imgWidth.constant = 90
-            self.dgImgHeight.constant = 90
+
             self.setImage()
 
             self.GHSScrollView.isHidden = false
+            
+            self.hpHeight.constant = 0
+            self.setTIVHeight()
 
         }
         
-        self.all.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        self.hazBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        self.preBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        
-//        all.setTitleColor(UIColor(red:0.91, green:0.53, blue:0.00, alpha:1.0), for: .normal)
-        hazBtn.setTitleColor(UIColor.white, for: .normal)
-        preBtn.setTitleColor(UIColor.white, for: .normal)
-        
-//        all.layer.addBorder(edge: UIRectEdge.bottom, color: UIColor.white, thickness: 1)
-//        hazBtn.layer.sublayers?.removeAll()
-//        preBtn.layer.sublayers?.removeAll()
-        
-        GHSClassT.layer.addBorder(edge: UIRectEdge.top, color: UIColor.orange, thickness: 1)
-        GHSClassT.layer.addBorder(edge: UIRectEdge.bottom, color: UIColor.orange, thickness: 1)
-        TIT.layer.addBorder(edge: UIRectEdge.top, color: UIColor.orange, thickness: 1)
-        TIT.layer.addBorder(edge: UIRectEdge.bottom, color: UIColor.orange, thickness: 1)
-        PST.layer.addBorder(edge: UIRectEdge.top, color: UIColor.orange, thickness: 1)
-        PST.layer.addBorder(edge: UIRectEdge.bottom, color: UIColor.orange, thickness: 1)
-
-        
+        navigationItem.title = "PREVIEW"
+        self.setPreViewBtnStyle()
+ 
     }
     
     
@@ -263,81 +246,27 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     }
     
     func viewMore() {
-        GHSClassT.sizeToFit()
-        HazardST.sizeToFit()
-        PercauT.sizeToFit()
-        PST.sizeToFit()
-        TIT.sizeToFit()
         
-        ghsclass.sizeToFit()
-        haz.sizeToFit()
-        pstate.sizeToFit()
-        ps.sizeToFit()
+        hpView.sizeToFit()
+        tiVIew.sizeToFit()
         
-        unno.sizeToFit()
-        pg.sizeToFit()
-        hc.sizeToFit()
-        psn.sizeToFit()
-
-        img1.sizeToFit()
-        img6.sizeToFit()
-        dgImg.sizeToFit()
         
+//        print("hpview: \(hpView.frame.height)\ntiview: \(tiVIew.frame.height)\ncontentview: \(contentView.frame.height)\n ghsscroll: \(GHSScrollView.frame.height)")
         contentView.sizeToFit()
         GHSScrollView.sizeToFit()
+        
+        
+        
+        self.view.layoutIfNeeded()
     
-
+        if contentView.frame.height > GHSScrollView.frame.height {
+            viewMoreLbl.isHidden = false
+            scrollDownArrow.isHidden = false
+        } else {
+            viewMoreLbl.isHidden = true
+            scrollDownArrow.isHidden = true
+        }
         
-//        let cont1 = GHSClassT.frame.height + HazardST.frame.height + PercauT.frame.height
-//        let cont2 = PST.frame.height + ghsclass.frame.height + TIT.frame.height
-//        let cont3 = haz.frame.height + pstate.frame.height + ps.frame.height
-//        var cont4 = unno.frame.height + pg.frame.height + hc.frame.height + psn.frame.height
-//        let cont5 = img1.frame.height + img6.frame.height/2 + ghsImgGap2.constant
-//        let cont6 = imgGhsGap.constant + ghsHazGap.constant + hazPreGap.constant
-//        let cont7 = preTiGap.constant + tiDgimgGap.constant + proPsGap.constant
-        
-//        if cont4 != 0{
-//            if (cont4 < 90) {
-//                cont4 = 90
-//            }
-//        }
-
-        
-//        let conT = cont1 + cont2 + cont3 + cont4 + cont5 + cont6 + cont7 + 15
-        
-        
-        
-//        print("contentView height: \(contentView.frame.height)\n scrollView height: \(GHSScrollView.frame.height)\n conT height: \(conT)\n")
-//        print("cont1 : \(cont1)\ncont2 : \(cont2)\ncont3 : \(cont3)\ncont4 : \(cont4)\ncont5 : \(cont5)\ncont6 : \(cont6)\ncont7 : \(cont7)\n")
-        
-        //check if the real content height is over or less the content view height
-//        if (contentView.frame.height > GHSScrollView.frame.height) {
-//            if (GHSScrollView.frame.height < conT) {
-//                self.viewMoreLbl.isHidden = false
-//                self.scrollDownArrow.isHidden = false
-//            } else {
-//               self.viewMoreLbl.isHidden = true
-//                self.scrollDownArrow.isHidden = true
-//            }
-//
-//        } else if (contentView.frame.height < GHSScrollView.frame.height) {
-//            if (GHSScrollView.frame.height < conT) {
-//                self.viewMoreLbl.isHidden = false
-//                self.scrollDownArrow.isHidden = false
-//            } else {
-//                self.viewMoreLbl.isHidden = true
-//                self.scrollDownArrow.isHidden = true
-//            }
-//        } else if (contentView.frame.height == GHSScrollView.frame.height) {
-//            if (GHSScrollView.frame.height < conT) {
-//                self.viewMoreLbl.isHidden = false
-//                self.scrollDownArrow.isHidden = false
-//            } else {
-//                self.viewMoreLbl.isHidden = true
-//                self.scrollDownArrow.isHidden = true
-//            }
-//        }
-//        view.reloadInputViews()
     }
     
     func setImage() {
@@ -456,6 +385,170 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         }
 
     }
+    
+    func setTitleBold() {
+        GHSClassT.font = UIFont.boldSystemFont(ofSize: 18)
+        HazardST.font = UIFont.boldSystemFont(ofSize: 18)
+        PercauT.font = UIFont.boldSystemFont(ofSize: 18)
+        PST.font = UIFont.boldSystemFont(ofSize: 18)
+        TIT.font = UIFont.boldSystemFont(ofSize: 18)
+        
+        UNNOT.font = UIFont.boldSystemFont(ofSize: 16)
+        DGCT.font = UIFont.boldSystemFont(ofSize: 16)
+        SUBRT.font = UIFont.boldSystemFont(ofSize: 16)
+        PGT.font = UIFont.boldSystemFont(ofSize: 16)
+        HCT.font = UIFont.boldSystemFont(ofSize: 16)
+        PSNT.font = UIFont.boldSystemFont(ofSize: 16)
+    }
+    
+    func setTitleStyle() {
+        
+        GHSClassT.layer.masksToBounds = true
+        GHSClassT.backgroundColor = UIColor.orange
+        GHSClassT.layer.cornerRadius = 8
+        
+        HazardST.layer.masksToBounds = true
+        HazardST.backgroundColor = UIColor.orange
+        HazardST.layer.cornerRadius = 8
+        
+        PercauT.layer.masksToBounds = true
+        PercauT.backgroundColor = UIColor.orange
+        PercauT.layer.cornerRadius = 8
+        
+        HazardST.layer.masksToBounds = true
+        HazardST.backgroundColor = UIColor.orange
+        HazardST.layer.cornerRadius = 8
+        
+        HazardST.layer.masksToBounds = true
+        HazardST.backgroundColor = UIColor.orange
+        HazardST.layer.cornerRadius = 8
+        
+        TIT.layer.masksToBounds = true
+        TIT.backgroundColor = UIColor.orange
+        TIT.layer.cornerRadius = 8
+        
+        PST.layer.masksToBounds = true
+        PST.backgroundColor = UIColor.orange
+        PST.layer.cornerRadius = 8
+        
+    }
+    
+    func setPreViewBtnStyle() {
+        self.viewSDSBTn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.preVBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        self.ghsBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.dgBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.faBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        
+        self.viewSDSBTn.backgroundColor = UIColor.darkGray
+        self.preVBtn.backgroundColor = UIColor.orange
+        self.ghsBtn.backgroundColor = UIColor.darkGray
+        self.dgBtn.backgroundColor = UIColor.darkGray
+        self.faBtn.backgroundColor = UIColor.darkGray
+        
+        //        GHSClassT.layer.addBorder(edge: UIRectEdge.top, color: UIColor.orange, thickness: 1)
+        //        GHSClassT.layer.addBorder(edge: UIRectEdge.bottom, color: UIColor.orange, thickness: 1)
+        //        TIT.layer.addBorder(edge: UIRectEdge.top, color: UIColor.orange, thickness: 1)
+        //        TIT.layer.addBorder(edge: UIRectEdge.bottom, color: UIColor.orange, thickness: 1)
+        //        PST.layer.addBorder(edge: UIRectEdge.top, color: UIColor.orange, thickness: 1)
+        //        PST.layer.addBorder(edge: UIRectEdge.bottom, color: UIColor.orange, thickness: 1)
+    }
+    
+    func setViewSDSBtnStyle() {
+        self.viewSDSBTn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        self.preVBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.ghsBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.dgBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.faBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        
+        self.viewSDSBTn.backgroundColor = UIColor.orange
+        self.preVBtn.backgroundColor = UIColor.darkGray
+        self.ghsBtn.backgroundColor = UIColor.darkGray
+        self.dgBtn.backgroundColor = UIColor.darkGray
+        self.faBtn.backgroundColor = UIColor.darkGray
+    }
+    
+    func setghsBtnStyle() {
+        self.viewSDSBTn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.preVBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.ghsBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        self.dgBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.faBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        
+        self.viewSDSBTn.backgroundColor = UIColor.darkGray
+        self.preVBtn.backgroundColor = UIColor.darkGray
+        self.ghsBtn.backgroundColor = UIColor.orange
+        self.dgBtn.backgroundColor = UIColor.darkGray
+        self.faBtn.backgroundColor = UIColor.darkGray
+    }
+    
+    func setdgBtnStyle() {
+        self.viewSDSBTn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.preVBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.ghsBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.dgBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        self.faBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        
+        self.viewSDSBTn.backgroundColor = UIColor.darkGray
+        self.preVBtn.backgroundColor = UIColor.darkGray
+        self.ghsBtn.backgroundColor = UIColor.darkGray
+        self.dgBtn.backgroundColor = UIColor.orange
+        self.faBtn.backgroundColor = UIColor.darkGray
+    }
+    
+    func setfaBtnStyle() {
+        self.viewSDSBTn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.preVBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.ghsBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.dgBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.faBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        
+        self.viewSDSBTn.backgroundColor = UIColor.darkGray
+        self.preVBtn.backgroundColor = UIColor.darkGray
+        self.ghsBtn.backgroundColor = UIColor.darkGray
+        self.dgBtn.backgroundColor = UIColor.darkGray
+        self.faBtn.backgroundColor = UIColor.orange
+    }
+    
+    func setHPVHeight() {
+        
+        HazardST.sizeToFit()
+        haz.sizeToFit()
+        PercauT.sizeToFit()
+        pstate.sizeToFit()
+        
+        let count = HazardST.frame.height + haz.frame.height + PercauT.frame.height + pstate.frame.height
+        
+        hpHeight.constant = count + 40
+
+    }
+    
+    func setTIVHeight() {
+        dgImg.sizeToFit()
+        subImg1.sizeToFit()
+        subImg2.sizeToFit()
+        
+        TIT.sizeToFit()
+        UNNOT.sizeToFit()
+        DGCT.sizeToFit()
+        SUBRT.sizeToFit()
+        PGT.sizeToFit()
+        HCT.sizeToFit()
+        psn.sizeToFit()
+        PST.sizeToFit()
+        ps.sizeToFit()
+        
+//        let count1 = subImg1.frame.height + subImg2.frame.height + UNNOT.frame.height + DGCT.frame.height
+        let count1 = 130 + UNNOT.frame.height + DGCT.frame.height
+        let count2 = SUBRT.frame.height + PGT.frame.height + HCT.frame.height + psn.frame.height
+        let count3 = PST.frame.height + ps.frame.height + TIT.frame.height
+        
+        tiHeight.constant = count1 + count2 + count3 + 110
+        print(count1)
+        print(count2)
+        print(count3)
+        print(tiHeight.constant)
+    }
 
     
     @IBAction func allBtnTapped(_ sender: Any) {
@@ -464,157 +557,87 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
 
     }
         
-    @IBAction func hazBtnTapped(_ sender: Any) {
+    @IBAction func ghsBtnTapped(_ sender: Any) {
         
-        img1.image = nil
-        img2.image = nil
-        img3.image = nil
-        img4.image = nil
-        img5.image = nil
-        img6.image = nil
-        img7.image = nil
+        setghsBtnStyle()
+        
+        GHSScrollView.isHidden = false
+        containerView.isHidden = true
+        
+        navigationItem.title = "GHS"
+        
         dgImg.image = nil
+        subImg1.image = nil
+        subImg2.image = nil
         
-        imgHeight.constant = 0
-        imgWidth.constant = 0
-        
-
-        GHSClassT.text = ""
-        HazardST.text = "HAZARD STATEMENT(S)"
-        PST.text = ""
-        PercauT.text = ""
-        TIT.text = ""
-
-        
-        self.ghsclass.text = ""
+        self.HazardST.text = "HAZARD STATEMENT(S)"
+        self.PercauT.text = "PRECAUTIONARY STATEMENT(S)"
         self.haz.text = localViewSDSGHS.hstate
-        self.pstate.text = ""
-        self.ps.text = ""
-
-
+        self.pstate.text = localViewSDSGHS.pstate
         
-//        ghsImgGap.constant = 0
-//        ghsImgGap2.constant = 0
-//        imgGhsGap.constant = 0
-//        ghsHazGap.constant = 0
-//        hazPreGap.constant = 0
-//        
-//        self.preTiGap.constant = 0
-//        self.tiDgimgGap.constant = 0
-//        self.unPgGap.constant = 0
-//        self.pgHcGap.constant = 0
-//        self.hcProGap.constant = 0
-//        self.proPsGap.constant = 0
-//        
-//        self.dgImgHeight.constant = 0
+        self.UNNOT.text = ""
+        self.DGCT.text = ""
+        self.SUBRT.text = ""
+        self.PGT.text = ""
+        self.HCT.text = ""
+        self.PSNT.text = ""
+        self.PST.text = ""
         
         self.unno.text = ""
         self.pg.text = ""
         self.hc.text = ""
         self.psn.text = ""
-
+        self.dgclass.text = ""
+        self.subrisk.text = ""
+        self.ps.text = ""
         
-        self.all.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        self.hazBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        self.preBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+//        self.hpHeight.constant = self.oriHPVHeight
+        self.tiHeight.constant = 0
+        self.setHPVHeight()
         
-        all.setTitleColor(UIColor.white, for: .normal)
-//        hazBtn.setTitleColor(UIColor(red:0.91, green:0.53, blue:0.00, alpha:1.0), for: .normal)
-        hazBtn.setTitleColor(UIColor.white, for: .normal)
-        preBtn.setTitleColor(UIColor.white, for: .normal)
-        
-        hazBtn.backgroundColor = UIColor.orange
-        all.backgroundColor = UIColor.darkGray
-        
-
-//        hazBtn.layer.addBorder(edge: UIRectEdge.bottom, color: UIColor.white, thickness: 1)
-//        all.layer.sublayers?.removeAll()
-//        preBtn.layer.sublayers?.removeAll()
-        
-        TIT.layer.sublayers?.removeAll()
-        PST.layer.sublayers?.removeAll()
         viewMore()
 
     }
     
-    @IBAction func preBtnTapped(_ sender: Any) {
-         
-    img1.image = nil
-    img2.image = nil
-    img3.image = nil
-    img4.image = nil
-    img5.image = nil
-    img6.image = nil
-    img7.image = nil
-    dgImg.image = nil
-         
-//        imgHeight.constant = 0
-//        imgWidth.constant = 0
-         
 
-        GHSClassT.text = ""
-        HazardST.text = ""
-        PST.text = ""
-        PercauT.text = "PRECAUTIONARY STATEMENT (S)"
-        TIT.text = ""
-
-         
-        self.ghsclass.text = ""
-        self.haz.text = ""
-        self.pstate.text = localViewSDSGHS.pstate
-        self.ps.text = ""
-
-        
-//        ghsImgGap.constant = 0
-//        ghsImgGap2.constant = 0
-//        imgGhsGap.constant = 0
-//        ghsHazGap.constant = 0
-//        hazPreGap.constant = 0
-//        
-//        self.preTiGap.constant = 0
-//        self.tiDgimgGap.constant = 0
-//        self.unPgGap.constant = 0
-//        self.pgHcGap.constant = 0
-//        self.hcProGap.constant = 0
-//        self.proPsGap.constant = 0
-//        
-//        self.dgImgHeight.constant = 0
-        
-        self.unno.text = ""
-        self.pg.text = ""
-        self.hc.text = ""
-        self.psn.text = ""
-        
-        self.all.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        self.hazBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        self.preBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        
-        all.setTitleColor(UIColor.white, for: .normal)
-        hazBtn.setTitleColor(UIColor.white, for: .normal)
-        preBtn.setTitleColor(UIColor(red:0.91, green:0.53, blue:0.00, alpha:1.0), for: .normal)
-        
-//        hazBtn.layer.sublayers?.removeAll()
-//        all.layer.sublayers?.removeAll()
-//        preBtn.layer.addBorder(edge: UIRectEdge.bottom, color: UIColor.white, thickness: 1)
-        
-        TIT.layer.sublayers?.removeAll()
-        PST.layer.sublayers?.removeAll()
-        viewMore()
-    }
     
     @IBAction func viewSDSBtnTapped(_ sender: Any) {
         
+//        setViewSDSBtnStyle()
         let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSViewPage_VC
         self.navigationController?.pushViewController(sdsJump!, animated: true)
-    }    
+    }
+    
     
     @IBAction func dgBtnTapped(_ sender: Any) {
+        
+        setdgBtnStyle()
+        navigationItem.title = "DG CLASS"
         
         GHSScrollView.isHidden = true
         containerView.isHidden = false
         
 
         let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSTI") as? SDSViewTI_VC
+
+        addChild(sdsJump!)
+        sdsJump!.view.frame = CGRect(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
+        containerView.addSubview(sdsJump!.view)
+
+        sdsJump!.didMove(toParent: self)
+    }
+    
+    
+    @IBAction func faBtnTapped(_ sender: Any) {
+        
+        setfaBtnStyle()
+        navigationItem.title = "FIRST AID"
+        
+        GHSScrollView.isHidden = true
+        containerView.isHidden = false
+        
+
+        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSFA") as? SDSViewFA_VC
 //         self.navigationController?.pushViewController(sdsJump!, animated: true)
         
         addChild(sdsJump!)
@@ -623,4 +646,5 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
 
         sdsJump!.didMove(toParent: self)
     }
+    
 }

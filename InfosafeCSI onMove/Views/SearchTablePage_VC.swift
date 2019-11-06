@@ -278,28 +278,6 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                 cell?.nameType?.image = UIImage(named: "ProdNameType-Local")
             }
             
-//            var imageView =
-//            if testrow == 0 {
-//                let image = UIImage(named: "row1")
-//                let imageView = UIImageView(image: image)
-//                cell?.backgroundView = imageView
-//                testrow += 1
-//            } else if testrow == 1 {
-//                let image = UIImage(named: "row2")
-//                let imageView = UIImageView(image: image)
-//                cell?.backgroundView = imageView
-//                testrow += 1
-//            } else if testrow == 2 {
-//                let image = UIImage(named: "row3")
-//                let imageView = UIImageView(image: image)
-//                cell?.backgroundView = imageView
-//                testrow += 1
-//            } else if testrow == 3 {
-//                let image = UIImage(named: "row4")
-//                let imageView = UIImageView(image: image)
-//                cell?.backgroundView = imageView
-//                testrow = 0
-//            }
             
             let image = UIImage(named: "CSI-CFBC")
             let imageView = UIImageView(image: image)

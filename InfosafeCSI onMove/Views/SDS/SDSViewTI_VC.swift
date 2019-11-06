@@ -438,8 +438,8 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             self.subRiskImg1.image = nil
             self.subRiskImg2.image = nil
             
-            self.dgCLbl.text = ""
-            self.subRiskLbl.text = ""
+            self.dgCLbl.text = localViewSDSTIIMDG.imdg_dgclass
+            self.subRiskLbl.text = localViewSDSTIIMDG.imdg_subrisks
             
             self.SYMBT.text = ""
             self.HCT.text = ""
@@ -564,8 +564,8 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             self.subRiskImg1.image = nil
             self.subRiskImg2.image = nil
             
-            self.dgCLbl.text = ""
-            self.subRiskLbl.text = ""
+            self.dgCLbl.text = localViewSDSTIIATA.iata_dgclass
+            self.subRiskLbl.text = localViewSDSTIIATA.iata_subrisks
             
             self.EMST.text = ""
             self.MPT.text = ""
