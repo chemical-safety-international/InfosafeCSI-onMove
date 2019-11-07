@@ -84,46 +84,12 @@ struct localsearchinfo {
         var subrisk1: String!
         var prodcode: String!
         var dgclass: String!
+        var GHS_Pictogram: String!
+        var Com_Country: String!
         var haz: String!
-                var ufs: [uf]!
+        var ufs: [uf]!
         
-//        var fcode: String!
-//        var erg: String! //Int!
-//        var phealth: String!
-//        var dgclass: String!
-//        var hazchem: String!
-//        var barid: String!
-//        var cl: String!
-//        var com: String!
-//        var inventory: String!
-//        var subrisk1: String!
-//        var haz: String!
-//        var uf: String!
-//        var name: String!
-//        var key: String!
-//        var ufs1: String!
-//        var nametype: String!
-//        var no: String!
-//        var utf3: String!
-//        var format: String!
-//        var penviron: String!
-//        var ufs2: String!
-//        var epg: String!//Int
-//        var ufs0: String!
-//        var partial: String!
-//        var pphysical: String!
-//        var ps: String!
-//        var issue: String!
-//        var barcode: String!
-//        var att: String!
-//        var code: String!
-//        var hcc: String!
-//
-//
-
-//        init(sdsno: String? = nil, synno: String? = nil, company: String? = nil, issueDate: String? = nil, prodname: String? = nil, prodtype: String? = nil, ispartial: Bool? = nil, ps: String? = nil, unno: String? = nil, subrisk1: String? = nil, prodcode: String? = nil, dgclass: String? = nil, haz: String? = nil, ufs: [uf]? = nil)
-        
-        init(sdsno: String? = nil, synno: String? = nil, company: String? = nil, issueDate: String? = nil, prodname: String? = nil, prodtype: String? = nil, ispartial: Bool? = nil, ps: String? = nil, unno: String? = nil, subrisk1: String? = nil, prodcode: String? = nil, dgclass: String? = nil, haz: String? = nil, ufs: [uf]? = nil) {
+        init(sdsno: String? = nil, synno: String? = nil, company: String? = nil, issueDate: String? = nil, prodname: String? = nil, prodtype: String? = nil, ispartial: Bool? = nil, ps: String? = nil, unno: String? = nil, subrisk1: String? = nil, prodcode: String? = nil, dgclass: String? = nil, haz: String? = nil, GHS_Pictogram: String? = nil, Com_Country: String? = nil, ufs: [uf]? = nil) {
             self.sdsno = sdsno
             self.synno = synno
             self.company = company
@@ -137,6 +103,8 @@ struct localsearchinfo {
             self.prodcode = prodcode
             self.dgclass = dgclass
             self.haz = haz
+            self.GHS_Pictogram = GHS_Pictogram
+            self.Com_Country = Com_Country
             self.ufs = ufs
         }
     }
@@ -215,6 +183,9 @@ struct localSearchData {
     var dgclass: String?
     var haz: String?
     
+    var GHS_Pictogram: String?
+    var Com_Country: String?
+    
     init() {
         company = ""
         issueDate = ""
@@ -225,9 +196,11 @@ struct localSearchData {
         unno = ""
         dgclass = ""
         haz = ""
+        GHS_Pictogram = ""
+        Com_Country = ""
     }
     
-    init(company: String, issueDate: String, prodcode: String, prodname: String, prodtype: String, ps: String, unno: String, dgclass: String, haz: String){
+    init(company: String, issueDate: String, prodcode: String, prodname: String, prodtype: String, ps: String, unno: String, dgclass: String, haz: String, GHS_Pictogram: String, Com_Country: String){
         self.company = company
         self.issueDate = issueDate
         self.prodcode = prodcode
@@ -237,6 +210,8 @@ struct localSearchData {
         self.unno = unno
         self.dgclass = dgclass
         self.haz = haz
+        self.GHS_Pictogram = GHS_Pictogram
+        self.Com_Country = Com_Country
     }
 }
 

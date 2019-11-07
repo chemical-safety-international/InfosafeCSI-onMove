@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14903" systemVersion="18G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15400" systemVersion="19A602" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="PDF" representedClassName="PDF" syncable="YES" codeGenerationType="class">
         <attribute name="issuedate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="pdfdata" optional="YES" attributeType="String"/>
@@ -17,8 +17,10 @@
         <attribute name="skullandcrossbones" optional="YES" attributeType="String"/>
     </entity>
     <entity name="SearchData" representedClassName="SearchData" syncable="YES" codeGenerationType="class">
+        <attribute name="com_Country" optional="YES" attributeType="String"/>
         <attribute name="company" optional="YES" attributeType="String"/>
         <attribute name="dgclass" optional="YES" attributeType="String"/>
+        <attribute name="ghs_Pictogram" optional="YES" attributeType="String"/>
         <attribute name="haz" optional="YES" attributeType="String"/>
         <attribute name="issueDate" optional="YES" attributeType="String"/>
         <attribute name="prodcode" optional="YES" attributeType="String"/>
@@ -36,8 +38,8 @@
     </entity>
     <elements>
         <element name="PDF" positionX="165.76953125" positionY="86.49609375" width="128" height="90"/>
-        <element name="SearchData" positionX="-55.921875" positionY="-92" width="128" height="43"/>
-        <element name="UserProfiles" positionX="-245.33984375" positionY="-121.328125" width="128" height="105"/>
         <element name="PicToGram" positionX="126.79296875" positionY="-71.63671875" width="128" height="178"/>
+        <element name="SearchData" positionX="-55.921875" positionY="-92" width="128" height="223"/>
+        <element name="UserProfiles" positionX="-245.33984375" positionY="-121.328125" width="128" height="105"/>
     </elements>
 </model>

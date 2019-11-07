@@ -107,6 +107,9 @@ class csiWCF_VM: UIViewController {
                         if let hazCode = info["haz"] as? [String: Any] {
                             ritem.haz = hazCode["value"] as? String
                         }
+                        
+                        ritem.Com_Country = info["scountry"] as? String
+                        ritem.GHS_Pictogram = info["sdsghspic"] as? String
                         //hanlde user field
                         //ritem.ufs.append(ritemuf)
                         //localresult.results.append(ritem)
@@ -114,7 +117,7 @@ class csiWCF_VM: UIViewController {
 
 // save search data to the core data
 //                        DispatchQueue.main.async {
-//                            CoreDataManager.storeObj(prodname: ritem.prodname ?? "", sdsno: ritem.sdsno ?? "", company: ritem.company ?? "", issueDate: ritem.issueDate ?? "", prodtype: ritem.prodtype ?? "", unno: ritem.unno ?? "", haz: ritem.haz ?? "", dgclass: ritem.dgclass ?? "", prodcode: ritem.prodcode ?? "", ps: ritem.ps ?? "")
+//                            CoreDataManager.storeObj(prodname: ritem.prodname ?? "", sdsno: ritem.sdsno ?? "", company: ritem.company ?? "", issueDate: ritem.issueDate ?? "", prodtype: ritem.prodtype ?? "", unno: ritem.unno ?? "", haz: ritem.haz ?? "", dgclass: ritem.dgclass ?? "", prodcode: ritem.prodcode ?? "", ps: ritem.ps ?? "", GHS_Pictogram: ritem.GHS_Pictogram ?? "", Com_Country: ritem.Com_Country ?? "")
 //                        }
 
                     
@@ -262,6 +265,7 @@ class csiWCF_VM: UIViewController {
                     localViewSDSGHS.hstate = output.hstate
                     localViewSDSGHS.ps = output.ps
                     localViewSDSGHS.pstate = output.pstate
+//                    print(output.pstate)
                     localViewSDSGHS.pic = output.pic
                     localViewSDSGHS.rphrase = output.rphrase
                     localViewSDSGHS.sds = output.sds

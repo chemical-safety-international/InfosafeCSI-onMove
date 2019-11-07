@@ -63,8 +63,8 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var scrollDownArrow: UIImageView!
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var hpView: UIView!
-    @IBOutlet weak var tiVIew: UIView!
+
+    
     
     @IBOutlet weak var img1Height: NSLayoutConstraint!
     @IBOutlet weak var img6Height: NSLayoutConstraint!
@@ -74,9 +74,11 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var ghsHPVGap: NSLayoutConstraint!
 //    @IBOutlet weak var hpvTIVGap: NSLayoutConstraint!
     
-    @IBOutlet weak var hpHeight: NSLayoutConstraint!
-    @IBOutlet weak var tiHeight: NSLayoutConstraint!
+
     
+    @IBOutlet weak var HShsGap: NSLayoutConstraint!
+    @IBOutlet weak var hsPSGap: NSLayoutConstraint!
+    @IBOutlet weak var PSpsGap: NSLayoutConstraint!
     
     @IBOutlet weak var img6GHSGap: UIView!
     
@@ -149,10 +151,18 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     func getValue() {
         DispatchQueue.main.async {
             
+            if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
+                self.GHSClassT.text = "GHS CLASSFICATION"
+                self.ghsclass.text = localViewSDSGHS.classification
+            } else {
+                self.GHSClassT.text = "RISK PHRASE"
+                self.ghsclass.text = localViewSDSGHS.rphrase
+            }
+            
             self.GHSScrollView.isHidden = false
             self.containerView.isHidden = true
             
-            self.ghsclass.text = localViewSDSGHS.classification
+            
             self.ps.text = localViewSDSGHS.ps
             self.unno.text = localViewSDSTIADG.road_unno
             self.pg.text = localViewSDSTIADG.road_packgrp
@@ -168,12 +178,13 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             self.HCT.text = "HAZCHEM CODE:"
             self.PSNT.text = "PROPER SHIPPING NAME:"
             self.PST.text = "POISONS SCHEDULE"
+            self.TIT.text = "TRANSPORT INFORMATION"
 
             
             self.HazardST.text = ""
             self.PercauT.text = ""
-            self.haz.text = localViewSDSGHS.hstate
-            self.pstate.text = localViewSDSGHS.pstate
+            self.haz.text = ""
+            self.pstate.text = ""
             
             
             self.viewMore()
@@ -183,8 +194,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
 
             self.GHSScrollView.isHidden = false
             
-            self.hpHeight.constant = 0
-            self.setTIVHeight()
+
 
         }
         
@@ -247,8 +257,6 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     
     func viewMore() {
         
-        hpView.sizeToFit()
-        tiVIew.sizeToFit()
         
         
 //        print("hpview: \(hpView.frame.height)\ntiview: \(tiVIew.frame.height)\ncontentview: \(contentView.frame.height)\n ghsscroll: \(GHSScrollView.frame.height)")
@@ -321,53 +329,95 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             }
 
             if cArray.count == 1 {
+                
+                img1Height.constant = 90
+                ghsImg1Gap.constant = 20
+                img6Height.constant = 0
+                ghsImg6Gap.constant = 103
+                
                 img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
 
             } else if cArray.count == 2 {
+                
+                img1Height.constant = 90
+                ghsImg1Gap.constant = 20
+                img6Height.constant = 0
+                ghsImg6Gap.constant = 103
+                
                 img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
                 img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
             } else if cArray.count == 3 {
+                
+                img1Height.constant = 90
+                ghsImg1Gap.constant = 20
+                img6Height.constant = 0
+                ghsImg6Gap.constant = 103
+                
                 img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
                 img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
                 img3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
             } else if cArray.count == 4 {
                 view.sizeToFit()
-                if (view.frame.height < 1024) {
+                img1Height.constant = 90
+                ghsImg1Gap.constant = 20
+                img6Height.constant = 90
+                ghsImg6Gap.constant = 58
+                
+//                if (view.frame.height < 1024) {
                     img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
                     img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
                     img3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
                     img6.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
-                } else {
-                    img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
-                    img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
-                    img3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
-                    img4.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
-                }
+//                } else {
+//                    img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+//                    img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
+//                    img3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
+//                    img4.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
+//                }
             } else if cArray.count == 5 {
 
                 view.sizeToFit()
+                
+                img1Height.constant = 90
+                 ghsImg1Gap.constant = 20
+                 img6Height.constant = 90
+                 ghsImg6Gap.constant = 58
                 //below iphone 11 pro max, width all less than 414
-                if (view.frame.width <= 414) {
+//                if (view.frame.width <= 414) {
  
                     img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
                     img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
                     img3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
                     img6.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
                     img7.image = UIImage(named: Bundle.main.path(forResource: cArray[4] as? String, ofType: "png")!)
-                    img4.image = nil
-                    img5.image = nil
-                    
-                } else {
+//                    img4.image = nil
+//                    img5.image = nil
+//
+//                } else {
 
-                    img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
-                    img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
-                    img3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
-                    img4.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
-                    img5.image = UIImage(named: Bundle.main.path(forResource: cArray[4] as? String, ofType: "png")!)
-                    img6.image = nil
-                    img7.image = nil
-                }
+//                    img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+//                    img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
+//                    img3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
+//                    img4.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
+//                    img5.image = UIImage(named: Bundle.main.path(forResource: cArray[4] as? String, ofType: "png")!)
+//                    img6.image = nil
+//                    img7.image = nil
+//                }
             }
+        } else {
+            img1.image = nil
+            img2.image = nil
+            img3.image = nil
+            img4.image = nil
+            img5.image = nil
+            img6.image = nil
+            img7.image = nil
+            
+            img1Height.constant = 0
+            img6Height.constant = 0
+            
+            ghsImg1Gap.constant = 0
+            ghsImg6Gap.constant = 0
         }
         
         var fixStr = ""
@@ -382,6 +432,38 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             }
             
             self.dgImg.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
+        }
+        
+        var fixSubStr1 = ""
+        var fixSubStr2 = ""
+        var fixSubArray: Array<String> = []
+ 
+        if (localViewSDSTIADG.road_subrisks.contains("None") || localViewSDSTIADG.road_subrisks.isEmpty == true) {
+            self.subImg1.image = nil
+            self.subImg2.image = nil
+        } else {
+             if (localViewSDSTIADG.road_subrisks.isEmpty == false) {
+                
+                 fixSubArray = localViewSDSTIADG.road_subrisks.components(separatedBy: " ")
+        //                         print("Array: \(fixSubArray.count)")
+                 if (fixSubArray.count == 2) {
+                     
+                     fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
+                     fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
+                     
+                     self.subImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+                     self.subImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
+                 } else if (fixSubArray.count == 1 ) {
+                    if fixSubStr1.contains("None") || fixSubStr1.contains("NIL") || fixSubStr1.isEmpty == true {
+                        
+                        self.subImg1.image = nil
+                     } else {
+                         
+                         fixSubStr1 = fixSubArray[0].replacingOccurrences(of: " ", with: "")
+                         self.subImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+                     }
+                 }
+             }
         }
 
     }
@@ -519,7 +601,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         
         let count = HazardST.frame.height + haz.frame.height + PercauT.frame.height + pstate.frame.height
         
-        hpHeight.constant = count + 40
+//        hpHeight.constant = count + 40
 
     }
     
@@ -543,11 +625,11 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         let count2 = SUBRT.frame.height + PGT.frame.height + HCT.frame.height + psn.frame.height
         let count3 = PST.frame.height + ps.frame.height + TIT.frame.height
         
-        tiHeight.constant = count1 + count2 + count3 + 110
-        print(count1)
-        print(count2)
-        print(count3)
-        print(tiHeight.constant)
+//        tiHeight.constant = count1 + count2 + count3 + 110
+//        print(count1)
+//        print(count2)
+//        print(count3)
+//        print(tiHeight.constant)
     }
 
     
@@ -570,10 +652,20 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         subImg1.image = nil
         subImg2.image = nil
         
-        self.HazardST.text = "HAZARD STATEMENT(S)"
-        self.PercauT.text = "PRECAUTIONARY STATEMENT(S)"
-        self.haz.text = localViewSDSGHS.hstate
-        self.pstate.text = localViewSDSGHS.pstate
+        if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
+            self.HazardST.text = "HAZARD STATEMENT(S)"
+            self.PercauT.text = "PRECAUTIONARY STATEMENT(S)"
+            self.haz.text = localViewSDSGHS.hstate
+            self.pstate.text = localViewSDSGHS.pstate
+            
+         } else {
+             self.HazardST.text = "RISK PHRASE(S)"
+             self.PercauT.text = "SAFETY PHRASE(S)"
+             self.haz.text = localViewSDSGHS.rphrase
+             self.pstate.text = localViewSDSGHS.sphrase
+         }
+        
+
         
         self.UNNOT.text = ""
         self.DGCT.text = ""
@@ -582,6 +674,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         self.HCT.text = ""
         self.PSNT.text = ""
         self.PST.text = ""
+        self.TIT.text = ""
         
         self.unno.text = ""
         self.pg.text = ""
@@ -591,9 +684,13 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         self.subrisk.text = ""
         self.ps.text = ""
         
-//        self.hpHeight.constant = self.oriHPVHeight
-        self.tiHeight.constant = 0
-        self.setHPVHeight()
+
+//        self.tiHeight.constant = 0
+//        self.setHPVHeight()
+        
+//        HShsGap.constant = 10
+//        hsPSGap.constant = 20
+//        PSpsGap.constant = 10
         
         viewMore()
 

@@ -8,8 +8,8 @@
 
 import Foundation
 
-var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
-//var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
+//var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
+var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
 
 
 // Call the WCF function: 'loginbyEami' with email, password, deviceid, devicemac and return the data from WCF
@@ -57,7 +57,12 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: String, c:String, p : Int, psize : Int, apptp: Int, completion:@escaping(Data) -> Void) -> (Void) {
  
     //create json data
-    let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":c, "v":inputData, "p":p, "psize":psize]
+//    let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":c, "v":inputData, "p":p, "psize":psize, "advanced": "0", "advancedsitetype": "3", "advanceditems": ["type": 2, "isgroup": 0, "groups": [], "values": inputData]]
+    
+//    let json: [String: Any] = ["client":client, "uid":uid, "apptp":"\(apptp)", "c":c, "v":inputData, "p":"\(p)", "psize":"\(psize)", "advanced": "0", "advancedsitetype": "3", "advanceditems": []]
+        let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":c, "v":inputData, "p":p, "psize":psize, "advanced": "0", "advancedsitetype": "3", "advanceditems": []]
+    
+//    let pNJson: [String: Any] = ["IsAdvanced":"true", "AdvancedCriteria": [ [ "SearchType": "2", "SearchValues": "", "IsGroup":"false", "Groups": [], "IsMixtrue": false, "Mixtures": "null"], [ "SearchType": "8", "SearchValues": "", "IsGroup": false, "Groups": [], "IsMixtrue": false, "Mixtures": "null"], [ "SearchType": "4", "SearchValues": "", "IsGroup": false, "Groups": [], "IsMixtrue": false, "Mixtures": "null"]]]
     
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
@@ -71,7 +76,7 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
     
     request.httpBody = jsonData
     
-//    print(json)
+    print(json)
     
     //create task
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -141,6 +146,9 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, completion
                     localcriteriainfo.arrName.append(noCount.name)
                 }
                 localcriteriainfo.code = model.items[0].code
+
+                print(localcriteriainfo.arrCode)
+                print(localcriteriainfo.arrName)
                 if localcriteriainfo.arrName != [] {
                     completion("true")
                 } else {

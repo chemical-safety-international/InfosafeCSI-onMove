@@ -29,7 +29,22 @@ class TableViewCell: UITableViewCell {
     
 
     @IBOutlet weak var PoisonSLbl: UILabel!
-
+    
+    
+    @IBOutlet weak var countryLbl: UILabel!
+    
+    @IBOutlet weak var ghsImg1: UIImageView!
+    @IBOutlet weak var ghsImg2: UIImageView!
+    @IBOutlet weak var ghsImg3: UIImageView!
+    @IBOutlet weak var ghsImg4: UIImageView!
+    @IBOutlet weak var ghsImg5: UIImageView!
+    
+    
+    @IBOutlet weak var issImg1Gap: NSLayoutConstraint!
+    @IBOutlet weak var issImg4Gap: NSLayoutConstraint!
+    
+    @IBOutlet weak var img1Height: NSLayoutConstraint!
+    @IBOutlet weak var img4Height: NSLayoutConstraint!
     
     
     @IBOutlet weak var prodCLbl: UILabel!
@@ -38,20 +53,11 @@ class TableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         name.font = UIFont.boldSystemFont(ofSize: 15)
-        
-
         isslbl.font = UIFont.boldSystemFont(ofSize: 13)
         unlbl.font = UIFont.boldSystemFont(ofSize: 13)
         prodCodeLbl.font = UIFont.boldSystemFont(ofSize: 13)
+        countryLbl.font = UIFont.systemFont(ofSize: 13)
 
-
-        
-        name.sizeToFit()
-        
-        //display full text of product name
-//        name.numberOfLines = 0
-//        name.adjustsFontSizeToFitWidth = true
-//        name.adjustsFontForContentSizeCategory = false
         
     }
 

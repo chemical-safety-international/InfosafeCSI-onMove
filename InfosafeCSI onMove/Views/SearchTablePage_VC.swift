@@ -266,6 +266,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
 //            cell?.dgcLbl.text = localsearchinfo.results[indexPath.row].dgclass
 //            cell?.psLbl.text = localsearchinfo.results[indexPath.row].ps
 //            cell?.hazLbl.text = localsearchinfo.results[indexPath.row].haz
+            cell?.countryLbl.text = localsearchinfo.results[indexPath.row].Com_Country
             
             
             
@@ -286,6 +287,152 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             
             
             
+            
+// setup the GHS pictograms in cells
+            var picArray: Array<Any> = []
+            cell?.ghsImg1.image = nil
+            cell?.ghsImg2.image = nil
+            cell?.ghsImg3.image = nil
+            cell?.ghsImg4.image = nil
+            cell?.ghsImg5.image = nil
+            
+            if (localsearchinfo.results[indexPath.row].GHS_Pictogram.isEmpty == false) {
+                picArray = localsearchinfo.results[indexPath.row].GHS_Pictogram.components(separatedBy: ",")
+            }
+            //print(localsearchinfo.results[indexPath.row].GHS_Pictogram)
+            
+            if picArray.count != 0 {
+                    var cArray: [Any] = []
+                    var imgCode: String!
+
+                    for index in 0..<(picArray.count) {
+
+                        let imgName = picArray[index]
+                        let imgNameFix = (imgName as AnyObject).trimmingCharacters(in: .whitespacesAndNewlines)
+
+                        if (imgNameFix == "Flame") {
+
+                            imgCode = "GHS02"
+                            cArray.append(imgCode!)
+                            
+                        } else if (imgNameFix == "Skull and crossbones") {
+
+                            imgCode = "GHS06"
+                            cArray.append(imgCode!)
+
+                        } else if (imgNameFix == "Flame over circle") {
+
+                            imgCode = "GHS03"
+                            cArray.append(imgCode!)
+
+                        } else if (imgNameFix == "Exclamation mark") {
+
+                            imgCode = "GHS07"
+                            cArray.append(imgCode!)
+
+                        } else if (imgNameFix == "Environment") {
+
+                            imgCode = "GHS09"
+                            cArray.append(imgCode!)
+
+                        } else if (imgNameFix == "Health hazard") {
+
+                            imgCode = "GHS08"
+                            cArray.append(imgCode!)
+
+                        } else if (imgNameFix == "Corrosion") {
+
+                            imgCode = "GHS05"
+                            cArray.append(imgCode!)
+
+                        } else if (imgNameFix == "Gas cylinder") {
+
+                            imgCode = "GHS04"
+                            cArray.append(imgCode!)
+
+                        } else if (imgNameFix == "Exploding bomb") {
+
+                            imgCode = "GHS01"
+                            cArray.append(imgCode!)
+                            
+                        } else {
+//                            print(imgNameFix)
+                        }
+    
+                    }
+
+                    if cArray.count == 1 {
+                        
+                        cell?.img1Height.constant = 60
+                        cell?.issImg1Gap.constant = 20
+                        cell?.img4Height.constant = 0
+                        cell?.issImg4Gap.constant = 80
+                        
+                        cell?.ghsImg1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+
+                    } else if cArray.count == 2 {
+                        
+                        cell?.img1Height.constant = 60
+                        cell?.issImg1Gap.constant = 20
+                        cell?.img4Height.constant = 0
+                        cell?.issImg4Gap.constant = 80
+                        
+                        cell?.ghsImg1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+                        cell?.ghsImg2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
+                    } else if cArray.count == 3 {
+                        
+                        cell?.img1Height.constant = 60
+                        cell?.issImg1Gap.constant = 20
+                        cell?.img4Height.constant = 0
+                        cell?.issImg4Gap.constant = 80
+                        
+                        cell?.ghsImg1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+                        cell?.ghsImg2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
+                        cell?.ghsImg3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
+                    } else if cArray.count == 4 {
+                        
+                        
+                        cell?.img1Height.constant = 60
+                        cell?.issImg1Gap.constant = 20
+                        cell?.img4Height.constant = 60
+                        cell?.issImg4Gap.constant = 60
+                        
+
+                            cell?.ghsImg1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+                            cell?.ghsImg2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
+                            cell?.ghsImg3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
+                            cell?.ghsImg4.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
+
+                    } else if cArray.count == 5 {
+
+
+                        
+                        cell?.img1Height.constant = 60
+                        cell?.issImg1Gap.constant = 20
+                        cell?.img4Height.constant = 60
+                        cell?.issImg4Gap.constant = 60
+         
+                            cell?.ghsImg1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+                            cell?.ghsImg2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
+                            cell?.ghsImg3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
+                            cell?.ghsImg4.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
+                            cell?.ghsImg5.image = UIImage(named: Bundle.main.path(forResource: cArray[4] as? String, ofType: "png")!)
+
+                    }
+                } else {
+                    cell?.ghsImg1.image = nil
+                    cell?.ghsImg2.image = nil
+                    cell?.ghsImg3.image = nil
+                    cell?.ghsImg4.image = nil
+                    cell?.ghsImg5.image = nil
+
+                    
+                    cell?.img1Height.constant = 0
+                    cell?.issImg1Gap.constant = 0
+                    cell?.img4Height.constant = 0
+                    cell?.issImg4Gap.constant = 0
+                }
+//            end setup GHS pictograms
             
             
             //setup cell color
@@ -370,7 +517,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                 if output.contains("true") {
                     DispatchQueue.main.async {
                         
-                        if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
+//                        if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
                             
                             csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
                             if output.sds != nil {
@@ -379,6 +526,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                                 localViewSDSTIADG.road_packgrp = output.road_packgrp
                                 localViewSDSTIADG.road_psn = output.road_psn
                                 localViewSDSTIADG.road_hazchem = output.road_hazchem
+                                localViewSDSTIADG.road_subrisks = output.road_subrisks
                                 
                                 DispatchQueue.main.async {
                                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
@@ -390,11 +538,11 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                             }
 //                            csiWCF_VM().callSDS_Trans() { (output)}
 
-                        } else {
-                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
-                            let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSCF") as? SDSViewCF_VC
-                            self.navigationController?.pushViewController(sdsJump!, animated: true)
-                        }
+//                        } else {
+//                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
+//                            let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSCF") as? SDSViewCF_VC
+//                            self.navigationController?.pushViewController(sdsJump!, animated: true)
+//                        }
                     }
                 }
             }

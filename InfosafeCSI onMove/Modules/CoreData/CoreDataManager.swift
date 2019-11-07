@@ -36,7 +36,7 @@ class CoreDataManager: NSObject {
     }
     
     //load data into coredata function
-    class func storeObj(prodname: String, sdsno: String, company: String, issueDate: String, prodtype: String, unno: String, haz: String, dgclass: String, prodcode: String, ps: String) {
+    class func storeObj(prodname: String, sdsno: String, company: String, issueDate: String, prodtype: String, unno: String, haz: String, dgclass: String, prodcode: String, ps: String, GHS_Pictogram: String, Com_Country: String) {
         
         let context = getContext()
         
@@ -54,6 +54,8 @@ class CoreDataManager: NSObject {
         manageObj.setValue(dgclass, forKey: "dgclass")
         manageObj.setValue(prodcode, forKey: "prodcode")
         manageObj.setValue(ps, forKey: "ps")
+        manageObj.setValue(GHS_Pictogram, forKey: "ghs_Pictogram")
+        manageObj.setValue(Com_Country, forKey: "com_Country")
         
         do {            
             try context.save()
@@ -83,7 +85,7 @@ class CoreDataManager: NSObject {
             let fetchResult = try getContext().fetch(fetchRequest)
             
             for item in fetchResult {
-                let prod = localSearchData(company: item.company!, issueDate: item.issueDate!, prodcode: item.prodcode!, prodname: item.prodname!, prodtype: item.prodtype!, ps: item.ps!, unno: item.unno!, dgclass: item.dgclass!, haz: item.haz!)
+                let prod = localSearchData(company: item.company!, issueDate: item.issueDate!, prodcode: item.prodcode!, prodname: item.prodname!, prodtype: item.prodtype!, ps: item.ps!, unno: item.unno!, dgclass: item.dgclass!, haz: item.haz!, GHS_Pictogram: item.ghs_Pictogram!, Com_Country: item.com_Country!)
                 productArray.append(prod)
                 }
             } catch {
