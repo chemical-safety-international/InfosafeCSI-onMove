@@ -270,6 +270,11 @@ class csiWCF_VM: UIViewController {
                     localViewSDSGHS.rphrase = output.rphrase
                     localViewSDSGHS.sds = output.sds
                     localViewSDSGHS.sphrase = output.sphrase
+                    localViewSDSGHS.ps_general = output.ps_general
+                    localViewSDSGHS.ps_storage = output.ps_storage
+                    localViewSDSGHS.ps_disposal = output.ps_disposal
+                    localViewSDSGHS.ps_response = output.ps_response
+                    localViewSDSGHS.ps_prevention = output.ps_prevention
                     
                     if (localViewSDSGHS.pic.isEmpty == false) {
                         localViewSDSGHS.picArray = localViewSDSGHS.pic.components(separatedBy: ",")
@@ -284,6 +289,7 @@ class csiWCF_VM: UIViewController {
                     localViewSDSCF.sds = output.sds
                     localViewSDSCF.sphrase = output.sphrase
                     localViewSDSCF.rphrase = output.rphrase
+                    
                 }
                 
                 completion("true")
@@ -363,4 +369,37 @@ class csiWCF_VM: UIViewController {
         }
     }
     
+        func callAllSDSFunction(completion:@escaping(String) -> Void) {
+            
+            DispatchQueue.main.async {
+ 
+                self.callSDS_GHS() { (output) in
+                    if output.contains("true") {
+                        
+                        self.callSDS_Trans() { (output) in
+                            if output.contains("true") {
+
+                                 self.callSDS_FA() { (output) in
+                                     if output.contains("true") {
+                                         completion("FAT")
+                                     } else {
+                                         completion("FAF")
+                                     }
+                                 }
+
+                                completion("TransT")
+                            } else {
+                                completion("TransF")
+                            }
+                        }
+
+                        completion("true")
+                    } else {
+                        localAllFunctionCheck.ghsFunction = false
+                        completion("false")
+                    }
+                }
+            }
+            completion("true")
+    }
 }

@@ -516,9 +516,9 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             csiWCF_VM().callSDS_GHS() { (output) in
                 if output.contains("true") {
                     DispatchQueue.main.async {
-                        
+
 //                        if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
-                            
+
                             csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
                             if output.sds != nil {
                                 localViewSDSTIADG.road_unno = output.road_unno
@@ -527,7 +527,8 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                                 localViewSDSTIADG.road_psn = output.road_psn
                                 localViewSDSTIADG.road_hazchem = output.road_hazchem
                                 localViewSDSTIADG.road_subrisks = output.road_subrisks
-                                
+
+
                                 DispatchQueue.main.async {
                                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
                                     let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC
@@ -536,19 +537,28 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
 
                                 }
                             }
-//                            csiWCF_VM().callSDS_Trans() { (output)}
-
-//                        } else {
-//                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
-//                            let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSCF") as? SDSViewCF_VC
-//                            self.navigationController?.pushViewController(sdsJump!, animated: true)
-//                        }
+                        }
                     }
                 }
-            }
+            
+            
+//                csiWCF_VM().callAllSDSFunction() { (output) in
+//
+//                    if (output.contains("true")) {
+//                            DispatchQueue.main.async {
+//                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
+//                            let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC
+//                            self.navigationController?.pushViewController(sdsJump!, animated: true)
+//                        }
+//                    } else {
+//                        print("Error!")
+//                    }
+//                }
+            
         }
-
     }
+
+
     
     
     

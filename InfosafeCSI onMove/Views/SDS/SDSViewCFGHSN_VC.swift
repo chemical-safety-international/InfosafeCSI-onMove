@@ -16,24 +16,16 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var PST: UILabel!
     @IBOutlet weak var TIT: UILabel!
     
-    @IBOutlet weak var UNNOT: UILabel!
-    @IBOutlet weak var DGCT: UILabel!
-    @IBOutlet weak var SUBRT: UILabel!
-    @IBOutlet weak var PGT: UILabel!
-    @IBOutlet weak var HCT: UILabel!
-    @IBOutlet weak var PSNT: UILabel!
-    
+    @IBOutlet weak var TIInfo: UILabel!
     
     @IBOutlet weak var ghsclass: UILabel!
     @IBOutlet weak var haz: UILabel!
-    @IBOutlet weak var pstate: UILabel!
     @IBOutlet weak var ps: UILabel!
-    @IBOutlet weak var unno: UILabel!
-    @IBOutlet weak var pg: UILabel!
-    @IBOutlet weak var hc: UILabel!
-    @IBOutlet weak var psn: UILabel!
-    @IBOutlet weak var dgclass: UILabel!
-    @IBOutlet weak var subrisk: UILabel!
+    
+    @IBOutlet weak var pstate: UILabel!
+
+    
+    
     
     @IBOutlet weak var img1: UIImageView!
     @IBOutlet weak var img2: UIImageView!
@@ -54,6 +46,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var faBtn: UIButton!
     
     
+    
     @IBOutlet weak var viewMoreLbl: UILabel!
     
 
@@ -71,21 +64,30 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var ghsImg1Gap: NSLayoutConstraint!
     @IBOutlet weak var ghsImg6Gap: NSLayoutConstraint!
-    @IBOutlet weak var ghsHPVGap: NSLayoutConstraint!
-//    @IBOutlet weak var hpvTIVGap: NSLayoutConstraint!
     
 
+    @IBOutlet weak var ghsHazGap: NSLayoutConstraint!
+    @IBOutlet weak var HazhazGap: NSLayoutConstraint!
+    @IBOutlet weak var hazPreGap: NSLayoutConstraint!
+    @IBOutlet weak var PregenGap: NSLayoutConstraint!
+ 
     
-    @IBOutlet weak var HShsGap: NSLayoutConstraint!
-    @IBOutlet weak var hsPSGap: NSLayoutConstraint!
+    @IBOutlet weak var TrandgImgGap: NSLayoutConstraint!
+    @IBOutlet weak var TransubImg1Gap: NSLayoutConstraint!
+    
+    @IBOutlet weak var subImg2UnGap: NSLayoutConstraint!
+    
+    @IBOutlet weak var dgImgHeight: NSLayoutConstraint!
+    @IBOutlet weak var subImg1height: NSLayoutConstraint!
+    
+    @IBOutlet weak var subImg1_2Gap: NSLayoutConstraint!
+    
+    @IBOutlet weak var unPSGap: NSLayoutConstraint!
     @IBOutlet weak var PSpsGap: NSLayoutConstraint!
     
     @IBOutlet weak var img6GHSGap: UIView!
     
-    
-    
-    
-    
+ 
     
     private var lastContentOffset: CGFloat = 0
     
@@ -117,11 +119,12 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
 
     }
     
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        self.view.layoutIfNeeded()
-//
-//    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+//        self.loadViewIfNeeded()
+//        viewMore()
+
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         setNavBar()
@@ -151,41 +154,122 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     func getValue() {
         DispatchQueue.main.async {
             
-            if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
-                self.GHSClassT.text = "GHS CLASSFICATION"
-                self.ghsclass.text = localViewSDSGHS.classification
-            } else {
-                self.GHSClassT.text = "RISK PHRASE"
-                self.ghsclass.text = localViewSDSGHS.rphrase
-            }
+//            if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
+//                self.GHSClassT.text = "GHS CLASSFICATION"
+//                self.ghsclass.text = localViewSDSGHS.classification
+//            } else {
+//                self.GHSClassT.text = "RISK PHRASE"
+//                self.ghsclass.text = localViewSDSGHS.rphrase
+//            }
+            
+            self.TrandgImgGap.constant = 30
+             self.TransubImg1Gap.constant = 10
+             self.subImg1_2Gap.constant = 10
+             self.subImg2UnGap.constant = 10
+             self.unPSGap.constant = 20
+             self.PSpsGap.constant = 10
+            
+            self.GHSClassT.text = "GHS CLASSFICATION"
+            self.ghsclass.text = localViewSDSGHS.classification
             
             self.GHSScrollView.isHidden = false
             self.containerView.isHidden = true
             
             
             self.ps.text = localViewSDSGHS.ps
-            self.unno.text = localViewSDSTIADG.road_unno
-            self.pg.text = localViewSDSTIADG.road_packgrp
-            self.hc.text = localViewSDSTIADG.road_hazchem
-            self.psn.text = localViewSDSTIADG.road_psn
-            self.dgclass.text = localViewSDSTIADG.road_dgclass
-            self.subrisk.text = localViewSDSTIADG.road_subrisks
             
-            self.UNNOT.text = "UNNO:"
-            self.DGCT.text = "DG CLASS:"
-            self.SUBRT.text = "SUB RISK(S)"
-            self.PGT.text = "PACKAGING GROUP"
-            self.HCT.text = "HAZCHEM CODE:"
-            self.PSNT.text = "PROPER SHIPPING NAME:"
             self.PST.text = "POISONS SCHEDULE"
             self.TIT.text = "TRANSPORT INFORMATION"
+            
+            let tiStr: NSMutableAttributedString = NSMutableAttributedString(string: "")
+            let breakStr: NSMutableAttributedString = NSMutableAttributedString(string: "\n")
+            
+            if localViewSDSTIADG.road_unno.isEmpty == false {
+                let str = "\nUNNO:\n"
+                let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                let strdata = NSMutableAttributedString(string: localViewSDSTIADG.road_unno)
+                
+                
+                tiStr.append(NSMutableAttributedString(string: str, attributes: attrs))
+                tiStr.append(strdata)
+                tiStr.append(breakStr)
+            }
+            
+            if localViewSDSTIADG.road_dgclass.isEmpty == false {
+                let str = "\nDG CLASS:\n"
+                let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                let strdata = NSMutableAttributedString(string: localViewSDSTIADG.road_dgclass)
+                
+                
+                tiStr.append(NSMutableAttributedString(string: str, attributes: attrs))
+                tiStr.append(strdata)
+                tiStr.append(breakStr)
+            }
+            
+            if localViewSDSTIADG.road_subrisks.isEmpty == false {
+                let str = "\nSUB RISK(S):\n"
+                let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                let strdata = NSMutableAttributedString(string: localViewSDSTIADG.road_subrisks)
+                
+                
+                tiStr.append(NSMutableAttributedString(string: str, attributes: attrs))
+                tiStr.append(strdata)
+                tiStr.append(breakStr)
+            }
+            
+            if localViewSDSTIADG.road_packgrp.isEmpty == false {
+                let str = "\nHAZCHEM CODE:\n"
+                let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                let strdata = NSMutableAttributedString(string: localViewSDSTIADG.road_packgrp)
+                
+                
+                tiStr.append(NSMutableAttributedString(string: str, attributes: attrs))
+                tiStr.append(strdata)
+                tiStr.append(breakStr)
+            }
+            
+            if localViewSDSTIADG.road_hazchem.isEmpty == false {
+                let str = "\nPACKAGING GROUP:\n"
+                let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                let strdata = NSMutableAttributedString(string: localViewSDSTIADG.road_hazchem)
+                
+                
+                tiStr.append(NSMutableAttributedString(string: str, attributes: attrs))
+                tiStr.append(strdata)
+                tiStr.append(breakStr)
+            }
+            
+            if localViewSDSTIADG.road_psn.isEmpty == false {
+                let str = "\nPROPER SHIPPING NAME:\n"
+                let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                let strdata = NSMutableAttributedString(string: localViewSDSTIADG.road_psn)
+                
+                
+                tiStr.append(NSMutableAttributedString(string: str, attributes: attrs))
+                tiStr.append(strdata)
+                tiStr.append(breakStr)
+            }
+            
+            
 
+
+            
+            self.TIInfo.attributedText = tiStr
+    
+            if (tiStr == NSMutableAttributedString(string: "")) {
+                self.TIInfo.text = ""
+                self.subImg2UnGap.constant = 0
+            }
             
             self.HazardST.text = ""
             self.PercauT.text = ""
             self.haz.text = ""
             self.pstate.text = ""
+
             
+            self.HazhazGap.constant = 0
+            self.hazPreGap.constant = 0
+            self.PregenGap.constant = 0
             
             self.viewMore()
             //set the collection view height same as it expanded
@@ -260,21 +344,52 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         
         
 //        print("hpview: \(hpView.frame.height)\ntiview: \(tiVIew.frame.height)\ncontentview: \(contentView.frame.height)\n ghsscroll: \(GHSScrollView.frame.height)")
-        contentView.sizeToFit()
-        GHSScrollView.sizeToFit()
+        DispatchQueue.main.async {
+            self.contentView.sizeToFit()
+            self.GHSScrollView.sizeToFit()
+            
+
+            
+//            self.view.layoutIfNeeded()
         
-        
-        
-        self.view.layoutIfNeeded()
-    
-        if contentView.frame.height > GHSScrollView.frame.height {
-            viewMoreLbl.isHidden = false
-            scrollDownArrow.isHidden = false
-        } else {
-            viewMoreLbl.isHidden = true
-            scrollDownArrow.isHidden = true
+ 
+            
+            self.img1.sizeToFit()
+            self.img6.sizeToFit()
+            self.ghsclass.sizeToFit()
+            self.GHSClassT.sizeToFit()
+            self.HazardST.sizeToFit()
+            self.haz.sizeToFit()
+            self.PercauT.sizeToFit()
+            self.pstate.sizeToFit()
+
+            self.TIT.sizeToFit()
+            self.dgImg.sizeToFit()
+            self.TIInfo.sizeToFit()
+            self.PST.sizeToFit()
+            self.ps.sizeToFit()
+            
+            let ct1 = self.img1Height.constant + self.img6Height.constant/2 + self.GHSClassT.frame.height + self.ghsclass.frame.height
+            let ct2 = self.HazardST.frame.height + self.haz.frame.height + self.PercauT.frame.height + self.pstate.frame.height
+            let ct3 = self.HazhazGap.constant + self.hazPreGap.constant + self.PregenGap.constant + self.dgImgHeight.constant
+            let ct4 = self.TIT.frame.height + self.TIInfo.frame.height + self.subImg2UnGap.constant + self.unPSGap.constant
+            let ct5 = self.PST.frame.height + self.ps.frame.height + self.PSpsGap.constant
+           let ctt = ct1 + ct2 + ct3 + ct4 + ct5 + 100
+           
+            print("Ctt: \(ctt)\n")
+            
+            if ctt > self.GHSScrollView.frame.height {
+                 self.viewMoreLbl.isHidden = false
+                 self.scrollDownArrow.isHidden = false
+             } else {
+                 self.viewMoreLbl.isHidden = true
+                 self.scrollDownArrow.isHidden = true
+             }
         }
-        
+        print(contentView.frame.height)
+        print(GHSScrollView.frame.height)
+
+ 
     }
     
     func setImage() {
@@ -420,10 +535,19 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             ghsImg6Gap.constant = 0
         }
         
+        
+        //set dg img and sub risk img
         var fixStr = ""
         
         if localViewSDSTIADG.road_dgclass.isEmpty == true || localViewSDSTIADG.road_dgclass.contains("None") {
             dgImg.image = nil
+            subImg1.image = nil
+            subImg2.image = nil
+            
+            dgImgHeight.constant = 0
+            subImg1height.constant = 0
+            subImg2UnGap.constant = 0
+            
         } else {
             if (localViewSDSTIADG.road_dgclass.contains(".")) {
                 fixStr = localViewSDSTIADG.road_dgclass.replacingOccurrences(of: ".", with: "")
@@ -431,6 +555,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                 fixStr = localViewSDSTIADG.road_dgclass
             }
             
+            dgImgHeight.constant = 90
             self.dgImg.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
         }
         
@@ -441,6 +566,11 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         if (localViewSDSTIADG.road_subrisks.contains("None") || localViewSDSTIADG.road_subrisks.isEmpty == true) {
             self.subImg1.image = nil
             self.subImg2.image = nil
+            
+            subImg2UnGap.constant = 0
+            subImg1_2Gap.constant = 0
+            
+            
         } else {
              if (localViewSDSTIADG.road_subrisks.isEmpty == false) {
                 
@@ -475,12 +605,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         PST.font = UIFont.boldSystemFont(ofSize: 18)
         TIT.font = UIFont.boldSystemFont(ofSize: 18)
         
-        UNNOT.font = UIFont.boldSystemFont(ofSize: 16)
-        DGCT.font = UIFont.boldSystemFont(ofSize: 16)
-        SUBRT.font = UIFont.boldSystemFont(ofSize: 16)
-        PGT.font = UIFont.boldSystemFont(ofSize: 16)
-        HCT.font = UIFont.boldSystemFont(ofSize: 16)
-        PSNT.font = UIFont.boldSystemFont(ofSize: 16)
+
     }
     
     func setTitleStyle() {
@@ -592,45 +717,45 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         self.faBtn.backgroundColor = UIColor.orange
     }
     
-    func setHPVHeight() {
-        
-        HazardST.sizeToFit()
-        haz.sizeToFit()
-        PercauT.sizeToFit()
-        pstate.sizeToFit()
-        
-        let count = HazardST.frame.height + haz.frame.height + PercauT.frame.height + pstate.frame.height
-        
-//        hpHeight.constant = count + 40
-
-    }
+//    func setHPVHeight() {
+//
+//        HazardST.sizeToFit()
+//        haz.sizeToFit()
+//        PercauT.sizeToFit()
+//        pstate.sizeToFit()
+//
+//        let count = HazardST.frame.height + haz.frame.height + PercauT.frame.height + pstate.frame.height
+//
+////        hpHeight.constant = count + 40
+//
+//    }
     
-    func setTIVHeight() {
-        dgImg.sizeToFit()
-        subImg1.sizeToFit()
-        subImg2.sizeToFit()
-        
-        TIT.sizeToFit()
-        UNNOT.sizeToFit()
-        DGCT.sizeToFit()
-        SUBRT.sizeToFit()
-        PGT.sizeToFit()
-        HCT.sizeToFit()
-        psn.sizeToFit()
-        PST.sizeToFit()
-        ps.sizeToFit()
-        
-//        let count1 = subImg1.frame.height + subImg2.frame.height + UNNOT.frame.height + DGCT.frame.height
-        let count1 = 130 + UNNOT.frame.height + DGCT.frame.height
-        let count2 = SUBRT.frame.height + PGT.frame.height + HCT.frame.height + psn.frame.height
-        let count3 = PST.frame.height + ps.frame.height + TIT.frame.height
-        
-//        tiHeight.constant = count1 + count2 + count3 + 110
-//        print(count1)
-//        print(count2)
-//        print(count3)
-//        print(tiHeight.constant)
-    }
+//    func setTIVHeight() {
+//        dgImg.sizeToFit()
+//        subImg1.sizeToFit()
+//        subImg2.sizeToFit()
+//
+//        TIT.sizeToFit()
+//        UNNOT.sizeToFit()
+//        DGCT.sizeToFit()
+//        SUBRT.sizeToFit()
+//        PGT.sizeToFit()
+//        HCT.sizeToFit()
+//        psn.sizeToFit()
+//        PST.sizeToFit()
+//        ps.sizeToFit()
+//
+////        let count1 = subImg1.frame.height + subImg2.frame.height + UNNOT.frame.height + DGCT.frame.height
+//        let count1 = 130 + UNNOT.frame.height + DGCT.frame.height
+//        let count2 = SUBRT.frame.height + PGT.frame.height + HCT.frame.height + psn.frame.height
+//        let count3 = PST.frame.height + ps.frame.height + TIT.frame.height
+//
+////        tiHeight.constant = count1 + count2 + count3 + 110
+////        print(count1)
+////        print(count2)
+////        print(count3)
+////        print(tiHeight.constant)
+//    }
 
     
     @IBAction func allBtnTapped(_ sender: Any) {
@@ -648,6 +773,10 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         
         navigationItem.title = "GHS"
         
+        self.HazhazGap.constant = 10
+        self.hazPreGap.constant = 20
+        self.PregenGap.constant = 10
+        
         dgImg.image = nil
         subImg1.image = nil
         subImg2.image = nil
@@ -656,41 +785,96 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             self.HazardST.text = "HAZARD STATEMENT(S)"
             self.PercauT.text = "PRECAUTIONARY STATEMENT(S)"
             self.haz.text = localViewSDSGHS.hstate
-            self.pstate.text = localViewSDSGHS.pstate
+            let psStr: NSMutableAttributedString = NSMutableAttributedString(string: "")
+            let breakStr: NSMutableAttributedString = NSMutableAttributedString(string: "\n")
+            
+            if (localViewSDSGHS.ps_general.isEmpty == false) {
+                let str = "General:\n"
+                let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                let strdata = NSMutableAttributedString(string: localViewSDSGHS.ps_general)
+                
+                psStr.append(NSMutableAttributedString(string: str, attributes: attrs))
+                psStr.append(strdata)
+                psStr.append(breakStr)
+            }
+            
+            if (localViewSDSGHS.ps_prevention.isEmpty == false) {
+
+                
+                let str = "\nPrevention:\n"
+                let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                let strdata = NSMutableAttributedString(string: localViewSDSGHS.ps_prevention)
+                
+                
+                psStr.append(NSMutableAttributedString(string: str, attributes: attrs))
+                psStr.append(strdata)
+                psStr.append(breakStr)
+            }
+            
+            if (localViewSDSGHS.ps_response.isEmpty == false) {
+
+                
+                let str = "\nRespone:\n"
+                let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                let strdata = NSMutableAttributedString(string: localViewSDSGHS.ps_response)
+                
+                psStr.append(NSMutableAttributedString(string: str, attributes: attrs))
+                psStr.append(strdata)
+                psStr.append(breakStr)
+            }
+            
+            if (localViewSDSGHS.ps_storage.isEmpty == false) {
+
+                let str = "\nStorage:\n"
+                let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                let strdata = NSMutableAttributedString(string: localViewSDSGHS.ps_storage)
+                
+                
+                psStr.append(NSMutableAttributedString(string: str, attributes: attrs))
+                psStr.append(strdata)
+                psStr.append(breakStr)
+            }
+            
+            if (localViewSDSGHS.ps_disposal.isEmpty == false) {
+                
+                let str = "\nDisposal:\n"
+                let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                let strdata = NSMutableAttributedString(string: localViewSDSGHS.ps_disposal)
+  
+                psStr.append(NSMutableAttributedString(string: str, attributes: attrs))
+                psStr.append(strdata)
+            }
+            
+            self.pstate.attributedText = psStr
+            
+            
+
+            
+            
+            
             
          } else {
              self.HazardST.text = "RISK PHRASE(S)"
              self.PercauT.text = "SAFETY PHRASE(S)"
-             self.haz.text = localViewSDSGHS.rphrase
-             self.pstate.text = localViewSDSGHS.sphrase
+             self.haz.text = localViewSDSCF.rphrase
+             self.pstate.text = localViewSDSCF.sphrase
          }
         
 
         
-        self.UNNOT.text = ""
-        self.DGCT.text = ""
-        self.SUBRT.text = ""
-        self.PGT.text = ""
-        self.HCT.text = ""
-        self.PSNT.text = ""
+        self.TIInfo.text = ""
         self.PST.text = ""
         self.TIT.text = ""
         
-        self.unno.text = ""
-        self.pg.text = ""
-        self.hc.text = ""
-        self.psn.text = ""
-        self.dgclass.text = ""
-        self.subrisk.text = ""
         self.ps.text = ""
         
 
-//        self.tiHeight.constant = 0
-//        self.setHPVHeight()
-        
-//        HShsGap.constant = 10
-//        hsPSGap.constant = 20
-//        PSpsGap.constant = 10
+        self.TrandgImgGap.constant = 0
+        self.TransubImg1Gap.constant = 0
+        self.subImg1_2Gap.constant = 0
+        self.subImg2UnGap.constant = 0
+        self.unPSGap.constant = 0
+        self.PSpsGap.constant = 0
         
         viewMore()
 
@@ -714,6 +898,9 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         GHSScrollView.isHidden = true
         containerView.isHidden = false
         
+        viewMoreLbl.isHidden = true
+        scrollDownArrow.isHidden = true
+        
 
         let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSTI") as? SDSViewTI_VC
 
@@ -732,6 +919,9 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         
         GHSScrollView.isHidden = true
         containerView.isHidden = false
+        
+        viewMoreLbl.isHidden = true
+        scrollDownArrow.isHidden = true
         
 
         let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSFA") as? SDSViewFA_VC

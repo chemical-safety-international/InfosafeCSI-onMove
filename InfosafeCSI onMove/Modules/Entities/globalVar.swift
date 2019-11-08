@@ -290,6 +290,11 @@ struct localViewSDSGHS {
     static var sds: String!
     static var sphrase: String!
     static var picArray: Array<Any>!
+    static var ps_disposal: String!
+    static var ps_general: String!
+    static var ps_prevention: String!
+    static var ps_response: String!
+    static var ps_storage: String!
 
 }
 
@@ -316,6 +321,13 @@ struct outViewSDSGHS: Codable {
     var rphrase: String!
     var sds: String!
     var sphrase: String!
+    var ps_disposal: String!
+    var ps_general: String!
+    var ps_prevention: String!
+    var ps_response: String!
+    var ps_storage: String!
+    
+    
 }
 
 struct localViewSDSFA {
@@ -409,4 +421,11 @@ struct localpictograms {
         self.picName = picName
         self.picCode = picCode
     }
+}
+
+struct localAllFunctionCheck {
+    static var ghsFunction: Bool!
+    static var transFunction: Bool!
+    static var faFunction: Bool!
+    static var allTrue: Bool!
 }

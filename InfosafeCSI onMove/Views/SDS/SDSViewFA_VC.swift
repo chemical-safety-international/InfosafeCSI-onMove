@@ -33,6 +33,14 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var viewMoreLbl: UILabel!
     @IBOutlet weak var scrollDownArrow: UIImageView!
     
+    @IBOutlet weak var INHinhGap: NSLayoutConstraint!
+    @IBOutlet weak var inhINGGap: NSLayoutConstraint!
+    
+    @IBOutlet weak var INGingGao: NSLayoutConstraint!
+    @IBOutlet weak var ingSKIGap: NSLayoutConstraint!
+    @IBOutlet weak var SKIskiGap: UILabel!
+    
+    
     private var lastContentOffset: CGFloat = 0
     
     
@@ -122,12 +130,50 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
     
     func getValue() {
         DispatchQueue.main.async {
-            self.inh.text = localViewSDSFA.inhalation
-            self.ing.text = localViewSDSFA.ingestion
-            self.skin.text = localViewSDSFA.skin
-            self.eye.text = localViewSDSFA.eye
-            self.faf.text = localViewSDSFA.fafacilities
-            self.atd.text = localViewSDSFA.advdoctor
+            
+            if (localViewSDSFA.inhalation.isEmpty == false) {
+                self.inh.text = localViewSDSFA.inhalation
+            } else {
+                self.INHT.text = ""
+                self.inh.text = ""
+            }
+            
+            if (localViewSDSFA.ingestion.isEmpty == false) {
+                self.ing.text = localViewSDSFA.ingestion
+            } else {
+                self.INGT.text = ""
+                self.ing.text = ""
+            }
+            
+            if (localViewSDSFA.skin.isEmpty == false) {
+                self.skin.text = localViewSDSFA.skin
+            } else {
+                self.SKINT.text = ""
+                self.skin.text = ""
+            }
+            
+            if (localViewSDSFA.eye.isEmpty == false) {
+                self.eye.text = localViewSDSFA.eye
+            } else {
+                self.EYET.text = ""
+                self.eye.text = ""
+            }
+            
+            if (localViewSDSFA.fafacilities.isEmpty == false) {
+                self.faf.text = localViewSDSFA.fafacilities
+            } else {
+                self.FAFT.text = ""
+                self.faf.text = ""
+            }
+            
+            if (localViewSDSFA.advdoctor.isEmpty == false) {
+                self.atd.text = localViewSDSFA.advdoctor
+            } else {
+                self.ATDT.text = ""
+                self.atd.text = ""
+            }
+            
+   
             
             self.viewMore()
             self.FAScrollView.isHidden = false

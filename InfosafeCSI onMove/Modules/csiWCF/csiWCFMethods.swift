@@ -76,7 +76,7 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
     
     request.httpBody = jsonData
     
-    print(json)
+//    print(json)
     
     //create task
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in

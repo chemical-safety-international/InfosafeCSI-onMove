@@ -204,28 +204,28 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func textTest() {
-//        let path = NSString(string: "~/Pictograms.txt").expandingTildeInPath
-//        let fileContent = try?NSString(contentsOfFile: path, encoding: String.Encoding.utf8.rawValue)
-//        print(fileContent)
-        
-        var items = localpictograms()
-        let bundle = Bundle(for: type(of: self))
-        if let path = bundle.path(forResource: "Pictograms", ofType: "txt") {
-            let contentStr = try? NSString(contentsOfFile: path, encoding: String.Encoding.utf8.rawValue)
-            let contentDat = contentStr?.data(using: String.Encoding.utf8.rawValue)
-            let contentDic = try? JSONSerialization.jsonObject(with: contentDat!, options: [])
-            print(contentDic!)
-            
-            let jsonArr = contentDic as? [String: Any]
-            jsonArr!.forEach { info in
-                
-            }
-//            contentData.forEach
-        } else {
-            print("failed")
-        }
-    }
+//    func textTest() {
+////        let path = NSString(string: "~/Pictograms.txt").expandingTildeInPath
+////        let fileContent = try?NSString(contentsOfFile: path, encoding: String.Encoding.utf8.rawValue)
+////        print(fileContent)
+//        
+//        var items = localpictograms()
+//        let bundle = Bundle(for: type(of: self))
+//        if let path = bundle.path(forResource: "Pictograms", ofType: "txt") {
+//            let contentStr = try? NSString(contentsOfFile: path, encoding: String.Encoding.utf8.rawValue)
+//            let contentDat = contentStr?.data(using: String.Encoding.utf8.rawValue)
+//            let contentDic = try? JSONSerialization.jsonObject(with: contentDat!, options: [])
+//            print(contentDic!)
+//            
+//            let jsonArr = contentDic as? [String: Any]
+//            jsonArr!.forEach { info in
+//                
+//            }
+////            contentData.forEach
+//        } else {
+//            print("failed")
+//        }
+//    }
 }
 
 //create a spinner for ViewController
