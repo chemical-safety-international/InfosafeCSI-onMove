@@ -814,7 +814,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             if (localViewSDSGHS.ps_response.isEmpty == false) {
 
                 
-                let str = "\nRespone:\n"
+                let str = "\nResponse:\n"
                 let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
                 let strdata = NSMutableAttributedString(string: localViewSDSGHS.ps_response)
                 
