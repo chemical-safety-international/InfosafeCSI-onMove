@@ -86,7 +86,7 @@
                                 </connections>
                             </textField>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CSI-Logo1" translatesAutoresizingMaskIntoConstraints="NO" id="arA-dx-5Ii">
-                                <rect key="frame" x="203.5" y="40" width="305.00000000000011" height="120"/>
+                                <rect key="frame" x="203.5" y="40" width="305" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="TYq-jb-dvX"/>
                                     <constraint firstAttribute="width" constant="305" id="kpJ-IC-h98"/>
@@ -1008,7 +1008,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CSI-Logo1" translatesAutoresizingMaskIntoConstraints="NO" id="ftH-fF-xtx">
-                                <rect key="frame" x="30" y="0.0" width="652.00000000000011" height="61"/>
+                                <rect key="frame" x="30" y="0.0" width="652" height="122"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2502,24 +2502,30 @@
                     <navigationItem key="navigationItem" id="4NO-YR-5Ge"/>
                     <connections>
                         <outlet property="ATDT" destination="J9G-42-XYd" id="hke-sg-0O9"/>
+                        <outlet property="ATDatdGap" destination="hte-HO-0e8" id="iJs-8R-A0D"/>
                         <outlet property="EYET" destination="jBC-7X-r5w" id="eiT-Xq-UlR"/>
+                        <outlet property="EYEeyeGap" destination="eTc-kU-dGh" id="CdU-ku-ImB"/>
                         <outlet property="FAFT" destination="s0G-0h-m6L" id="Dni-bf-Pd2"/>
+                        <outlet property="FAFfafGap" destination="4ii-Ce-5F3" id="Y8b-Tk-aZE"/>
                         <outlet property="FAScrollView" destination="t0I-wX-SKy" id="kfZ-Rt-SBD"/>
                         <outlet property="INGT" destination="rKJ-f2-vQV" id="sno-jO-cfa"/>
                         <outlet property="INGingGao" destination="rkB-Eb-dAb" id="6fJ-ZD-KUS"/>
                         <outlet property="INHT" destination="sca-56-pxg" id="Y5F-h1-Kfq"/>
                         <outlet property="INHinhGap" destination="1eD-uP-FGe" id="0we-06-eXD"/>
                         <outlet property="SKINT" destination="KAv-tk-qLt" id="2zn-0o-cri"/>
-                        <outlet property="SKIskiGap" destination="KAv-tk-qLt" id="S5s-x9-8fe"/>
+                        <outlet property="SkiskiGap" destination="ooY-OM-rJB" id="QJy-RG-fz8"/>
                         <outlet property="atd" destination="JUe-WR-ccP" id="qwy-UZ-Cai"/>
                         <outlet property="contentView" destination="PAk-u0-h3y" id="UTN-Uh-wXd"/>
                         <outlet property="eye" destination="bmh-qB-eyj" id="x1e-pi-FZ6"/>
+                        <outlet property="eyeFAFGap" destination="qCK-TJ-TLx" id="jFi-2B-R3d"/>
                         <outlet property="faf" destination="T4H-Vx-8oG" id="GVa-Ze-jJM"/>
+                        <outlet property="fafATDGap" destination="QNX-FZ-AUO" id="ZVz-ug-oeu"/>
                         <outlet property="ing" destination="BIi-TO-ds0" id="gKS-Bz-ZRc"/>
                         <outlet property="ingSKIGap" destination="v5r-kS-JdE" id="fze-bo-qUC"/>
                         <outlet property="inh" destination="mCV-H0-QQ5" id="SDO-Sr-hnr"/>
                         <outlet property="inhINGGap" destination="BLL-Nm-Qtv" id="bTs-eG-ws5"/>
                         <outlet property="scrollDownArrow" destination="C2e-OI-kmi" id="Mn3-ti-8rc"/>
+                        <outlet property="skiEYEGap" destination="HSO-4Z-wa7" id="h9g-zN-b9u"/>
                         <outlet property="skin" destination="N0t-XV-NIs" id="24R-V9-gI0"/>
                         <outlet property="viewMoreLbl" destination="Duv-pV-MDO" id="Jsm-MB-nw6"/>
                     </connections>

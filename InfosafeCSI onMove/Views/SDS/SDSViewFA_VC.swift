@@ -35,10 +35,16 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var INHinhGap: NSLayoutConstraint!
     @IBOutlet weak var inhINGGap: NSLayoutConstraint!
-    
     @IBOutlet weak var INGingGao: NSLayoutConstraint!
     @IBOutlet weak var ingSKIGap: NSLayoutConstraint!
-    @IBOutlet weak var SKIskiGap: UILabel!
+    @IBOutlet weak var SkiskiGap: NSLayoutConstraint!
+    @IBOutlet weak var skiEYEGap: NSLayoutConstraint!
+    @IBOutlet weak var EYEeyeGap: NSLayoutConstraint!
+    @IBOutlet weak var eyeFAFGap: NSLayoutConstraint!
+    @IBOutlet weak var FAFfafGap: NSLayoutConstraint!
+    @IBOutlet weak var fafATDGap: NSLayoutConstraint!
+    @IBOutlet weak var ATDatdGap: NSLayoutConstraint!
+    
     
     
     private var lastContentOffset: CGFloat = 0
@@ -136,6 +142,8 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
             } else {
                 self.INHT.text = ""
                 self.inh.text = ""
+                self.INHinhGap.constant = 0
+
             }
             
             if (localViewSDSFA.ingestion.isEmpty == false) {
@@ -143,6 +151,8 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
             } else {
                 self.INGT.text = ""
                 self.ing.text = ""
+                self.inhINGGap.constant = 0
+                self.INGingGao.constant = 0
             }
             
             if (localViewSDSFA.skin.isEmpty == false) {
@@ -150,6 +160,8 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
             } else {
                 self.SKINT.text = ""
                 self.skin.text = ""
+                self.ingSKIGap.constant = 0
+                self.SkiskiGap.constant = 0
             }
             
             if (localViewSDSFA.eye.isEmpty == false) {
@@ -157,6 +169,8 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
             } else {
                 self.EYET.text = ""
                 self.eye.text = ""
+                self.skiEYEGap.constant = 0
+                self.EYEeyeGap.constant = 0
             }
             
             if (localViewSDSFA.fafacilities.isEmpty == false) {
@@ -164,6 +178,8 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
             } else {
                 self.FAFT.text = ""
                 self.faf.text = ""
+                self.eyeFAFGap.constant = 0
+                self.FAFfafGap.constant = 0
             }
             
             if (localViewSDSFA.advdoctor.isEmpty == false) {
@@ -171,9 +187,9 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
             } else {
                 self.ATDT.text = ""
                 self.atd.text = ""
+                self.fafATDGap.constant = 0
+                self.ATDatdGap.constant = 0
             }
-            
-   
             
             self.viewMore()
             self.FAScrollView.isHidden = false
@@ -195,11 +211,14 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
         faf.sizeToFit()
         atd.sizeToFit()
         
-        let cont1 = INHT.frame.height + INGT.frame.height + SKINT.frame.height + EYET.frame.height
-        let cont2 = FAFT.frame.height + ATDT.frame.height + inh.frame.height + ing.frame.height
-        let cont3 = skin.frame.height + eye.frame.height + faf.frame.height + atd.frame.height
+        let count1 = INHT.frame.height + INGT.frame.height + SKINT.frame.height + EYET.frame.height
+        let count2 = FAFT.frame.height + ATDT.frame.height + inh.frame.height + ing.frame.height
+        let count3 = skin.frame.height + eye.frame.height + faf.frame.height + atd.frame.height
+        let count4 = INHinhGap.constant + inhINGGap.constant + INGingGao.constant + ingSKIGap.constant
+        let count5 = SkiskiGap.constant + skiEYEGap.constant + EYEeyeGap.constant + eyeFAFGap.constant
+        let count6 = FAFfafGap.constant + fafATDGap.constant + ATDatdGap.constant
         
-        let conT = cont1 + cont2 + cont3 + 180
+        let conT = count1 + count2 + count3 + count4 + count5 + count6 + 20
 
 //        print(contentView.frame.height)
 //        print(FAScrollView.frame.height)
@@ -207,30 +226,38 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
 //        print("\n")
         
         //check if the real content height is over or less the content view height
-        if (contentView.frame.height > FAScrollView.frame.height) {
-
+        if conT > self.FAScrollView.frame.height {
             self.viewMoreLbl.isHidden = false
             self.scrollDownArrow.isHidden = false
-        } else if (contentView.frame.height < FAScrollView.frame.height) {
-            if (FAScrollView.frame.height < conT) {
-                self.viewMoreLbl.isHidden = false
-                self.scrollDownArrow.isHidden = false
-            } else if (FAScrollView.frame.height - conT <= 50.0) {
-                self.viewMoreLbl.isHidden = false
-                self.scrollDownArrow.isHidden = false
-            } else {
-                self.viewMoreLbl.isHidden = true
-                self.scrollDownArrow.isHidden = true
-            }
-        } else if (contentView.frame.height == FAScrollView.frame.height) {
-            if (FAScrollView.frame.height < conT) {
-                self.viewMoreLbl.isHidden = false
-                self.scrollDownArrow.isHidden = false
-            } else {
-                self.viewMoreLbl.isHidden = true
-                self.scrollDownArrow.isHidden = true
-            }
+        } else {
+            self.viewMoreLbl.isHidden = true
+            self.scrollDownArrow.isHidden = true
         }
+        
+//        if (contentView.frame.height > FAScrollView.frame.height) {
+//
+//            self.viewMoreLbl.isHidden = false
+//            self.scrollDownArrow.isHidden = false
+//        } else if (contentView.frame.height < FAScrollView.frame.height) {
+//            if (FAScrollView.frame.height < conT) {
+//                self.viewMoreLbl.isHidden = false
+//                self.scrollDownArrow.isHidden = false
+//            } else if (FAScrollView.frame.height - conT <= 50.0) {
+//                self.viewMoreLbl.isHidden = false
+//                self.scrollDownArrow.isHidden = false
+//            } else {
+//                self.viewMoreLbl.isHidden = true
+//                self.scrollDownArrow.isHidden = true
+//            }
+//        } else if (contentView.frame.height == FAScrollView.frame.height) {
+//            if (FAScrollView.frame.height < conT) {
+//                self.viewMoreLbl.isHidden = false
+//                self.scrollDownArrow.isHidden = false
+//            } else {
+//                self.viewMoreLbl.isHidden = true
+//                self.scrollDownArrow.isHidden = true
+//            }
+//        }
     }
     
     func setTitlesLayout() {
