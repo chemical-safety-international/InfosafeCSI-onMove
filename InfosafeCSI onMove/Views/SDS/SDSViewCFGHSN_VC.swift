@@ -75,8 +75,6 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var TrandgImgGap: NSLayoutConstraint!
     @IBOutlet weak var TransubImg1Gap: NSLayoutConstraint!
     
-    @IBOutlet weak var subImg2UnGap: NSLayoutConstraint!
-    
     @IBOutlet weak var dgImgHeight: NSLayoutConstraint!
     @IBOutlet weak var subImg1height: NSLayoutConstraint!
     
@@ -85,7 +83,9 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var unPSGap: NSLayoutConstraint!
     @IBOutlet weak var PSpsGap: NSLayoutConstraint!
     
-    @IBOutlet weak var img6GHSGap: UIView!
+    @IBOutlet weak var img6GHSGap: NSLayoutConstraint!
+    
+    @IBOutlet weak var dgImgTIInfoGap: NSLayoutConstraint!
     
  
     
@@ -165,7 +165,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             self.TrandgImgGap.constant = 30
              self.TransubImg1Gap.constant = 10
              self.subImg1_2Gap.constant = 10
-             self.subImg2UnGap.constant = 10
+             self.dgImgTIInfoGap.constant = 30
              self.unPSGap.constant = 20
              self.PSpsGap.constant = 10
             
@@ -176,9 +176,21 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             self.containerView.isHidden = true
             
             
-            self.ps.text = localViewSDSGHS.ps
             
-            self.PST.text = "POISONS SCHEDULE"
+            
+            
+            if (localViewSDSGHS.ps.isEmpty == false) {
+                self.PST.text = "POISONS SCHEDULE"
+                self.ps.text = localViewSDSGHS.ps
+                self.unPSGap.constant = 20
+                self.PSpsGap.constant = 10
+            } else {
+                self.PST.text = ""
+                self.ps.text = ""
+                self.unPSGap.constant = 0
+                self.PSpsGap.constant = 0
+            }
+            
             self.TIT.text = "TRANSPORT INFORMATION"
             
             let tiStr: NSMutableAttributedString = NSMutableAttributedString(string: "")
@@ -258,7 +270,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     
             if (tiStr == NSMutableAttributedString(string: "")) {
                 self.TIInfo.text = ""
-                self.subImg2UnGap.constant = 0
+                
             }
             
             self.HazardST.text = ""
@@ -348,10 +360,6 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             self.contentView.sizeToFit()
             self.GHSScrollView.sizeToFit()
             
-
-            
-//            self.view.layoutIfNeeded()
-        
  
             
             self.img1.sizeToFit()
@@ -372,11 +380,11 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             let ct1 = self.img1Height.constant + self.img6Height.constant/2 + self.GHSClassT.frame.height + self.ghsclass.frame.height
             let ct2 = self.HazardST.frame.height + self.haz.frame.height + self.PercauT.frame.height + self.pstate.frame.height
             let ct3 = self.HazhazGap.constant + self.hazPreGap.constant + self.PregenGap.constant + self.dgImgHeight.constant
-            let ct4 = self.TIT.frame.height + self.TIInfo.frame.height + self.subImg2UnGap.constant + self.unPSGap.constant
+            let ct4 = self.TIT.frame.height + self.TIInfo.frame.height + self.dgImgTIInfoGap.constant + self.unPSGap.constant
             let ct5 = self.PST.frame.height + self.ps.frame.height + self.PSpsGap.constant
            let ctt = ct1 + ct2 + ct3 + ct4 + ct5 + 100
            
-            print("Ctt: \(ctt)\n")
+//            print("Ctt: \(ctt)\n")
             
             if ctt > self.GHSScrollView.frame.height {
                  self.viewMoreLbl.isHidden = false
@@ -386,8 +394,8 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                  self.scrollDownArrow.isHidden = true
              }
         }
-        print(contentView.frame.height)
-        print(GHSScrollView.frame.height)
+//        print(contentView.frame.height)
+//        print(GHSScrollView.frame.height)
 
  
     }
@@ -546,7 +554,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             
             dgImgHeight.constant = 0
             subImg1height.constant = 0
-            subImg2UnGap.constant = 0
+            dgImgTIInfoGap.constant = 0
             
         } else {
             if (localViewSDSTIADG.road_dgclass.contains(".")) {
@@ -556,6 +564,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             }
             
             dgImgHeight.constant = 90
+            dgImgTIInfoGap.constant = 30
             self.dgImg.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
         }
         
@@ -567,7 +576,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             self.subImg1.image = nil
             self.subImg2.image = nil
             
-            subImg2UnGap.constant = 0
+            subImg1height.constant = 0
             subImg1_2Gap.constant = 0
             
             
@@ -717,45 +726,6 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         self.faBtn.backgroundColor = UIColor.orange
     }
     
-//    func setHPVHeight() {
-//
-//        HazardST.sizeToFit()
-//        haz.sizeToFit()
-//        PercauT.sizeToFit()
-//        pstate.sizeToFit()
-//
-//        let count = HazardST.frame.height + haz.frame.height + PercauT.frame.height + pstate.frame.height
-//
-////        hpHeight.constant = count + 40
-//
-//    }
-    
-//    func setTIVHeight() {
-//        dgImg.sizeToFit()
-//        subImg1.sizeToFit()
-//        subImg2.sizeToFit()
-//
-//        TIT.sizeToFit()
-//        UNNOT.sizeToFit()
-//        DGCT.sizeToFit()
-//        SUBRT.sizeToFit()
-//        PGT.sizeToFit()
-//        HCT.sizeToFit()
-//        psn.sizeToFit()
-//        PST.sizeToFit()
-//        ps.sizeToFit()
-//
-////        let count1 = subImg1.frame.height + subImg2.frame.height + UNNOT.frame.height + DGCT.frame.height
-//        let count1 = 130 + UNNOT.frame.height + DGCT.frame.height
-//        let count2 = SUBRT.frame.height + PGT.frame.height + HCT.frame.height + psn.frame.height
-//        let count3 = PST.frame.height + ps.frame.height + TIT.frame.height
-//
-////        tiHeight.constant = count1 + count2 + count3 + 110
-////        print(count1)
-////        print(count2)
-////        print(count3)
-////        print(tiHeight.constant)
-//    }
 
     
     @IBAction func allBtnTapped(_ sender: Any) {
@@ -861,20 +831,19 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
          }
         
 
-        
-        self.TIInfo.text = ""
-        self.PST.text = ""
         self.TIT.text = ""
-        
-        self.ps.text = ""
-        
-
+        self.TIInfo.text = ""
         self.TrandgImgGap.constant = 0
+        self.dgImgHeight.constant = 0
+        self.subImg1height.constant = 0
         self.TransubImg1Gap.constant = 0
         self.subImg1_2Gap.constant = 0
-        self.subImg2UnGap.constant = 0
+        self.dgImgTIInfoGap.constant = 0
+        
         self.unPSGap.constant = 0
+        self.PST.text = ""
         self.PSpsGap.constant = 0
+        self.ps.text = ""
         
         viewMore()
 

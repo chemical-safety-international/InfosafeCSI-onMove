@@ -122,16 +122,16 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
     
     func callFA() {
 
-        csiWCF_VM().callSDS_FA() { (output) in
-            if output.contains("true") {
+//        csiWCF_VM().callSDS_FA() { (output) in
+//            if output.contains("true") {
 
                 self.getValue()
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
-            }else {
-                print("Something wrong!")
-            }
-            
-        }
+//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
+//            }else {
+//                print("Something wrong!")
+//            }
+//
+//        }
     }
     
     func getValue() {
@@ -197,42 +197,48 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
     }
     
     func viewMore() {
-        INHT.sizeToFit()
-        INGT.sizeToFit()
-        SKINT.sizeToFit()
-        EYET.sizeToFit()
-        FAFT.sizeToFit()
-        ATDT.sizeToFit()
         
-        inh.sizeToFit()
-        ing.sizeToFit()
-        skin.sizeToFit()
-        eye.sizeToFit()
-        faf.sizeToFit()
-        atd.sizeToFit()
-        
-        let count1 = INHT.frame.height + INGT.frame.height + SKINT.frame.height + EYET.frame.height
-        let count2 = FAFT.frame.height + ATDT.frame.height + inh.frame.height + ing.frame.height
-        let count3 = skin.frame.height + eye.frame.height + faf.frame.height + atd.frame.height
-        let count4 = INHinhGap.constant + inhINGGap.constant + INGingGao.constant + ingSKIGap.constant
-        let count5 = SkiskiGap.constant + skiEYEGap.constant + EYEeyeGap.constant + eyeFAFGap.constant
-        let count6 = FAFfafGap.constant + fafATDGap.constant + ATDatdGap.constant
-        
-        let conT = count1 + count2 + count3 + count4 + count5 + count6 + 20
+        DispatchQueue.main.async {
+            self.INHT.sizeToFit()
+            self.INGT.sizeToFit()
+            self.SKINT.sizeToFit()
+            self.EYET.sizeToFit()
+            self.FAFT.sizeToFit()
+            self.ATDT.sizeToFit()
+            
+            self.inh.sizeToFit()
+            self.ing.sizeToFit()
+            self.skin.sizeToFit()
+            self.eye.sizeToFit()
+            self.faf.sizeToFit()
+            self.atd.sizeToFit()
+            
+            let count1 = self.INHT.frame.height + self.INGT.frame.height + self.SKINT.frame.height + self.EYET.frame.height
+            let count2 = self.FAFT.frame.height + self.ATDT.frame.height + self.inh.frame.height + self.ing.frame.height
+            let count3 = self.skin.frame.height + self.eye.frame.height + self.faf.frame.height + self.atd.frame.height
+            let count4 = self.INHinhGap.constant + self.inhINGGap.constant + self.INGingGao.constant + self.ingSKIGap.constant
+            let count5 = self.SkiskiGap.constant + self.skiEYEGap.constant + self.EYEeyeGap.constant + self.eyeFAFGap.constant
+            let count6 = self.FAFfafGap.constant + self.fafATDGap.constant + self.ATDatdGap.constant
+            
+            let conT = count1 + count2 + count3 + count4 + count5 + count6 + 20
 
-//        print(contentView.frame.height)
-//        print(FAScrollView.frame.height)
-//        print(conT)
-//        print("\n")
-        
-        //check if the real content height is over or less the content view height
-        if conT > self.FAScrollView.frame.height {
-            self.viewMoreLbl.isHidden = false
-            self.scrollDownArrow.isHidden = false
-        } else {
-            self.viewMoreLbl.isHidden = true
-            self.scrollDownArrow.isHidden = true
+            print(self.contentView.frame.height)
+            print(self.FAScrollView.frame.height)
+            print(conT)
+            print("\n")
+            
+            //check if the real content height is over or less the content view height
+            if conT > self.FAScrollView.frame.height {
+                self.viewMoreLbl.isHidden = false
+                self.scrollDownArrow.isHidden = false
+            } else {
+                self.viewMoreLbl.isHidden = true
+                self.scrollDownArrow.isHidden = true
+            }
         }
+
+        
+
         
 //        if (contentView.frame.height > FAScrollView.frame.height) {
 //

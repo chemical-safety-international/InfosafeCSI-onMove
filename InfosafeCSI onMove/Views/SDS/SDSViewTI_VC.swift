@@ -158,15 +158,15 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
     
     func callTI() {
 
-        csiWCF_VM().callSDS_Trans() { (output) in
-            if output.contains("true") {
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
+//        csiWCF_VM().callSDS_Trans() { (output) in
+//            if output.contains("true") {
+//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
                 self.getValue()
   
-            }else {
-                print("Something wrong!")
-            }
-        }
+//            }else {
+//                print("Something wrong!")
+//            }
+//        }
     }
     
     func getValue() {

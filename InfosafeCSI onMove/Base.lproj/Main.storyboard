@@ -3086,6 +3086,7 @@
                                             <constraint firstAttribute="trailing" secondItem="bzS-c8-XsX" secondAttribute="trailing" constant="5" id="3f0-s0-7lz"/>
                                             <constraint firstItem="pzw-9Y-Hyo" firstAttribute="leading" secondItem="jPy-e0-Bse" secondAttribute="leading" constant="5" id="5bg-kQ-ovE"/>
                                             <constraint firstItem="SfP-Md-rwb" firstAttribute="width" secondItem="c5K-Ne-EqZ" secondAttribute="width" id="6M2-rm-4a4"/>
+                                            <constraint firstItem="WbK-xI-8Oj" firstAttribute="top" secondItem="Jbg-aj-gMH" secondAttribute="bottom" constant="30" id="6W2-25-qjj"/>
                                             <constraint firstItem="6zg-no-wRH" firstAttribute="width" secondItem="SfP-Md-rwb" secondAttribute="width" id="6rh-D7-dQY"/>
                                             <constraint firstItem="hgV-ls-Ju3" firstAttribute="top" secondItem="hUk-JO-Xb0" secondAttribute="bottom" constant="10" id="8bb-u2-LdC"/>
                                             <constraint firstItem="bzS-c8-XsX" firstAttribute="leading" secondItem="jPy-e0-Bse" secondAttribute="leading" constant="5" id="8zC-U0-BbV"/>
@@ -3118,7 +3119,6 @@
                                             <constraint firstItem="9Wt-ZD-CnV" firstAttribute="leading" secondItem="6zg-no-wRH" secondAttribute="trailing" constant="10" id="VLB-aQ-IYK"/>
                                             <constraint firstItem="WbK-xI-8Oj" firstAttribute="leading" secondItem="jPy-e0-Bse" secondAttribute="leading" constant="5" id="aAW-xr-EMt"/>
                                             <constraint firstItem="zhS-eL-06a" firstAttribute="top" secondItem="cYi-DP-r48" secondAttribute="bottom" constant="20" id="brD-v2-UDP"/>
-                                            <constraint firstItem="WbK-xI-8Oj" firstAttribute="top" secondItem="0Vk-LK-hIZ" secondAttribute="bottom" constant="10" id="bxG-7U-dFl"/>
                                             <constraint firstItem="9b4-73-CqM" firstAttribute="leading" secondItem="jPy-e0-Bse" secondAttribute="leading" constant="5" id="bzC-rx-k5c"/>
                                             <constraint firstItem="zev-QI-0zr" firstAttribute="width" secondItem="9Wt-ZD-CnV" secondAttribute="width" id="cvR-Ku-aWA"/>
                                             <constraint firstItem="cYi-DP-r48" firstAttribute="leading" secondItem="jPy-e0-Bse" secondAttribute="leading" constant="55" id="eHp-wx-eI1"/>
@@ -3306,6 +3306,7 @@
                         <outlet property="dgBtn" destination="0vV-C4-22j" id="WFf-bP-1gS"/>
                         <outlet property="dgImg" destination="Jbg-aj-gMH" id="4vZ-ho-Tsi"/>
                         <outlet property="dgImgHeight" destination="Yr3-rM-U5d" id="KDh-lT-6Lo"/>
+                        <outlet property="dgImgTIInfoGap" destination="6W2-25-qjj" id="jaJ-1a-crt"/>
                         <outlet property="faBtn" destination="mob-Fz-ZjY" id="SKP-6N-yS9"/>
                         <outlet property="ghsBtn" destination="zRx-Ew-4J7" id="TsL-6L-cXu"/>
                         <outlet property="ghsHazGap" destination="ygi-50-uGH" id="ATw-hv-KVo"/>
@@ -3321,7 +3322,7 @@
                         <outlet property="img4" destination="9Wt-ZD-CnV" id="CPc-Di-7U6"/>
                         <outlet property="img5" destination="zev-QI-0zr" id="cOa-AW-DiN"/>
                         <outlet property="img6" destination="cYi-DP-r48" id="obj-FV-eR6"/>
-                        <outlet property="img6GHSGap" destination="jPy-e0-Bse" id="O01-qQ-dlP"/>
+                        <outlet property="img6GHSGap" destination="brD-v2-UDP" id="vE8-rV-Z4u"/>
                         <outlet property="img6Height" destination="HF1-ih-LpH" id="3pT-uA-xjq"/>
                         <outlet property="img7" destination="nmd-hq-DUj" id="XSd-ux-oT9"/>
                         <outlet property="preVBtn" destination="ULD-27-LXd" id="C8q-XO-94p"/>
@@ -3332,7 +3333,6 @@
                         <outlet property="subImg1_2Gap" destination="GzJ-L6-nxp" id="mDk-Jc-2tr"/>
                         <outlet property="subImg1height" destination="3mi-bg-NTZ" id="rgK-hO-3m8"/>
                         <outlet property="subImg2" destination="0Vk-LK-hIZ" id="XVG-jm-wKV"/>
-                        <outlet property="subImg2UnGap" destination="bxG-7U-dFl" id="6EA-0a-NfT"/>
                         <outlet property="unPSGap" destination="Gpy-Wm-9fA" id="7Bz-GZ-cKg"/>
                         <outlet property="viewMoreLbl" destination="YSi-0V-If7" id="ybu-bB-6NA"/>
                         <outlet property="viewSDSBTn" destination="3V0-Ol-IfW" id="BuO-0n-lBl"/>

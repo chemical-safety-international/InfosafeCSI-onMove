@@ -508,38 +508,82 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
 //
 //                menuAppear()
 //            }
-            
-            
-            //directly call the CF page
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
-            
-            csiWCF_VM().callSDS_GHS() { (output) in
+            csiWCF_VM().callSDS_FA() { (output) in
                 if output.contains("true") {
                     DispatchQueue.main.async {
-
-//                        if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
-
-                            csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
-                            if output.sds != nil {
-                                localViewSDSTIADG.road_unno = output.road_unno
-                                localViewSDSTIADG.road_dgclass = output.road_dgclass
-                                localViewSDSTIADG.road_packgrp = output.road_packgrp
-                                localViewSDSTIADG.road_psn = output.road_psn
-                                localViewSDSTIADG.road_hazchem = output.road_hazchem
-                                localViewSDSTIADG.road_subrisks = output.road_subrisks
-
-
+                        csiWCF_VM().callSDS_Trans() { (output) in
+                            if output.contains("true") {
                                 DispatchQueue.main.async {
-                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
-                                    let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC
-                                    self.navigationController?.pushViewController(sdsJump!, animated: true)
-                                }
+                                    csiWCF_VM().callSDS_GHS() { (output) in
+                                        if output.contains("true") {
+                                            DispatchQueue.main.async {
 
+                                                csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
+                                                if output.sds != nil {
+                                                    localViewSDSTIADG.road_unno = output.road_unno
+                                                    localViewSDSTIADG.road_dgclass = output.road_dgclass
+                                                    localViewSDSTIADG.road_packgrp = output.road_packgrp
+                                                    localViewSDSTIADG.road_psn = output.road_psn
+                                                    localViewSDSTIADG.road_hazchem = output.road_hazchem
+                                                    localViewSDSTIADG.road_subrisks = output.road_subrisks
+
+
+                                                    DispatchQueue.main.async {
+                                                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
+                                                        let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC
+                                                        self.navigationController?.pushViewController(sdsJump!, animated: true)
+                                                    }
+
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }                                    
                                 }
+                            }else {
+                            print("Something wrong!")
                             }
                         }
                     }
+                    
+                }else {
+                    print("Something wrong!")
                 }
+                
+            }
+            
+            
+            //directly call the CF page
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
+//
+//            csiWCF_VM().callSDS_GHS() { (output) in
+//                if output.contains("true") {
+//                    DispatchQueue.main.async {
+//
+////                        if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
+//
+//                            csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
+//                            if output.sds != nil {
+//                                localViewSDSTIADG.road_unno = output.road_unno
+//                                localViewSDSTIADG.road_dgclass = output.road_dgclass
+//                                localViewSDSTIADG.road_packgrp = output.road_packgrp
+//                                localViewSDSTIADG.road_psn = output.road_psn
+//                                localViewSDSTIADG.road_hazchem = output.road_hazchem
+//                                localViewSDSTIADG.road_subrisks = output.road_subrisks
+//
+//
+//                                DispatchQueue.main.async {
+//                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
+//                                    let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC
+//                                    self.navigationController?.pushViewController(sdsJump!, animated: true)
+//                                }
+//
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
             
             
 //                csiWCF_VM().callAllSDSFunction() { (output) in
