@@ -28,7 +28,7 @@ class csiWCF_VM: UIViewController {
         }
     }
     
-    func callSearch(inputData:String, completion:@escaping(Bool) -> Void) {
+    func callSearch(pnameInputData:String, supInputData: String, pcodeInputData: String, completion:@escaping(Bool) -> Void) {
 //        CoreDataManager.cleanSearchCoreData()
 //        print("callsearch called successfully")
         localsearchinfo.details = ""
@@ -52,7 +52,7 @@ class csiWCF_VM: UIViewController {
         let psize = localsearchinfo.psize
         
         //call search function
-        csiWCF_GetSDSSearchResultsPage(inputData: inputData, client: client!, uid: uid!, c: c!, p: p!, psize:psize!, apptp:apptp!) { (completionReturnData) in
+        csiWCF_GetSDSSearchResultsPage(pnameInputData: pnameInputData, supInputData: supInputData, pcodeInputData: pcodeInputData, client: client!, uid: uid!, c: c!, p: p!, psize:psize!, apptp:apptp!) { (completionReturnData) in
 
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
@@ -369,37 +369,4 @@ class csiWCF_VM: UIViewController {
         }
     }
     
-        func callAllSDSFunction(completion:@escaping(String) -> Void) {
-            
-            DispatchQueue.main.async {
- 
-                self.callSDS_GHS() { (output) in
-                    if output.contains("true") {
-                        
-                        self.callSDS_Trans() { (output) in
-                            if output.contains("true") {
-
-                                 self.callSDS_FA() { (output) in
-                                     if output.contains("true") {
-                                         completion("FAT")
-                                     } else {
-                                         completion("FAF")
-                                     }
-                                 }
-
-                                completion("TransT")
-                            } else {
-                                completion("TransF")
-                            }
-                        }
-
-                        completion("true")
-                    } else {
-                        localAllFunctionCheck.ghsFunction = false
-                        completion("false")
-                    }
-                }
-            }
-            completion("true")
-    }
 }

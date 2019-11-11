@@ -18,7 +18,7 @@ class SearchPage_VC: UIViewController {
     @IBOutlet weak var searchBtn: UIButton!
     
     @IBOutlet weak var logoffBtn: UIButton!
-    @IBOutlet weak var companyLogo: UIImageView!
+
     
     @IBOutlet weak var supplierSearchbar: UISearchBar!
     @IBOutlet weak var pCodeSearchbar: UISearchBar!
@@ -185,14 +185,18 @@ class SearchPage_VC: UIViewController {
     
     func searchData() {
 //        print("search Data called")
-        if searchbar.text!.isEmpty {
+        if searchbar.text!.isEmpty && supplierSearchbar.text!.isEmpty && pCodeSearchbar.text!.isEmpty {
             self.removeSpinner()
             searchbar.text = ""
+            supplierSearchbar.text = ""
+            pCodeSearchbar.text = ""
             self.showAlert(title: "Hi", message: "Search content empty.")
             
-        } else if searchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+        } else if searchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" &&  supplierSearchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" && pCodeSearchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == ""{
             self.removeSpinner()
             searchbar.text = ""
+            supplierSearchbar.text = ""
+            pCodeSearchbar.text = ""
             self.showAlert(title: "Hi", message: "Search content empty.")
 //        } else if searchbar.text!.count < 3 {
 //            self.removeSpinner()
@@ -202,15 +206,21 @@ class SearchPage_VC: UIViewController {
 //            print("Called call search")
             self.cPickView.endEditing(true)
             self.showSpinner(onView: self.view)
+            
             let searchInPut = searchbar.text!
+            let supplierSearchInput = supplierSearchbar.text!
+            let pCodeSeatchInput = pCodeSearchbar.text!
+            
             localcriteriainfo.searchValue = searchInPut
+            localcriteriainfo.supSearchValue = supplierSearchInput
+            localcriteriainfo.pcodeSearchValue = pCodeSeatchInput
             
             noSearchResultLbl.isHidden = true
             
             localsearchinfo.results = []
             localsearchinfo.cpage = 1
             
-            csiWCF_VM().callSearch(inputData: searchInPut) { (completionReturnData) in
+            csiWCF_VM().callSearch(pnameInputData: searchInPut, supInputData: supplierSearchInput, pcodeInputData: pCodeSeatchInput) { (completionReturnData) in
                 if completionReturnData == true {
                     DispatchQueue.main.async {
                         self.removeSpinner()

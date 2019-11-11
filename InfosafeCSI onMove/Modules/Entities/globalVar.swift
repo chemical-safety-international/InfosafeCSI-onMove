@@ -56,6 +56,8 @@ struct localcriteriainfo {
     static var code: String!
     static var pickerValue: String!
     static var searchValue: String!
+    static var supSearchValue: String!
+    static var pcodeSearchValue: String!
 }
 
 
@@ -423,9 +425,3 @@ struct localpictograms {
     }
 }
 
-struct localAllFunctionCheck {
-    static var ghsFunction: Bool!
-    static var transFunction: Bool!
-    static var faFunction: Bool!
-    static var allTrue: Bool!
-}

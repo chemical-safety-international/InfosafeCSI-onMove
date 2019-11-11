@@ -222,10 +222,10 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
             
             let conT = count1 + count2 + count3 + count4 + count5 + count6 + 20
 
-            print(self.contentView.frame.height)
-            print(self.FAScrollView.frame.height)
-            print(conT)
-            print("\n")
+//            print(self.contentView.frame.height)
+//            print(self.FAScrollView.frame.height)
+//            print(conT)
+//            print("\n")
             
             //check if the real content height is over or less the content view height
             if conT > self.FAScrollView.frame.height {

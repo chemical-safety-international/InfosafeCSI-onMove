@@ -665,7 +665,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                 localsearchinfo.cpage += 1
                 
                 
-                csiWCF_VM().callSearch(inputData: localcriteriainfo.searchValue) { (completionReturnData) in
+                csiWCF_VM().callSearch(pnameInputData: localcriteriainfo.searchValue, supInputData: localcriteriainfo.supSearchValue, pcodeInputData: localcriteriainfo.pcodeSearchValue ) { (completionReturnData) in
                     if completionReturnData == true {
                         DispatchQueue.main.async {
                             self.removeSpinner()

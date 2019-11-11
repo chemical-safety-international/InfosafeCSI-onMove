@@ -54,17 +54,20 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 
 
 //Call the WCF function: 'GetSDSSearchResultsPageEx' with input data
-func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: String, c:String, p : Int, psize : Int, apptp: Int, completion:@escaping(Data) -> Void) -> (Void) {
+func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String, pcodeInputData: String,  client: String, uid: String, c:String, p : Int, psize : Int, apptp: Int, completion:@escaping(Data) -> Void) -> (Void) {
  
     //create json data
-//    let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":c, "v":inputData, "p":p, "psize":psize, "advanced": "0", "advancedsitetype": "3", "advanceditems": ["type": 2, "isgroup": 0, "groups": [], "values": inputData]]
+
     
-//    let json: [String: Any] = ["client":client, "uid":uid, "apptp":"\(apptp)", "c":c, "v":inputData, "p":"\(p)", "psize":"\(psize)", "advanced": "0", "advancedsitetype": "3", "advanceditems": []]
-        let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":c, "v":inputData, "p":p, "psize":psize, "advanced": "0", "advancedsitetype": "3", "advanceditems": []]
+    let pName: [String: Any] = ["type": "2", "isgroup": "0", "groups": [], "values": [pnameInputData]]
+    let sup: [String: Any] = ["type": "4", "isgroup": "0", "groups": [], "values": [supInputData]]
+    let pcode: [String: Any] = ["type": "8", "isgroup": "0", "groups": [], "values": [pcodeInputData]]
+
+    let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":c, "v":pnameInputData, "p":p, "psize":psize, "advanced": "1", "advancedsitetype": "3", "advanceditems": [pName, sup, pcode]]
     
-//    let pNJson: [String: Any] = ["IsAdvanced":"true", "AdvancedCriteria": [ [ "SearchType": "2", "SearchValues": "", "IsGroup":"false", "Groups": [], "IsMixtrue": false, "Mixtures": "null"], [ "SearchType": "8", "SearchValues": "", "IsGroup": false, "Groups": [], "IsMixtrue": false, "Mixtures": "null"], [ "SearchType": "4", "SearchValues": "", "IsGroup": false, "Groups": [], "IsMixtrue": false, "Mixtures": "null"]]]
     
-    let jsonData = try? JSONSerialization.data(withJSONObject: json)
+    
+    let jsonData = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)
     
     //setup url
     let url = URL(string: csiWCF_URLHeader + "GetSDSSearchResultsPage")!
@@ -76,7 +79,7 @@ func csiWCF_GetSDSSearchResultsPage(inputData:String, client: String, uid: Strin
     
     request.httpBody = jsonData
     
-//    print(json)
+    print(json)
     
     //create task
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in

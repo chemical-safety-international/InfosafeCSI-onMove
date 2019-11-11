@@ -61,8 +61,11 @@ class LocalSearch_VC: UIViewController {
             localsearchinfo.cpage = 1
 
         let searchInPut = ""
+        let supSearchInput = ""
+        let pcodeSearchInput = ""
+        
         if count == 0 {
-            csiWCF_VM().callSearch(inputData: searchInPut) { (completionReturnData) in
+            csiWCF_VM().callSearch(pnameInputData: searchInPut, supInputData: supSearchInput, pcodeInputData: pcodeSearchInput) { (completionReturnData) in
                 if completionReturnData == true {
                     DispatchQueue.main.async {
                         self.removeSpinner()
