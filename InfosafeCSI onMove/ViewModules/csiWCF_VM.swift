@@ -289,7 +289,7 @@ class csiWCF_VM: UIViewController {
                     localViewSDSCF.sds = output.sds
                     localViewSDSCF.sphrase = output.sphrase
                     localViewSDSCF.rphrase = output.rphrase
-                    
+
                 }
                 
                 completion("true")

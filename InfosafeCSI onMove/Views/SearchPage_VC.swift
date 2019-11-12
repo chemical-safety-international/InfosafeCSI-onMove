@@ -88,6 +88,7 @@ class SearchPage_VC: UIViewController {
     }
     
     
+    
     // custom picker view
     func createPicker() {
 
@@ -198,10 +199,10 @@ class SearchPage_VC: UIViewController {
             supplierSearchbar.text = ""
             pCodeSearchbar.text = ""
             self.showAlert(title: "Hi", message: "Search content empty.")
-//        } else if searchbar.text!.count < 3 {
+//        } else if searchbar.text!.count < 4 || supplierSearchbar.text!.count < 4 {
 //            self.removeSpinner()
-//            self.showAlert(title: "Hi", message: "Please enter more than 2 character!")
-            
+//            self.showAlert(title: "Hi", message: "Please enter more than 3 character!")
+//            
         } else {
 //            print("Called call search")
             self.cPickView.endEditing(true)

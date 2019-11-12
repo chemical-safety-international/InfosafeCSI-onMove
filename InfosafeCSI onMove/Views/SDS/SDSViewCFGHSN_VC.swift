@@ -169,27 +169,58 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
              self.unPSGap.constant = 20
              self.PSpsGap.constant = 10
             
+            
             self.GHSClassT.text = "GHS CLASSFICATION"
-            self.ghsclass.text = localViewSDSGHS.classification
+            
+            
             
             self.GHSScrollView.isHidden = false
             self.containerView.isHidden = true
             
             
             
-            
-            
-            if (localViewSDSGHS.ps.isEmpty == false) {
-                self.PST.text = "POISONS SCHEDULE"
-                self.ps.text = localViewSDSGHS.ps
-                self.unPSGap.constant = 20
-                self.PSpsGap.constant = 10
+            if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
+                if (localViewSDSGHS.ps.isEmpty == false) {
+                    self.PST.text = "POISONS SCHEDULE"
+                    self.ps.text = localViewSDSGHS.ps
+                    self.unPSGap.constant = 20
+                    self.PSpsGap.constant = 10
+                    
+                } else {
+                    self.PST.text = ""
+                    self.ps.text = ""
+                    self.unPSGap.constant = 0
+                    self.PSpsGap.constant = 0
+                }
+                
+                if (localViewSDSGHS.classification.isEmpty == false) {
+                    self.ghsclass.text = localViewSDSGHS.classification
+                } else {
+                    self.ghsclass.text = "None."
+                }
             } else {
-                self.PST.text = ""
-                self.ps.text = ""
-                self.unPSGap.constant = 0
-                self.PSpsGap.constant = 0
+                if (localViewSDSCF.ps != nil) {
+                    self.PST.text = "POISONS SCHEDULE"
+                    self.ps.text = localViewSDSCF.ps
+                    self.unPSGap.constant = 20
+                    self.PSpsGap.constant = 10
+                    
+                
+                } else {
+                    self.PST.text = ""
+                    self.ps.text = ""
+                    self.unPSGap.constant = 0
+                    self.PSpsGap.constant = 0
+                }
+                
+                if (localViewSDSCF.classification.isEmpty == false) {
+                    self.ghsclass.text = localViewSDSCF.classification
+                } else {
+                    self.ghsclass.text = "None."
+                }
             }
+            
+
             
             self.TIT.text = "TRANSPORT INFORMATION"
             
@@ -484,7 +515,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                 img1Height.constant = 90
                 ghsImg1Gap.constant = 20
                 img6Height.constant = 90
-                ghsImg6Gap.constant = 58
+                ghsImg6Gap.constant = 78
                 
 //                if (view.frame.height < 1024) {
                     img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
@@ -504,7 +535,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                 img1Height.constant = 90
                  ghsImg1Gap.constant = 20
                  img6Height.constant = 90
-                 ghsImg6Gap.constant = 58
+                 ghsImg6Gap.constant = 78
                 //below iphone 11 pro max, width all less than 414
 //                if (view.frame.width <= 414) {
  

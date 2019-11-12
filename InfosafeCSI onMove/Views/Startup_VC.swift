@@ -33,6 +33,7 @@ class StartupPage_VC: UIViewController {
         self.navigationController?.navigationBar.isHidden = true
     }
     
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         

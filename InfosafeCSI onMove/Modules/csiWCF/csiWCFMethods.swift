@@ -8,8 +8,8 @@
 
 import Foundation
 
-var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
-//var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
+//var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
+var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
 
 
 // Call the WCF function: 'loginbyEami' with email, password, deviceid, devicemac and return the data from WCF
@@ -57,13 +57,36 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String, pcodeInputData: String,  client: String, uid: String, c:String, p : Int, psize : Int, apptp: Int, completion:@escaping(Data) -> Void) -> (Void) {
  
     //create json data
-
+    var advanced: String = "0"
+    var type: String = "2"
+    var singleValue: String = ""
+    
+    let pnameStr = pnameInputData.trimmingCharacters(in: .whitespacesAndNewlines)
+    let supStr = supInputData.trimmingCharacters(in: .whitespacesAndNewlines)
+    let pcodeStr = pcodeInputData.trimmingCharacters(in: .whitespacesAndNewlines)
+    
+    if (pnameStr.isEmpty == false && supStr.isEmpty == true && pcodeStr.isEmpty == true) {
+        advanced = "0"
+        type = "2"
+        singleValue = pnameStr
+    } else if (pnameStr.isEmpty == true && supStr.isEmpty == false && pcodeStr.isEmpty == true) {
+        advanced = "0"
+        type = "4"
+        singleValue = supStr
+        
+    } else if (pnameStr.isEmpty == true && supStr.isEmpty == true && pcodeStr.isEmpty == false) {
+        advanced = "0"
+        type = "8"
+        singleValue = pcodeStr
+    } else {
+        advanced = "1"
+    }
     
     let pName: [String: Any] = ["type": "2", "isgroup": "0", "groups": [], "values": [pnameInputData]]
     let sup: [String: Any] = ["type": "4", "isgroup": "0", "groups": [], "values": [supInputData]]
     let pcode: [String: Any] = ["type": "8", "isgroup": "0", "groups": [], "values": [pcodeInputData]]
 
-    let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":c, "v":pnameInputData, "p":p, "psize":psize, "advanced": "1", "advancedsitetype": "3", "advanceditems": [pName, sup, pcode]]
+    let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":type, "v":singleValue, "p":p, "psize":psize, "advanced": advanced, "advancedsitetype": "3", "advanceditems": [pName, sup, pcode]]
     
     
     

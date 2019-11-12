@@ -86,6 +86,15 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
         self.navigationController?.navigationBar.isHidden = false
     }
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return .portrait
+        } else {
+            return .all
+        }
+    }
+    
+    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == passwordTextField {

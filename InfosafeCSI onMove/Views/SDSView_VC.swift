@@ -43,11 +43,18 @@ class SDSViewPage_VC: UIViewController {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(errorHandle), name: NSNotification.Name("errorSDSView"), object: nil)
+        
+        setNavbar()
     }
     
     @objc private func errorHandle() {
         self.removeSpinner()
         self.showAlert(title: "Connection failure!", message: "Please check the connection and try again!")
+    }
+    
+    func setNavbar() {
+        let btnShare = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareBtnTapped))
+        self.navigationItem.rightBarButtonItem = btnShare
     }
     
     
@@ -233,6 +240,7 @@ class SplitView_VC: UIViewController {
      // Pass the selected object to the new view controller.
      }
      */
+
     
     func spliteSDSShow() {
 //        print("reach spliteSDSShow()")

@@ -26,14 +26,13 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     @IBOutlet weak var splitView: UIView!
     
-    @IBOutlet weak var companyLogo: UIImageView!
-    
     var selectedIndex:Bool = false;
 
     var selectedthecellno = 0
     var testrow = 0
     
     @IBOutlet weak var tabTrailing: NSLayoutConstraint!
+    //    @IBOutlet weak var tabTrailing: NSLayoutConstraint!
     @IBOutlet weak var splitLeading: NSLayoutConstraint!
     
     override func viewDidLoad() {
@@ -103,7 +102,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
             menu.isHidden = false
         }
         
-        setNavBar()
+//        setNavBar()
         
     }
     
@@ -157,12 +156,21 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     func setNavBar() {
         //change background color
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barTintColor = UIColor.white
-        navigationController?.navigationBar.tintColor = UIColor.black
+        DispatchQueue.main.async {
+            self.navigationController?.navigationBar.isTranslucent = false
+            self.navigationController?.navigationBar.barTintColor = UIColor.white
+            self.navigationController?.navigationBar.tintColor = UIColor.black
+            self.navigationItem.title = "SEARCH RESULT"
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20), .foregroundColor: UIColor.black]
+            
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "    ", style: .plain, target: self, action: .none)
+            
+            
+        }
+
         
                 //setup the company logo
-                if (localclientinfo.clientlogo != "") {
+//                if (localclientinfo.clientlogo != "") {
 
                     
         //            let comLogo = localclientinfo.clientlogo.toImage()
@@ -176,18 +184,17 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         //            navigationItem.titleView?.backgroundColor = UIColor.clear
         //            navigationItem.titleView = imageView
                     
-                    navigationItem.title = "SEARCH RESULT"
-                    navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20), .foregroundColor: UIColor.black]
+
 
                     
-                    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "    ", style: .plain, target: self, action: .none)
+
                     
                     
                     
-                } else {
-                    let comLogo = UIImage(named: "CSI-Logo")
-                    navigationItem.titleView = UIImageView(image: comLogo)
-                }
+//                } else {
+//                    let comLogo = UIImage(named: "CSI-Logo")
+//                    navigationItem.titleView = UIImageView(image: comLogo)
+//                }
 
     }
     
@@ -266,7 +273,12 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
 //            cell?.dgcLbl.text = localsearchinfo.results[indexPath.row].dgclass
 //            cell?.psLbl.text = localsearchinfo.results[indexPath.row].ps
 //            cell?.hazLbl.text = localsearchinfo.results[indexPath.row].haz
-            cell?.countryLbl.text = localsearchinfo.results[indexPath.row].Com_Country
+            if (localsearchinfo.results[indexPath.row].Com_Country.isEmpty == true) {
+                cell?.countryLbl.text = "Australia"
+            } else {
+               cell?.countryLbl.text = localsearchinfo.results[indexPath.row].Com_Country
+            }
+            
             
             
             
@@ -295,6 +307,11 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             cell?.ghsImg3.image = nil
             cell?.ghsImg4.image = nil
             cell?.ghsImg5.image = nil
+            
+            cell?.img1Height.constant = 0
+            cell?.issImg1Gap.constant = 0
+            cell?.img4Height.constant = 0
+            cell?.issImg4Gap.constant = 0
             
             if (localsearchinfo.results[indexPath.row].GHS_Pictogram.isEmpty == false) {
                 picArray = localsearchinfo.results[indexPath.row].GHS_Pictogram.components(separatedBy: ",")
@@ -552,52 +569,6 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                 }
                 
             }
-            
-            
-            //directly call the CF page
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
-//
-//            csiWCF_VM().callSDS_GHS() { (output) in
-//                if output.contains("true") {
-//                    DispatchQueue.main.async {
-//
-////                        if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
-//
-//                            csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
-//                            if output.sds != nil {
-//                                localViewSDSTIADG.road_unno = output.road_unno
-//                                localViewSDSTIADG.road_dgclass = output.road_dgclass
-//                                localViewSDSTIADG.road_packgrp = output.road_packgrp
-//                                localViewSDSTIADG.road_psn = output.road_psn
-//                                localViewSDSTIADG.road_hazchem = output.road_hazchem
-//                                localViewSDSTIADG.road_subrisks = output.road_subrisks
-//
-//
-//                                DispatchQueue.main.async {
-//                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
-//                                    let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC
-//                                    self.navigationController?.pushViewController(sdsJump!, animated: true)
-//                                }
-//
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-            
-            
-//                csiWCF_VM().callAllSDSFunction() { (output) in
-//
-//                    if (output.contains("true")) {
-//                            DispatchQueue.main.async {
-//                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
-//                            let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC
-//                            self.navigationController?.pushViewController(sdsJump!, animated: true)
-//                        }
-//                    } else {
-//                        print("Error!")
-//                    }
-//                }
             
         }
     }
