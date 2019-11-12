@@ -849,16 +849,22 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             self.pstate.attributedText = psStr
             
             
-
-            
-            
-            
-            
          } else {
              self.HazardST.text = "RISK PHRASE(S)"
              self.PercauT.text = "SAFETY PHRASE(S)"
-             self.haz.text = localViewSDSCF.rphrase
-             self.pstate.text = localViewSDSCF.sphrase
+            
+            if (localViewSDSCF.rphrase == "") {
+                self.haz.text = "None."
+            } else {
+                self.haz.text = localViewSDSCF.rphrase
+            }
+            
+            if (localViewSDSCF.sphrase == "") {
+                self.pstate.text = "None."
+            } else {
+                self.pstate.text = localViewSDSCF.sphrase
+            }
+             
          }
         
 

@@ -222,6 +222,7 @@ class SplitView_VC: UIViewController {
     //    }
     @objc private func showSDS() {
         spliteSDSShow()
+        loadGHSScreen()
     }
     
     @objc private func hideContainer() {
@@ -240,7 +241,61 @@ class SplitView_VC: UIViewController {
      // Pass the selected object to the new view controller.
      }
      */
+    func loadGHSScreen() {
+        containerView.isHidden = false
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
+        csiWCF_VM().callSDS_FA() { (output) in
+            if output.contains("true") {
+                DispatchQueue.main.async {
+                    csiWCF_VM().callSDS_Trans() { (output) in
+                        if output.contains("true") {
+                            DispatchQueue.main.async {
+                                csiWCF_VM().callSDS_GHS() { (output) in
+                                    if output.contains("true") {
+                                        DispatchQueue.main.async {
 
+                                            csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
+                                            if output.sds != nil {
+                                                localViewSDSTIADG.road_unno = output.road_unno
+                                                localViewSDSTIADG.road_dgclass = output.road_dgclass
+                                                localViewSDSTIADG.road_packgrp = output.road_packgrp
+                                                localViewSDSTIADG.road_psn = output.road_psn
+                                                localViewSDSTIADG.road_hazchem = output.road_hazchem
+                                                localViewSDSTIADG.road_subrisks = output.road_subrisks
+
+
+                                                DispatchQueue.main.async {
+                                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
+                                                    let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC
+                                            //        self.navigationController?.pushViewController(sdsJump!, animated: true)
+                                                    self.addChild(sdsJump!)
+                                                    sdsJump!.view.frame = CGRect(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
+                                                    self.containerView.addSubview(sdsJump!.view)
+
+                                                    sdsJump!.didMove(toParent: self)
+                                                }
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }else {
+                        print("Something wrong!")
+                        }
+                    }
+                }
+                
+            }else {
+                print("Something wrong!")
+            }
+            
+        }
+        
+
+    }
     
     func spliteSDSShow() {
 //        print("reach spliteSDSShow()")
@@ -379,6 +434,7 @@ class SplitView_VC: UIViewController {
             }
         }
     }
+    
     
     @IBAction func faBtnTapped(_ sender: Any) {
         containerView.isHidden = false

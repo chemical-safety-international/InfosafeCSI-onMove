@@ -199,10 +199,10 @@ class SearchPage_VC: UIViewController {
             supplierSearchbar.text = ""
             pCodeSearchbar.text = ""
             self.showAlert(title: "Hi", message: "Search content empty.")
-//        } else if searchbar.text!.count < 4 || supplierSearchbar.text!.count < 4 {
-//            self.removeSpinner()
-//            self.showAlert(title: "Hi", message: "Please enter more than 3 character!")
-//            
+        } else if searchbar.text!.count < 4 && searchbar.text!.isEmpty == false {
+            self.removeSpinner()
+            self.showAlert(title: "Hi", message: "Please enter more than 3 characters for product name!")
+            
         } else {
 //            print("Called call search")
             self.cPickView.endEditing(true)

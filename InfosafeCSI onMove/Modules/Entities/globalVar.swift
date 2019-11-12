@@ -171,6 +171,10 @@ struct localcurrentSDS {
     static var pdfData: Data!
 }
 
+struct localDeafultData {
+    static var sdsNo: String!
+}
+
 struct localSearchData {
     
     var company: String?
