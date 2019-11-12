@@ -221,7 +221,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		17818BB522811A88000EAFF1 /* InfosafeCSI onMove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "InfosafeCSI onMove.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		17818BB522811A88000EAFF1 /* Chemical Safety - InfosafeCSI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chemical Safety - InfosafeCSI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		17818BB822811A88000EAFF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17818BBA22811A88000EAFF1 /* LoginPage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage_VC.swift; sourceTree = "<group>"; };
 		17818BBD22811A88000EAFF1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -474,7 +474,7 @@
 		17818BB622811A88000EAFF1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				17818BB522811A88000EAFF1 /* InfosafeCSI onMove.app */,
+				17818BB522811A88000EAFF1 /* Chemical Safety - InfosafeCSI.app */,
 				17818BCC22811A89000EAFF1 /* InfosafeCSI onMoveTests.xctest */,
 				17818BD722811A89000EAFF1 /* InfosafeCSI onMoveUITests.xctest */,
 			);
@@ -808,7 +808,7 @@
 			);
 			name = "InfosafeCSI onMove";
 			productName = "InfosafeCSI onMove";
-			productReference = 17818BB522811A88000EAFF1 /* InfosafeCSI onMove.app */;
+			productReference = 17818BB522811A88000EAFF1 /* Chemical Safety - InfosafeCSI.app */;
 			productType = "com.apple.product-type.application";
 		};
 		17818BCB22811A89000EAFF1 /* InfosafeCSI onMoveTests */ = {
@@ -1286,17 +1286,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = ZT7UW87A6L;
 				INFOPLIST_FILE = "InfosafeCSI onMove/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.19;
+				MARKETING_VERSION = 1.20;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMove";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Chemical Safety - InfosafeCSI";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1307,17 +1307,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = ZT7UW87A6L;
 				INFOPLIST_FILE = "InfosafeCSI onMove/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.19;
+				MARKETING_VERSION = 1.20;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMove";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Chemical Safety - InfosafeCSI";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
