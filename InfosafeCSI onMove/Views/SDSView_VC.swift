@@ -77,7 +77,7 @@ class SDSViewPage_VC: UIViewController {
         } else {
 
             let rtype : String = "1"
-            csiWCF_VM().callSDS(rtype : rtype) { (completionReturnData) in
+            csiWCF_VM().callSDS(sdsno: localcurrentSDS.sdsNo, rtype : rtype) { (completionReturnData) in
                 DispatchQueue.main.async {
 
                     if rtype == "1" {
@@ -245,17 +245,17 @@ class SplitView_VC: UIViewController {
         containerView.isHidden = false
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
-        csiWCF_VM().callSDS_FA() { (output) in
+        csiWCF_VM().callSDS_FA(sdsno: localDeafultData.sdsNo) { (output) in
             if output.contains("true") {
                 DispatchQueue.main.async {
-                    csiWCF_VM().callSDS_Trans() { (output) in
+                    csiWCF_VM().callSDS_Trans(sdsno: localDeafultData.sdsNo) { (output) in
                         if output.contains("true") {
                             DispatchQueue.main.async {
-                                csiWCF_VM().callSDS_GHS() { (output) in
+                                csiWCF_VM().callSDS_GHS(sdsno: localDeafultData.sdsNo) { (output) in
                                     if output.contains("true") {
                                         DispatchQueue.main.async {
 
-                                            csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
+                                            csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localDeafultData.sdsNo, apptp: "1", rtype: "1") { (output) in
                                             if output.sds != nil {
                                                 localViewSDSTIADG.road_unno = output.road_unno
                                                 localViewSDSTIADG.road_dgclass = output.road_dgclass
@@ -331,7 +331,7 @@ class SplitView_VC: UIViewController {
         } else {
             
             let rtype : String = "1"
-            csiWCF_VM().callSDS(rtype : rtype) { (completionReturnData) in
+            csiWCF_VM().callSDS(sdsno: localcurrentSDS.sdsNo, rtype : rtype) { (completionReturnData) in
                 DispatchQueue.main.async {
                     
                     if rtype == "1" {
@@ -408,7 +408,7 @@ class SplitView_VC: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
         containerView.isHidden = false
 
-        csiWCF_VM().callSDS_GHS() { (output) in
+        csiWCF_VM().callSDS_GHS(sdsno: localcurrentSDS.sdsNo) { (output) in
             if output.contains("true") {
                 DispatchQueue.main.async {
                     if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {

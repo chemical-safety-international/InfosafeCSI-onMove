@@ -102,7 +102,7 @@ class SDSMenu_VC: UIViewController {
         if buttonName[index] == "Classification" {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
             
-            csiWCF_VM().callSDS_GHS() { (output) in
+            csiWCF_VM().callSDS_GHS(sdsno: localcurrentSDS.sdsNo) { (output) in
                 if output.contains("true") {
                     DispatchQueue.main.async {
                         

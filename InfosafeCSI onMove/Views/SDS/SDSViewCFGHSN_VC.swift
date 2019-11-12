@@ -115,7 +115,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         scrollDownArrow.isHidden = true
         
         setCFTIValue()
-        
+        preloadTIScreen()
 
     }
     
@@ -757,6 +757,15 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         self.faBtn.backgroundColor = UIColor.orange
     }
     
+    func preloadTIScreen() {
+        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSTI") as? SDSViewTI_VC
+
+        addChild(sdsJump!)
+        sdsJump!.view.frame = CGRect(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
+        containerView.addSubview(sdsJump!.view)
+
+        sdsJump!.didMove(toParent: self)
+    }
 
     
     @IBAction func allBtnTapped(_ sender: Any) {

@@ -122,9 +122,7 @@ class csiWCF_VM: UIViewController {
 
                     
                     }
-                    let firstSDS = jsonArr1[0]["key"] as? [String: Any]
-                    localDeafultData.sdsNo =  firstSDS!["value"] as? String
-//                    print(localDeafultData.sdsNo)
+                    
             }
                 self.localresult.result = jsonResponse!["result"] as? Bool
 //                self.localresult.pcount = jsonResponse!["pcount"] as? Int
@@ -179,14 +177,11 @@ class csiWCF_VM: UIViewController {
         
     }
     
-    func callSDS(rtype : String, completion:@escaping(String) -> Void ) {
+    func callSDS(sdsno: String, rtype : String, completion:@escaping(String) -> Void ) {
 
-        if (localcurrentSDS.sdsNo == "" || localcurrentSDS.sdsNo == nil) {
-            localcurrentSDS.sdsNo = localDeafultData.sdsNo
-        }
 
         if rtype == "1" {
-            csiWCF_getSDS(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: rtype) { (output) in
+            csiWCF_getSDS(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: sdsno, apptp: "1", rtype: rtype) { (output) in
                 if output.pdfString != nil {
                     completion(output.pdfString)
                 }
@@ -199,7 +194,7 @@ class csiWCF_VM: UIViewController {
             }
         }
         else if rtype == "2" {
-            csiWCF_getSDS(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: rtype) { (output) in
+            csiWCF_getSDS(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: sdsno, apptp: "1", rtype: rtype) { (output) in
                 
                 let strForWeb = """
                     <html>
@@ -257,13 +252,11 @@ class csiWCF_VM: UIViewController {
         }
     }
     
-    func callSDS_GHS(completion:@escaping(String) -> Void) {
+    func callSDS_GHS(sdsno: String, completion:@escaping(String) -> Void) {
 
-        if (localcurrentSDS.sdsNo == "" || localcurrentSDS.sdsNo == nil) {
-            localcurrentSDS.sdsNo = localDeafultData.sdsNo
-        }
+ 
         
-        csiWCF_getClassification(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
+        csiWCF_getClassification(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: sdsno, apptp: "1", rtype: "1") { (output) in
             if output.sds != nil {
                 localViewSDSGHS.formatcode = output.formatcode
                 localViewSDSGHS.picArray = []
@@ -312,13 +305,11 @@ class csiWCF_VM: UIViewController {
     }
     
     
-    func callSDS_FA(completion:@escaping(String) -> Void) {
+    func callSDS_FA(sdsno: String, completion:@escaping(String) -> Void) {
         
-        if (localcurrentSDS.sdsNo == "" || localcurrentSDS.sdsNo == nil) {
-            localcurrentSDS.sdsNo = localDeafultData.sdsNo
-        }
+
 //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
-        csiWCF_getFirstAid(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
+        csiWCF_getFirstAid(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet:  sdsno, apptp: "1", rtype: "1") { (output) in
             if output.sds != nil {
                 
                 
@@ -339,14 +330,11 @@ class csiWCF_VM: UIViewController {
         }
     }
     
-    func callSDS_Trans(completion:@escaping(String) -> Void) {
+    func callSDS_Trans(sdsno: String, completion:@escaping(String) -> Void) {
         
-        if (localcurrentSDS.sdsNo == "" || localcurrentSDS.sdsNo == nil) {
-            localcurrentSDS.sdsNo = localDeafultData.sdsNo
-        }
 //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
 
-        csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
+        csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: sdsno, apptp: "1", rtype: "1") { (output) in
             if output.sds != nil {
                 
 //                print(output)
