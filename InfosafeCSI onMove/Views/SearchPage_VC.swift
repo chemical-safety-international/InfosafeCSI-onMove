@@ -202,6 +202,10 @@ class SearchPage_VC: UIViewController {
         } else if searchbar.text!.count < 4 && searchbar.text!.isEmpty == false {
             self.removeSpinner()
             self.showAlert(title: "Hi", message: "Please enter more than 3 characters for product name!")
+        
+        } else if supplierSearchbar.text!.count < 3 && supplierSearchbar.text!.isEmpty == false {
+            self.removeSpinner()
+            self.showAlert(title: "Hi", message: "Please enter more than 2 characters for supplier!")
             
         } else {
 //            print("Called call search")

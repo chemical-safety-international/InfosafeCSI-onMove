@@ -66,7 +66,7 @@ class csiWCF_VM: UIViewController {
  
                         
                         if let prodname = info["name"] as? [String: Any] {
-                            ritem.prodname = prodname["value"] as? String
+                            ritem.prodname = (prodname["value"] as? String)!.trimmingCharacters(in: .whitespacesAndNewlines)
                         }
                         if let comname = info["com"] as? [String: Any] {
                             ritem.company = comname["value"] as? String
@@ -340,7 +340,7 @@ class csiWCF_VM: UIViewController {
 //                print(output)
                 //store data to local
                 //ADG
-                localViewSDSTIADG.road_unno = output.road_unno
+                localViewSDSTIADG.road_unno = output.road_unno.trimmingCharacters(in: .whitespacesAndNewlines)
                 localViewSDSTIADG.road_dgclass = output.road_dgclass
                 localViewSDSTIADG.road_subrisks = output.road_subrisks
                 localViewSDSTIADG.road_packgrp = output.road_packgrp
@@ -350,7 +350,7 @@ class csiWCF_VM: UIViewController {
                 localViewSDSTIADG.road_ierg = output.road_ierg
                 localViewSDSTIADG.road_packmethod = output.road_packmethod
                 //IMDG
-                localViewSDSTIIMDG.imdg_unno = output.imdg_unno
+                localViewSDSTIIMDG.imdg_unno = output.imdg_unno.trimmingCharacters(in: .whitespacesAndNewlines)
                 localViewSDSTIIMDG.imdg_dgclass = output.imdg_dgclass
                 localViewSDSTIIMDG.imdg_subrisks = output.imdg_subrisks
                 localViewSDSTIIMDG.imdg_packgrp = output.imdg_packgrp
@@ -358,7 +358,7 @@ class csiWCF_VM: UIViewController {
                 localViewSDSTIIMDG.imdg_ems = output.imdg_ems
                 localViewSDSTIIMDG.imdg_mp = output.imdg_mp
                 //IATA
-                localViewSDSTIIATA.iata_unno = output.iata_unno
+                localViewSDSTIIATA.iata_unno = output.iata_unno.trimmingCharacters(in: .whitespacesAndNewlines)
                 localViewSDSTIIATA.iata_dgclass = output.iata_dgclass
                 localViewSDSTIIATA.iata_subrisks = output.iata_subrisks
                 localViewSDSTIIATA.iata_packgrp = output.iata_packgrp

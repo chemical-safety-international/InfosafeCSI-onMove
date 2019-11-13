@@ -87,7 +87,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var dgImgTIInfoGap: NSLayoutConstraint!
     
- 
+    
     
     private var lastContentOffset: CGFloat = 0
     
@@ -169,8 +169,11 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
              self.unPSGap.constant = 20
              self.PSpsGap.constant = 10
             
+            self.ghsImg1Gap.constant = 20
+            self.ghsImg6Gap.constant = 78
+            self.img6GHSGap.constant = 10
+            self.ghsHazGap.constant = 20
             
-            self.GHSClassT.text = "GHS CLASSFICATION"
             
             
             
@@ -180,6 +183,9 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             
             
             if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
+                
+                self.GHSClassT.text = "GHS CLASSFICATION"
+                
                 if (localViewSDSGHS.ps.isEmpty == false) {
                     self.PST.text = "POISONS SCHEDULE"
                     self.ps.text = localViewSDSGHS.ps
@@ -194,11 +200,15 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                 }
                 
                 if (localViewSDSGHS.classification.isEmpty == false) {
+                    
                     self.ghsclass.text = localViewSDSGHS.classification
                 } else {
                     self.ghsclass.text = "None."
                 }
             } else {
+                
+                self.GHSClassT.text = "RISK PHRASE(S)"
+                
                 if (localViewSDSCF.ps != nil) {
                     self.PST.text = "POISONS SCHEDULE"
                     self.ps.text = localViewSDSCF.ps
@@ -213,8 +223,9 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                     self.PSpsGap.constant = 0
                 }
                 
-                if (localViewSDSCF.classification.isEmpty == false) {
-                    self.ghsclass.text = localViewSDSCF.classification
+                if (localViewSDSCF.rphrase.isEmpty == false) {
+                    
+                    self.ghsclass.text = localViewSDSCF.rphrase
                 } else {
                     self.ghsclass.text = "None."
                 }
@@ -681,6 +692,13 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     }
     
     func setPreViewBtnStyle() {
+        
+        if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
+            self.ghsBtn.setTitle("GHS", for: .normal)
+        } else {
+            self.ghsBtn.setTitle("CF", for: .normal)
+        }
+        
         self.viewSDSBTn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         self.preVBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         self.ghsBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -716,6 +734,13 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     }
     
     func setghsBtnStyle() {
+        
+//        if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
+//            self.ghsBtn.setTitle("GHS", for: .normal)
+//        } else {
+//            self.ghsBtn.setTitle("CF", for: .normal)
+//        }
+        
         self.viewSDSBTn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         self.preVBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         self.ghsBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
@@ -781,7 +806,12 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         GHSScrollView.isHidden = false
         containerView.isHidden = true
         
-        navigationItem.title = "GHS"
+        if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
+            navigationItem.title = "GHS"
+        } else {
+            navigationItem.title = "CF"
+        }
+        
         
         self.HazhazGap.constant = 10
         self.hazPreGap.constant = 20
@@ -859,6 +889,15 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             
             
          } else {
+            
+            self.ghsImg1Gap.constant = 0
+            self.ghsImg6Gap.constant = 0
+            self.img6GHSGap.constant = 0
+            self.ghsHazGap.constant = 0
+            
+            self.GHSClassT.text = ""
+            self.ghsclass.text = ""
+            
              self.HazardST.text = "RISK PHRASE(S)"
              self.PercauT.text = "SAFETY PHRASE(S)"
             

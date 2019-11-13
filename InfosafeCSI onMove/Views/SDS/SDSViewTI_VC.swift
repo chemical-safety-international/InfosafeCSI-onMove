@@ -171,9 +171,21 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
     
     func getValue() {
         DispatchQueue.main.async {
-            self.unno.text = localViewSDSTIADG.road_unno
+            
+            if (localViewSDSTIADG.road_unno.isEmpty == false) {
+                self.unno.text = localViewSDSTIADG.road_unno
+            } else {
+                self.unno.text = "None"
+            }
+            
             self.pg.text = localViewSDSTIADG.road_packgrp
-            self.psn.text = localViewSDSTIADG.road_psn
+            
+            if (localViewSDSTIADG.road_psn.isEmpty == false) {
+               self.psn.text = localViewSDSTIADG.road_psn
+            } else {
+                self.psn.text = "  None"
+            }
+            
             
             self.psnSYMGap.constant = 0
             self.SYMBT.text = ""
@@ -197,7 +209,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             if (localViewSDSTIADG.road_hazchem.isEmpty == false) {
                 self.HCT.text = "HAZCHEM CODE"
                 self.hc.text = localViewSDSTIADG.road_hazchem
-                self.mpHCGap.constant = 10
+                self.mpHCGap.constant = 20
             } else {
                 self.HCT.text = ""
                 self.hc.text = ""
@@ -208,7 +220,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             if (localViewSDSTIADG.road_epg.isEmpty == false) {
                 self.EPGT.text = "EPG NUMBER"
                 self.epg.text = localViewSDSTIADG.road_epg
-                self.hcEPGGap.constant = 10
+                self.hcEPGGap.constant = 20
             } else {
                 self.EPGT.text = ""
                 self.epg.text = ""
@@ -218,7 +230,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             if (localViewSDSTIADG.road_ierg.isEmpty == false) {
                 self.IERGT.text = "IERG NUMBER"
                 self.ierg.text = localViewSDSTIADG.road_ierg
-                self.epgIERGap.constant = 10
+                self.epgIERGap.constant = 20
             } else {
                 self.IERGT.text = ""
                 self.ierg.text = ""
@@ -229,7 +241,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             if (localViewSDSTIADG.road_packmethod.isEmpty == false) {
                 self.PMT.text = "PACKAGING METHOD"
                 self.pm.text = localViewSDSTIADG.road_packmethod
-                self.ierPMGap.constant = 10
+                self.ierPMGap.constant = 20
             } else {
                 self.PMT.text = ""
                 self.pm.text = ""
@@ -287,72 +299,82 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
     }
     
     func setImg() {
-        var fixStr = ""
-        var fixSubStr1 = ""
-        var fixSubStr2 = ""
-        var fixSubArray: Array<String> = []
         
-        if (localViewSDSTIADG.road_dgclass != "") {
-            if (localViewSDSTIADG.road_dgclass.contains("None")) {
-                self.dgCLbl.text = localViewSDSTIADG.road_dgclass
-            } else {
-               if (localViewSDSTIADG.road_dgclass.contains(".")) {
-                   fixStr = localViewSDSTIADG.road_dgclass.replacingOccurrences(of: ".", with: "")
-               } else {
-                   fixStr = localViewSDSTIADG.road_dgclass
-               }
-                topdgImgGap.constant = 35
-                dgImgDGCGap.constant = 45
-                self.dgImgHeight.constant = 150
-                self.dgClassImage.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
-                self.dgCLbl.text = localViewSDSTIADG.road_dgclass
-            }
-
-
-        } else {
-            
-            self.dgCLbl.text = ""
+        DispatchQueue.main.async {
             self.dgClassImage.image = nil
-            topdgImgGap.constant = 0
-            dgImgHeight.constant = 0
-            subImgHeight.constant = 0
-            dgImgDGCGap.constant = 0
-        }
-        
-        
-        if (localViewSDSTIADG.road_subrisks != "") {
-            
-            if localViewSDSTIADG.road_subrisks.contains("None") {
-                self.subRiskLbl.text = localViewSDSTIADG.road_subrisks
-            } else {
-                self.subImgHeight.constant = 110
-                fixSubArray = localViewSDSTIADG.road_subrisks.components(separatedBy: " ")
-
-                if (fixSubArray.count == 2) {
-
-                    fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
-                    fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
-                    
-                    self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
-                    self.subRiskImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
-                } else if (fixSubArray.count == 1 ) {
-
-                    fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
-                    self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
-
-                } else {
-                    self.subRiskImg1.image = nil
-                    self.subRiskImg2.image = nil
-                    self.subImgHeight.constant = 0
-                }
-            }
-
-        } else {
-            self.subRiskLbl.text = ""
             self.subRiskImg1.image = nil
             self.subRiskImg2.image = nil
-            self.subImgHeight.constant = 0
+            
+            var fixStr = ""
+            var fixSubStr1 = ""
+            var fixSubStr2 = ""
+            var fixSubArray: Array<String> = []
+            
+            if (localViewSDSTIADG.road_dgclass != "") {
+                if (localViewSDSTIADG.road_dgclass.contains("None")) {
+                    self.dgCLbl.text = localViewSDSTIADG.road_dgclass
+                } else {
+                   if (localViewSDSTIADG.road_dgclass.contains(".")) {
+                       fixStr = localViewSDSTIADG.road_dgclass.replacingOccurrences(of: ".", with: "")
+                   } else {
+                       fixStr = localViewSDSTIADG.road_dgclass
+                   }
+                    self.topdgImgGap.constant = 35
+                    self.dgImgDGCGap.constant = 45
+                    self.dgImgHeight.constant = 150
+                    self.dgClassImage.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
+                    self.dgCLbl.text = localViewSDSTIADG.road_dgclass
+                }
+
+
+            } else {
+                DispatchQueue.main.async {
+                    self.dgCLbl.text = ""
+                    self.dgClassImage.image = nil
+                    self.topdgImgGap.constant = 0
+                    self.dgImgHeight.constant = 0
+                    self.subImgHeight.constant = 0
+                    self.dgImgDGCGap.constant = 0
+                }
+
+            }
+            
+            
+            if (localViewSDSTIADG.road_subrisks != "" || localViewSDSTIADG.road_subrisks.isEmpty == false) {
+                
+                if (localViewSDSTIADG.road_subrisks.contains("None") || localViewSDSTIADG.road_subrisks.contains("NIL")) {
+                    self.subRiskLbl.text = localViewSDSTIADG.road_subrisks
+                } else {
+                    self.subImgHeight.constant = 110
+                    fixSubArray = localViewSDSTIADG.road_subrisks.components(separatedBy: " ")
+
+                    if (fixSubArray.count == 2) {
+
+                        fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
+                        fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
+                        
+                        self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+                        self.subRiskImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
+                    } else if (fixSubArray.count == 1 ) {
+
+                        fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
+                        self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+
+                    } else {
+                        self.subRiskImg1.image = nil
+                        self.subRiskImg2.image = nil
+                        self.subImgHeight.constant = 0
+                    }
+                }
+
+            } else {
+                self.subRiskLbl.text = ""
+                self.subRiskImg1.image = nil
+                self.subRiskImg2.image = nil
+                self.subImgHeight.constant = 0
+            }
         }
+
     }
     
     func viewMore() {
@@ -445,7 +467,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             if(localViewSDSTIIMDG.imdg_ems.isEmpty == false) {
                 self.EMST.text = "EMS"
                 self.ems.text = localViewSDSTIIMDG.imdg_ems
-                self.symEMSGap.constant = 10
+                self.symEMSGap.constant = 20
             } else {
                 self.EMST.text = ""
                 self.ems.text = ""
@@ -455,7 +477,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             if(localViewSDSTIIMDG.imdg_mp.isEmpty == false) {
                 self.MPT.text = "MARINE POLLUTANT"
                 self.mp.text = localViewSDSTIIMDG.imdg_mp
-                self.emsMPGap.constant = 10
+                self.emsMPGap.constant = 20
             } else {
                 self.MPT.text = ""
                 self.mp.text = ""
@@ -511,7 +533,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                     self.dgImgDGCGap.constant = 0
                 }
                 
-                if localViewSDSTIIMDG.imdg_subrisks.contains("None") {
+                if (localViewSDSTIIMDG.imdg_subrisks.contains("None") || localViewSDSTIIMDG.imdg_subrisks.contains("NIL")) {
                     self.subRiskLbl.text = localViewSDSTIIMDG.imdg_subrisks
                 } else {
                      if (localViewSDSTIIMDG.imdg_subrisks.isEmpty == false) {
@@ -534,11 +556,11 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                                  self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
                              }
                          }
-                     } else {
-                        self.subRiskLbl.text = ""
-                        self.subRiskImg1.image = nil
-                        self.subRiskImg2.image = nil
-                        self.subImgHeight.constant = 0
+                       } else {
+                         self.subRiskLbl.text = ""
+                         self.subRiskImg1.image = nil
+                         self.subRiskImg2.image = nil
+                         self.subImgHeight.constant = 0
  
                     }
                 }
@@ -601,7 +623,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             if(localViewSDSTIIATA.iata_symbol.isEmpty == false) {
                 self.SYMBT.text = "SYMBOL"
                 self.symb.text = localViewSDSTIIATA.iata_symbol
-                self.psnSYMGap.constant = 10
+                self.psnSYMGap.constant = 20
             } else {
                 self.SYMBT.text = ""
                 self.symb.text = ""
@@ -664,7 +686,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             }
 
                
-            if localViewSDSTIIATA.iata_subrisks.contains("None") {
+            if (localViewSDSTIIATA.iata_subrisks.contains("None") || localViewSDSTIIATA.iata_subrisks.contains("NIL")) {
                 self.subRiskLbl.text = localViewSDSTIIATA.iata_subrisks
             } else {
                 if (localViewSDSTIIATA.iata_subrisks.isEmpty == false) {
@@ -688,13 +710,13 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                             self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
                         }
                       }
-                } else {
-                    self.subRiskLbl.text = ""
-                    self.subRiskImg1.image = nil
-                    self.subRiskImg2.image = nil
-                    self.subImgHeight.constant = 0
+                    } else {
+                        self.subRiskLbl.text = ""
+                        self.subRiskImg1.image = nil
+                        self.subRiskImg2.image = nil
+                        self.subImgHeight.constant = 0
 
-                }
+                    }
             }
 
   

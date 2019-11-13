@@ -258,8 +258,6 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        localDeafultData.sdsNo = localsearchinfo.results[0].synno
-        
         if localsearchinfo.results.isEmpty == true {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
@@ -268,6 +266,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
             
+            cell?.name.text = localsearchinfo.results[indexPath.row].prodname
             cell?.SupplierLbl.text = localsearchinfo.results[indexPath.row].company
             cell?.IssueDateLbl.text = localsearchinfo.results[indexPath.row].issueDate
             cell?.UNNoLbl.text = localsearchinfo.results[indexPath.row].unno
@@ -303,6 +302,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             
             
 // setup the GHS pictograms in cells
+            
             var picArray: Array<Any> = []
             cell?.ghsImg1.image = nil
             cell?.ghsImg2.image = nil
@@ -465,7 +465,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
 //            }
 //            cell?.backgroundColor = UIColor(red:0.11, green:0.15, blue:0.18, alpha:1.0)
             cell?.layer.cornerRadius = 10
-            cell?.name.text = localsearchinfo.results[indexPath.row].prodname
+
 
             //set row number of button that inside cell when tap
 //            cell?.sdsBtn.tag = indexPath.row
@@ -496,7 +496,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
         
         //pass the synno number
         localcurrentSDS.sdsNo = localsearchinfo.results[indexPath.row].synno
-        view.sizeToFit()
+//        view.sizeToFit()
         
         
         // controll the animation of side menu (click on the same row - no change)
@@ -538,24 +538,11 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                                         if output.contains("true") {
                                             DispatchQueue.main.async {
 
-                                                csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
-                                                if output.sds != nil {
-                                                    localViewSDSTIADG.road_unno = output.road_unno
-                                                    localViewSDSTIADG.road_dgclass = output.road_dgclass
-                                                    localViewSDSTIADG.road_packgrp = output.road_packgrp
-                                                    localViewSDSTIADG.road_psn = output.road_psn
-                                                    localViewSDSTIADG.road_hazchem = output.road_hazchem
-                                                    localViewSDSTIADG.road_subrisks = output.road_subrisks
-
-
                                                     DispatchQueue.main.async {
                                                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
                                                         let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC
                                                         self.navigationController?.pushViewController(sdsJump!, animated: true)
                                                     }
-
-                                                    }
-                                                }
                                             }
                                         }
                                     }                                    

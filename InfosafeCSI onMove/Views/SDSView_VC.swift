@@ -243,7 +243,7 @@ class SplitView_VC: UIViewController {
      */
     func loadGHSScreen() {
         containerView.isHidden = false
-        
+        localDeafultData.sdsNo = localsearchinfo.results[0].synno
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
         csiWCF_VM().callSDS_FA(sdsno: localDeafultData.sdsNo) { (output) in
             if output.contains("true") {
