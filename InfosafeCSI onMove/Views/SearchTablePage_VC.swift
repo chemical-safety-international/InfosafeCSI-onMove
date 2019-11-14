@@ -38,6 +38,8 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tableDisplay.contentInsetAdjustmentBehavior = .never
+//        self.tableDisplay.contentInset = self.view.safeAreaInsets
         self.view.backgroundColor = UIColor(red:0.11, green:0.15, blue:0.18, alpha:1.0)
         menuDisappear()
         // Do any additional setup after loading the view.
@@ -47,7 +49,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         self.tableDisplay.dataSource = self
 
         
-        self.hideKeyboardWhenTappedAround()
+//        self.hideKeyboardWhenTappedAround()
         
         // label setup
         self.primaryLbl.text = localsearchinfo.pamount
@@ -134,10 +136,16 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        tableDisplay.estimatedRowHeight = 130
-        tableDisplay.rowHeight = UITableView.automaticDimension
+//        tableDisplay.estimatedRowHeight = 130
+//        tableDisplay.rowHeight = UITableView.automaticDimension
         setNavBar()
+        
     }
+    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(true)
+//        tableDisplay.reloadData()
+//    }
     
     //for the view sds button inside of cell (currently not using)
 //    @IBAction func sdsViewBtnTapped(_ sender: UIButton) {
@@ -158,11 +166,24 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     func setNavBar() {
         //change background color
         DispatchQueue.main.async {
+//            self.navigationController?.navigationBar.isTranslucent = false
+//            self.navigationController?.navigationBar.barTintColor = UIColor.white
+//            self.navigationController?.navigationBar.tintColor = UIColor.black
+//            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20), .foregroundColor: UIColor.black]
+            
+            
+                   //change background color & back button color
             self.navigationController?.navigationBar.isTranslucent = false
-            self.navigationController?.navigationBar.barTintColor = UIColor.white
-            self.navigationController?.navigationBar.tintColor = UIColor.black
+            self.navigationController?.navigationBar.barTintColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
+            self.navigationController?.navigationBar.tintColor = UIColor.white
+                    
+                    //change navigation bar text color and font
+            //        navigationItem.title = "CLASSIFICATION"
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25), .foregroundColor: UIColor.white]
+            
+            
             self.navigationItem.title = "SEARCH RESULT"
-            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20), .foregroundColor: UIColor.black]
+
             
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "    ", style: .plain, target: self, action: .none)
             
@@ -200,7 +221,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     }
     
     func splitViewSetup() {
-        view.sizeToFit()
+//        view.sizeToFit()
         if (view.frame.height >= 1024) {
             print("\n\n view width: \(view.frame.width) \(view.frame.height)\n\ntable Trailing: \(self.view.frame.width*2/3)\n\n")
              self.tabTrailing.constant = self.view.frame.height*2/3
@@ -216,7 +237,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
 //            tableDisplay.updateConstraints()
 //            splitView.updateConstraints()
             splitView.isHidden = true
-            menu.isHidden = false
+//            menu.isHidden = false
         }
     }
     
@@ -252,6 +273,12 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
 
 
 extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    
     // non-expandable
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return localsearchinfo.results.count
@@ -440,22 +467,6 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                                     cell?.issImg4Gap.constant = 0
                                 }
                 //            end setup GHS pictograms
-                
-                
-//                cell?.name.sizeToFit()
-//                cell?.SupplierLbl.sizeToFit()
-//                cell?.UNNoLbl.sizeToFit()
-//                cell?.IssueDateLbl.sizeToFit()
-//
-//                cell?.ghsImg1.sizeToFit()
-//                cell?.ghsImg2.sizeToFit()
-//                cell?.ghsImg3.sizeToFit()
-//                cell?.ghsImg4.sizeToFit()
-//                cell?.ghsImg5.sizeToFit()
-//            }
-
-            
-            
             
             
             //setup name type pic
@@ -475,16 +486,6 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             
             
             
-            
-            DispatchQueue.main.async {
-                cell?.ghsImg1.sizeToFit()
-                cell?.ghsImg2.sizeToFit()
-                cell?.ghsImg3.sizeToFit()
-                cell?.ghsImg4.sizeToFit()
-                cell?.ghsImg5.sizeToFit()
-            }
-            
-            
             //setup cell color
             
 //            if indexPath.row % 2 == 0 {
@@ -501,13 +502,8 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             //set row number of button that inside cell when tap
 //            cell?.sdsBtn.tag = indexPath.row
 //            cell?.sdsBtn.addTarget(self, action: #selector(sdsViewBtnTapped(_:)), for: .touchUpInside)
-            
-            // set the selected cell background view in order to set background color
-//            let backgroundView = UIView()
-//            backgroundView.backgroundColor = UIColor.init(red: 0.98, green: 0.80, blue: 0.61, alpha: 1)
-//            cell?.selectedBackgroundView = backgroundView
-                
-            
+                          
+
             return cell!
         }
         
@@ -523,13 +519,12 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
 //    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
+
         //pass the synno number
         localcurrentSDS.sdsNo = localsearchinfo.results[indexPath.row].synno
-//        view.sizeToFit()
-        
-        
+        view.sizeToFit()
+
+
         // controll the animation of side menu (click on the same row - no change)
         if (view.frame.width >= 1024) {
 
@@ -538,9 +533,9 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hideContainer"), object: nil)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showSDS"), object: nil)
 
-                
-            
-            
+
+
+
         } else if (view.frame.width < 1024) {
 
             // call the menu
@@ -568,7 +563,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                                     csiWCF_VM().callSDS_GHS(sdsno: localcurrentSDS.sdsNo) { (output) in
                                         if output.contains("true") {
                                             DispatchQueue.main.async {
-
+                                                print("tapped")
                                                     DispatchQueue.main.async {
                                                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
                                                         let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC
@@ -576,20 +571,20 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                                                     }
                                             }
                                         }
-                                    }                                    
+                                    }
                                 }
                             }else {
                             print("Something wrong!")
                             }
                         }
                     }
-                    
+
                 }else {
                     print("Something wrong!")
                 }
-                
+
             }
-            
+
         }
     }
 
