@@ -102,7 +102,7 @@ func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String,
     
     request.httpBody = jsonData
     
-    print(json)
+//    print(json)
     
     //create task
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -117,8 +117,8 @@ func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String,
 
                 return }
         
-        let str = String.init(data: dataResponse, encoding: .utf8)
-        print(str as Any)
+//        let str = String.init(data: dataResponse, encoding: .utf8)
+//        print(str as Any)
         completion(dataResponse)
     }
 
@@ -173,8 +173,8 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, completion
                 }
                 localcriteriainfo.code = model.items[0].code
 
-                print(localcriteriainfo.arrCode)
-                print(localcriteriainfo.arrName)
+//                print(localcriteriainfo.arrCode)
+//                print(localcriteriainfo.arrName)
                 if localcriteriainfo.arrName != [] {
                     completion("true")
                 } else {

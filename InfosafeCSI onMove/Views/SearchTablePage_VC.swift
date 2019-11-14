@@ -75,8 +75,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         
 //        tableDisplay.separatorColor = UIColor.orange
         
-        tableDisplay.estimatedRowHeight = 140
-        tableDisplay.rowHeight = UITableView.automaticDimension
+
         
         //check the iOS version
         if #available(iOS 13.0, *) {
@@ -135,6 +134,8 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        tableDisplay.estimatedRowHeight = 130
+        tableDisplay.rowHeight = UITableView.automaticDimension
         setNavBar()
     }
     
@@ -265,20 +266,194 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             return cell!
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
+           
             
-            cell?.name.text = localsearchinfo.results[indexPath.row].prodname
-            cell?.SupplierLbl.text = localsearchinfo.results[indexPath.row].company
-            cell?.IssueDateLbl.text = localsearchinfo.results[indexPath.row].issueDate
-            cell?.UNNoLbl.text = localsearchinfo.results[indexPath.row].unno
-            cell?.prodCLbl.text = localsearchinfo.results[indexPath.row].prodcode
-//            cell?.dgcLbl.text = localsearchinfo.results[indexPath.row].dgclass
-//            cell?.psLbl.text = localsearchinfo.results[indexPath.row].ps
-//            cell?.hazLbl.text = localsearchinfo.results[indexPath.row].haz
-            if (localsearchinfo.results[indexPath.row].Com_Country.isEmpty == true) {
-                cell?.countryLbl.text = "Australia"
-            } else {
-               cell?.countryLbl.text = localsearchinfo.results[indexPath.row].Com_Country
-            }
+//            DispatchQueue.main.async {
+                            cell?.name.text = localsearchinfo.results[indexPath.row].prodname
+                            cell?.SupplierLbl.text = localsearchinfo.results[indexPath.row].company
+                            cell?.IssueDateLbl.text = localsearchinfo.results[indexPath.row].issueDate
+                            cell?.UNNoLbl.text = localsearchinfo.results[indexPath.row].unno
+                            cell?.prodCLbl.text = localsearchinfo.results[indexPath.row].prodcode
+                //            cell?.dgcLbl.text = localsearchinfo.results[indexPath.row].dgclass
+                //            cell?.psLbl.text = localsearchinfo.results[indexPath.row].ps
+                //            cell?.hazLbl.text = localsearchinfo.results[indexPath.row].haz
+                            if (localsearchinfo.results[indexPath.row].Com_Country.isEmpty == true) {
+                                cell?.countryLbl.text = "Australia"
+                            } else {
+                               cell?.countryLbl.text = localsearchinfo.results[indexPath.row].Com_Country
+                            }
+                
+                // setup the GHS pictograms in cells
+                            
+                            var picArray: Array<Any> = []
+                            cell?.ghsImg1.image = nil
+                            cell?.ghsImg2.image = nil
+                            cell?.ghsImg3.image = nil
+                            cell?.ghsImg4.image = nil
+                            cell?.ghsImg5.image = nil
+                            
+                            cell?.img1Height.constant = 0
+                            cell?.issImg1Gap.constant = 0
+                            cell?.img4Height.constant = 0
+                            cell?.issImg4Gap.constant = 0
+                            cell?.img1BotGap.constant = 10
+                            
+                            if (localsearchinfo.results[indexPath.row].GHS_Pictogram.isEmpty == false) {
+                                picArray = localsearchinfo.results[indexPath.row].GHS_Pictogram.components(separatedBy: ",")
+                            }
+//                            print(localsearchinfo.results[indexPath.row].GHS_Pictogram)
+                            
+                            if picArray.count != 0 {
+                                    var cArray: [Any] = []
+                                    var imgCode: String!
+
+                                    for index in 0..<(picArray.count) {
+
+                                        let imgName = picArray[index]
+                                        let imgNameFix = (imgName as AnyObject).trimmingCharacters(in: .whitespacesAndNewlines)
+
+                                        if (imgNameFix == "Flame") {
+
+                                            imgCode = "GHS02"
+                                            cArray.append(imgCode!)
+                                            
+                                        } else if (imgNameFix == "Skull and crossbones") {
+
+                                            imgCode = "GHS06"
+                                            cArray.append(imgCode!)
+
+                                        } else if (imgNameFix == "Flame over circle") {
+
+                                            imgCode = "GHS03"
+                                            cArray.append(imgCode!)
+
+                                        } else if (imgNameFix == "Exclamation mark") {
+
+                                            imgCode = "GHS07"
+                                            cArray.append(imgCode!)
+
+                                        } else if (imgNameFix == "Environment") {
+
+                                            imgCode = "GHS09"
+                                            cArray.append(imgCode!)
+
+                                        } else if (imgNameFix == "Health hazard") {
+
+                                            imgCode = "GHS08"
+                                            cArray.append(imgCode!)
+
+                                        } else if (imgNameFix == "Corrosion") {
+
+                                            imgCode = "GHS05"
+                                            cArray.append(imgCode!)
+
+                                        } else if (imgNameFix == "Gas cylinder") {
+
+                                            imgCode = "GHS04"
+                                            cArray.append(imgCode!)
+
+                                        } else if (imgNameFix == "Exploding bomb") {
+
+                                            imgCode = "GHS01"
+                                            cArray.append(imgCode!)
+                                            
+                                        } else {
+                //                            print(imgNameFix)
+                                        }
+                    
+                                    }
+
+                                    if cArray.count == 1 {
+                                        
+                                        cell?.img1Height.constant = 60
+                                        cell?.issImg1Gap.constant = 20
+                                        cell?.img4Height.constant = 0
+                                        cell?.issImg4Gap.constant = 0
+                                        cell?.img1BotGap.constant = 10
+                                        
+                                        cell?.ghsImg1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+
+                                    } else if cArray.count == 2 {
+                                        
+                                        cell?.img1Height.constant = 60
+                                        cell?.issImg1Gap.constant = 20
+                                        cell?.img4Height.constant = 0
+                                        cell?.issImg4Gap.constant = 0
+                                        cell?.img1BotGap.constant = 10
+                                        
+                                        cell?.ghsImg1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+                                        cell?.ghsImg2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
+                                    } else if cArray.count == 3 {
+                                        
+                                        cell?.img1Height.constant = 60
+                                        cell?.issImg1Gap.constant = 20
+                                        cell?.img4Height.constant = 0
+                                        cell?.issImg4Gap.constant = 0
+                                        cell?.img1BotGap.constant = 10
+                                        
+                                        cell?.ghsImg1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+                                        cell?.ghsImg2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
+                                        cell?.ghsImg3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
+                                    } else if cArray.count == 4 {
+                                        
+                                        
+                                        cell?.img1Height.constant = 60
+                                        cell?.issImg1Gap.constant = 20
+                                        cell?.img4Height.constant = 60
+                                        cell?.issImg4Gap.constant = 60
+                                        cell?.img1BotGap.constant = 65
+                                        
+
+                                            cell?.ghsImg1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+                                            cell?.ghsImg2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
+                                            cell?.ghsImg3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
+                                            cell?.ghsImg4.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
+
+                                    } else if cArray.count == 5 {
+
+
+                                        
+                                        cell?.img1Height.constant = 60
+                                        cell?.issImg1Gap.constant = 20
+                                        cell?.img4Height.constant = 60
+                                        cell?.issImg4Gap.constant = 60
+                                        cell?.img1BotGap.constant = 65
+                         
+                                            cell?.ghsImg1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+                                            cell?.ghsImg2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
+                                            cell?.ghsImg3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
+                                            cell?.ghsImg4.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
+                                            cell?.ghsImg5.image = UIImage(named: Bundle.main.path(forResource: cArray[4] as? String, ofType: "png")!)
+
+                                    }
+                                } else {
+                                    cell?.ghsImg1.image = nil
+                                    cell?.ghsImg2.image = nil
+                                    cell?.ghsImg3.image = nil
+                                    cell?.ghsImg4.image = nil
+                                    cell?.ghsImg5.image = nil
+
+                                    
+                                    cell?.img1Height.constant = 0
+                                    cell?.issImg1Gap.constant = 0
+                                    cell?.img4Height.constant = 0
+                                    cell?.issImg4Gap.constant = 0
+                                }
+                //            end setup GHS pictograms
+                
+                
+//                cell?.name.sizeToFit()
+//                cell?.SupplierLbl.sizeToFit()
+//                cell?.UNNoLbl.sizeToFit()
+//                cell?.IssueDateLbl.sizeToFit()
+//
+//                cell?.ghsImg1.sizeToFit()
+//                cell?.ghsImg2.sizeToFit()
+//                cell?.ghsImg3.sizeToFit()
+//                cell?.ghsImg4.sizeToFit()
+//                cell?.ghsImg5.sizeToFit()
+//            }
+
             
             
             
@@ -301,157 +476,13 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             
             
             
-// setup the GHS pictograms in cells
-            
-            var picArray: Array<Any> = []
-            cell?.ghsImg1.image = nil
-            cell?.ghsImg2.image = nil
-            cell?.ghsImg3.image = nil
-            cell?.ghsImg4.image = nil
-            cell?.ghsImg5.image = nil
-            
-            cell?.img1Height.constant = 0
-            cell?.issImg1Gap.constant = 0
-            cell?.img4Height.constant = 0
-            cell?.issImg4Gap.constant = 0
-            
-            if (localsearchinfo.results[indexPath.row].GHS_Pictogram.isEmpty == false) {
-                picArray = localsearchinfo.results[indexPath.row].GHS_Pictogram.components(separatedBy: ",")
+            DispatchQueue.main.async {
+                cell?.ghsImg1.sizeToFit()
+                cell?.ghsImg2.sizeToFit()
+                cell?.ghsImg3.sizeToFit()
+                cell?.ghsImg4.sizeToFit()
+                cell?.ghsImg5.sizeToFit()
             }
-            //print(localsearchinfo.results[indexPath.row].GHS_Pictogram)
-            
-            if picArray.count != 0 {
-                    var cArray: [Any] = []
-                    var imgCode: String!
-
-                    for index in 0..<(picArray.count) {
-
-                        let imgName = picArray[index]
-                        let imgNameFix = (imgName as AnyObject).trimmingCharacters(in: .whitespacesAndNewlines)
-
-                        if (imgNameFix == "Flame") {
-
-                            imgCode = "GHS02"
-                            cArray.append(imgCode!)
-                            
-                        } else if (imgNameFix == "Skull and crossbones") {
-
-                            imgCode = "GHS06"
-                            cArray.append(imgCode!)
-
-                        } else if (imgNameFix == "Flame over circle") {
-
-                            imgCode = "GHS03"
-                            cArray.append(imgCode!)
-
-                        } else if (imgNameFix == "Exclamation mark") {
-
-                            imgCode = "GHS07"
-                            cArray.append(imgCode!)
-
-                        } else if (imgNameFix == "Environment") {
-
-                            imgCode = "GHS09"
-                            cArray.append(imgCode!)
-
-                        } else if (imgNameFix == "Health hazard") {
-
-                            imgCode = "GHS08"
-                            cArray.append(imgCode!)
-
-                        } else if (imgNameFix == "Corrosion") {
-
-                            imgCode = "GHS05"
-                            cArray.append(imgCode!)
-
-                        } else if (imgNameFix == "Gas cylinder") {
-
-                            imgCode = "GHS04"
-                            cArray.append(imgCode!)
-
-                        } else if (imgNameFix == "Exploding bomb") {
-
-                            imgCode = "GHS01"
-                            cArray.append(imgCode!)
-                            
-                        } else {
-//                            print(imgNameFix)
-                        }
-    
-                    }
-
-                    if cArray.count == 1 {
-                        
-                        cell?.img1Height.constant = 60
-                        cell?.issImg1Gap.constant = 20
-                        cell?.img4Height.constant = 0
-                        cell?.issImg4Gap.constant = 80
-                        
-                        cell?.ghsImg1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
-
-                    } else if cArray.count == 2 {
-                        
-                        cell?.img1Height.constant = 60
-                        cell?.issImg1Gap.constant = 20
-                        cell?.img4Height.constant = 0
-                        cell?.issImg4Gap.constant = 80
-                        
-                        cell?.ghsImg1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
-                        cell?.ghsImg2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
-                    } else if cArray.count == 3 {
-                        
-                        cell?.img1Height.constant = 60
-                        cell?.issImg1Gap.constant = 20
-                        cell?.img4Height.constant = 0
-                        cell?.issImg4Gap.constant = 80
-                        
-                        cell?.ghsImg1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
-                        cell?.ghsImg2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
-                        cell?.ghsImg3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
-                    } else if cArray.count == 4 {
-                        
-                        
-                        cell?.img1Height.constant = 60
-                        cell?.issImg1Gap.constant = 20
-                        cell?.img4Height.constant = 60
-                        cell?.issImg4Gap.constant = 60
-                        
-
-                            cell?.ghsImg1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
-                            cell?.ghsImg2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
-                            cell?.ghsImg3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
-                            cell?.ghsImg4.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
-
-                    } else if cArray.count == 5 {
-
-
-                        
-                        cell?.img1Height.constant = 60
-                        cell?.issImg1Gap.constant = 20
-                        cell?.img4Height.constant = 60
-                        cell?.issImg4Gap.constant = 60
-         
-                            cell?.ghsImg1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
-                            cell?.ghsImg2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
-                            cell?.ghsImg3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
-                            cell?.ghsImg4.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
-                            cell?.ghsImg5.image = UIImage(named: Bundle.main.path(forResource: cArray[4] as? String, ofType: "png")!)
-
-                    }
-                } else {
-                    cell?.ghsImg1.image = nil
-                    cell?.ghsImg2.image = nil
-                    cell?.ghsImg3.image = nil
-                    cell?.ghsImg4.image = nil
-                    cell?.ghsImg5.image = nil
-
-                    
-                    cell?.img1Height.constant = 0
-                    cell?.issImg1Gap.constant = 0
-                    cell?.img4Height.constant = 0
-                    cell?.issImg4Gap.constant = 0
-                }
-//            end setup GHS pictograms
             
             
             //setup cell color

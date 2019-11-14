@@ -46,6 +46,7 @@ class TableViewCell: UITableViewCell {
     @IBOutlet weak var img1Height: NSLayoutConstraint!
     @IBOutlet weak var img4Height: NSLayoutConstraint!
     
+    @IBOutlet weak var img1BotGap: NSLayoutConstraint!
     
     @IBOutlet weak var prodCLbl: UILabel!
     

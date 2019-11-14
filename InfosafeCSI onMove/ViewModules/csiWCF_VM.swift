@@ -56,7 +56,7 @@ class csiWCF_VM: UIViewController {
 
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
-                print(jsonResponse as Any)
+//                print(jsonResponse as Any)
                 if let jsonArr1 = jsonResponse!["data"] as? [[String: Any]] {
 
                     jsonArr1.forEach { info in
