@@ -33,7 +33,8 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     @IBOutlet weak var tabTrailing: NSLayoutConstraint!
     //    @IBOutlet weak var tabTrailing: NSLayoutConstraint!
-    @IBOutlet weak var splitLeading: NSLayoutConstraint!
+//    @IBOutlet weak var splitLeading: NSLayoutConstraint!
+    @IBOutlet weak var splLeading: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +67,8 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         NotificationCenter.default.addObserver(self, selector: #selector(loadingSprin), name: NSNotification.Name(rawValue: "startSpin"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(removeSprin), name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(resetNavbar), name: NSNotification.Name(rawValue: "resetNavbar"), object: nil)
+        
         
    
         //control side menu height when need to suit large screen (full side menu require)
@@ -91,16 +94,16 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         if (view.frame.width >= 1024) {
 //            print("\n\n view width: \(view.frame.width) \(view.frame.height)\n\ntable Trailing: \(self.view.frame.width*2/3)\n\n")
              self.tabTrailing.constant = self.view.frame.width*2/3
-             self.splitLeading.constant = self.view.frame.width/3
+             self.splLeading.constant = self.view.frame.width/3 + 10
             
-            
+//             setNavbarShareBtn()
              splitView.isHidden = false
              menu.isHidden = true
         } else {
 //            self.tabTrailing.constant = 7
  
             splitView.isHidden = true
-            menu.isHidden = false
+//            menu.isHidden = false
         }
         
 //        setNavBar()
@@ -116,6 +119,9 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     }
     @objc func removeSprin() {
         self.removeSpinner()
+    }
+    @objc func resetNavbar() {
+        setNavBar()
     }
     
     //handle the screen size when did rotation
@@ -138,7 +144,15 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     override func viewWillAppear(_ animated: Bool) {
 //        tableDisplay.estimatedRowHeight = 130
 //        tableDisplay.rowHeight = UITableView.automaticDimension
-        setNavBar()
+        
+//        if (view.frame.width >= 1024) {
+//
+////             setNavbarShareBtn()
+//
+//        } else {
+            setNavBar()
+//        }
+        
         
     }
     
@@ -189,8 +203,6 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
             
             
         }
-
-        
                 //setup the company logo
 //                if (localclientinfo.clientlogo != "") {
 
@@ -220,12 +232,24 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
 
     }
     
+    func setNavbarShareBtn() {
+        let btnShare = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareBtnTapped))
+        self.navigationItem.rightBarButtonItem = btnShare
+    }
+    
+    @IBAction func shareBtnTapped() {
+        let activityVC = UIActivityViewController(activityItems: [localcurrentSDS.pdfData!], applicationActivities: nil)
+        activityVC.popoverPresentationController?.sourceView = self.view
+        
+        self.present(activityVC, animated: true, completion: nil)
+    }
+    
     func splitViewSetup() {
 //        view.sizeToFit()
         if (view.frame.height >= 1024) {
-            print("\n\n view width: \(view.frame.width) \(view.frame.height)\n\ntable Trailing: \(self.view.frame.width*2/3)\n\n")
+//            print("\n\n view width: \(view.frame.width) \(view.frame.height)\n\ntable Trailing: \(self.view.frame.width*2/3)\n\n")
              self.tabTrailing.constant = self.view.frame.height*2/3
-             self.splitLeading.constant = self.view.frame.height/3
+             self.splLeading.constant = self.view.frame.height/3 + 10
             
 //            tableDisplay.updateConstraints()
 //            splitView.updateConstraints()
@@ -520,19 +544,66 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
+//        cell?.name.textColor = UIColor.orange
+//        cell?.countryLbl.textColor = UIColor.orange
+//        cell?.isslbl.textColor = UIColor.orange
+//        cell?.IssueDateLbl.textColor = UIColor.orange
+//        cell?.UNNoLbl.textColor = UIColor.orange
+//        cell?.unlbl.textColor = UIColor.orange
+//        cell?.prodCodeLbl.textColor = UIColor.orange
+//        cell?.prodCLbl.textColor = UIColor.orange
+        
         //pass the synno number
         localcurrentSDS.sdsNo = localsearchinfo.results[indexPath.row].synno
         view.sizeToFit()
 
+        
+        
 
         // controll the animation of side menu (click on the same row - no change)
         if (view.frame.width >= 1024) {
+            
 
-            menu.isHidden = true
+
+//            menu.isHidden = true
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hideContainer"), object: nil)
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showSDS"), object: nil)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hideContainer"), object: nil)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showSDS"), object: nil)
+            csiWCF_VM().callSDS_FA(sdsno: localcurrentSDS.sdsNo) { (output) in
+                if output.contains("true") {
+                    DispatchQueue.main.async {
+                        csiWCF_VM().callSDS_Trans(sdsno: localcurrentSDS.sdsNo) { (output) in
+                            if output.contains("true") {
+                                DispatchQueue.main.async {
+                                    csiWCF_VM().callSDS_GHS(sdsno: localcurrentSDS.sdsNo) { (output) in
+                                        if output.contains("true") {
+                                            DispatchQueue.main.async {
+//                                                print("tapped")
+//                                                    DispatchQueue.main.async {
+                                                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
+                                                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "callPerView"), object: nil)
+//                                                        let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC
+//                                                        self.navigationController?.pushViewController(sdsJump!, animated: true)
+//                                                    }
+                                                self.splitView.setNeedsLayout()
+                                                self.splitView.layoutIfNeeded()
+                                            }
+                                        }
+                                    }
+                                }
+                            }else {
+                            print("Something wrong!")
+                            }
+                        }
+                    }
 
+                }else {
+                    print("Something wrong!")
+                }
+
+            }
 
 
 
@@ -563,7 +634,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                                     csiWCF_VM().callSDS_GHS(sdsno: localcurrentSDS.sdsNo) { (output) in
                                         if output.contains("true") {
                                             DispatchQueue.main.async {
-                                                print("tapped")
+//                                                print("tapped")
                                                     DispatchQueue.main.async {
                                                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
                                                         let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC
@@ -586,7 +657,22 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             }
 
         }
+        
+
     }
+    
+//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
+//        cell?.name.textColor = UIColor.white
+//        cell?.countryLbl.textColor = UIColor.white
+//        cell?.isslbl.textColor = UIColor.white
+//        cell?.IssueDateLbl.textColor = UIColor.white
+//        cell?.UNNoLbl.textColor = UIColor.white
+//        cell?.unlbl.textColor = UIColor.white
+//        cell?.prodCodeLbl.textColor = UIColor.white
+//        cell?.prodCLbl.textColor = UIColor.white
+//
+//    }
 
 
     

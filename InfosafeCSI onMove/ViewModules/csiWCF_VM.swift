@@ -46,6 +46,7 @@ class csiWCF_VM: UIViewController {
         let client = localclientinfo.clientid
         let uid = localclientinfo.infosafeid
         let c = localcriteriainfo.code
+
         let apptp = localclientinfo.apptype
         
         let p = localsearchinfo.cpage

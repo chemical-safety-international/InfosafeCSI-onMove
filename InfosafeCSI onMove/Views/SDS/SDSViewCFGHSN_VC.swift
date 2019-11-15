@@ -116,6 +116,8 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         
         setCFTIValue()
         preloadTIScreen()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(callPerView), name: NSNotification.Name(rawValue: "callPerView"), object: nil)
 
     }
     
@@ -782,6 +784,20 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         self.faBtn.backgroundColor = UIColor.orange
     }
     
+    func setSDSBtnStyle() {
+        self.viewSDSBTn.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+        self.preVBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.ghsBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.dgBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.faBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        
+        self.viewSDSBTn.backgroundColor = UIColor.orange
+        self.preVBtn.backgroundColor = UIColor.darkGray
+        self.ghsBtn.backgroundColor = UIColor.darkGray
+        self.dgBtn.backgroundColor = UIColor.darkGray
+        self.faBtn.backgroundColor = UIColor.darkGray
+    }
+    
     func preloadTIScreen() {
         let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSTI") as? SDSViewTI_VC
 
@@ -939,8 +955,24 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     @IBAction func viewSDSBtnTapped(_ sender: Any) {
         
 //        setViewSDSBtnStyle()
-        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSViewPage_VC
-        self.navigationController?.pushViewController(sdsJump!, animated: true)
+//        print(self.view.frame.width)
+        
+        if (self.view.frame.width > 500) {
+            
+            containerView.isHidden = false
+            GHSScrollView.isHidden = true
+            setSDSBtnStyle()
+            let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSViewPage_VC
+
+            addChild(sdsJump!)
+            sdsJump!.view.frame = CGRect(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
+            containerView.addSubview(sdsJump!.view)
+
+            sdsJump!.didMove(toParent: self)
+        } else {
+            let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSViewPage_VC
+            self.navigationController?.pushViewController(sdsJump!, animated: true)
+        }
     }
     
     
@@ -986,6 +1018,11 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         containerView.addSubview(sdsJump!.view)
 
         sdsJump!.didMove(toParent: self)
+    }
+    
+    @objc func callPerView() {
+//         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetNavbar"), object: nil)
+        getValue()
     }
     
 }

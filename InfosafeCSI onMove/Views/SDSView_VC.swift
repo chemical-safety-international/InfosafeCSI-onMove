@@ -172,6 +172,7 @@ class SplitView_VC: UIViewController {
     
 
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var GHSContainer: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -183,31 +184,34 @@ class SplitView_VC: UIViewController {
 //            splitPrintBtn.isHidden = true
 //            splitShareBtn.isHidden = true
         }
-        splitPrintBtn.isHidden = true
-        splitShareBtn.isHidden = true
-        containerView.isHidden = true
-        
-        ciBtn.isHidden = true
-        cfBtn.isHidden = true
-        faBtn.isHidden = true
-        tiBtn.isHidden = true
-        viewSDSBtn.isHidden = true
-        
-        ciLbl.isHidden = true
-        cfLbl.isHidden = true
-        faLbl.isHidden = true
-        tiLbl.isHidden = true
-        vsLbl.isHidden = true
+//        splitPrintBtn.isHidden = true
+//        splitShareBtn.isHidden = true
+//        containerView.isHidden = true
+//
+//        ciBtn.isHidden = true
+//        cfBtn.isHidden = true
+//        faBtn.isHidden = true
+//        tiBtn.isHidden = true
+//        viewSDSBtn.isHidden = true
+//
+//        ciLbl.isHidden = true
+//        cfLbl.isHidden = true
+//        faLbl.isHidden = true
+//        tiLbl.isHidden = true
+//        vsLbl.isHidden = true
         
         menuView.layer.cornerRadius = 15
         sdsDisplay.layer.cornerRadius = 15
         view.layer.cornerRadius = 15
         
-        NotificationCenter.default.addObserver(self, selector: #selector(showSDS), name: NSNotification.Name(rawValue: "showSDS"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(hideContainer), name: NSNotification.Name(rawValue: "hideContainer"), object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(errorHandle), name: NSNotification.Name("errorSplitSDSView"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(showSDS), name: NSNotification.Name(rawValue: "showSDS"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(hideContainer), name: NSNotification.Name(rawValue: "hideContainer"), object: nil)
+////        NotificationCenter.default.addObserver(self, selector: #selector(errorHandle), name: NSNotification.Name("errorSplitSDSView"), object: nil)
+//
+//        NotificationCenter.default.addObserver(self, selector: #selector(splitLoading), name: NSNotification.Name(rawValue: "splitLoading"), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(splitLoading), name: NSNotification.Name(rawValue: "splitLoading"), object: nil)
+
+        loadGHSScreen()
     }
     
 //    @objc private func errorHandle() {
@@ -242,8 +246,9 @@ class SplitView_VC: UIViewController {
      }
      */
     func loadGHSScreen() {
-        containerView.isHidden = false
+        GHSContainer.isHidden = false
         localDeafultData.sdsNo = localsearchinfo.results[0].synno
+        localcurrentSDS.sdsNo = localDeafultData.sdsNo
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
         csiWCF_VM().callSDS_FA(sdsno: localDeafultData.sdsNo) { (output) in
             if output.contains("true") {
@@ -257,21 +262,21 @@ class SplitView_VC: UIViewController {
 
                                             csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localDeafultData.sdsNo, apptp: "1", rtype: "1") { (output) in
                                             if output.sds != nil {
-                                                localViewSDSTIADG.road_unno = output.road_unno
-                                                localViewSDSTIADG.road_dgclass = output.road_dgclass
-                                                localViewSDSTIADG.road_packgrp = output.road_packgrp
-                                                localViewSDSTIADG.road_psn = output.road_psn
-                                                localViewSDSTIADG.road_hazchem = output.road_hazchem
-                                                localViewSDSTIADG.road_subrisks = output.road_subrisks
+//                                                localViewSDSTIADG.road_unno = output.road_unno
+//                                                localViewSDSTIADG.road_dgclass = output.road_dgclass
+//                                                localViewSDSTIADG.road_packgrp = output.road_packgrp
+//                                                localViewSDSTIADG.road_psn = output.road_psn
+//                                                localViewSDSTIADG.road_hazchem = output.road_hazchem
+//                                                localViewSDSTIADG.road_subrisks = output.road_subrisks
 
-
+                                                print("reached here")
                                                 DispatchQueue.main.async {
                                                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
                                                     let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC
                                             //        self.navigationController?.pushViewController(sdsJump!, animated: true)
                                                     self.addChild(sdsJump!)
-                                                    sdsJump!.view.frame = CGRect(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
-                                                    self.containerView.addSubview(sdsJump!.view)
+                                                    sdsJump!.view.frame = CGRect(x: 0, y: 0, width: self.GHSContainer.frame.size.width, height: self.GHSContainer.frame.size.height)
+                                                    self.GHSContainer.addSubview(sdsJump!.view)
 
                                                     sdsJump!.didMove(toParent: self)
                                                 }
