@@ -175,6 +175,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             self.ghsImg6Gap.constant = 78
             self.img6GHSGap.constant = 10
             self.ghsHazGap.constant = 20
+
             
             
             
@@ -445,209 +446,230 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     }
     
     func setImage() {
-        
-        if localViewSDSGHS.picArray.count != 0 {
-            var cArray: [Any] = []
-            var imgCode: String!
+        DispatchQueue.main.async {
+//            self.img1Height.constant = 90
+//            self.dgImgHeight.constant = 90
 
-            for index in 0..<(localViewSDSGHS.picArray!.count) {
+            if localViewSDSGHS.picArray.count != 0 {
+                var cArray: [Any] = []
+                var imgCode: String!
 
-                let imgName = localViewSDSGHS.picArray![index]
-                let imgNameFix = (imgName as AnyObject).trimmingCharacters(in: .whitespacesAndNewlines)
+                for index in 0..<(localViewSDSGHS.picArray!.count) {
 
-                if (imgNameFix == "Flame") {
+                    let imgName = localViewSDSGHS.picArray![index]
+                    let imgNameFix = (imgName as AnyObject).trimmingCharacters(in: .whitespacesAndNewlines)
 
-                    imgCode = "GHS02"
-                    
-                } else if (imgNameFix == "Skull and crossbones") {
+                    if (imgNameFix == "Flame") {
 
-                    imgCode = "GHS06"
+                        imgCode = "GHS02"
+                        
+                    } else if (imgNameFix == "Skull and crossbones") {
 
-                } else if (imgNameFix == "Flame over circle") {
+                        imgCode = "GHS06"
 
-                    imgCode = "GHS03"
+                    } else if (imgNameFix == "Flame over circle") {
 
-                } else if (imgNameFix == "Exclamation mark") {
+                        imgCode = "GHS03"
 
-                    imgCode = "GHS07"
+                    } else if (imgNameFix == "Exclamation mark") {
 
-                } else if (imgNameFix == "Environment") {
+                        imgCode = "GHS07"
 
-                    imgCode = "GHS09"
+                    } else if (imgNameFix == "Environment") {
 
-                } else if (imgNameFix == "Health hazard") {
+                        imgCode = "GHS09"
 
-                    imgCode = "GHS08"
+                    } else if (imgNameFix == "Health hazard") {
 
-                } else if (imgNameFix == "Corrosion") {
+                        imgCode = "GHS08"
 
-                    imgCode = "GHS05"
+                    } else if (imgNameFix == "Corrosion") {
 
-                } else if (imgNameFix == "Gas cylinder") {
+                        imgCode = "GHS05"
 
-                    imgCode = "GHS04"
+                    } else if (imgNameFix == "Gas cylinder") {
 
-                } else if (imgNameFix == "Exploding bomb") {
+                        imgCode = "GHS04"
 
-                    imgCode = "GHS01"
+                    } else if (imgNameFix == "Exploding bomb") {
+
+                        imgCode = "GHS01"
+                    }
+
+                    cArray.append(imgCode!)
                 }
 
-                cArray.append(imgCode!)
-            }
+                if cArray.count == 1 {
+                    
+                    self.img1Height.constant = 90
+                    self.ghsImg1Gap.constant = 20
+                    self.img6Height.constant = 0
+                    self.ghsImg6Gap.constant = 103
+                    self.img1.frame.size.height = 90
+                    
+                    self.img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
 
-            if cArray.count == 1 {
-                
-                img1Height.constant = 90
-                ghsImg1Gap.constant = 20
-                img6Height.constant = 0
-                ghsImg6Gap.constant = 103
-                
-                img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+                } else if cArray.count == 2 {
+                    
+                    self.img1Height.constant = 90
+                    self.ghsImg1Gap.constant = 20
+                    self.img6Height.constant = 0
+                    self.ghsImg6Gap.constant = 103
+                    self.img1.frame.size.height = 90
+                    
+                    self.img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+                    self.img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
+                } else if cArray.count == 3 {
+                    
+                    self.img1Height.constant = 90
+                    self.ghsImg1Gap.constant = 20
+                    self.img6Height.constant = 0
+                    self.ghsImg6Gap.constant = 103
+                    self.img1.frame.size.height = 90
+                    
+                    self.img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+                    self.img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
+                    self.img3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
+                } else if cArray.count == 4 {
+                    self.view.sizeToFit()
+                    self.img1Height.constant = 90
+                    self.ghsImg1Gap.constant = 20
+                    self.img6Height.constant = 90
+                    self.ghsImg6Gap.constant = 78
+                    self.img1.frame.size.height = 90
+                    self.img6.frame.size.height = 90
+                    
+    //                if (view.frame.height < 1024) {
+                        self.img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+                        self.img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
+                        self.img3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
+                        self.img6.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
+    //                } else {
+    //                    img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+    //                    img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
+    //                    img3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
+    //                    img4.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
+    //                }
+                } else if cArray.count == 5 {
 
-            } else if cArray.count == 2 {
-                
-                img1Height.constant = 90
-                ghsImg1Gap.constant = 20
-                img6Height.constant = 0
-                ghsImg6Gap.constant = 103
-                
-                img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
-                img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
-            } else if cArray.count == 3 {
-                
-                img1Height.constant = 90
-                ghsImg1Gap.constant = 20
-                img6Height.constant = 0
-                ghsImg6Gap.constant = 103
-                
-                img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
-                img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
-                img3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
-            } else if cArray.count == 4 {
-                view.sizeToFit()
-                img1Height.constant = 90
-                ghsImg1Gap.constant = 20
-                img6Height.constant = 90
-                ghsImg6Gap.constant = 78
-                
-//                if (view.frame.height < 1024) {
-                    img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
-                    img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
-                    img3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
-                    img6.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
-//                } else {
-//                    img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
-//                    img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
-//                    img3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
-//                    img4.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
-//                }
-            } else if cArray.count == 5 {
+                    self.view.sizeToFit()
+                    
+                    self.img1Height.constant = 90
+                     self.ghsImg1Gap.constant = 20
+                     self.img6Height.constant = 90
+                     self.ghsImg6Gap.constant = 78
+                    self.img1.frame.size.height = 90
+                    self.img6.frame.size.height = 90
+                    //below iphone 11 pro max, width all less than 414
+    //                if (view.frame.width <= 414) {
+     
+                        self.img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+                        self.img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
+                        self.img3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
+                        self.img6.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
+                        self.img7.image = UIImage(named: Bundle.main.path(forResource: cArray[4] as? String, ofType: "png")!)
+    //                    img4.image = nil
+    //                    img5.image = nil
+    //
+    //                } else {
 
-                view.sizeToFit()
-                
-                img1Height.constant = 90
-                 ghsImg1Gap.constant = 20
-                 img6Height.constant = 90
-                 ghsImg6Gap.constant = 78
-                //below iphone 11 pro max, width all less than 414
-//                if (view.frame.width <= 414) {
- 
-                    img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
-                    img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
-                    img3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
-                    img6.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
-                    img7.image = UIImage(named: Bundle.main.path(forResource: cArray[4] as? String, ofType: "png")!)
-//                    img4.image = nil
-//                    img5.image = nil
-//
-//                } else {
-
-//                    img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
-//                    img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
-//                    img3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
-//                    img4.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
-//                    img5.image = UIImage(named: Bundle.main.path(forResource: cArray[4] as? String, ofType: "png")!)
-//                    img6.image = nil
-//                    img7.image = nil
-//                }
-            }
-        } else {
-            img1.image = nil
-            img2.image = nil
-            img3.image = nil
-            img4.image = nil
-            img5.image = nil
-            img6.image = nil
-            img7.image = nil
-            
-            img1Height.constant = 0
-            img6Height.constant = 0
-            
-            ghsImg1Gap.constant = 0
-            ghsImg6Gap.constant = 0
-        }
-        
-        
-        //set dg img and sub risk img
-        var fixStr = ""
-        
-        if localViewSDSTIADG.road_dgclass.isEmpty == true || localViewSDSTIADG.road_dgclass.contains("None") {
-            dgImg.image = nil
-            subImg1.image = nil
-            subImg2.image = nil
-            
-            dgImgHeight.constant = 0
-            subImg1height.constant = 0
-            dgImgTIInfoGap.constant = 0
-            
-        } else {
-            if (localViewSDSTIADG.road_dgclass.contains(".")) {
-                fixStr = localViewSDSTIADG.road_dgclass.replacingOccurrences(of: ".", with: "")
+    //                    img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
+    //                    img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
+    //                    img3.image = UIImage(named: Bundle.main.path(forResource: cArray[2] as? String, ofType: "png")!)
+    //                    img4.image = UIImage(named: Bundle.main.path(forResource: cArray[3] as? String, ofType: "png")!)
+    //                    img5.image = UIImage(named: Bundle.main.path(forResource: cArray[4] as? String, ofType: "png")!)
+    //                    img6.image = nil
+    //                    img7.image = nil
+    //                }
+                }
             } else {
-                fixStr = localViewSDSTIADG.road_dgclass
+                self.img1.image = nil
+                self.img2.image = nil
+                self.img3.image = nil
+                self.img4.image = nil
+                self.img5.image = nil
+                self.img6.image = nil
+                self.img7.image = nil
+                
+                self.img1Height.constant = 0
+                self.img6Height.constant = 0
+                
+                self.ghsImg1Gap.constant = 0
+                self.ghsImg6Gap.constant = 0
             }
             
-            dgImgHeight.constant = 90
-            dgImgTIInfoGap.constant = 30
-            self.dgImg.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
-        }
-        
-        var fixSubStr1 = ""
-        var fixSubStr2 = ""
-        var fixSubArray: Array<String> = []
- 
-        if (localViewSDSTIADG.road_subrisks.contains("None") || localViewSDSTIADG.road_subrisks.isEmpty == true) {
-            self.subImg1.image = nil
-            self.subImg2.image = nil
             
-            subImg1height.constant = 0
-            subImg1_2Gap.constant = 0
+            //set dg img and sub risk img
+            var fixStr = ""
             
-            
-        } else {
-             if (localViewSDSTIADG.road_subrisks.isEmpty == false) {
+            if localViewSDSTIADG.road_dgclass.isEmpty == true || localViewSDSTIADG.road_dgclass.contains("None") {
+                self.dgImg.image = nil
+                self.subImg1.image = nil
+                self.subImg2.image = nil
                 
-                 fixSubArray = localViewSDSTIADG.road_subrisks.components(separatedBy: " ")
-        //                         print("Array: \(fixSubArray.count)")
-                 if (fixSubArray.count == 2) {
-                     
-                     fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
-                     fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
-                     
-                     self.subImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
-                     self.subImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
-                 } else if (fixSubArray.count == 1 ) {
-                    if fixSubStr1.contains("None") || fixSubStr1.contains("NIL") || fixSubStr1.isEmpty == true {
+                self.dgImgHeight.constant = 0
+                self.subImg1height.constant = 0
+                self.dgImgTIInfoGap.constant = 0
+                
+            } else {
+                if (localViewSDSTIADG.road_dgclass.contains(".")) {
+                    fixStr = localViewSDSTIADG.road_dgclass.replacingOccurrences(of: ".", with: "")
+                } else {
+                    fixStr = localViewSDSTIADG.road_dgclass
+                }
+                
+                self.dgImgHeight.constant = 90
+                self.dgImgTIInfoGap.constant = 30
+                self.dgImg.frame.size.height = 90
+                self.dgImg.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
+            }
+            
+            var fixSubStr1 = ""
+            var fixSubStr2 = ""
+            var fixSubArray: Array<String> = []
+     
+            if (localViewSDSTIADG.road_subrisks.contains("None") || localViewSDSTIADG.road_subrisks.isEmpty == true) {
+                self.subImg1.image = nil
+                self.subImg2.image = nil
+                
+                self.subImg1height.constant = 0
+                self.subImg1_2Gap.constant = 0
+                
+                
+            } else {
+                 if (localViewSDSTIADG.road_subrisks.isEmpty == false) {
+                    
+                     fixSubArray = localViewSDSTIADG.road_subrisks.components(separatedBy: " ")
+            //                         print("Array: \(fixSubArray.count)")
+                     if (fixSubArray.count == 2) {
                         
-                        self.subImg1.image = nil
-                     } else {
+                        self.subImg1height.constant = 60
+                        self.subImg1.frame.size.height = 60
                          
-                         fixSubStr1 = fixSubArray[0].replacingOccurrences(of: " ", with: "")
+                         fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
+                         fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
+                         
                          self.subImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+                         self.subImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
+                     } else if (fixSubArray.count == 1 ) {
+                        if fixSubStr1.contains("None") || fixSubStr1.contains("NIL") || fixSubStr1.isEmpty == true {
+                            
+                            self.subImg1.image = nil
+                            self.subImg1height.constant = 0
+                            self.subImg1.frame.size.height = 0
+                         } else {
+                             self.subImg1height.constant = 60
+                            self.subImg1.frame.size.height = 60
+
+                             fixSubStr1 = fixSubArray[0].replacingOccurrences(of: " ", with: "")
+                             self.subImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+                         }
                      }
                  }
-             }
+            }
+            
         }
+
 
     }
     
@@ -833,9 +855,19 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         self.hazPreGap.constant = 20
         self.PregenGap.constant = 10
         
-        dgImg.image = nil
-        subImg1.image = nil
-        subImg2.image = nil
+
+            self.setImage()
+         DispatchQueue.main.async {
+            self.dgImg.image = nil
+            self.subImg1.image = nil
+            self.subImg2.image = nil
+            self.dgImgHeight.constant = 0
+        self.dgImg.frame.size.height = 0
+            self.subImg1height.constant = 0
+        }
+        
+
+
         
         if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
             self.HazardST.text = "HAZARD STATEMENT(S)"
