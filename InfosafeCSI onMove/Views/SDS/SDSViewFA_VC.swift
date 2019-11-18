@@ -135,7 +135,7 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
     }
     
     func getValue() {
-        DispatchQueue.main.async {
+//        DispatchQueue.main.async {
             
             if (localViewSDSFA.inhalation.isEmpty == false) {
                 self.inh.text = localViewSDSFA.inhalation
@@ -193,12 +193,12 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
             
             self.viewMore()
             self.FAScrollView.isHidden = false
-        }
+//        }
     }
     
     func viewMore() {
         
-        DispatchQueue.main.async {
+//        DispatchQueue.main.async {
             self.INHT.sizeToFit()
             self.INGT.sizeToFit()
             self.SKINT.sizeToFit()
@@ -235,7 +235,7 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
                 self.viewMoreLbl.isHidden = true
                 self.scrollDownArrow.isHidden = true
             }
-        }
+//        }
 
         
 
