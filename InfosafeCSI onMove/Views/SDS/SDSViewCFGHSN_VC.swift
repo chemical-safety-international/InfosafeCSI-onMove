@@ -130,6 +130,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         setNavBar()
+        
     }
     
     func setNavBar() {
@@ -151,6 +152,11 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     func setCFTIValue() {
         
         getValue()
+        viewSDSBTn.isEnabled = true
+        preVBtn.isEnabled = false
+        ghsBtn.isEnabled = true
+        dgBtn.isEnabled = true
+        faBtn.isEnabled = true
     }
     
     func getValue() {
@@ -329,7 +335,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             self.PregenGap.constant = 0
             
             self.viewMore()
-            //set the collection view height same as it expanded
+
 
             self.setImage()
 
@@ -429,7 +435,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             let ct5 = self.PST.frame.height + self.ps.frame.height + self.PSpsGap.constant
            let ctt = ct1 + ct2 + ct3 + ct4 + ct5 + 100
            
-//            print("Ctt: \(ctt)\n")
+//            print("Ctt: \(ctt)")
             
             if ctt > self.GHSScrollView.frame.height {
                  self.viewMoreLbl.isHidden = false
@@ -439,16 +445,21 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                  self.scrollDownArrow.isHidden = true
              }
         }
-//        print(contentView.frame.height)
-//        print(GHSScrollView.frame.height)
+        print(contentView.frame.height)
+        print(GHSScrollView.frame.height)
+//        print("\n")
 
  
     }
     
     func setImage() {
         DispatchQueue.main.async {
-//            self.img1Height.constant = 90
-//            self.dgImgHeight.constant = 90
+            self.img1Height.constant = 90
+            self.dgImgHeight.constant = 90
+            self.img1.frame.size.height = 90
+            self.dgImg.frame.size.height = 90
+            self.img1.frame.size.width = 90
+            self.dgImg.frame.size.width = 90
 
             if localViewSDSGHS.picArray.count != 0 {
                 var cArray: [Any] = []
@@ -506,6 +517,8 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                     self.img6Height.constant = 0
                     self.ghsImg6Gap.constant = 103
                     self.img1.frame.size.height = 90
+                    self.img1.frame.size.width = 90
+
                     
                     self.img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
 
@@ -516,6 +529,8 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                     self.img6Height.constant = 0
                     self.ghsImg6Gap.constant = 103
                     self.img1.frame.size.height = 90
+                    self.img1.frame.size.width = 90
+
                     
                     self.img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
                     self.img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
@@ -526,6 +541,8 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                     self.img6Height.constant = 0
                     self.ghsImg6Gap.constant = 103
                     self.img1.frame.size.height = 90
+                    self.img1.frame.size.width = 90
+
                     
                     self.img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
                     self.img2.image = UIImage(named: Bundle.main.path(forResource: cArray[1] as? String, ofType: "png")!)
@@ -538,6 +555,8 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                     self.ghsImg6Gap.constant = 78
                     self.img1.frame.size.height = 90
                     self.img6.frame.size.height = 90
+                    self.img1.frame.size.width = 90
+
                     
     //                if (view.frame.height < 1024) {
                         self.img1.image = UIImage(named: Bundle.main.path(forResource: cArray[0] as? String, ofType: "png")!)
@@ -560,6 +579,8 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                      self.ghsImg6Gap.constant = 78
                     self.img1.frame.size.height = 90
                     self.img6.frame.size.height = 90
+                    self.img1.frame.size.width = 90
+ 
                     //below iphone 11 pro max, width all less than 414
     //                if (view.frame.width <= 414) {
      
@@ -621,6 +642,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                 self.dgImgHeight.constant = 90
                 self.dgImgTIInfoGap.constant = 30
                 self.dgImg.frame.size.height = 90
+                self.dgImg.frame.size.width = 90
                 self.dgImg.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
             }
             
@@ -834,6 +856,12 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     @IBAction func allBtnTapped(_ sender: Any) {
             
         getValue()
+        
+        viewSDSBTn.isEnabled = true
+        preVBtn.isEnabled = false
+        ghsBtn.isEnabled = true
+        dgBtn.isEnabled = true
+        faBtn.isEnabled = true
 
     }
         
@@ -979,7 +1007,12 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         self.ps.text = ""
         
         viewMore()
-
+        
+        viewSDSBTn.isEnabled = true
+        preVBtn.isEnabled = true
+        ghsBtn.isEnabled = false
+        dgBtn.isEnabled = true
+        faBtn.isEnabled = true
     }
     
 
@@ -990,6 +1023,12 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
 //        print(self.view.frame.width)
         
         if (self.view.frame.width > 500) {
+            
+            viewSDSBTn.isEnabled = false
+            preVBtn.isEnabled = true
+            ghsBtn.isEnabled = true
+            dgBtn.isEnabled = true
+            faBtn.isEnabled = true
             
             containerView.isHidden = false
             GHSScrollView.isHidden = true
@@ -1027,6 +1066,12 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         containerView.addSubview(sdsJump!.view)
 
         sdsJump!.didMove(toParent: self)
+        
+        viewSDSBTn.isEnabled = true
+        preVBtn.isEnabled = true
+        ghsBtn.isEnabled = true
+        dgBtn.isEnabled = false
+        faBtn.isEnabled = true
     }
     
     
@@ -1050,11 +1095,22 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         containerView.addSubview(sdsJump!.view)
 
         sdsJump!.didMove(toParent: self)
+        
+        viewSDSBTn.isEnabled = true
+        preVBtn.isEnabled = true
+        ghsBtn.isEnabled = true
+        dgBtn.isEnabled = true
+        faBtn.isEnabled = false
     }
     
     @objc func callPerView() {
 //         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetNavbar"), object: nil)
         getValue()
+        viewSDSBTn.isEnabled = true
+        preVBtn.isEnabled = false
+        ghsBtn.isEnabled = true
+        dgBtn.isEnabled = true
+        faBtn.isEnabled = true
     }
     
 }
