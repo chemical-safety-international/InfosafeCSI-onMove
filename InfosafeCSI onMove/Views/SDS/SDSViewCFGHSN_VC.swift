@@ -248,7 +248,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             let breakStr: NSMutableAttributedString = NSMutableAttributedString(string: "\n")
             
             if localViewSDSTIADG.road_unno.isEmpty == false {
-                let str = "\nUNNO:\n"
+                let str = "\nUNNO\n"
                 let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
                 let strdata = NSMutableAttributedString(string: localViewSDSTIADG.road_unno)
                 
@@ -259,7 +259,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             }
             
             if localViewSDSTIADG.road_dgclass.isEmpty == false {
-                let str = "\nDG CLASS:\n"
+                let str = "\nDG CLASS\n"
                 let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
                 let strdata = NSMutableAttributedString(string: localViewSDSTIADG.road_dgclass)
                 
@@ -270,7 +270,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             }
             
             if localViewSDSTIADG.road_subrisks.isEmpty == false {
-                let str = "\nSUB RISK(S):\n"
+                let str = "\nSUB RISK(S)\n"
                 let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
                 let strdata = NSMutableAttributedString(string: localViewSDSTIADG.road_subrisks)
                 
@@ -281,7 +281,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             }
             
             if localViewSDSTIADG.road_packgrp.isEmpty == false {
-                let str = "\nHAZCHEM CODE:\n"
+                let str = "\nHAZCHEM CODE\n"
                 let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
                 let strdata = NSMutableAttributedString(string: localViewSDSTIADG.road_packgrp)
                 
@@ -292,7 +292,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             }
             
             if localViewSDSTIADG.road_hazchem.isEmpty == false {
-                let str = "\nPACKAGING GROUP:\n"
+                let str = "\nPACKAGING GROUP\n"
                 let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
                 let strdata = NSMutableAttributedString(string: localViewSDSTIADG.road_hazchem)
                 
@@ -303,7 +303,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             }
             
             if localViewSDSTIADG.road_psn.isEmpty == false {
-                let str = "\nPROPER SHIPPING NAME:\n"
+                let str = "\nPROPER SHIPPING NAME\n"
                 let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
                 let strdata = NSMutableAttributedString(string: localViewSDSTIADG.road_psn)
                 
@@ -434,15 +434,15 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             let ct3 = self.HazhazGap.constant + self.hazPreGap.constant + self.PregenGap.constant + self.dgImgHeight.constant
             let ct4 = self.TIT.frame.height + self.TIInfo.frame.height + self.dgImgTIInfoGap.constant + self.unPSGap.constant
             let ct5 = self.PST.frame.height + self.ps.frame.height + self.PSpsGap.constant
-            let ctt = ct1 + ct2 + ct3 + ct4 + ct5 + 103.1
+            let ctt = ct1 + ct2 + ct3 + ct4 + ct5 + 100
            
-            print("Ctt: \(ctt)")
-            print(self.contentView.frame.height)
-            print(self.GHSScrollView.frame.height)
-            print("ct1: \(ct1)\nct2: \(ct2)\nct3: \(ct3)\nct4: \(ct4)\nct5: \(ct5)\nctt: \(ctt)\n ")
+//            print("Ctt: \(ctt)")
+//            print(self.contentView.frame.height)
+//            print(self.GHSScrollView.frame.height)
+//            print("ct1: \(ct1)\nct2: \(ct2)\nct3: \(ct3)\nct4: \(ct4)\nct5: \(ct5)\nctt: \(ctt)\n ")
             
-            if ctt > self.GHSScrollView.frame.height {
-                print("ctt > GHS")
+            if ctt > (self.GHSScrollView.frame.height + 10) {
+//                print("ctt > GHS")
                  self.viewMoreLbl.isHidden = false
                  self.scrollDownArrow.isHidden = false
              } else {
