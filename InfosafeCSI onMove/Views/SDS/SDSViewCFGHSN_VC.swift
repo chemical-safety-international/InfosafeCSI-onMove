@@ -334,10 +334,10 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             self.hazPreGap.constant = 0
             self.PregenGap.constant = 0
             
-            self.viewMore()
-
-
+            
             self.setImage()
+            
+            self.viewMore()
 
             self.GHSScrollView.isHidden = false
             
@@ -397,8 +397,9 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         DispatchQueue.main.async {
 
-            self.viewMore()
+            
             self.setImage()
+            self.viewMore()
         }
     }
     
@@ -408,36 +409,40 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         
 //        print("hpview: \(hpView.frame.height)\ntiview: \(tiVIew.frame.height)\ncontentview: \(contentView.frame.height)\n ghsscroll: \(GHSScrollView.frame.height)")
         DispatchQueue.main.async {
-            self.contentView.sizeToFit()
-            self.GHSScrollView.sizeToFit()
-            
- 
-            
-            self.img1.sizeToFit()
-            self.img6.sizeToFit()
-            self.ghsclass.sizeToFit()
-            self.GHSClassT.sizeToFit()
-            self.HazardST.sizeToFit()
-            self.haz.sizeToFit()
-            self.PercauT.sizeToFit()
-            self.pstate.sizeToFit()
-
-            self.TIT.sizeToFit()
-            self.dgImg.sizeToFit()
-            self.TIInfo.sizeToFit()
-            self.PST.sizeToFit()
-            self.ps.sizeToFit()
+//            self.contentView.sizeToFit()
+//            self.GHSScrollView.sizeToFit()
+//
+//
+//
+//            self.img1.sizeToFit()
+//            self.img6.sizeToFit()
+//            self.ghsclass.sizeToFit()
+//            self.GHSClassT.sizeToFit()
+//            self.HazardST.sizeToFit()
+//            self.haz.sizeToFit()
+//            self.PercauT.sizeToFit()
+//            self.pstate.sizeToFit()
+//
+//            self.TIT.sizeToFit()
+//            self.dgImg.sizeToFit()
+//            self.TIInfo.sizeToFit()
+//            self.PST.sizeToFit()
+//            self.ps.sizeToFit()
             
             let ct1 = self.img1Height.constant + self.img6Height.constant/2 + self.GHSClassT.frame.height + self.ghsclass.frame.height
             let ct2 = self.HazardST.frame.height + self.haz.frame.height + self.PercauT.frame.height + self.pstate.frame.height
             let ct3 = self.HazhazGap.constant + self.hazPreGap.constant + self.PregenGap.constant + self.dgImgHeight.constant
             let ct4 = self.TIT.frame.height + self.TIInfo.frame.height + self.dgImgTIInfoGap.constant + self.unPSGap.constant
             let ct5 = self.PST.frame.height + self.ps.frame.height + self.PSpsGap.constant
-           let ctt = ct1 + ct2 + ct3 + ct4 + ct5 + 100
+            let ctt = ct1 + ct2 + ct3 + ct4 + ct5 + 103.1
            
-//            print("Ctt: \(ctt)")
+            print("Ctt: \(ctt)")
+            print(self.contentView.frame.height)
+            print(self.GHSScrollView.frame.height)
+            print("ct1: \(ct1)\nct2: \(ct2)\nct3: \(ct3)\nct4: \(ct4)\nct5: \(ct5)\nctt: \(ctt)\n ")
             
             if ctt > self.GHSScrollView.frame.height {
+                print("ctt > GHS")
                  self.viewMoreLbl.isHidden = false
                  self.scrollDownArrow.isHidden = false
              } else {
@@ -445,8 +450,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                  self.scrollDownArrow.isHidden = true
              }
         }
-        print(contentView.frame.height)
-        print(GHSScrollView.frame.height)
+
 //        print("\n")
 
  
@@ -854,7 +858,8 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
 
     
     @IBAction func allBtnTapped(_ sender: Any) {
-            
+        viewMoreLbl.isHidden = true
+        scrollDownArrow.isHidden = true
         getValue()
         
         viewSDSBTn.isEnabled = true
@@ -867,15 +872,18 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         
     @IBAction func ghsBtnTapped(_ sender: Any) {
         
-        setghsBtnStyle()
         
-        GHSScrollView.isHidden = false
-        containerView.isHidden = true
+        DispatchQueue.main.async {
+
+        self.setghsBtnStyle()
+        
+        self.GHSScrollView.isHidden = false
+        self.containerView.isHidden = true
         
         if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
-            navigationItem.title = "GHS"
+            self.navigationItem.title = "GHS"
         } else {
-            navigationItem.title = "CF"
+            self.navigationItem.title = "CF"
         }
         
         
@@ -1006,13 +1014,14 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         self.PSpsGap.constant = 0
         self.ps.text = ""
         
-        viewMore()
+        self.viewMore()
         
-        viewSDSBTn.isEnabled = true
-        preVBtn.isEnabled = true
-        ghsBtn.isEnabled = false
-        dgBtn.isEnabled = true
-        faBtn.isEnabled = true
+        self.viewSDSBTn.isEnabled = true
+        self.preVBtn.isEnabled = true
+        self.ghsBtn.isEnabled = false
+        self.dgBtn.isEnabled = true
+        self.faBtn.isEnabled = true
+        }
     }
     
 
@@ -1105,12 +1114,16 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     
     @objc func callPerView() {
 //         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetNavbar"), object: nil)
+        viewMoreLbl.isHidden = true
+        scrollDownArrow.isHidden = true
         getValue()
         viewSDSBTn.isEnabled = true
         preVBtn.isEnabled = false
         ghsBtn.isEnabled = true
         dgBtn.isEnabled = true
         faBtn.isEnabled = true
+        
+
     }
     
 }

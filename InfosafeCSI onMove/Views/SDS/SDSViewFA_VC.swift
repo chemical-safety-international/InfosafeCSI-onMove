@@ -191,27 +191,30 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
                 self.ATDatdGap.constant = 0
             }
             
+        DispatchQueue.main.async {
             self.viewMore()
+        }
+            
             self.FAScrollView.isHidden = false
 //        }
     }
     
     func viewMore() {
         
-//        DispatchQueue.main.async {
-            self.INHT.sizeToFit()
-            self.INGT.sizeToFit()
-            self.SKINT.sizeToFit()
-            self.EYET.sizeToFit()
-            self.FAFT.sizeToFit()
-            self.ATDT.sizeToFit()
-            
-            self.inh.sizeToFit()
-            self.ing.sizeToFit()
-            self.skin.sizeToFit()
-            self.eye.sizeToFit()
-            self.faf.sizeToFit()
-            self.atd.sizeToFit()
+        DispatchQueue.main.async {
+//            self.INHT.sizeToFit()
+//            self.INGT.sizeToFit()
+//            self.SKINT.sizeToFit()
+//            self.EYET.sizeToFit()
+//            self.FAFT.sizeToFit()
+//            self.ATDT.sizeToFit()
+//            
+//            self.inh.sizeToFit()
+//            self.ing.sizeToFit()
+//            self.skin.sizeToFit()
+//            self.eye.sizeToFit()
+//            self.faf.sizeToFit()
+//            self.atd.sizeToFit()
             
             let count1 = self.INHT.frame.height + self.INGT.frame.height + self.SKINT.frame.height + self.EYET.frame.height
             let count2 = self.FAFT.frame.height + self.ATDT.frame.height + self.inh.frame.height + self.ing.frame.height
@@ -228,6 +231,7 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
 //            print("\n")
             
             //check if the real content height is over or less the content view height
+//        DispatchQueue.main.async {
             if conT > self.FAScrollView.frame.height {
                 self.viewMoreLbl.isHidden = false
                 self.scrollDownArrow.isHidden = false
@@ -236,6 +240,7 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
                 self.scrollDownArrow.isHidden = true
             }
 //        }
+        }
 
         
 

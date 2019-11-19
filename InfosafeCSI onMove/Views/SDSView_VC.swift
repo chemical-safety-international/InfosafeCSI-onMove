@@ -269,7 +269,7 @@ class SplitView_VC: UIViewController {
 //                                                localViewSDSTIADG.road_hazchem = output.road_hazchem
 //                                                localViewSDSTIADG.road_subrisks = output.road_subrisks
 
-                                                print("reached here")
+//                                                print("reached here")
                                                 DispatchQueue.main.async {
                                                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
                                                     let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSGHSN") as? SDSViewCFGHSN_VC

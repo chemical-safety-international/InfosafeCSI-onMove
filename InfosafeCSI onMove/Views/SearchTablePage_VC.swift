@@ -152,7 +152,8 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
 //        } else {
             setNavBar()
 //        }
-        
+//        let indexPath = IndexPath(row: 0, section: 0)
+//        tableDisplay.selectRow(at: indexPath, animated: true, scrollPosition: .top)
         
     }
     

@@ -173,7 +173,12 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
         DispatchQueue.main.async {
             
             if (localViewSDSTIADG.road_unno.isEmpty == false) {
-                self.unno.text = localViewSDSTIADG.road_unno
+                if (localViewSDSTIADG.road_unno.contains("None")) {
+                    self.unno.text = "None"
+                } else {
+                    self.unno.text = localViewSDSTIADG.road_unno
+                }
+                
             } else {
                 self.unno.text = "None"
             }
@@ -181,9 +186,14 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             self.pg.text = localViewSDSTIADG.road_packgrp
             
             if (localViewSDSTIADG.road_psn.isEmpty == false) {
-               self.psn.text = localViewSDSTIADG.road_psn
+                if (localViewSDSTIADG.road_psn.contains("None")) {
+                    self.psn.text = "None"
+                } else {
+                    self.psn.text = localViewSDSTIADG.road_psn
+                }
+
             } else {
-                self.psn.text = "  None"
+                self.psn.text = "None"
             }
             
             
@@ -311,8 +321,16 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             var fixSubArray: Array<String> = []
             
             if (localViewSDSTIADG.road_dgclass != "") {
-                if (localViewSDSTIADG.road_dgclass.contains("None")) {
-                    self.dgCLbl.text = localViewSDSTIADG.road_dgclass
+
+                if (localViewSDSTIADG.road_dgclass.contains("None") || localViewSDSTIADG.road_dgclass.contains("NIL")) {
+//                    self.dgCLbl.text = localViewSDSTIADG.road_dgclass
+
+                    self.dgCLbl.text = "None"
+                    self.dgClassImage.image = nil
+                    self.topdgImgGap.constant = 0
+                    self.dgImgHeight.constant = 0
+                    self.subImgHeight.constant = 0
+                    self.dgImgDGCGap.constant = 0
                 } else {
                    if (localViewSDSTIADG.road_dgclass.contains(".")) {
                        fixStr = localViewSDSTIADG.road_dgclass.replacingOccurrences(of: ".", with: "")
@@ -343,12 +361,19 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
             if (localViewSDSTIADG.road_subrisks != "" || localViewSDSTIADG.road_subrisks.isEmpty == false) {
                 
                 if (localViewSDSTIADG.road_subrisks.contains("None") || localViewSDSTIADG.road_subrisks.contains("NIL")) {
-                    self.subRiskLbl.text = localViewSDSTIADG.road_subrisks
+//                    self.subRiskLbl.text = localViewSDSTIADG.road_subrisks
+                    self.subRiskLbl.text = "None"
+                    self.subRiskImg1.image = nil
+                    self.subRiskImg2.image = nil
+                    self.subImgHeight.constant = 0
+                    
+                    
                 } else {
-                    self.subImgHeight.constant = 110
+                    
                     fixSubArray = localViewSDSTIADG.road_subrisks.components(separatedBy: " ")
 
                     if (fixSubArray.count == 2) {
+                        self.subImgHeight.constant = 110
 
                         fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
                         fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
@@ -356,7 +381,8 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                         self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
                         self.subRiskImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
                     } else if (fixSubArray.count == 1 ) {
-
+                        self.subImgHeight.constant = 110
+ 
                         fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
                         self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
 
@@ -380,38 +406,38 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
     func viewMore() {
         
         DispatchQueue.main.async {
-            self.UNNOT.sizeToFit()
-             self.DGCLT.sizeToFit()
-             self.SUBRT.sizeToFit()
-             self.PACKT.sizeToFit()
-             self.PSNT.sizeToFit()
-             self.SYMBT.sizeToFit()
-             self.EMST.sizeToFit()
-             self.MPT.sizeToFit()
-             self.HCT.sizeToFit()
-             self.EPGT.sizeToFit()
-             self.IERGT.sizeToFit()
-             self.PMT.sizeToFit()
-             
-             self.unno.sizeToFit()
-             self.dgClassImage.sizeToFit()
-             self.subRiskImg1.sizeToFit()
-             self.pg.sizeToFit()
-             self.psn.sizeToFit()
-             self.symb.sizeToFit()
-             self.ems.sizeToFit()
-             self.mp.sizeToFit()
-             self.hc.sizeToFit()
-             self.epg.sizeToFit()
-             self.ierg.sizeToFit()
-             self.pm.sizeToFit()
-             
-             
-             self.dgCLbl.sizeToFit()
-             self.subRiskLbl.sizeToFit()
-             
-             self.contentView.sizeToFit()
-             self.TIScrollView.sizeToFit()
+//            self.UNNOT.sizeToFit()
+//             self.DGCLT.sizeToFit()
+//             self.SUBRT.sizeToFit()
+//             self.PACKT.sizeToFit()
+//             self.PSNT.sizeToFit()
+//             self.SYMBT.sizeToFit()
+//             self.EMST.sizeToFit()
+//             self.MPT.sizeToFit()
+//             self.HCT.sizeToFit()
+//             self.EPGT.sizeToFit()
+//             self.IERGT.sizeToFit()
+//             self.PMT.sizeToFit()
+//             
+//             self.unno.sizeToFit()
+//             self.dgClassImage.sizeToFit()
+//             self.subRiskImg1.sizeToFit()
+//             self.pg.sizeToFit()
+//             self.psn.sizeToFit()
+//             self.symb.sizeToFit()
+//             self.ems.sizeToFit()
+//             self.mp.sizeToFit()
+//             self.hc.sizeToFit()
+//             self.epg.sizeToFit()
+//             self.ierg.sizeToFit()
+//             self.pm.sizeToFit()
+//             
+//             
+//             self.dgCLbl.sizeToFit()
+//             self.subRiskLbl.sizeToFit()
+//             
+//             self.contentView.sizeToFit()
+//             self.TIScrollView.sizeToFit()
              
             let cont1 = self.DGCLT.frame.height + self.topdgImgGap.constant + self.dgImgHeight.constant + self.dgImgDGCGap.constant
             let cont2 = self.PSNT.frame.height + self.SYMBT.frame.height + self.EMST.frame.height + self.MPT.frame.height
@@ -541,7 +567,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                          fixSubArray = localViewSDSTIIMDG.imdg_subrisks.components(separatedBy: " ")
 //                         print("Array: \(fixSubArray.count)")
                          if (fixSubArray.count == 2) {
-                             
+                            
                              fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
                              fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
                              

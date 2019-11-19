@@ -124,22 +124,22 @@ class SDSViewCFGHS_VC: UIViewController, UIScrollViewDelegate {
     }
     
     func viewMore() {
-        GHSClassT.sizeToFit()
-        HazardST.sizeToFit()
-        PercauT.sizeToFit()
-        PST.sizeToFit()
-        DanGT.sizeToFit()
-        
-        ghsclass.sizeToFit()
-        haz.sizeToFit()
-        pstate.sizeToFit()
-        ps.sizeToFit()
-        dang.sizeToFit()
-        ptg.sizeToFit()
-        
-        contentView.sizeToFit()
-        GHSScrollView.sizeToFit()
-        GHSCollectionView.sizeToFit()
+//        GHSClassT.sizeToFit()
+//        HazardST.sizeToFit()
+//        PercauT.sizeToFit()
+//        PST.sizeToFit()
+//        DanGT.sizeToFit()
+//        
+//        ghsclass.sizeToFit()
+//        haz.sizeToFit()
+//        pstate.sizeToFit()
+//        ps.sizeToFit()
+//        dang.sizeToFit()
+//        ptg.sizeToFit()
+//        
+//        contentView.sizeToFit()
+//        GHSScrollView.sizeToFit()
+//        GHSCollectionView.sizeToFit()
         
         let cont1 = GHSClassT.frame.height + HazardST.frame.height + PercauT.frame.height
         let cont2 = PST.frame.height + DanGT.frame.height + ghsclass.frame.height
