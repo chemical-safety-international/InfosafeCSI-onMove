@@ -66,6 +66,7 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
 //        self.view.backgroundColor = UIColor.black
         
         NotificationCenter.default.addObserver(self, selector: #selector(errorHandle), name: NSNotification.Name("errorLogin"), object: nil)
+        
 
     }
     
@@ -78,21 +79,28 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
         super.viewWillAppear(animated)
 
         self.navigationController?.navigationBar.isHidden = true
+
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
         self.navigationController?.navigationBar.isHidden = false
+//
+
     }
     
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            return .portrait
-        } else {
-            return .all
-        }
-    }
+//    override open var shouldAutorotate: Bool {
+//        return false
+//    }
+    
+//    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+//        if UIDevice.current.userInterfaceIdiom == .pad {
+//            return .portrait
+//        } else {
+//            return .all
+//        }
+//    }
     
     
     

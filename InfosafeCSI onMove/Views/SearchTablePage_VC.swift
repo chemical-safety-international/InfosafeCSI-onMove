@@ -40,7 +40,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         super.viewDidLoad()
         
         self.tableDisplay.contentInsetAdjustmentBehavior = .never
-//        self.tableDisplay.contentInset = self.view.safeAreaInsets
+
         self.view.backgroundColor = UIColor(red:0.11, green:0.15, blue:0.18, alpha:1.0)
         menuDisappear()
         // Do any additional setup after loading the view.
@@ -108,6 +108,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         
 //        setNavBar()
         
+        
     }
     
     @objc func menuDis() {
@@ -142,6 +143,11 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.enableAllOrientation = true
+        }
 //        tableDisplay.estimatedRowHeight = 130
 //        tableDisplay.rowHeight = UITableView.automaticDimension
         
@@ -157,10 +163,14 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         
     }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(true)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
 //        tableDisplay.reloadData()
-//    }
+
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+         appDelegate.enableAllOrientation = false
+ 
+    }
     
     //for the view sds button inside of cell (currently not using)
 //    @IBAction func sdsViewBtnTapped(_ sender: UIButton) {

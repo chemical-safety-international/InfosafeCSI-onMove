@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class Update_VC: UIViewController {
 
     @IBOutlet weak var progressView: UIProgressView!
@@ -60,9 +62,43 @@ class Update_VC: UIViewController {
     @IBAction func showInfoTapped(_ sender: Any) {
         
 //        print(UIDevice.current.modelName)
-        
+        deviceName()
+        modelName()
+        UUID()
+        currentDate()
+        currentDevice()
+
+    }
+    
+    func modelName() {
         let modelName = UIDevice.modelName
-        print(modelName)
+        print("Model name: \(modelName)\n")
+        
+    }
+    
+    // for identify the device uniquely (will create a new one after reinstalling)
+    func UUID() {
+        let uuid = UIDevice.current.identifierForVendor?.uuidString
+        print("UUID: \(uuid ?? "")\n")
+    }
+    
+    func deviceName() {
+        let deviceName = UIDevice.current.name
+        print("Device name: \(deviceName)\n")
+        
+    }
+    
+    func currentDate() {
+        let date = Date()
+        let format = DateFormatter()
+        format.dateFormat = "HH:mm:ss dd-MM-yyyy"
+        
+        let formattedDate = format.string(from: date)
+        print("Current date: \(formattedDate)\n")
+    }
+    
+    func currentDevice() {
+        print(UIDevice.current)
     }
     
 }

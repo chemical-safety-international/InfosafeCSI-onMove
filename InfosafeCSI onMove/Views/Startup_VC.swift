@@ -40,6 +40,8 @@ class StartupPage_VC: UIViewController {
         self.navigationController?.navigationBar.isHidden = false
     }
     
+        
+    
     func setNavigationBar() {
         navigationController?.navigationBar.isTranslucent = false
 //        navigationController?.navigationBar.barTintColor = UIColor(red:0.76, green:0.75, blue:0.75, alpha:1.0)
