@@ -129,6 +129,9 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            self.viewMore()
+        }
         setNavBar()
         
     }
