@@ -81,6 +81,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="VzH-kI-hjB"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oMZ-2a-qi9">
                                 <rect key="frame" x="30" y="250" width="315" height="35"/>
@@ -91,7 +94,7 @@
                                 </connections>
                             </textField>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CSI-Logo1" translatesAutoresizingMaskIntoConstraints="NO" id="arA-dx-5Ii">
-                                <rect key="frame" x="35" y="40" width="305.00000000000011" height="120"/>
+                                <rect key="frame" x="35" y="40" width="305" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="TYq-jb-dvX"/>
                                     <constraint firstAttribute="width" constant="305" id="kpJ-IC-h98"/>
@@ -972,7 +975,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CSI-Logo1" translatesAutoresizingMaskIntoConstraints="NO" id="ftH-fF-xtx">
-                                <rect key="frame" x="30" y="0.0" width="315.00000000000011" height="61"/>
+                                <rect key="frame" x="30" y="0.0" width="315" height="122"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2877,12 +2880,6 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CSI-CFBC" translatesAutoresizingMaskIntoConstraints="NO" id="3bi-bp-XVJ">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                             </imageView>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fIt-ww-2Z1">
-                                <rect key="frame" x="0.0" y="30" width="375" height="782"/>
-                                <connections>
-                                    <segue destination="6ny-Cs-TdL" kind="embed" id="h3B-g9-C6d"/>
-                                </connections>
-                            </containerView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" indicatorStyle="white" translatesAutoresizingMaskIntoConstraints="NO" id="u8p-5y-teX">
                                 <rect key="frame" x="16" y="50" width="343" height="704"/>
                                 <subviews>
@@ -3176,6 +3173,12 @@
                                     <constraint firstAttribute="bottom" secondItem="0vV-C4-22j" secondAttribute="bottom" id="y05-d8-LyP"/>
                                 </constraints>
                             </view>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fIt-ww-2Z1">
+                                <rect key="frame" x="0.0" y="30" width="375" height="782"/>
+                                <connections>
+                                    <segue destination="6ny-Cs-TdL" kind="embed" id="h3B-g9-C6d"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -3324,7 +3327,6 @@
         <image name="white-drop-down-arrow" width="1000" height="1000"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="cJE-Cl-ui8"/>
         <segue reference="LNz-yn-sCP"/>
     </inferredMetricsTieBreakers>
 </document>

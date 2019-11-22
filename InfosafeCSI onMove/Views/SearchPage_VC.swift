@@ -126,6 +126,7 @@ class SearchPage_VC: UIViewController {
         
     }
     
+    //add arrow image into pickview
     func createArrow() {
         cPickView.rightViewMode = UITextField.ViewMode.always
         
@@ -134,7 +135,6 @@ class SearchPage_VC: UIViewController {
             let image = UIImage(named: "combox-down-arrow")
             imageView.image = image
             cPickView.rightView = imageView
-
 
     }
     
@@ -191,21 +191,21 @@ class SearchPage_VC: UIViewController {
             searchbar.text = ""
             supplierSearchbar.text = ""
             pCodeSearchbar.text = ""
-            self.showAlert(title: "Hi", message: "Search content empty.")
+            self.showAlert(title: "Hi", message: "Search content is empty.")
             
         } else if searchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" &&  supplierSearchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" && pCodeSearchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == ""{
             self.removeSpinner()
             searchbar.text = ""
             supplierSearchbar.text = ""
             pCodeSearchbar.text = ""
-            self.showAlert(title: "Hi", message: "Search content empty.")
+            self.showAlert(title: "Hi", message: "Search content is empty.")
         } else if searchbar.text!.count < 4 && searchbar.text!.isEmpty == false {
             self.removeSpinner()
             self.showAlert(title: "Hi", message: "Please enter more than 3 characters for product name!")
         
-        } else if supplierSearchbar.text!.count < 3 && supplierSearchbar.text!.isEmpty == false {
+        } else if supplierSearchbar.text!.count < 2 && supplierSearchbar.text!.isEmpty == false {
             self.removeSpinner()
-            self.showAlert(title: "Hi", message: "Please enter more than 2 characters for supplier!")
+            self.showAlert(title: "Hi", message: "Please enter more than 1 characters for supplier!")
             
         } else {
 //            print("Called call search")
@@ -275,8 +275,11 @@ class SearchPage_VC: UIViewController {
         self.view.addGestureRecognizer(tap)
     }
     
+    //Notify to disKeyboard
     @objc func disKeyboard() {
         searchbar.endEditing(true)
+        supplierSearchbar.endEditing(true)
+        pCodeSearchbar.endEditing(true)
     }
     
 }

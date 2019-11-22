@@ -189,28 +189,22 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
 //    }
     
     func setNavBar() {
+        
         //change background color
         DispatchQueue.main.async {
-//            self.navigationController?.navigationBar.isTranslucent = false
-//            self.navigationController?.navigationBar.barTintColor = UIColor.white
-//            self.navigationController?.navigationBar.tintColor = UIColor.black
-//            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20), .foregroundColor: UIColor.black]
             
-            
-                   //change background color & back button color
+            //change background color & back button color
             self.navigationController?.navigationBar.isTranslucent = false
             self.navigationController?.navigationBar.barTintColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
             self.navigationController?.navigationBar.tintColor = UIColor.white
                     
-                    //change navigation bar text color and font
+            //change navigation bar text color and font
             //        navigationItem.title = "CLASSIFICATION"
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25), .foregroundColor: UIColor.white]
-            
-            
             self.navigationItem.title = "SEARCH RESULT"
-
             
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "    ", style: .plain, target: self, action: .none)
+            // set right item to make title view in the center
+//            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "    ", style: .plain, target: self, action: .none)
             
             
         }
@@ -228,13 +222,6 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         //            imageView.image = comLogo
         //            navigationItem.titleView?.backgroundColor = UIColor.clear
         //            navigationItem.titleView = imageView
-                    
-
-
-                    
-
-                    
-                    
                     
 //                } else {
 //                    let comLogo = UIImage(named: "CSI-Logo")
@@ -277,6 +264,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     }
     
     
+    // menu appear
     func menuAppear() {
 
         UIView.animate(withDuration: 0.5, animations:  {
@@ -293,13 +281,13 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         
     }
     
+    //menu disappear
     func menuDisappear() {
 
         UIView.animate(withDuration: 0.2, animations: {
             self.menu.isHidden = true
             self.menu.frame.origin.x = self.view.bounds.width
             }, completion: nil)
-        
         
     }
     

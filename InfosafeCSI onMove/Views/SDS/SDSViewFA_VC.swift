@@ -120,6 +120,17 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            self.viewMore()
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        viewMoreLbl.isHidden = true
+        scrollDownArrow.isHidden = true
+    }
+    
     func callFA() {
 
 //        csiWCF_VM().callSDS_FA() { (output) in

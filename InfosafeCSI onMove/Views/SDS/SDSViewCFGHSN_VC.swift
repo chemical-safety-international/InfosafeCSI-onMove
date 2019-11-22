@@ -118,7 +118,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         preloadTIScreen()
         
         NotificationCenter.default.addObserver(self, selector: #selector(callPerView), name: NSNotification.Name(rawValue: "callPerView"), object: nil)
-
+//        print("GHS Screen")
     }
     
     override func viewDidLayoutSubviews() {
@@ -134,6 +134,11 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         }
         setNavBar()
         
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        viewMoreLbl.isHidden = true
+        scrollDownArrow.isHidden = true
     }
     
     func setNavBar() {
@@ -331,20 +336,16 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             self.PercauT.text = ""
             self.haz.text = ""
             self.pstate.text = ""
-
             
             self.HazhazGap.constant = 0
             self.hazPreGap.constant = 0
             self.PregenGap.constant = 0
-            
-            
+ 
             self.setImage()
             
             self.viewMore()
 
             self.GHSScrollView.isHidden = false
-            
-
 
         }
         
@@ -397,14 +398,14 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     }
     
     //detect the rotation
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        DispatchQueue.main.async {
-
-            
-            self.setImage()
-            self.viewMore()
-        }
-    }
+//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        DispatchQueue.main.async {
+//
+//
+//            self.setImage()
+//            self.viewMore()
+//        }
+//    }
     
     func viewMore() {
         
@@ -422,9 +423,12 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
 //            self.ghsclass.sizeToFit()
 //            self.GHSClassT.sizeToFit()
 //            self.HazardST.sizeToFit()
-//            self.haz.sizeToFit()
+            print("GHS Screen")
+            
+            
+            self.haz.sizeToFit()
 //            self.PercauT.sizeToFit()
-//            self.pstate.sizeToFit()
+            self.pstate.sizeToFit()
 //
 //            self.TIT.sizeToFit()
 //            self.dgImg.sizeToFit()
@@ -439,10 +443,10 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             let ct5 = self.PST.frame.height + self.ps.frame.height + self.PSpsGap.constant
             let ctt = ct1 + ct2 + ct3 + ct4 + ct5 + 100
            
-//            print("Ctt: \(ctt)")
-//            print(self.contentView.frame.height)
-//            print(self.GHSScrollView.frame.height)
-//            print("ct1: \(ct1)\nct2: \(ct2)\nct3: \(ct3)\nct4: \(ct4)\nct5: \(ct5)\nctt: \(ctt)\n ")
+            print("Ctt: \(ctt)")
+            print(self.contentView.frame.height)
+            print(self.GHSScrollView.frame.height)
+            print("ct1: \(ct1)\nct2: \(ct2)\nct3: \(ct3)\nct4: \(ct4)\nct5: \(ct5)\nctt: \(ctt)\n ")
             
             if ctt > (self.GHSScrollView.frame.height + 10) {
 //                print("ctt > GHS")
@@ -1044,6 +1048,10 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             
             containerView.isHidden = false
             GHSScrollView.isHidden = true
+            
+            viewMoreLbl.isHidden = true
+            scrollDownArrow.isHidden = true
+            
             setSDSBtnStyle()
             let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSView") as? SDSViewPage_VC
 
@@ -1060,59 +1068,64 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     
     
     @IBAction func dgBtnTapped(_ sender: Any) {
-        
-        setdgBtnStyle()
-        navigationItem.title = "DG CLASS"
-        
-        GHSScrollView.isHidden = true
-        containerView.isHidden = false
-        
-        viewMoreLbl.isHidden = true
-        scrollDownArrow.isHidden = true
-        
+        DispatchQueue.main.async {
+            self.setdgBtnStyle()
+            self.navigationItem.title = "DG CLASS"
+            
+            self.GHSScrollView.isHidden = true
+            self.containerView.isHidden = false
+            
+            self.viewMoreLbl.isHidden = true
+            self.scrollDownArrow.isHidden = true
+            
+            self.viewSDSBTn.isEnabled = true
+            self.preVBtn.isEnabled = true
+            self.ghsBtn.isEnabled = true
+            self.dgBtn.isEnabled = false
+            self.faBtn.isEnabled = true
 
-        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSTI") as? SDSViewTI_VC
+            let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSTI") as? SDSViewTI_VC
 
-        addChild(sdsJump!)
-        sdsJump!.view.frame = CGRect(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
-        containerView.addSubview(sdsJump!.view)
+            self.addChild(sdsJump!)
+            sdsJump!.view.frame = CGRect(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
+            self.containerView.addSubview(sdsJump!.view)
 
-        sdsJump!.didMove(toParent: self)
-        
-        viewSDSBTn.isEnabled = true
-        preVBtn.isEnabled = true
-        ghsBtn.isEnabled = true
-        dgBtn.isEnabled = false
-        faBtn.isEnabled = true
+            sdsJump!.didMove(toParent: self)
+        }
+
     }
     
     
     @IBAction func faBtnTapped(_ sender: Any) {
         
-        setfaBtnStyle()
-        navigationItem.title = "FIRST AID"
-        
-        GHSScrollView.isHidden = true
-        containerView.isHidden = false
-        
-        viewMoreLbl.isHidden = true
-        scrollDownArrow.isHidden = true
-        
+        DispatchQueue.main.async {
+            self.setfaBtnStyle()
+            self.navigationItem.title = "FIRST AID"
+            
+            self.GHSScrollView.isHidden = true
+            self.containerView.isHidden = false
+            
+            self.viewMoreLbl.isHidden = true
+            self.scrollDownArrow.isHidden = true
+            
+            self.viewSDSBTn.isEnabled = true
+            self.preVBtn.isEnabled = true
+            self.ghsBtn.isEnabled = true
+            self.dgBtn.isEnabled = true
+            self.faBtn.isEnabled = false
+            
+            let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SDSFA") as? SDSViewFA_VC
+    //         self.navigationController?.pushViewController(sdsJump!, animated: true)
+            
+            self.addChild(sdsJump!)
+            sdsJump!.view.frame = CGRect(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
+            self.containerView.addSubview(sdsJump!.view)
 
-        let sdsJump = storyboard?.instantiateViewController(withIdentifier: "SDSFA") as? SDSViewFA_VC
-//         self.navigationController?.pushViewController(sdsJump!, animated: true)
-        
-        addChild(sdsJump!)
-        sdsJump!.view.frame = CGRect(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
-        containerView.addSubview(sdsJump!.view)
+            sdsJump!.didMove(toParent: self)
+            
 
-        sdsJump!.didMove(toParent: self)
-        
-        viewSDSBTn.isEnabled = true
-        preVBtn.isEnabled = true
-        ghsBtn.isEnabled = true
-        dgBtn.isEnabled = true
-        faBtn.isEnabled = false
+        }
+
     }
     
     @objc func callPerView() {

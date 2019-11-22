@@ -155,6 +155,20 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            self.viewMore()
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        DispatchQueue.main.async{
+            self.viewMoreLbl.isHidden = true
+            self.scrollDownArrow.isHidden = true
+        }
+
+    }
+    
     
     func callTI() {
 
@@ -419,22 +433,22 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
 //             self.IERGT.sizeToFit()
 //             self.PMT.sizeToFit()
 //             
-//             self.unno.sizeToFit()
-//             self.dgClassImage.sizeToFit()
-//             self.subRiskImg1.sizeToFit()
-//             self.pg.sizeToFit()
-//             self.psn.sizeToFit()
-//             self.symb.sizeToFit()
-//             self.ems.sizeToFit()
-//             self.mp.sizeToFit()
-//             self.hc.sizeToFit()
-//             self.epg.sizeToFit()
-//             self.ierg.sizeToFit()
-//             self.pm.sizeToFit()
+             self.unno.sizeToFit()
+             self.dgClassImage.sizeToFit()
+             self.subRiskImg1.sizeToFit()
+             self.pg.sizeToFit()
+             self.psn.sizeToFit()
+             self.symb.sizeToFit()
+             self.ems.sizeToFit()
+             self.mp.sizeToFit()
+             self.hc.sizeToFit()
+             self.epg.sizeToFit()
+             self.ierg.sizeToFit()
+             self.pm.sizeToFit()
 //             
 //             
-//             self.dgCLbl.sizeToFit()
-//             self.subRiskLbl.sizeToFit()
+             self.dgCLbl.sizeToFit()
+             self.subRiskLbl.sizeToFit()
 //             
 //             self.contentView.sizeToFit()
 //             self.TIScrollView.sizeToFit()

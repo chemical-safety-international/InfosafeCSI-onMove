@@ -102,6 +102,32 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
 //        }
 //    }
     
+    //detect user typing in the text field
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        let defaults = UserDefaults.standard
+//        if (defaults.bool(forKey: "remeberstatus") == true) {
+//            let defaults = UserDefaults.standard
+//            defaults.set("", forKey: localclientcoreData.username)
+//            defaults.set("", forKey: localclientcoreData.password)
+//            defaults.set("", forKey: localclientcoreData.image)
+//            let image = UIImage(named: "login-unticked-box")
+//            self.remember.setImage(image, for: .normal)
+//            defaults.set(false, forKey: "remeberstatus")
+//        }
+//    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let defaults = UserDefaults.standard
+        if (defaults.bool(forKey: "remeberstatus") == true) {
+            let defaults = UserDefaults.standard
+            defaults.set("", forKey: localclientcoreData.username)
+            defaults.set("", forKey: localclientcoreData.password)
+            defaults.set("", forKey: localclientcoreData.image)
+            let image = UIImage(named: "login-unticked-box")
+            self.remember.setImage(image, for: .normal)
+            defaults.set(false, forKey: "remeberstatus")
+        }
+    }
     
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
