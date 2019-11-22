@@ -158,8 +158,16 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
 //        } else {
             setNavBar()
 //        }
-//        let indexPath = IndexPath(row: 0, section: 0)
-//        tableDisplay.selectRow(at: indexPath, animated: true, scrollPosition: .top)
+        
+        if (UIDevice.current.userInterfaceIdiom == .pad) {
+            print("UIDevice")
+            let indexPath = IndexPath(row: 0, section: 0)
+            tableDisplay.selectRow(at: indexPath, animated: true, scrollPosition: .top)
+//            tableDisplay.allowsSelection = true
+        } else {
+//            tableDisplay.allowsSelection = false
+        }
+
         
     }
     
@@ -525,6 +533,16 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             //set row number of button that inside cell when tap
 //            cell?.sdsBtn.tag = indexPath.row
 //            cell?.sdsBtn.addTarget(self, action: #selector(sdsViewBtnTapped(_:)), for: .touchUpInside)
+            
+            if (UIDevice.current.userInterfaceIdiom == .pad) {
+                let selectedView = UIView()
+                selectedView.backgroundColor = UIColor(red:0.10, green:0.10, blue:0.09, alpha:1.0)
+                cell?.selectedBackgroundView = selectedView
+            } else {
+                cell?.selectionStyle = .none
+            }
+            
+            
                           
 
             return cell!
