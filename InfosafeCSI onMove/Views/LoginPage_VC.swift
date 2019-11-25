@@ -103,7 +103,7 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
 //    }
     
     //detect user typing in the text field
-//    func textFieldDidBeginEditing(_ textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
 //        let defaults = UserDefaults.standard
 //        if (defaults.bool(forKey: "remeberstatus") == true) {
 //            let defaults = UserDefaults.standard
@@ -114,7 +114,10 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
 //            self.remember.setImage(image, for: .normal)
 //            defaults.set(false, forKey: "remeberstatus")
 //        }
-//    }
+        loginBtn.isHidden = true
+//        userIDTextField.enablesReturnKeyAutomatically = true
+//        passwordTextField.enablesReturnKeyAutomatically = true
+    }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         let defaults = UserDefaults.standard
@@ -127,6 +130,9 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
             self.remember.setImage(image, for: .normal)
             defaults.set(false, forKey: "remeberstatus")
         }
+        loginBtn.isHidden = false
+//        userIDTextField.enablesReturnKeyAutomatically = false
+//        passwordTextField.enablesReturnKeyAutomatically = false
     }
     
     
@@ -271,85 +277,4 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
 //    }
 }
 
-//create a spinner for ViewController
-var vSpinner : UIView?
-
-extension UIViewController {
-    //start spinner function
-    func showSpinner(onView: UIView) {
-        let spinnerView = UIView.init(frame: onView.bounds)
-        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-        let ai = UIActivityIndicatorView.init(style: .whiteLarge)
-        ai.startAnimating()
-        ai.center = spinnerView.center
-
-        DispatchQueue.main.async {
-            spinnerView.addSubview(ai)
-            onView.addSubview(spinnerView)
-        }
-        vSpinner = spinnerView
-    }
-    //stop spinner function
-    func removeSpinner(){
-        DispatchQueue.main.async {
-            vSpinner?.removeFromSuperview()
-            vSpinner = nil
-        }
-    }
-
-    func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        self.view.addGestureRecognizer(tap)
-    }
-
-    @objc func dismissKeyboard() {
-        self.view.endEditing(true)
-    }
-
-    func showAlert(title: String, message: String) {
-        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "OK", style:  .default))
-        self.present(ac, animated: true)
-    }
-}
-
-extension String {
-    func toImage() -> UIImage? {
-        if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters) {
-            return UIImage(data: data)
-        }
-        return nil
-    }
-}
-
-extension CALayer {
-    func addBorder(edge: UIRectEdge, color: UIColor, thickness: CGFloat) {
-        let border = CALayer()
- 
-        switch edge {
-        case UIRectEdge.top:
-//            border.frame = CGRect(x: 0, y: 0, width: self.frame.height, height: thickness)
-            border.frame = CGRect(x: 0, y: -2, width: self.frame.width, height: thickness)
-            break
-        case UIRectEdge.bottom:
-//            border.frame = CGRect(x: 0, y: self.frame.height - thickness, width: self.frame.width, height: thickness)
-            border.frame = CGRect(x: 0, y: self.bounds.height + 2 , width: self.bounds.width, height: thickness)
-            break
-        case UIRectEdge.left:
-            border.frame = CGRect(x: 0, y: 0, width: thickness, height: self.frame.height)
-            break
-        case UIRectEdge.right:
-            border.frame = CGRect(x: self.frame.width - thickness, y: 0, width: thickness, height: self.frame.height)
-            break
-        default:
-            break
-        }
-        
-        border.backgroundColor = color.cgColor
-        
-        self.addSublayer(border)
-    }
-    
-}
 

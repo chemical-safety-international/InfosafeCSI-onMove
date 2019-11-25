@@ -9,9 +9,11 @@
 import UIKit
 
 class StartupPage_VC: UIViewController {
-    @IBOutlet weak var textLbl: UILabel!
     
+    @IBOutlet weak var textLbl: UILabel!
     @IBOutlet weak var startBtn: UIButton!
+    @IBOutlet weak var bgImg: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,6 +33,14 @@ class StartupPage_VC: UIViewController {
         super.viewWillAppear(animated)
         
         self.navigationController?.navigationBar.isHidden = true
+        
+        if (UIDevice.current.userInterfaceIdiom == .pad) {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.enableAllOrientation = true
+//            let image = UIImage(named: "CSI-SC")
+//            let newImage = image!.rotate(radians: .pi/2)
+//            bgImg.image = newImage
+        }
     }
     
     
@@ -70,3 +80,5 @@ class StartupPage_VC: UIViewController {
     */
 
 }
+
+

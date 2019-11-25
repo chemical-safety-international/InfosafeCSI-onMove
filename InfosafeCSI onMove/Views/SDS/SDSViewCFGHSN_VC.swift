@@ -117,6 +117,10 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         setCFTIValue()
         preloadTIScreen()
         
+        if (UIDevice.current.userInterfaceIdiom == .pad) {
+            faBtn.setTitle("First Aid", for: .normal)
+        }
+        
         NotificationCenter.default.addObserver(self, selector: #selector(callPerView), name: NSNotification.Name(rawValue: "callPerView"), object: nil)
 //        print("GHS Screen")
     }
@@ -423,7 +427,6 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
 //            self.ghsclass.sizeToFit()
 //            self.GHSClassT.sizeToFit()
 //            self.HazardST.sizeToFit()
-            print("GHS Screen")
             
             
             self.haz.sizeToFit()
@@ -431,10 +434,10 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             self.pstate.sizeToFit()
 //
 //            self.TIT.sizeToFit()
-//            self.dgImg.sizeToFit()
-//            self.TIInfo.sizeToFit()
+            self.dgImg.sizeToFit()
+            self.TIInfo.sizeToFit()
 //            self.PST.sizeToFit()
-//            self.ps.sizeToFit()
+            self.ps.sizeToFit()
             
             let ct1 = self.img1Height.constant + self.img6Height.constant/2 + self.GHSClassT.frame.height + self.ghsclass.frame.height
             let ct2 = self.HazardST.frame.height + self.haz.frame.height + self.PercauT.frame.height + self.pstate.frame.height
@@ -443,10 +446,10 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             let ct5 = self.PST.frame.height + self.ps.frame.height + self.PSpsGap.constant
             let ctt = ct1 + ct2 + ct3 + ct4 + ct5 + 100
            
-            print("Ctt: \(ctt)")
-            print(self.contentView.frame.height)
-            print(self.GHSScrollView.frame.height)
-            print("ct1: \(ct1)\nct2: \(ct2)\nct3: \(ct3)\nct4: \(ct4)\nct5: \(ct5)\nctt: \(ctt)\n ")
+//            print("Ctt: \(ctt)")
+//            print(self.contentView.frame.height)
+//            print(self.GHSScrollView.frame.height)
+//            print("ct1: \(ct1)\nct2: \(ct2)\nct3: \(ct3)\nct4: \(ct4)\nct5: \(ct5)\nctt: \(ctt)\n ")
             
             if ctt > (self.GHSScrollView.frame.height + 10) {
 //                print("ctt > GHS")

@@ -32,6 +32,7 @@
 		578B9E6E23600F9200AB1475 /* Pictograms.txt in Resources */ = {isa = PBXBuildFile; fileRef = 578B9E6D23600F9100AB1475 /* Pictograms.txt */; };
 		578F6B94234D52FC00CCDFC9 /* SDSViewFA_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578F6B93234D52FC00CCDFC9 /* SDSViewFA_VC.swift */; };
 		57A46680234FF36A007B810D /* GHSCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A4667F234FF36A007B810D /* GHSCollectionViewCell.swift */; };
+		57A47C46238B91B80097B068 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A47C45238B91B80097B068 /* extensions.swift */; };
 		57A8090722CDB20100CA4439 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A8090622CDB20100CA4439 /* WebKit.framework */; };
 		57A815B12345D4CA00EE352B /* SDSViewCore_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A815B02345D4CA00EE352B /* SDSViewCore_VC.swift */; };
 		57AAA79A23508D0600FAD796 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = 57AAA6FC23508D0600FAD796 /* 0.png */; };
@@ -252,6 +253,7 @@
 		578B9E6D23600F9100AB1475 /* Pictograms.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Pictograms.txt; sourceTree = "<group>"; };
 		578F6B93234D52FC00CCDFC9 /* SDSViewFA_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSViewFA_VC.swift; sourceTree = "<group>"; };
 		57A4667F234FF36A007B810D /* GHSCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GHSCollectionViewCell.swift; sourceTree = "<group>"; };
+		57A47C45238B91B80097B068 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		57A8090622CDB20100CA4439 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		57A815B02345D4CA00EE352B /* SDSViewCore_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSViewCore_VC.swift; sourceTree = "<group>"; };
 		57AAA6FC23508D0600FAD796 /* 0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0.png; sourceTree = "<group>"; };
@@ -747,6 +749,7 @@
 				17818BEB2281563E000EAFF1 /* Entities */,
 				17818BEA22815524000EAFF1 /* UserProfile */,
 				17818BE9228152AA000EAFF1 /* csiWCF */,
+				57A47C45238B91B80097B068 /* extensions.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -1086,6 +1089,7 @@
 				17818BBB22811A88000EAFF1 /* LoginPage_VC.swift in Sources */,
 				57DF2CC2231396BE0044A96B /* StoredPDF_VC.swift in Sources */,
 				578F6B94234D52FC00CCDFC9 /* SDSViewFA_VC.swift in Sources */,
+				57A47C46238B91B80097B068 /* extensions.swift in Sources */,
 				57727D33230D0F3700734B43 /* LocalTableViewCell.swift in Sources */,
 				577B1A592284059700E5C4AB /* SearchPage_VC.swift in Sources */,
 				17818BED22815661000EAFF1 /* UserProfilesData.swift in Sources */,
