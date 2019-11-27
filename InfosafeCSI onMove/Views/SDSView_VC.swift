@@ -42,9 +42,10 @@ class SDSViewPage_VC: UIViewController {
             overrideUserInterfaceStyle = .light
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(errorHandle), name: NSNotification.Name("errorSDSView"), object: nil)
         
         setNavbar()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(errorHandle), name: NSNotification.Name("errorSDSView"), object: nil)
     }
     
     @objc private func errorHandle() {
@@ -72,6 +73,11 @@ class SDSViewPage_VC: UIViewController {
                 localcurrentSDS.pdfData = decodeData
                 self.printBtn.isHidden = false
                 self.shareBtn.isHidden = false
+                
+                if (UIDevice.current.userInterfaceIdiom == .pad) {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "setNavbarShareBtn"), object: nil)
+                }
+                
                 self.removeSpinner()
             }
         } else {

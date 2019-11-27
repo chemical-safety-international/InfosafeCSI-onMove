@@ -220,12 +220,12 @@ class SDSViewFA_VC: UIViewController, UIScrollViewDelegate {
 //            self.FAFT.sizeToFit()
 //            self.ATDT.sizeToFit()
 //            
-//            self.inh.sizeToFit()
-//            self.ing.sizeToFit()
-//            self.skin.sizeToFit()
-//            self.eye.sizeToFit()
-//            self.faf.sizeToFit()
-//            self.atd.sizeToFit()
+            self.inh.sizeToFit()
+            self.ing.sizeToFit()
+            self.skin.sizeToFit()
+            self.eye.sizeToFit()
+            self.faf.sizeToFit()
+            self.atd.sizeToFit()
             
             let count1 = self.INHT.frame.height + self.INGT.frame.height + self.SKINT.frame.height + self.EYET.frame.height
             let count2 = self.FAFT.frame.height + self.ATDT.frame.height + self.inh.frame.height + self.ing.frame.height

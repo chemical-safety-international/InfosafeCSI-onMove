@@ -8,6 +8,8 @@
 
 import UIKit
 
+import PDFKit
+
 class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDelegate {
     
 
@@ -20,11 +22,12 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     @IBOutlet weak var menu: UIView!
     
-    
     @IBOutlet weak var loadmoreLbl: UILabel!
-
     
     @IBOutlet weak var splitView: UIView!
+
+    @IBOutlet weak var tablecellView: UIView!
+    
     
     var selectedIndex:Bool = false;
 
@@ -69,7 +72,9 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         
         NotificationCenter.default.addObserver(self, selector: #selector(resetNavbar), name: NSNotification.Name(rawValue: "resetNavbar"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(setNavbarShareBtn), name: NSNotification.Name(rawValue: "setNavbarShareBtn"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(removeShareBtn), name: NSNotification.Name(rawValue: "removeShareBtn"), object: nil)
    
         //control side menu height when need to suit large screen (full side menu require)
         if (menu.frame.height >= 580) {
@@ -238,16 +243,28 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
 
     }
     
-    func setNavbarShareBtn() {
+    @objc func setNavbarShareBtn() {
         let btnShare = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareBtnTapped))
         self.navigationItem.rightBarButtonItem = btnShare
     }
     
+    //create share btn function
     @IBAction func shareBtnTapped() {
+        
+
         let activityVC = UIActivityViewController(activityItems: [localcurrentSDS.pdfData!], applicationActivities: nil)
-        activityVC.popoverPresentationController?.sourceView = self.view
+        
+        activityVC.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
+        
+        activityVC.excludedActivityTypes = [UIActivity.ActivityType.airDrop, UIActivity.ActivityType.addToReadingList]
+        
         
         self.present(activityVC, animated: true, completion: nil)
+        
+    }
+    
+    @objc func removeShareBtn() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "    ", style: .plain, target: self, action: .none)
     }
     
     func splitViewSetup() {
@@ -535,15 +552,26 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
 //            cell?.sdsBtn.addTarget(self, action: #selector(sdsViewBtnTapped(_:)), for: .touchUpInside)
             
             if (UIDevice.current.userInterfaceIdiom == .pad) {
+                //set background display image/color
                 let selectedView = UIView()
-                selectedView.backgroundColor = UIColor(red:0.10, green:0.10, blue:0.09, alpha:1.0)
+//                selectedView.backgroundColor = UIColor(red:0.10, green:0.10, blue:0.09, alpha:1.0)
+                selectedView.backgroundColor = UIColor.clear
                 cell?.selectedBackgroundView = selectedView
+                
+                //set text display color
+                cell?.name.highlightedTextColor = UIColor.orange
+                cell?.SupplierLbl.highlightedTextColor = UIColor.orange
+                cell?.IssueDateLbl.highlightedTextColor = UIColor.orange
+                cell?.isslbl.highlightedTextColor = UIColor.orange
+                cell?.UNNoLbl.highlightedTextColor = UIColor.orange
+                cell?.unlbl.highlightedTextColor = UIColor.orange
+                cell?.prodCodeLbl.highlightedTextColor = UIColor.orange
+                cell?.prodCLbl.highlightedTextColor = UIColor.orange
+                cell?.countryLbl.highlightedTextColor = UIColor.orange
             } else {
                 cell?.selectionStyle = .none
             }
-            
-            
-                          
+               
 
             return cell!
         }
@@ -560,16 +588,6 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
 //    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
-//        cell?.name.textColor = UIColor.orange
-//        cell?.countryLbl.textColor = UIColor.orange
-//        cell?.isslbl.textColor = UIColor.orange
-//        cell?.IssueDateLbl.textColor = UIColor.orange
-//        cell?.UNNoLbl.textColor = UIColor.orange
-//        cell?.unlbl.textColor = UIColor.orange
-//        cell?.prodCodeLbl.textColor = UIColor.orange
-//        cell?.prodCLbl.textColor = UIColor.orange
         
         //pass the synno number
         localcurrentSDS.sdsNo = localsearchinfo.results[indexPath.row].synno

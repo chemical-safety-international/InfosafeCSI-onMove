@@ -749,7 +749,6 @@
 				17818BEB2281563E000EAFF1 /* Entities */,
 				17818BEA22815524000EAFF1 /* UserProfile */,
 				17818BE9228152AA000EAFF1 /* csiWCF */,
-				57A47C45238B91B80097B068 /* extensions.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -769,6 +768,7 @@
 				17A2683F228D04410039A798 /* Startup_VC.swift */,
 				5743492022B08C000036199E /* SDSMenu_VC.swift */,
 				57DF2CC1231396BE0044A96B /* StoredPDF_VC.swift */,
+				57A47C45238B91B80097B068 /* extensions.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

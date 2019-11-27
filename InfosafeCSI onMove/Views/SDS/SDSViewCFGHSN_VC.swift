@@ -45,6 +45,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var ghsBtn: UIButton!
     @IBOutlet weak var faBtn: UIButton!
     
+    @IBOutlet weak var shareBtn: UIButton!
     
     
     @IBOutlet weak var viewMoreLbl: UILabel!
@@ -122,6 +123,8 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(callPerView), name: NSNotification.Name(rawValue: "callPerView"), object: nil)
+        
+
 //        print("GHS Screen")
     }
     
@@ -160,6 +163,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.layoutIfNeeded()
     }
+    
     
     func setCFTIValue() {
         
@@ -1141,6 +1145,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         ghsBtn.isEnabled = true
         dgBtn.isEnabled = true
         faBtn.isEnabled = true
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeShareBtn"), object: nil)
         
 
     }
