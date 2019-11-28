@@ -3434,7 +3434,7 @@
         <image name="white-drop-down-arrow" width="1000" height="1000"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="cJE-Cl-ui8"/>
+        <segue reference="mcs-Vw-Izu"/>
         <segue reference="LNz-yn-sCP"/>
     </inferredMetricsTieBreakers>
 </document>
