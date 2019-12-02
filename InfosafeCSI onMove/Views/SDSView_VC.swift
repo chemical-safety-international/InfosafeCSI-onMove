@@ -26,8 +26,7 @@ class SDSViewPage_VC: UIViewController {
 
         // Do any additional setup after loading the view.
 
-        navigationItem.title = "VIEW SDS"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25), .foregroundColor: UIColor.white]
+
         
         self.sdsShow()
         printBtn.isHidden = true
@@ -48,12 +47,21 @@ class SDSViewPage_VC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(errorHandle), name: NSNotification.Name("errorSDSView"), object: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if (UIDevice.current.userInterfaceIdiom == .pad) {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "setNavbarShareBtn"), object: nil)
+        }
+    }
+    
     @objc private func errorHandle() {
         self.removeSpinner()
         self.showAlert(title: "Connection failure!", message: "Please check the connection and try again!")
     }
     
     func setNavbar() {
+        navigationItem.title = "VIEW SDS"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25), .foregroundColor: UIColor.white]
+        
         let btnShare = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareBtnTapped))
         self.navigationItem.rightBarButtonItem = btnShare
     }
