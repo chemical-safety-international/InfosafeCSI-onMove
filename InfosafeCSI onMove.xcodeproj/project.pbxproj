@@ -33,6 +33,7 @@
 		578F6B94234D52FC00CCDFC9 /* SDSViewFA_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578F6B93234D52FC00CCDFC9 /* SDSViewFA_VC.swift */; };
 		57A46680234FF36A007B810D /* GHSCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A4667F234FF36A007B810D /* GHSCollectionViewCell.swift */; };
 		57A47C46238B91B80097B068 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A47C45238B91B80097B068 /* extensions.swift */; };
+		57A47C482390E07C0097B068 /* multiSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A47C472390E07C0097B068 /* multiSearchCell.swift */; };
 		57A8090722CDB20100CA4439 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A8090622CDB20100CA4439 /* WebKit.framework */; };
 		57A815B12345D4CA00EE352B /* SDSViewCore_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A815B02345D4CA00EE352B /* SDSViewCore_VC.swift */; };
 		57AAA79A23508D0600FAD796 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = 57AAA6FC23508D0600FAD796 /* 0.png */; };
@@ -254,6 +255,7 @@
 		578F6B93234D52FC00CCDFC9 /* SDSViewFA_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSViewFA_VC.swift; sourceTree = "<group>"; };
 		57A4667F234FF36A007B810D /* GHSCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GHSCollectionViewCell.swift; sourceTree = "<group>"; };
 		57A47C45238B91B80097B068 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
+		57A47C472390E07C0097B068 /* multiSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = multiSearchCell.swift; sourceTree = "<group>"; };
 		57A8090622CDB20100CA4439 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		57A815B02345D4CA00EE352B /* SDSViewCore_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSViewCore_VC.swift; sourceTree = "<group>"; };
 		57AAA6FC23508D0600FAD796 /* 0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0.png; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 				57711F56228808300051E576 /* TableViewCell.swift */,
 				5743492222B094F00036199E /* MenuTableViewCell.swift */,
 				57A4667F234FF36A007B810D /* GHSCollectionViewCell.swift */,
+				57A47C472390E07C0097B068 /* multiSearchCell.swift */,
 			);
 			path = subControllers;
 			sourceTree = "<group>";
@@ -1110,6 +1113,7 @@
 				577B1A5D2285195600E5C4AB /* SearchTablePage_VC.swift in Sources */,
 				5720266122DC469D003E1C17 /* PhotoPage_VC.swift in Sources */,
 				57A46680234FF36A007B810D /* GHSCollectionViewCell.swift in Sources */,
+				57A47C482390E07C0097B068 /* multiSearchCell.swift in Sources */,
 				17818BEF22815681000EAFF1 /* UserProfilesAccess.swift in Sources */,
 				57C8B92822813EEC004966C5 /* csiWCFMethods.swift in Sources */,
 				574D034A234D909900B93F7C /* SDSViewTI_VC.swift in Sources */,

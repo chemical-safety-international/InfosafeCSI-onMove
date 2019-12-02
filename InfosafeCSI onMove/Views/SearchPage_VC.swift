@@ -22,9 +22,23 @@ class SearchPage_VC: UIViewController {
     
     @IBOutlet weak var supplierSearchbar: UISearchBar!
     @IBOutlet weak var pCodeSearchbar: UISearchBar!
-    
-    
+
     @IBOutlet weak var noSearchResultLbl: UILabel!
+    
+    // multi-search test
+    @IBOutlet weak var newCriteria: UISearchBar!
+    @IBOutlet weak var multiBtn: UIButton!
+    @IBOutlet weak var criteriaCV: UICollectionView!
+    @IBOutlet weak var newCriteria2: UISearchBar!
+    @IBOutlet weak var newCriteria3: UISearchBar!
+    
+    @IBOutlet weak var newSBHeight: NSLayoutConstraint!
+    @IBOutlet weak var newSBHeight2: NSLayoutConstraint!
+    @IBOutlet weak var newSBHeight3: NSLayoutConstraint!
+    
+    var count = 0
+    
+    
     // create picker view
     let criPicker = UIPickerView()
     
@@ -84,7 +98,14 @@ class SearchPage_VC: UIViewController {
         self.view.backgroundColor = UIColor(red:0.76, green:0.75, blue:0.75, alpha:1.0)
         setSearchbar()
 
-        
+        //multi-Search test
+        criteriaCV.isHidden = true
+        newCriteria.isHidden = true
+        newCriteria2.isHidden = true
+        newCriteria3.isHidden = true
+        newSBHeight.constant = 0
+        newSBHeight2.constant = 0
+        newSBHeight3.constant = 0
     }
     
     
@@ -123,6 +144,24 @@ class SearchPage_VC: UIViewController {
         pCodeSearchbar.setTextField(color: UIColor.white)
         pCodeSearchbar.setPlaceholder(textColor: .black)
         pCodeSearchbar.setSearchImage(color: .black)
+        
+        newCriteria.set(textColor: .black)
+        //newCriteria text field color
+        newCriteria.setTextField(color: UIColor.white)
+        newCriteria.setPlaceholder(textColor: .black)
+        newCriteria.setSearchImage(color: .black)
+        
+        newCriteria2.set(textColor: .black)
+        //newCriteria2 text field color
+        newCriteria2.setTextField(color: UIColor.white)
+        newCriteria2.setPlaceholder(textColor: .black)
+        newCriteria2.setSearchImage(color: .black)
+        
+        newCriteria3.set(textColor: .black)
+        //newCriteria3 text field color
+        newCriteria3.setTextField(color: UIColor.white)
+        newCriteria3.setPlaceholder(textColor: .black)
+        newCriteria3.setSearchImage(color: .black)
         
     }
     
@@ -258,6 +297,7 @@ class SearchPage_VC: UIViewController {
                 if completionReturnData.contains("true") {
                     self.cPickView.text = localcriteriainfo.arrName[0]
                     localcriteriainfo.pickerValue = localcriteriainfo.arrName[0]
+                    self.criteriaCV.reloadData()
 
                 } else if completionReturnData.contains("false") {
                     self.showAlert(title: "Failed", message: "Cannot get the criteria list!")
@@ -280,6 +320,26 @@ class SearchPage_VC: UIViewController {
         searchbar.endEditing(true)
         supplierSearchbar.endEditing(true)
         pCodeSearchbar.endEditing(true)
+    }
+    
+    @IBAction func multiSearchBtn(_ sender: Any) {
+        
+        if (criteriaCV.isHidden == true) {
+           criteriaCV.isHidden = false
+            multiBtn.setTitle(" Cancel ", for: .normal)
+        } else {
+            criteriaCV.isHidden = true
+            multiBtn.setTitle(" Multi-Search ", for: .normal)
+            count = 0
+            
+            newCriteria.isHidden = true
+            newCriteria2.isHidden = true
+            newCriteria3.isHidden = true
+            newSBHeight.constant = 0
+            newSBHeight2.constant = 0
+            newSBHeight3.constant = 0
+        }
+        
     }
     
 }
@@ -485,3 +545,51 @@ private extension UITextField {
 
     func getClearButton() -> UIButton? { return value(forKey: "clearButton") as? UIButton }
 }
+
+
+
+
+extension SearchPage_VC: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return localcriteriainfo.arrName.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = criteriaCV.dequeueReusableCell(withReuseIdentifier: "mscell", for: indexPath) as? MultiSearchCell
+        
+//        print(localcriteriainfo.arrName[indexPath.row])
+        cell?.criteriaLbl.text = localcriteriainfo.arrName[indexPath.row]
+        
+        return cell!
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+        
+        if count == 0 {
+            newCriteria.isHidden = false
+            newCriteria.placeholder = localcriteriainfo.arrName[indexPath.row]
+            newSBHeight.constant = 56
+            count += 1
+        } else if count == 1 {
+            newCriteria2.isHidden = false
+            newCriteria2.placeholder = localcriteriainfo.arrName[indexPath.row]
+            newSBHeight2.constant = 56
+            count += 1
+        } else if count == 2 {
+            newCriteria3.isHidden = false
+            newCriteria3.placeholder = localcriteriainfo.arrName[indexPath.row]
+            newSBHeight3.constant = 56
+            count += 1
+        }
+        
+    }
+    
+    
+    
+}
+
+
