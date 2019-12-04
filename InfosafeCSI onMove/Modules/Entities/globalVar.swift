@@ -58,6 +58,15 @@ struct localcriteriainfo {
     static var searchValue: String!
     static var supSearchValue: String!
     static var pcodeSearchValue: String!
+    
+    //multi-search test
+    static var type1: String!
+    static var type2: String!
+    static var type3: String!
+    
+    static var value1: String!
+    static var value2: String!
+    static var value3: String!
 }
 
 

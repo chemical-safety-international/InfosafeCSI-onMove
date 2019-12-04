@@ -64,6 +64,7 @@ class SearchPage_VC: UIViewController {
         //enable the delegate
         self.cPickView.delegate = self
         self.searchbar.delegate = self
+        
 
         //setup navigation function
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
@@ -99,6 +100,8 @@ class SearchPage_VC: UIViewController {
         setSearchbar()
 
         //multi-Search test
+        cPickView.isHidden = true
+        
         criteriaCV.isHidden = true
         newCriteria.isHidden = true
         newCriteria2.isHidden = true
@@ -106,6 +109,10 @@ class SearchPage_VC: UIViewController {
         newSBHeight.constant = 0
         newSBHeight2.constant = 0
         newSBHeight3.constant = 0
+        
+        localcriteriainfo.type1 = ""
+        localcriteriainfo.type2 = ""
+        localcriteriainfo.type3 = ""
     }
     
     
@@ -230,6 +237,7 @@ class SearchPage_VC: UIViewController {
             searchbar.text = ""
             supplierSearchbar.text = ""
             pCodeSearchbar.text = ""
+            
             self.showAlert(title: "Hi", message: "Search content is empty.")
             
         } else if searchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" &&  supplierSearchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" && pCodeSearchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == ""{
@@ -238,9 +246,9 @@ class SearchPage_VC: UIViewController {
             supplierSearchbar.text = ""
             pCodeSearchbar.text = ""
             self.showAlert(title: "Hi", message: "Search content is empty.")
-        } else if searchbar.text!.count < 4 && searchbar.text!.isEmpty == false {
+        } else if searchbar.text!.count < 3 && searchbar.text!.isEmpty == false {
             self.removeSpinner()
-            self.showAlert(title: "Hi", message: "Please enter more than 3 characters for product name!")
+            self.showAlert(title: "Hi", message: "Please enter more than 2 characters for product name!")
         
         } else if supplierSearchbar.text!.count < 2 && supplierSearchbar.text!.isEmpty == false {
             self.removeSpinner()
@@ -258,6 +266,20 @@ class SearchPage_VC: UIViewController {
             localcriteriainfo.searchValue = searchInPut
             localcriteriainfo.supSearchValue = supplierSearchInput
             localcriteriainfo.pcodeSearchValue = pCodeSeatchInput
+            
+            
+            if (newCriteria.isHidden == false) {
+                localcriteriainfo.value1 = newCriteria.text!
+            }
+            
+            if (newCriteria2.isHidden == false) {
+                localcriteriainfo.value2 = newCriteria2.text!
+            }
+            
+            if (newCriteria3.isHidden == false) {
+                localcriteriainfo.value3 = newCriteria3.text!
+            }
+            
             
             noSearchResultLbl.isHidden = true
             
@@ -320,15 +342,20 @@ class SearchPage_VC: UIViewController {
         searchbar.endEditing(true)
         supplierSearchbar.endEditing(true)
         pCodeSearchbar.endEditing(true)
+        newCriteria.endEditing(true)
+        newCriteria2.endEditing(true)
+        newCriteria3.endEditing(true)
     }
     
     @IBAction func multiSearchBtn(_ sender: Any) {
         
-        if (criteriaCV.isHidden == true) {
-           criteriaCV.isHidden = false
+        if (cPickView.isHidden == true) {
+//           criteriaCV.isHidden = false
+            cPickView.isHidden = false
             multiBtn.setTitle(" Cancel ", for: .normal)
         } else {
-            criteriaCV.isHidden = true
+//            criteriaCV.isHidden = true
+            cPickView.isHidden = true
             multiBtn.setTitle(" Multi-Search ", for: .normal)
             count = 0
             
@@ -338,6 +365,18 @@ class SearchPage_VC: UIViewController {
             newSBHeight.constant = 0
             newSBHeight2.constant = 0
             newSBHeight3.constant = 0
+            
+            localcriteriainfo.type1 = ""
+            localcriteriainfo.value1 = ""
+            newCriteria.text = ""
+            
+            localcriteriainfo.type2 = ""
+            localcriteriainfo.value2 = ""
+            newCriteria2.text = ""
+            
+            localcriteriainfo.type3 = ""
+            localcriteriainfo.value3 = ""
+            newCriteria3.text = ""
         }
         
     }
@@ -403,7 +442,9 @@ extension SearchPage_VC: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 
-        self.cPickView.text = localcriteriainfo.arrName[row]
+        self.cPickView.text = "Add more criterias"
+        
+//        self.cPickView.text = localcriteriainfo.arrName[row]
         selectedRow = row
         localcriteriainfo.code = localcriteriainfo.arrCode[row]
         localcriteriainfo.pickerValue = localcriteriainfo.arrName[row]
@@ -445,6 +486,26 @@ extension SearchPage_VC: UIPickerViewDelegate, UIPickerViewDataSource {
         localcriteriainfo.code = localcriteriainfo.arrCode[selectedRow]
         localcriteriainfo.pickerValue = localcriteriainfo.arrName[selectedRow]
         self.cPickView.resignFirstResponder()
+        
+        if count == 0 {
+            newCriteria.isHidden = false
+            newCriteria.placeholder = localcriteriainfo.arrName[selectedRow]
+            localcriteriainfo.type1 = localcriteriainfo.arrCode[selectedRow]
+            newSBHeight.constant = 56
+            count += 1
+        } else if count == 1 {
+            newCriteria2.isHidden = false
+            newCriteria2.placeholder = localcriteriainfo.arrName[selectedRow]
+            localcriteriainfo.type2 = localcriteriainfo.arrCode[selectedRow]
+            newSBHeight2.constant = 56
+            count += 1
+        } else if count == 2 {
+            newCriteria3.isHidden = false
+            newCriteria3.placeholder = localcriteriainfo.arrName[selectedRow]
+            localcriteriainfo.type3 = localcriteriainfo.arrCode[selectedRow]
+            newSBHeight3.constant = 56
+            count += 1
+        }
 
     }
     
@@ -572,16 +633,19 @@ extension SearchPage_VC: UICollectionViewDelegate, UICollectionViewDataSource {
         if count == 0 {
             newCriteria.isHidden = false
             newCriteria.placeholder = localcriteriainfo.arrName[indexPath.row]
+            localcriteriainfo.type1 = localcriteriainfo.arrCode[indexPath.row]
             newSBHeight.constant = 56
             count += 1
         } else if count == 1 {
             newCriteria2.isHidden = false
             newCriteria2.placeholder = localcriteriainfo.arrName[indexPath.row]
+            localcriteriainfo.type2 = localcriteriainfo.arrCode[indexPath.row]
             newSBHeight2.constant = 56
             count += 1
         } else if count == 2 {
             newCriteria3.isHidden = false
             newCriteria3.placeholder = localcriteriainfo.arrName[indexPath.row]
+            localcriteriainfo.type3 = localcriteriainfo.arrCode[indexPath.row]
             newSBHeight3.constant = 56
             count += 1
         }

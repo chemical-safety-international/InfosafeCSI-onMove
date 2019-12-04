@@ -94,7 +94,7 @@
                                 </connections>
                             </textField>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CSI-Logo1" translatesAutoresizingMaskIntoConstraints="NO" id="arA-dx-5Ii">
-                                <rect key="frame" x="54.5" y="40" width="305" height="150"/>
+                                <rect key="frame" x="54.5" y="40" width="305.00000000000011" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="TYq-jb-dvX"/>
                                     <constraint firstAttribute="width" constant="305" id="kpJ-IC-h98"/>
@@ -300,17 +300,6 @@
                                     <action selector="searchBtnTapped:" destination="GdH-TU-FXW" eventType="touchUpInside" id="cP2-xu-NBM"/>
                                 </connections>
                             </button>
-                            <textField hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uKa-kl-URf">
-                                <rect key="frame" x="174" y="666" width="33" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <viewLayoutGuide key="safeArea" id="jJK-bu-eXq"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
-                                <connections>
-                                    <outlet property="delegate" destination="GdH-TU-FXW" id="aPL-2b-SxP"/>
-                                </connections>
-                            </textField>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rBj-7N-oHu">
                                 <rect key="frame" x="81" y="540" width="241" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
@@ -378,13 +367,6 @@
                                     <outlet property="delegate" destination="GdH-TU-FXW" id="dvt-YK-U54"/>
                                 </connections>
                             </searchBar>
-                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="New criteria" translatesAutoresizingMaskIntoConstraints="NO" id="d2p-tT-Urt">
-                                <rect key="frame" x="15" y="351" width="384" height="56"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="aKn-aV-sOx"/>
-                                </constraints>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EPt-6Q-PYn">
                                 <rect key="frame" x="277" y="564" width="89" height="30"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -451,6 +433,9 @@
                                     <constraint firstAttribute="height" constant="56" id="5hM-ij-hIB"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="GdH-TU-FXW" id="6nK-RC-LXf"/>
+                                </connections>
                             </searchBar>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="New Criteria" translatesAutoresizingMaskIntoConstraints="NO" id="j0Z-ly-ktM">
                                 <rect key="frame" x="15" y="493" width="384" height="56"/>
@@ -458,7 +443,32 @@
                                     <constraint firstAttribute="height" constant="56" id="Q36-6O-MAI"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="GdH-TU-FXW" id="dr9-RV-gZ1"/>
+                                </connections>
                             </searchBar>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="New criteria" translatesAutoresizingMaskIntoConstraints="NO" id="d2p-tT-Urt">
+                                <rect key="frame" x="15" y="351" width="384" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="aKn-aV-sOx"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="GdH-TU-FXW" id="Fvo-Bn-xRv"/>
+                                </connections>
+                            </searchBar>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uKa-kl-URf">
+                                <rect key="frame" x="190.5" y="604" width="33" height="34"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <viewLayoutGuide key="safeArea" id="jJK-bu-eXq"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                <connections>
+                                    <outlet property="delegate" destination="GdH-TU-FXW" id="aPL-2b-SxP"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -479,7 +489,9 @@
                             <constraint firstItem="Ah0-fS-OOZ" firstAttribute="top" secondItem="PH2-6a-te9" secondAttribute="top" id="Pe4-QO-YAJ"/>
                             <constraint firstItem="NxL-lQ-6dM" firstAttribute="trailing" secondItem="d2p-tT-Urt" secondAttribute="trailing" constant="15" id="Q08-Sp-8EF"/>
                             <constraint firstItem="0CG-hq-yUg" firstAttribute="top" secondItem="NxL-lQ-6dM" secondAttribute="top" constant="10" id="QVe-4B-eBp"/>
+                            <constraint firstItem="uKa-kl-URf" firstAttribute="top" secondItem="x6x-J2-eUl" secondAttribute="bottom" constant="10" id="ST6-3e-wIn"/>
                             <constraint firstItem="NxL-lQ-6dM" firstAttribute="trailing" secondItem="0CG-hq-yUg" secondAttribute="trailing" constant="20" id="Tnw-HC-zrW"/>
+                            <constraint firstItem="uKa-kl-URf" firstAttribute="centerX" secondItem="x6x-J2-eUl" secondAttribute="centerX" id="Ur0-Ug-DwF"/>
                             <constraint firstItem="QRL-h0-6s9" firstAttribute="leading" secondItem="NxL-lQ-6dM" secondAttribute="leading" constant="15" id="YY7-c2-qNC"/>
                             <constraint firstItem="j0Z-ly-ktM" firstAttribute="top" secondItem="XzQ-w7-40A" secondAttribute="bottom" constant="15" id="Zo7-Li-4ab"/>
                             <constraint firstItem="NxL-lQ-6dM" firstAttribute="trailing" secondItem="j0Z-ly-ktM" secondAttribute="trailing" constant="15" id="auF-go-P7t"/>
@@ -1088,7 +1100,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CSI-Logo1" translatesAutoresizingMaskIntoConstraints="NO" id="ftH-fF-xtx">
-                                <rect key="frame" x="30" y="0.0" width="354" height="122"/>
+                                <rect key="frame" x="30" y="0.0" width="354.00000000000011" height="61"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

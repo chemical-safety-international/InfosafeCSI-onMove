@@ -60,33 +60,103 @@ func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String,
     var advanced: String = "0"
     var type: String = "2"
     var singleValue: String = ""
+    var advanArray: [Any] = []
     
     let pnameStr = pnameInputData.trimmingCharacters(in: .whitespacesAndNewlines)
     let supStr = supInputData.trimmingCharacters(in: .whitespacesAndNewlines)
     let pcodeStr = pcodeInputData.trimmingCharacters(in: .whitespacesAndNewlines)
     
-    if (pnameStr.isEmpty == false && supStr.isEmpty == true && pcodeStr.isEmpty == true) {
-        advanced = "0"
+    
+//    if (pnameStr.isEmpty == false && supStr.isEmpty == true && pcodeStr.isEmpty == true) {
+//        advanced = "0"
+//        type = "2"
+//        singleValue = pnameStr
+//    } else if (pnameStr.isEmpty == true && supStr.isEmpty == false && pcodeStr.isEmpty == true) {
+//        advanced = "0"
+//        type = "4"
+//        singleValue = supStr
+//
+//    } else if (pnameStr.isEmpty == true && supStr.isEmpty == true && pcodeStr.isEmpty == false) {
+//        advanced = "0"
+//        type = "8"
+//        singleValue = pcodeStr
+//    } else {
+//        advanced = "1"
+//    }
+//
+//    if (pnameStr.isEmpty == false || supStr.isEmpty == false || pcodeStr.isEmpty == false && localcriteriainfo.type1.isEmpty == false) {
+//        advanced = "1"
+//    }
+    
+
+
+
+    
+//    var add1: [String: Any]!
+//    if localcriteriainfo.type1.isEmpty == false {
+//
+//    } else {
+//        add1 = ["type": "", "isgroup": "0", "groups": [], "values": []]
+//    }
+//
+//    var add2: [String: Any]!
+//    if localcriteriainfo.type2.isEmpty == false {
+//
+//    } else {
+//        add2 = ["type": "", "isgroup": "0", "groups": [], "values": []]
+//    }
+//
+//    var add3: [String: Any]!
+//    if localcriteriainfo.type3.isEmpty == false {
+//
+//    } else {
+//        add3 = ["type": "", "isgroup": "0", "groups": [], "values": []]
+//    }
+
+    if(pnameStr.isEmpty == false) {
         type = "2"
         singleValue = pnameStr
-    } else if (pnameStr.isEmpty == true && supStr.isEmpty == false && pcodeStr.isEmpty == true) {
-        advanced = "0"
-        type = "4"
-        singleValue = supStr
-        
-    } else if (pnameStr.isEmpty == true && supStr.isEmpty == true && pcodeStr.isEmpty == false) {
-        advanced = "0"
-        type = "8"
-        singleValue = pcodeStr
-    } else {
-        advanced = "1"
+        let pName: [String: Any] = ["type": "2", "isgroup": "0", "groups": [], "values": [pnameInputData]]
+        advanArray.append(pName)
     }
     
-    let pName: [String: Any] = ["type": "2", "isgroup": "0", "groups": [], "values": [pnameInputData]]
-    let sup: [String: Any] = ["type": "4", "isgroup": "0", "groups": [], "values": [supInputData]]
-    let pcode: [String: Any] = ["type": "8", "isgroup": "0", "groups": [], "values": [pcodeInputData]]
+    if(supStr.isEmpty == false) {
+        type = "4"
+        singleValue = supStr
+        let sup: [String: Any] = ["type": "4", "isgroup": "0", "groups": [], "values": [supInputData]]
+        advanArray.append(sup)
+    }
+    
+    if(pcodeStr.isEmpty == false) {
+        type = "8"
+        singleValue = pcodeStr
+        let pcode: [String: Any] = ["type": "8", "isgroup": "0", "groups": [], "values": [pcodeInputData]]
+        advanArray.append(pcode)
+    }
+    
+    if(localcriteriainfo.type1.isEmpty == false) {
+        let add1: [String: Any] = ["type": localcriteriainfo.type1!, "isgroup": "0", "groups": [], "values": [localcriteriainfo.value1]]
+        advanArray.append(add1)
+    }
+    
+    if(localcriteriainfo.type2.isEmpty == false) {
+        let add2: [String: Any] = ["type": localcriteriainfo.type2!, "isgroup": "0", "groups": [], "values": [localcriteriainfo.value2]]
+        advanArray.append(add2)
+    }
+    
+    if(localcriteriainfo.type3.isEmpty == false) {
+        let add3: [String: Any] = ["type": localcriteriainfo.type3!, "isgroup": "0", "groups": [], "values": [localcriteriainfo.value3]]
+        advanArray.append(add3)
+    }
+    
+    if (advanArray.count > 1) {
+        advanced = "1"
+    } else {
+        advanced = "0"
+    }
 
-    let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":type, "v":singleValue, "p":p, "psize":psize, "advanced": advanced, "advancedsitetype": "3", "advanceditems": [pName, sup, pcode]]
+//    let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":type, "v":singleValue, "p":p, "psize":psize, "advanced": advanced, "advancedsitetype": "3", "advanceditems": [pName, sup, pcode, add1, add2, add3]]
+    let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":type, "v":singleValue, "p":p, "psize":psize, "advanced": advanced, "advancedsitetype": "3", "advanceditems": advanArray]
     
     
     
@@ -102,7 +172,11 @@ func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String,
     
     request.httpBody = jsonData
     
-//    print(json)
+    
+//    print(localcriteriainfo.arrName)
+//    print(localcriteriainfo.arrCode)
+//    print(advanArray)
+    print(json)
     
     //create task
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
