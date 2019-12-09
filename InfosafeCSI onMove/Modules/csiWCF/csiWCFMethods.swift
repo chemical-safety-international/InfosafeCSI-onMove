@@ -372,8 +372,8 @@ func csiWCF_getClassification(clientid: String, uid: String, sdsNoGet: String, a
             let decoder = JSONDecoder()
             let cModel = try decoder.decode(outViewSDSGHS.self, from: dataResponse)
             
-//            let str = String.init(data: dataResponse, encoding: .utf8)
-//            print(str as Any)
+            let str = String.init(data: dataResponse, encoding: .utf8)
+            print(str as Any)
             
             completion(cModel)
 

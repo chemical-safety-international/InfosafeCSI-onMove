@@ -320,9 +320,10 @@ struct localViewSDSCF {
     static var hstate: String!
     static var pic: String!
     static var ps: String!
-    static var rphrase: String!
+    static var rphrase: String?
     static var sds: String!
     static var sphrase: String!
+    
 }
 
 struct outViewSDSGHS: Codable {

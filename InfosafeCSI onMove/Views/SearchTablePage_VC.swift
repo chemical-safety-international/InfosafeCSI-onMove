@@ -112,7 +112,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         }
         
 //        setNavBar()
-        
+
         
     }
     

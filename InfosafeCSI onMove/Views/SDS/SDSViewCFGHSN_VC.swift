@@ -126,6 +126,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         
 
 //        print("GHS Screen")
+
     }
     
     override func viewDidLayoutSubviews() {
@@ -198,8 +199,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             self.img6GHSGap.constant = 10
             self.ghsHazGap.constant = 20
 
-            
-            
+
             
             
             self.GHSScrollView.isHidden = false
@@ -228,7 +228,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                     
                     self.ghsclass.text = localViewSDSGHS.classification
                 } else {
-                    self.ghsclass.text = "None."
+                    self.ghsclass.text = ""
                 }
             } else {
                 
@@ -248,11 +248,12 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                     self.PSpsGap.constant = 0
                 }
                 
-                if (localViewSDSCF.rphrase.isEmpty == false) {
+                
+                if (localViewSDSCF.rphrase?.isEmpty == false) {
                     
                     self.ghsclass.text = localViewSDSCF.rphrase
                 } else {
-                    self.ghsclass.text = "None."
+                   self.ghsclass.text = ""
                 }
             }
             
@@ -897,7 +898,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
             self.navigationItem.title = "GHS"
         } else {
-            self.navigationItem.title = "CF"
+            self.navigationItem.title = "CLASSFICATION"
         }
         
         
@@ -1000,13 +1001,13 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
              self.PercauT.text = "SAFETY PHRASE(S)"
             
             if (localViewSDSCF.rphrase == "") {
-                self.haz.text = "None."
+                self.haz.text = ""
             } else {
                 self.haz.text = localViewSDSCF.rphrase
             }
             
             if (localViewSDSCF.sphrase == "") {
-                self.pstate.text = "None."
+                self.pstate.text = ""
             } else {
                 self.pstate.text = localViewSDSCF.sphrase
             }

@@ -253,56 +253,58 @@ class csiWCF_VM: UIViewController {
         }
     }
     
-    func callSDS_GHS(sdsno: String, completion:@escaping(String) -> Void) {
+    func callSDS_GHS(sdsno: String, completion:@escaping(String) -> Void) {        
+        DispatchQueue.main.async {
 
- 
-        
-        csiWCF_getClassification(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: sdsno, apptp: "1", rtype: "1") { (output) in
-            if output.sds != nil {
-                localViewSDSGHS.formatcode = output.formatcode
-                localViewSDSGHS.picArray = []
-//                print(localViewSDSGHS.picArray.count)
-                if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
-                    
-                    localViewSDSGHS.classification = output.classification
-                    localViewSDSGHS.dg = output.dg
-                    localViewSDSGHS.hstate = output.hstate
-                    localViewSDSGHS.ps = output.ps
-                    localViewSDSGHS.pstate = output.pstate
-//                    print(output.pstate)
-                    localViewSDSGHS.pic = output.pic
-                    localViewSDSGHS.rphrase = output.rphrase
-                    localViewSDSGHS.sds = output.sds
-                    localViewSDSGHS.sphrase = output.sphrase
-                    localViewSDSGHS.ps_general = output.ps_general
-                    localViewSDSGHS.ps_storage = output.ps_storage
-                    localViewSDSGHS.ps_disposal = output.ps_disposal
-                    localViewSDSGHS.ps_response = output.ps_response
-                    localViewSDSGHS.ps_prevention = output.ps_prevention
-                    
-                    if (localViewSDSGHS.pic.isEmpty == false) {
-                        localViewSDSGHS.picArray = localViewSDSGHS.pic.components(separatedBy: ",")
+            csiWCF_getClassification(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: sdsno, apptp: "1", rtype: "1") { (output) in
+                if output.sds != nil {
+                    localViewSDSGHS.formatcode = output.formatcode
+                    localViewSDSGHS.picArray = []
+    //                print(localViewSDSGHS.picArray.count)
+                    if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
+                        
+                        localViewSDSGHS.classification = output.classification
+                        localViewSDSGHS.dg = output.dg
+                        localViewSDSGHS.hstate = output.hstate
+                        localViewSDSGHS.ps = output.ps
+                        localViewSDSGHS.pstate = output.pstate
+                        localViewSDSGHS.pic = output.pic
+                        localViewSDSGHS.rphrase = output.rphrase
+                        localViewSDSGHS.sds = output.sds
+                        localViewSDSGHS.sphrase = output.sphrase
+                        localViewSDSGHS.ps_general = output.ps_general
+                        localViewSDSGHS.ps_storage = output.ps_storage
+                        localViewSDSGHS.ps_disposal = output.ps_disposal
+                        localViewSDSGHS.ps_response = output.ps_response
+                        localViewSDSGHS.ps_prevention = output.ps_prevention
+                        
+                        if (localViewSDSGHS.pic.isEmpty == false) {
+                            localViewSDSGHS.picArray = localViewSDSGHS.pic.components(separatedBy: ",")
+
+                        }
+                    } else {
+
+                        localViewSDSCF.classification = output.classification
+                        localViewSDSCF.dg = output.dg
+                        localViewSDSCF.hstate = output.hstate
+                        localViewSDSCF.pic = output.pic
+                        localViewSDSCF.ps = output.ps
+                        localViewSDSCF.sds = output.sds
+                        localViewSDSCF.sphrase = output.sphrase
+                        localViewSDSCF.rphrase = output.rphrase
 
                     }
+                    
+                    completion("true")
                 } else {
-                    localViewSDSCF.classification = output.classification
-                    localViewSDSCF.dg = output.dg
-                    localViewSDSCF.hstate = output.hstate
-                    localViewSDSCF.pic = output.pic
-                    localViewSDSCF.ps = output.ps
-                    localViewSDSCF.sds = output.sds
-                    localViewSDSCF.sphrase = output.sphrase
-                    localViewSDSCF.rphrase = output.rphrase
-
+                    
+                    
+                    completion("false")
                 }
-                
-                completion("true")
-            } else {
-                
-                
-                completion("false")
             }
         }
+        
+
     }
     
     
