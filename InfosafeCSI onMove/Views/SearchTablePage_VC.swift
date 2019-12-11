@@ -599,7 +599,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
         // controll the animation of side menu (click on the same row - no change)
         if (view.frame.width >= 1024) {
             
-
+            print(">1024")
 
 //            menu.isHidden = true
 //            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
@@ -643,7 +643,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
 
 
         } else if (view.frame.width < 1024) {
-
+            print("<1024")
             // call the menu
 //            if self.menu.isHidden == true {
 //

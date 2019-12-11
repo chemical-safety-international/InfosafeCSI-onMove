@@ -176,7 +176,7 @@ func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String,
 //    print(localcriteriainfo.arrName)
 //    print(localcriteriainfo.arrCode)
 //    print(advanArray)
-    print(json)
+//    print(json)
     
     //create task
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -454,8 +454,8 @@ func csiWCF_getTransport(clientid: String, uid: String, sdsNoGet: String, apptp 
             let decoder = JSONDecoder()
             let cModel = try decoder.decode(outViewSDSTI.self, from: dataResponse)
             
-//            let str = String.init(data: dataResponse, encoding: .utf8)
-//            print(str as Any)
+            let str = String.init(data: dataResponse, encoding: .utf8)
+            print(str as Any)
             
             completion(cModel)
 

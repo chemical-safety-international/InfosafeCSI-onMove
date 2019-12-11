@@ -231,8 +231,19 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                     self.ghsclass.text = ""
                 }
             } else {
+                let cfStr: NSMutableAttributedString = NSMutableAttributedString(string: "")
+//                self.GHSClassT.text = "RISK PHRASE(S)"
+                self.GHSClassT.text = "CLASSIFICATION"
+                if (localViewSDSCF.classification.isEmpty == false) {
+                    
+//                    self.ghsclass.text = localViewSDSCF.classification
+                    let hc = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                    
+                    cfStr.append(NSMutableAttributedString(string:"Hazard Classification\n", attributes: hc))
+                     cfStr.append(NSMutableAttributedString(string:localViewSDSCF.classification))
+                    cfStr.append(NSMutableAttributedString(string:"\n"))
+                }
                 
-                self.GHSClassT.text = "RISK PHRASE(S)"
                 
                 if (localViewSDSCF.ps != nil) {
                     self.PST.text = "POISONS SCHEDULE"
@@ -251,10 +262,15 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                 
                 if (localViewSDSCF.rphrase?.isEmpty == false) {
                     
-                    self.ghsclass.text = localViewSDSCF.rphrase
-                } else {
-                   self.ghsclass.text = ""
+//                    self.ghsclass.text = localViewSDSCF.rphrase
+                    cfStr.append(NSMutableAttributedString(string:"\n"))
+                    
+                    let rp = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+                    cfStr.append(NSMutableAttributedString(string: "Risk Phrase(s)\n", attributes: rp))
+                    cfStr.append(NSMutableAttributedString(string: localViewSDSCF.rphrase!))
                 }
+                
+                self.ghsclass.attributedText = cfStr
             }
             
 

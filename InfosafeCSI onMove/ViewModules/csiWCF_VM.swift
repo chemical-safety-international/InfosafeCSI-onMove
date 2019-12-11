@@ -257,6 +257,7 @@ class csiWCF_VM: UIViewController {
         DispatchQueue.main.async {
 
             csiWCF_getClassification(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: sdsno, apptp: "1", rtype: "1") { (output) in
+                
                 if output.sds != nil {
                     localViewSDSGHS.formatcode = output.formatcode
                     localViewSDSGHS.picArray = []

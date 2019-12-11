@@ -224,8 +224,10 @@ class SplitView_VC: UIViewController {
 //
 //        NotificationCenter.default.addObserver(self, selector: #selector(splitLoading), name: NSNotification.Name(rawValue: "splitLoading"), object: nil)
         
-
-        loadGHSScreen()
+        if (UIDevice.current.userInterfaceIdiom == .pad){
+            loadGHSScreen()
+        }
+        
     }
     
 //    @objc private func errorHandle() {
@@ -260,6 +262,7 @@ class SplitView_VC: UIViewController {
      }
      */
     func loadGHSScreen() {
+        print("loaded")
         GHSContainer.isHidden = false
         localDeafultData.sdsNo = localsearchinfo.results[0].synno
         localcurrentSDS.sdsNo = localDeafultData.sdsNo
