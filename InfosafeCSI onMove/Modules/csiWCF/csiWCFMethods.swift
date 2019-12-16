@@ -115,22 +115,22 @@ func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String,
 
     if(pnameStr.isEmpty == false) {
         type = "2"
-        singleValue = pnameStr
-        let pName: [String: Any] = ["type": "2", "isgroup": "0", "groups": [], "values": [pnameInputData]]
+        singleValue = "0" + pnameStr
+        let pName: [String: Any] = ["type": "2", "isgroup": "0", "groups": [], "values": [singleValue]]
         advanArray.append(pName)
     }
     
     if(supStr.isEmpty == false) {
         type = "4"
-        singleValue = supStr
-        let sup: [String: Any] = ["type": "4", "isgroup": "0", "groups": [], "values": [supInputData]]
+        singleValue = "0" + supStr
+        let sup: [String: Any] = ["type": "4", "isgroup": "0", "groups": [], "values": [singleValue]]
         advanArray.append(sup)
     }
     
     if(pcodeStr.isEmpty == false) {
         type = "8"
-        singleValue = pcodeStr
-        let pcode: [String: Any] = ["type": "8", "isgroup": "0", "groups": [], "values": [pcodeInputData]]
+        singleValue = "0" + pcodeStr
+        let pcode: [String: Any] = ["type": "8", "isgroup": "0", "groups": [], "values": [singleValue]]
         advanArray.append(pcode)
     }
     
@@ -152,7 +152,7 @@ func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String,
     if (advanArray.count > 1) {
         advanced = "1"
     } else {
-        advanced = "0"
+        advanced = "1"
     }
 
 //    let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":type, "v":singleValue, "p":p, "psize":psize, "advanced": advanced, "advancedsitetype": "3", "advanceditems": [pName, sup, pcode, add1, add2, add3]]
@@ -176,7 +176,7 @@ func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String,
 //    print(localcriteriainfo.arrName)
 //    print(localcriteriainfo.arrCode)
 //    print(advanArray)
-//    print(json)
+    print(json)
     
     //create task
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -191,8 +191,8 @@ func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String,
 
                 return }
         
-//        let str = String.init(data: dataResponse, encoding: .utf8)
-//        print(str as Any)
+        let str = String.init(data: dataResponse, encoding: .utf8)
+        print(str as Any)
         completion(dataResponse)
     }
 
@@ -247,8 +247,8 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, completion
                 }
                 localcriteriainfo.code = model.items[0].code
 
-//                print(localcriteriainfo.arrCode)
-//                print(localcriteriainfo.arrName)
+                print(localcriteriainfo.arrCode)
+                print(localcriteriainfo.arrName)
                 if localcriteriainfo.arrName != [] {
                     completion("true")
                 } else {
