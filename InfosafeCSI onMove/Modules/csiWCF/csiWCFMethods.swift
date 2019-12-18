@@ -113,6 +113,7 @@ func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String,
 //        add3 = ["type": "", "isgroup": "0", "groups": [], "values": []]
 //    }
 
+    //add value to the array
     if(pnameStr.isEmpty == false) {
         type = "2"
         singleValue = "0" + pnameStr
@@ -134,6 +135,7 @@ func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String,
         advanArray.append(pcode)
     }
     
+    //set for more criterias' values added into the array
     if(localcriteriainfo.type1.isEmpty == false) {
         let add1: [String: Any] = ["type": localcriteriainfo.type1!, "isgroup": "0", "groups": [], "values": [localcriteriainfo.value1]]
         advanArray.append(add1)
@@ -149,16 +151,16 @@ func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String,
         advanArray.append(add3)
     }
     
+    //if array count is more than one  will use multi-search (current all use)
     if (advanArray.count > 1) {
         advanced = "1"
     } else {
-        advanced = "1"
+        advanced = ""
+        singleValue.remove(at: singleValue.startIndex)
     }
 
-//    let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":type, "v":singleValue, "p":p, "psize":psize, "advanced": advanced, "advancedsitetype": "3", "advanceditems": [pName, sup, pcode, add1, add2, add3]]
+    //create json string
     let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":type, "v":singleValue, "p":p, "psize":psize, "advanced": advanced, "advancedsitetype": "3", "advanceditems": advanArray]
-    
-    
     
     let jsonData = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)
     
