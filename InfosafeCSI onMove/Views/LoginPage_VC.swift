@@ -39,8 +39,8 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
             let image = UIImage(named: "login-ticked-box")
             remember.setImage(image, for: .normal)
 
-            let imageStr = defaults.string(forKey: localclientcoreData.image)
-            if (imageStr != "") {
+            let imageStr: String? = defaults.string(forKey: localclientcoreData.image)
+            if (imageStr != "" || imageStr?.isEmpty == false) {
                 let image = imageStr!.toImage()
                 loginLogo.image = image
             } else {
