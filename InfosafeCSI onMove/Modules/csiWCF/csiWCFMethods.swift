@@ -8,8 +8,8 @@
 
 import Foundation
 
-var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
-//var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
+//var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
+var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
 
 
 // Call the WCF function: 'loginbyEami' with email, password, deviceid, devicemac and return the data from WCF
@@ -19,7 +19,7 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 
     
     //create a json type string
-    let json: [String: Any] = ["email":email, "password":password, "deviceid":deviceid, "devicemac":devicemac]
+    let json: [String: Any] = ["email":email, "password":password, "deviceid":deviceid, "devicemac":devicemac, "phoneno": "", "devicename": locallogininfo.deviceName ?? "", "devicemodel": locallogininfo.model ?? "", "deviceserialno": locallogininfo.UUID ?? "", "deviceSEID": "", "deviceIMEI": "", "deviceMEID": "", "sourceip":""]
     
     //serialiazation of json string
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
@@ -34,18 +34,21 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 
     //insert json string to the request
     request.httpBody = jsonData
-    
+    print(json)
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
                 print(error?.localizedDescription ?? "Response Error")
-                
+
                 DispatchQueue.main.async {
                     //send the notification to searchPage_VC
                     NotificationCenter.default.post(name: Notification.Name("errorLogin"), object: nil)
                 }
-                
+
                 return }
+        
+        let str = String.init(data: dataResponse, encoding: .utf8)
+        print(str as Any)
         completion(dataResponse)
     }
     task.resume()

@@ -27,6 +27,10 @@ class StartupPage_VC: UIViewController {
 //        let image = UIImage(named: "button")
 //        startBtn.setImage(image, for: .normal)
 //        setNavigationBar()
+        deviceName()
+        modelName()
+        UUID()
+//        currentDevice()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -78,7 +82,33 @@ class StartupPage_VC: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    func modelName() {
+        let modelName = UIDevice.modelName
+        locallogininfo.model = modelName
+//        print("Model name: \(modelName)\n")
+        
+    }
+    
+    // for identify the device uniquely (will create a new one after reinstalling)
+    func UUID() {
+        let uuid = UIDevice.current.identifierForVendor?.uuidString
+        locallogininfo.UUID = uuid
+//        print("UUID: \(uuid ?? "")\n")
+    }
+    
+    func deviceName() {
+        let deviceName = UIDevice.current.name
+        locallogininfo.deviceName = deviceName
+//        print("Device name: \(deviceName)\n")
+        
+    }
+    
+//    func currentDevice() {
+//
+//        print("Device systen name: \(UIDevice.current.systemName)\n")
+//        print("Device system version: \(UIDevice.current.systemVersion)\n")
+//    }
 }
 
 

@@ -22,6 +22,12 @@ struct outLoginData: Codable {
     var surname: String!
 }
 
+struct locallogininfo{
+    static var deviceName: String?
+    static var UUID: String?
+    static var model: String?
+}
+
 struct localclientinfo {
     static var clientid: String!
     static var clientcode: String!
