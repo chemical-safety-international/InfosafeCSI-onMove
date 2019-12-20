@@ -34,7 +34,7 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 
     //insert json string to the request
     request.httpBody = jsonData
-    print(json)
+//    print(json)
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
@@ -47,8 +47,8 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 
                 return }
         
-        let str = String.init(data: dataResponse, encoding: .utf8)
-        print(str as Any)
+//        let str = String.init(data: dataResponse, encoding: .utf8)
+//        print(str as Any)
         completion(dataResponse)
     }
     task.resume()

@@ -260,15 +260,15 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                 }
                 
                 
-                if (localViewSDSCF.rphrase?.isEmpty == false) {
-                    
-//                    self.ghsclass.text = localViewSDSCF.rphrase
-                    cfStr.append(NSMutableAttributedString(string:"\n"))
-                    
-                    let rp = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
-                    cfStr.append(NSMutableAttributedString(string: "Risk Phrase(s)\n", attributes: rp))
-                    cfStr.append(NSMutableAttributedString(string: localViewSDSCF.rphrase!))
-                }
+//                if (localViewSDSCF.rphrase?.isEmpty == false) {
+//                    
+////                    self.ghsclass.text = localViewSDSCF.rphrase
+//                    cfStr.append(NSMutableAttributedString(string:"\n"))
+//                    
+//                    let rp = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
+//                    cfStr.append(NSMutableAttributedString(string: "Risk Phrase(s)\n", attributes: rp))
+//                    cfStr.append(NSMutableAttributedString(string: localViewSDSCF.rphrase!))
+//                }
                 
                 self.ghsclass.attributedText = cfStr
             }
