@@ -90,7 +90,7 @@ class SDSViewPage_VC: UIViewController {
             }
         } else {
 
-            let rtype : String = "2"
+            let rtype : String = "1"
             csiWCF_VM().callSDS(sdsno: localcurrentSDS.sdsNo, rtype : rtype) { (completionReturnData) in
                 DispatchQueue.main.async {
 
@@ -352,7 +352,7 @@ class SplitView_VC: UIViewController {
             }
         } else {
             
-            let rtype : String = "2"
+            let rtype : String = "1"
             csiWCF_VM().callSDS(sdsno: localcurrentSDS.sdsNo, rtype : rtype) { (completionReturnData) in
                 DispatchQueue.main.async {
                     
