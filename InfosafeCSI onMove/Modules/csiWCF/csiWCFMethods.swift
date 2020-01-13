@@ -8,8 +8,8 @@
 
 import Foundation
 
-//var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
-var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
+var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
+//var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
 
 
 // Call the WCF function: 'loginbyEami' with email, password, deviceid, devicemac and return the data from WCF
@@ -137,6 +137,7 @@ func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String,
         let pcode: [String: Any] = ["type": "8", "isgroup": "0", "groups": [], "values": [singleValue]]
         advanArray.append(pcode)
     }
+    
     
     //set for more criterias' values added into the array
     if(localcriteriainfo.type1.isEmpty == false) {
