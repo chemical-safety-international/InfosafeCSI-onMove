@@ -273,7 +273,7 @@ func csiWCF_getSDS(clientid: String, uid: String, sdsNoGet: String, apptp : Stri
 
     let json: [String: Any] = ["client":clientid, "apptp": apptp, "uid":uid, "sds": sdsNoGet, "rtype" : rtype, "regetFormat":"1", "f":"", "subf":""]
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
-
+    print(json)
     let url = URL(string: csiWCF_URLHeader + "ViewSDS")!
     
     var request = URLRequest(url:url)
@@ -296,8 +296,8 @@ func csiWCF_getSDS(clientid: String, uid: String, sdsNoGet: String, apptp : Stri
             let decoder = JSONDecoder()
             let model = try decoder.decode(outViewSDSData.self, from: dataResponse)
             
-//            let str = String.init(data: dataResponse, encoding: .utf8)
-//            print(str as Any)
+            let str = String.init(data: dataResponse, encoding: .utf8)
+            print(str as Any)
             
             completion(model)
 
@@ -314,6 +314,7 @@ func csiWCF_getCoreInfo(clientid: String, uid: String, sdsNoGet: String, apptp :
 
     let json: [String: Any] = ["client":clientid, "apptp": apptp, "uid":uid, "sds": sdsNoGet, "rtype" : rtype, "regetFormat":"1", "f":"", "subf":""]
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
+
 
     let url = URL(string: csiWCF_URLHeader + "ViewSDS_Core")!
     

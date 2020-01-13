@@ -81,6 +81,7 @@ class csiWCF_VM: UIViewController {
                         }
                         if let key = info["key"] as? [String: Any] {
                             ritem.synno = key["value"] as? String
+                            print(ritem.synno!)
                         }
                         if let unno = info["unno"] as? [String: Any] {
                             ritem.unno = unno["value"] as? String

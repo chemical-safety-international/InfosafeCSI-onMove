@@ -591,6 +591,8 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
         
         //pass the synno number
         localcurrentSDS.sdsNo = localsearchinfo.results[indexPath.row].synno
+
+        print(localcurrentSDS.sdsNo ?? "")
         view.sizeToFit()
 
         
