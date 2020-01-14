@@ -379,55 +379,55 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
 //                            print(localsearchinfo.results[indexPath.row].GHS_Pictogram)
                             
                             if picArray.count != 0 {
-                                    var cArray: [Any] = []
-                                    var imgCode: String!
+                                    var cArray: [Any?] = []
+                                    var imgCode: String?
 
                                     for index in 0..<(picArray.count) {
 
                                         let imgName = picArray[index]
-                                        let imgNameFix = (imgName as AnyObject).trimmingCharacters(in: .whitespacesAndNewlines)
+                                        let imgNameFix = (imgName as AnyObject).trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
 
-                                        if (imgNameFix == "Flame") {
+                                        if (imgNameFix == "flame") {
 
                                             imgCode = "GHS02"
                                             cArray.append(imgCode!)
                                             
-                                        } else if (imgNameFix == "Skull and crossbones") {
+                                        } else if (imgNameFix == "skull and crossbones") {
 
                                             imgCode = "GHS06"
                                             cArray.append(imgCode!)
 
-                                        } else if (imgNameFix == "Flame over circle") {
+                                        } else if (imgNameFix == "flame over circle") {
 
                                             imgCode = "GHS03"
                                             cArray.append(imgCode!)
 
-                                        } else if (imgNameFix == "Exclamation mark") {
+                                        } else if (imgNameFix == "exclamation mark") {
 
                                             imgCode = "GHS07"
                                             cArray.append(imgCode!)
 
-                                        } else if (imgNameFix == "Environment") {
+                                        } else if (imgNameFix == "environment") {
 
                                             imgCode = "GHS09"
                                             cArray.append(imgCode!)
 
-                                        } else if (imgNameFix == "Health hazard") {
+                                        } else if (imgNameFix == "health hazard") {
 
                                             imgCode = "GHS08"
                                             cArray.append(imgCode!)
 
-                                        } else if (imgNameFix == "Corrosion") {
+                                        } else if (imgNameFix == "corrosion") {
 
                                             imgCode = "GHS05"
                                             cArray.append(imgCode!)
 
-                                        } else if (imgNameFix == "Gas cylinder") {
+                                        } else if (imgNameFix == "gas cylinder") {
 
                                             imgCode = "GHS04"
                                             cArray.append(imgCode!)
 
-                                        } else if (imgNameFix == "Exploding bomb") {
+                                        } else if (imgNameFix == "exploding bomb") {
 
                                             imgCode = "GHS01"
                                             cArray.append(imgCode!)
@@ -435,9 +435,10 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                                         } else {
                 //                            print(imgNameFix)
                                         }
-                    
+                                        
                                     }
 
+                                print(cArray.count)
                                     if cArray.count == 1 {
                                         
                                         cell?.img1Height.constant = 60

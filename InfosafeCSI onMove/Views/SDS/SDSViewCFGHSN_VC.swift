@@ -316,7 +316,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             if localViewSDSTIADG.road_packgrp.isEmpty == false {
                 let str = "\nHAZCHEM CODE\n"
                 let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
-                let strdata = NSMutableAttributedString(string: localViewSDSTIADG.road_packgrp)
+                let strdata = NSMutableAttributedString(string: localViewSDSTIADG.road_hazchem)
                 
                 
                 tiStr.append(NSMutableAttributedString(string: str, attributes: attrs))
@@ -327,7 +327,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             if localViewSDSTIADG.road_hazchem.isEmpty == false {
                 let str = "\nPACKAGING GROUP\n"
                 let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 15)]
-                let strdata = NSMutableAttributedString(string: localViewSDSTIADG.road_hazchem)
+                let strdata = NSMutableAttributedString(string: localViewSDSTIADG.road_packgrp)
                 
                 
                 tiStr.append(NSMutableAttributedString(string: str, attributes: attrs))
@@ -497,53 +497,72 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             self.dgImg.frame.size.width = 90
 
             if localViewSDSGHS.picArray.count != 0 {
-                var cArray: [Any] = []
-                var imgCode: String!
+                var cArray: [Any?] = []
+                var imgCode: String?
 
                 for index in 0..<(localViewSDSGHS.picArray!.count) {
 
                     let imgName = localViewSDSGHS.picArray![index]
-                    let imgNameFix = (imgName as AnyObject).trimmingCharacters(in: .whitespacesAndNewlines)
+                    let imgNameFix = (imgName as AnyObject).trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
 
-                    if (imgNameFix == "Flame") {
+                    if (imgNameFix == "flame") {
 
                         imgCode = "GHS02"
+                        cArray.append(imgCode)
                         
-                    } else if (imgNameFix == "Skull and crossbones") {
+                    } else if (imgNameFix == "skull and crossbones") {
 
                         imgCode = "GHS06"
+                        cArray.append(imgCode)
 
-                    } else if (imgNameFix == "Flame over circle") {
+                    } else if (imgNameFix == "flame over circle") {
 
                         imgCode = "GHS03"
+                        cArray.append(imgCode)
 
-                    } else if (imgNameFix == "Exclamation mark") {
+                    } else if (imgNameFix == "exclamation mark") {
 
                         imgCode = "GHS07"
+                        cArray.append(imgCode)
 
-                    } else if (imgNameFix == "Environment") {
+                    } else if (imgNameFix == "environment") {
 
                         imgCode = "GHS09"
+                        cArray.append(imgCode)
 
-                    } else if (imgNameFix == "Health hazard") {
+                    } else if (imgNameFix == "health hazard") {
 
                         imgCode = "GHS08"
+                        cArray.append(imgCode)
 
-                    } else if (imgNameFix == "Corrosion") {
+                    } else if (imgNameFix == "corrosion") {
 
                         imgCode = "GHS05"
+                        cArray.append(imgCode)
 
-                    } else if (imgNameFix == "Gas cylinder") {
+                    } else if (imgNameFix == "gas cylinder") {
 
                         imgCode = "GHS04"
+                        cArray.append(imgCode)
 
-                    } else if (imgNameFix == "Exploding bomb") {
+                    } else if (imgNameFix == "exploding bomb") {
 
                         imgCode = "GHS01"
+                        cArray.append(imgCode)
+                    } else {
+
                     }
 
-                    cArray.append(imgCode!)
+
                 }
+
+//                for i in 0..<(cArray.count) {
+//                    if (cArray[i] == nil) {
+//                        cArray.remove(at: i)
+//                    }
+//                }
+
+
 
                 if cArray.count == 1 {
                     
@@ -637,6 +656,20 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     //                    img6.image = nil
     //                    img7.image = nil
     //                }
+                } else if cArray.count == 0 {
+                    self.img1.image = nil
+                    self.img2.image = nil
+                    self.img3.image = nil
+                    self.img4.image = nil
+                    self.img5.image = nil
+                    self.img6.image = nil
+                    self.img7.image = nil
+                    
+                    self.img1Height.constant = 0
+                    self.img6Height.constant = 0
+                    
+                    self.ghsImg1Gap.constant = 0
+                    self.ghsImg6Gap.constant = 0
                 }
             } else {
                 self.img1.image = nil
@@ -657,7 +690,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             
             //set dg img and sub risk img
             var fixStr = ""
-            
+
             if localViewSDSTIADG.road_dgclass.isEmpty == true || localViewSDSTIADG.road_dgclass.contains("None") {
                 self.dgImg.image = nil
                 self.subImg1.image = nil
@@ -680,55 +713,74 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                 self.dgImg.frame.size.width = 90
                 self.dgImg.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
             }
+
+
             
             var fixSubStr1 = ""
             var fixSubStr2 = ""
             var fixSubArray: Array<String> = []
-     
-            if (localViewSDSTIADG.road_subrisks.contains("None") || localViewSDSTIADG.road_subrisks.isEmpty == true) {
-                self.subImg1.image = nil
-                self.subImg2.image = nil
-                
-                self.subImg1height.constant = 0
-                self.subImg1_2Gap.constant = 0
-                
-                
-            } else {
-                 if (localViewSDSTIADG.road_subrisks.isEmpty == false) {
-                    
-                     fixSubArray = localViewSDSTIADG.road_subrisks.components(separatedBy: " ")
-            //                         print("Array: \(fixSubArray.count)")
-                     if (fixSubArray.count == 2) {
-                        
-                        self.subImg1height.constant = 60
-                        self.subImg1.frame.size.height = 60
-                         
-                         fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
-                         fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
-                         
-                         self.subImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
-                         self.subImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
-                     } else if (fixSubArray.count == 1 ) {
-                        if fixSubStr1.contains("None") || fixSubStr1.contains("NIL") || fixSubStr1.isEmpty == true {
-                            
-                            self.subImg1.image = nil
-                            self.subImg1height.constant = 0
-                            self.subImg1.frame.size.height = 0
-                         } else {
-                             self.subImg1height.constant = 60
-                            self.subImg1.frame.size.height = 60
-
-                             fixSubStr1 = fixSubArray[0].replacingOccurrences(of: " ", with: "")
-                             self.subImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
-                         }
-                     }
-                 }
-            }
             
+           if (localViewSDSTIADG.road_subrisks.contains("None") || localViewSDSTIADG.road_subrisks.isEmpty == true) {
+               self.subImg1.image = nil
+               self.subImg2.image = nil
+               
+               self.subImg1height.constant = 0
+               self.subImg1_2Gap.constant = 0
+               
+               
+           } else {
+
+                if (localViewSDSTIADG.road_subrisks.isEmpty == false) {
+                   
+                    fixSubArray = localViewSDSTIADG.road_subrisks.components(separatedBy: " ")
+           //                         print("Array: \(fixSubArray.count)")
+                    if (fixSubArray.count == 2) {
+                       
+                       self.subImg1height.constant = 60
+                       self.subImg1.frame.size.height = 60
+                        
+                        fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
+                        fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
+                        
+                        self.subImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+                        self.subImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
+                    } else if (fixSubArray.count == 1 ) {
+
+                       fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
+                       if (fixSubStr1.contains("None") || fixSubStr1.contains("NIL") || fixSubStr1.isEmpty == true) {
+                                                       print("here1")
+                           self.subImg1.image = nil
+                           self.subImg1height.constant = 0
+                           self.subImg1.frame.size.height = 0
+                        } else {
+
+                            self.subImg1height.constant = 60
+                           self.subImg1.frame.size.height = 60
+
+                            fixSubStr1 = fixSubArray[0].replacingOccurrences(of: " ", with: "")
+                            self.subImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+                        }
+                    }
+                }
+           }
+           
         }
 
 
     }
+    
+//    func containsOnlyLettes(input: String) -> Bool {
+//        print(input)
+//        for chr in input {
+//            if (!(chr >= "a" && chr <= "Z") && !(chr >= "A" && chr <= "Z")) {
+//                print("has letters")
+//                return false
+//            }
+//        }
+//        print("no letters")
+//        return true
+//    }
+    
     
     func setTitleBold() {
         GHSClassT.font = UIFont.boldSystemFont(ofSize: 18)

@@ -371,7 +371,7 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
 
             }
             
-            
+
             if (localViewSDSTIADG.road_subrisks != "" || localViewSDSTIADG.road_subrisks.isEmpty == false) {
                 
                 if (localViewSDSTIADG.road_subrisks.contains("None") || localViewSDSTIADG.road_subrisks.contains("NIL")) {
@@ -380,7 +380,6 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                     self.subRiskImg1.image = nil
                     self.subRiskImg2.image = nil
                     self.subImgHeight.constant = 0
-                    
                     
                 } else {
                     
@@ -413,9 +412,20 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                 self.subRiskImg2.image = nil
                 self.subImgHeight.constant = 0
             }
+            
+
         }
 
     }
+    
+//    func containsOnlyLettes(input: String) -> Bool {
+//        for chr in input {
+//            if (!(chr >= "a" && chr <= "Z") && !(chr >= "A" && chr <= "Z")) {
+//                return false
+//            }
+//        }
+//        return true
+//    }
     
     func viewMore() {
         
