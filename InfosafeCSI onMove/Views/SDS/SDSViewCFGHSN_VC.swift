@@ -973,7 +973,9 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     
     func preloadSDS() {
         
-        viewSDSBTn.isHidden = true
+//        viewSDSBTn.isHidden = true
+        viewSDSBTn.setTitleColor(.black, for: .normal)
+        viewSDSBTn.isEnabled = false
         
         let rtype : String = "1"
         csiWCF_VM().callSDS(sdsno: localcurrentSDS.sdsNo, rtype : rtype) { (completionReturnData) in
@@ -989,7 +991,9 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
 
                     CoreDataManager.storePDF(sdsno: localcurrentSDS.sdsNo, pdfdata: completionReturnData)
 //                    self.removeSpinner()
-                    self.viewSDSBTn.isHidden = false
+                    self.viewSDSBTn.setTitleColor(.white, for: .normal)
+                    self.viewSDSBTn.isEnabled = true
+//                    self.viewSDSBTn.isHidden = false
                 }
                 else if rtype == "2" {
 //                    self.sdsDisplay!.loadHTMLString(String(describing: completionReturnData), baseURL: nil)
