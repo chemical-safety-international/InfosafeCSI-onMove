@@ -8,8 +8,8 @@
 
 import Foundation
 
-//var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
-var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
+var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
+//var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
 
 
 // Call the WCF function: 'loginbyEami' with email, password, deviceid, devicemac and return the data from WCF
