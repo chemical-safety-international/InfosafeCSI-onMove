@@ -68,7 +68,7 @@ class SDSViewPage_VC: UIViewController {
     
     
     func sdsShow() {
-        self.showSpinner(onView: self.view)
+//        self.showSpinner(onView: self.view)
 
         let pdfArray = CoreDataManager.fetchPDF(targetText: localcurrentSDS.sdsNo)
 
@@ -86,33 +86,37 @@ class SDSViewPage_VC: UIViewController {
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "setNavbarShareBtn"), object: nil)
                 }
                 
-                self.removeSpinner()
+//                self.removeSpinner()
             }
         } else {
-
-            let rtype : String = "1"
-            csiWCF_VM().callSDS(sdsno: localcurrentSDS.sdsNo, rtype : rtype) { (completionReturnData) in
-                DispatchQueue.main.async {
-
-                    if rtype == "1" {
-                        //PDF return string must be base64string
-                        let decodeData = Data(base64Encoded: completionReturnData, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
-                        self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
-                        localcurrentSDS.pdfData = decodeData
-                        self.printBtn.isHidden = false
-                        self.shareBtn.isHidden = false
-
-                        CoreDataManager.storePDF(sdsno: localcurrentSDS.sdsNo, pdfdata: completionReturnData)
-                        self.removeSpinner()
-                    }
-                    else if rtype == "2" {
-                        self.sdsDisplay!.loadHTMLString(String(describing: completionReturnData), baseURL: nil)
-                        self.printBtn.isHidden = false
-                        self.shareBtn.isHidden = false
-                        self.removeSpinner()
-                    }
-                }
+// call the SDS WCF and display on SDS page
+//            let rtype : String = "1"
+//            csiWCF_VM().callSDS(sdsno: localcurrentSDS.sdsNo, rtype : rtype) { (completionReturnData) in
+//                DispatchQueue.main.async {
+//
+//                    if rtype == "1" {
+//                        //PDF return string must be base64string
+//                        let decodeData = Data(base64Encoded: completionReturnData, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+//                        self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
+//                        localcurrentSDS.pdfData = decodeData
+//                        self.printBtn.isHidden = false
+//                        self.shareBtn.isHidden = false
+//
+//                        CoreDataManager.storePDF(sdsno: localcurrentSDS.sdsNo, pdfdata: completionReturnData)
+//                        self.removeSpinner()
+//                    }
+//                    else if rtype == "2" {
+//                        self.sdsDisplay!.loadHTMLString(String(describing: completionReturnData), baseURL: nil)
+//                        self.printBtn.isHidden = false
+//                        self.shareBtn.isHidden = false
+//                        self.removeSpinner()
+//                    }
+//                }
+//            }
+            if (localcurrentSDS.pdfData != nil) {
+                self.sdsDisplay!.load(localcurrentSDS.pdfData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL:  URL(fileURLWithPath: ""))
             }
+            
         }
         
     }

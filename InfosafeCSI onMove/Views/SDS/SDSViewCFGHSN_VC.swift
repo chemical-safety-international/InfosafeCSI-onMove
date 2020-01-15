@@ -117,6 +117,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         
         setCFTIValue()
         preloadTIScreen()
+        preloadSDS()
         
         if (UIDevice.current.userInterfaceIdiom == .pad) {
             faBtn.setTitle("First Aid", for: .normal)
@@ -707,11 +708,26 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                     fixStr = localViewSDSTIADG.road_dgclass
                 }
                 
-                self.dgImgHeight.constant = 90
-                self.dgImgTIInfoGap.constant = 30
-                self.dgImg.frame.size.height = 90
-                self.dgImg.frame.size.width = 90
-                self.dgImg.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
+
+                
+                
+                if (UIImage(named: fixStr) != nil) {
+                    self.dgImgHeight.constant = 90
+                    self.dgImgTIInfoGap.constant = 30
+                    self.dgImg.frame.size.height = 90
+                    self.dgImg.frame.size.width = 90
+                    
+                    self.dgImg.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
+                } else {
+                    self.dgImg.image = nil
+                    self.subImg1.image = nil
+                    self.subImg2.image = nil
+                    
+                    self.dgImgHeight.constant = 0
+                    self.subImg1height.constant = 0
+                    self.dgImgTIInfoGap.constant = 0
+                }
+
             }
 
 
@@ -719,50 +735,66 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             var fixSubStr1 = ""
             var fixSubStr2 = ""
             var fixSubArray: Array<String> = []
-            
-           if (localViewSDSTIADG.road_subrisks.contains("None") || localViewSDSTIADG.road_subrisks.isEmpty == true) {
-               self.subImg1.image = nil
-               self.subImg2.image = nil
-               
-               self.subImg1height.constant = 0
-               self.subImg1_2Gap.constant = 0
-               
-               
-           } else {
+            if (self.dgImg.image == nil) {
+                self.subImg1.image = nil
+                 self.subImg2.image = nil
+                 
+                 self.subImg1height.constant = 0
+                 self.subImg1_2Gap.constant = 0
+            } else {
+                if (localViewSDSTIADG.road_subrisks.contains("None") || localViewSDSTIADG.road_subrisks.isEmpty == true) {
+                    self.subImg1.image = nil
+                    self.subImg2.image = nil
+                    
+                    self.subImg1height.constant = 0
+                    self.subImg1_2Gap.constant = 0
+                    
+                    
+                } else {
 
-                if (localViewSDSTIADG.road_subrisks.isEmpty == false) {
-                   
-                    fixSubArray = localViewSDSTIADG.road_subrisks.components(separatedBy: " ")
-           //                         print("Array: \(fixSubArray.count)")
-                    if (fixSubArray.count == 2) {
-                       
-                       self.subImg1height.constant = 60
-                       self.subImg1.frame.size.height = 60
+                     if (localViewSDSTIADG.road_subrisks.isEmpty == false) {
                         
-                        fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
-                        fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
-                        
-                        self.subImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
-                        self.subImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
-                    } else if (fixSubArray.count == 1 ) {
-
-                       fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
-                       if (fixSubStr1.contains("None") || fixSubStr1.contains("NIL") || fixSubStr1.isEmpty == true) {
-                                                       print("here1")
-                           self.subImg1.image = nil
-                           self.subImg1height.constant = 0
-                           self.subImg1.frame.size.height = 0
-                        } else {
-
+                         fixSubArray = localViewSDSTIADG.road_subrisks.components(separatedBy: " ")
+                //                         print("Array: \(fixSubArray.count)")
+                         if (fixSubArray.count == 2) {
+                            
                             self.subImg1height.constant = 60
-                           self.subImg1.frame.size.height = 60
+                            self.subImg1.frame.size.height = 60
+                             
+                             fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
+                             fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
+                             
+                            if (UIImage(named: fixSubStr1) != nil) {
+                                self.subImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+                            }
+                            if (UIImage(named: fixSubStr2) != nil) {
+                               self.subImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
+                            }
+                             
+                         } else if (fixSubArray.count == 1 ) {
 
-                            fixSubStr1 = fixSubArray[0].replacingOccurrences(of: " ", with: "")
-                            self.subImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
-                        }
-                    }
+                            fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
+                            if (fixSubStr1.contains("None") || fixSubStr1.contains("NIL") || fixSubStr1.isEmpty == true) {
+                                                            print("here1")
+                                self.subImg1.image = nil
+                                self.subImg1height.constant = 0
+                                self.subImg1.frame.size.height = 0
+                             } else {
+
+                                 self.subImg1height.constant = 60
+                                self.subImg1.frame.size.height = 60
+
+                                 fixSubStr1 = fixSubArray[0].replacingOccurrences(of: " ", with: "")
+                                if (UIImage(named: fixSubStr1) != nil) {
+                                   self.subImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+                                }
+                                 
+                             }
+                         }
+                     }
                 }
-           }
+            }
+
            
         }
 
@@ -937,6 +969,36 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         containerView.addSubview(sdsJump!.view)
 
         sdsJump!.didMove(toParent: self)
+    }
+    
+    func preloadSDS() {
+        
+        viewSDSBTn.isHidden = true
+        
+        let rtype : String = "1"
+        csiWCF_VM().callSDS(sdsno: localcurrentSDS.sdsNo, rtype : rtype) { (completionReturnData) in
+            DispatchQueue.main.async {
+
+                if rtype == "1" {
+                    //PDF return string must be base64string
+                    let decodeData = Data(base64Encoded: completionReturnData, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+//                    self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
+                    localcurrentSDS.pdfData = decodeData
+//                    self.printBtn.isHidden = false
+//                    self.shareBtn.isHidden = false
+
+                    CoreDataManager.storePDF(sdsno: localcurrentSDS.sdsNo, pdfdata: completionReturnData)
+//                    self.removeSpinner()
+                    self.viewSDSBTn.isHidden = false
+                }
+                else if rtype == "2" {
+//                    self.sdsDisplay!.loadHTMLString(String(describing: completionReturnData), baseURL: nil)
+//                    self.printBtn.isHidden = false
+//                    self.shareBtn.isHidden = false
+//                    self.removeSpinner()
+                }
+            }
+        }
     }
 
     

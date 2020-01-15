@@ -351,10 +351,24 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
                    } else {
                        fixStr = localViewSDSTIADG.road_dgclass
                    }
-                    self.topdgImgGap.constant = 35
-                    self.dgImgDGCGap.constant = 45
-                    self.dgImgHeight.constant = 150
-                    self.dgClassImage.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
+
+                    
+                    if (UIImage(named: fixStr) != nil) {
+                        self.topdgImgGap.constant = 35
+                        self.dgImgDGCGap.constant = 45
+                        self.dgImgHeight.constant = 150
+                        
+                        self.dgClassImage.image = UIImage(named: Bundle.main.path(forResource: fixStr, ofType: "png")!)
+                    } else {
+                        self.dgClassImage.image = nil
+                        self.subRiskImg1.image = nil
+                        self.subRiskImg2.image = nil
+                        self.topdgImgGap.constant = 0
+                        self.dgImgHeight.constant = 0
+                        self.subImgHeight.constant = 0
+                        self.dgImgDGCGap.constant = 0
+                    }
+
                     self.dgCLbl.text = localViewSDSTIADG.road_dgclass
                 }
 
@@ -371,48 +385,65 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
 
             }
             
-
-            if (localViewSDSTIADG.road_subrisks != "" || localViewSDSTIADG.road_subrisks.isEmpty == false) {
-                
-                if (localViewSDSTIADG.road_subrisks.contains("None") || localViewSDSTIADG.road_subrisks.contains("NIL")) {
-//                    self.subRiskLbl.text = localViewSDSTIADG.road_subrisks
-                    self.subRiskLbl.text = "None"
-                    self.subRiskImg1.image = nil
-                    self.subRiskImg2.image = nil
-                    self.subImgHeight.constant = 0
-                    
-                } else {
-                    
-                    fixSubArray = localViewSDSTIADG.road_subrisks.components(separatedBy: " ")
-
-                    if (fixSubArray.count == 2) {
-                        self.subImgHeight.constant = 110
-
-                        fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
-                        fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
-                        
-                        self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
-                        self.subRiskImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
-                    } else if (fixSubArray.count == 1 ) {
-                        self.subImgHeight.constant = 110
- 
-                        fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
-                        self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
-
-                    } else {
-                        self.subRiskImg1.image = nil
-                        self.subRiskImg2.image = nil
-                        self.subImgHeight.constant = 0
-                    }
-                }
-
-            } else {
-                self.subRiskLbl.text = ""
+            if (self.dgClassImage.image == nil) {
+                self.subRiskLbl.text = localViewSDSTIADG.road_subrisks
                 self.subRiskImg1.image = nil
                 self.subRiskImg2.image = nil
                 self.subImgHeight.constant = 0
+            } else {
+                if (localViewSDSTIADG.road_subrisks != "" || localViewSDSTIADG.road_subrisks.isEmpty == false) {
+                    
+                    if (localViewSDSTIADG.road_subrisks.contains("None") || localViewSDSTIADG.road_subrisks.contains("NIL")) {
+    //                    self.subRiskLbl.text = localViewSDSTIADG.road_subrisks
+                        self.subRiskLbl.text = "None"
+                        self.subRiskImg1.image = nil
+                        self.subRiskImg2.image = nil
+                        self.subImgHeight.constant = 0
+                        
+                    } else {
+                        
+                        fixSubArray = localViewSDSTIADG.road_subrisks.components(separatedBy: " ")
+
+                        if (fixSubArray.count == 2) {
+                            self.subImgHeight.constant = 110
+
+                            fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
+                            fixSubStr2 = fixSubArray[1].replacingOccurrences(of: ".", with: "")
+                            self.subRiskLbl.text = localViewSDSTIADG.road_subrisks
+                            if (UIImage(named: fixSubStr1) != nil) {
+                               self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+                            }
+                            if (UIImage(named: fixSubStr2) != nil) {
+                               self.subRiskImg2.image = UIImage(named: Bundle.main.path(forResource: fixSubStr2, ofType: "png")!)
+                            }
+                            
+                        } else if (fixSubArray.count == 1 ) {
+                            self.subImgHeight.constant = 110
+     
+                            fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
+                            self.subRiskLbl.text = localViewSDSTIADG.road_subrisks
+                            
+                            if (UIImage(named: fixSubStr1) != nil) {
+                               self.subRiskImg1.image = UIImage(named: Bundle.main.path(forResource: fixSubStr1, ofType: "png")!)
+                            }
+                            
+
+                        } else {
+                            self.subRiskLbl.text = localViewSDSTIADG.road_subrisks
+                            self.subRiskImg1.image = nil
+                            self.subRiskImg2.image = nil
+                            self.subImgHeight.constant = 0
+                        }
+                    }
+
+                } else {
+                    self.subRiskLbl.text = localViewSDSTIADG.road_subrisks
+                    self.subRiskImg1.image = nil
+                    self.subRiskImg2.image = nil
+                    self.subImgHeight.constant = 0
+                }
             }
-            
+ 
 
         }
 
