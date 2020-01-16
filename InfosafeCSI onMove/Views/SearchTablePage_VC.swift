@@ -438,7 +438,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                                         
                                     }
 
-                                print(cArray.count)
+//                                print(cArray.count)
                                     if cArray.count == 1 {
                                         
                                         cell?.img1Height.constant = 60
@@ -593,7 +593,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
         //pass the synno number
         localcurrentSDS.sdsNo = localsearchinfo.results[indexPath.row].synno
 
-        print(localcurrentSDS.sdsNo ?? "")
+//        print(localcurrentSDS.sdsNo ?? "")
         view.sizeToFit()
 
         

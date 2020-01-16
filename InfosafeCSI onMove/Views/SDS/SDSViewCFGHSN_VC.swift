@@ -94,7 +94,9 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     
     
 
-    
+    @IBOutlet weak var progressBarSDS: UIProgressView!
+    var isStop = false
+    var progressBarTimer: Timer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -972,6 +974,9 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     }
     
     func preloadSDS() {
+//        self.progressBarSDS.isHidden = false
+        progressBarSDS.progress = 0.0
+          self.progressBarTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(SDSViewCFGHSN_VC.updateProgressView), userInfo: nil, repeats: true)
         
 //        viewSDSBTn.isHidden = true
         viewSDSBTn.setTitleColor(.black, for: .normal)
@@ -988,12 +993,15 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
                     localcurrentSDS.pdfData = decodeData
 //                    self.printBtn.isHidden = false
 //                    self.shareBtn.isHidden = false
-
-                    CoreDataManager.storePDF(sdsno: localcurrentSDS.sdsNo, pdfdata: completionReturnData)
+// call core data function to store pdf
+//                    CoreDataManager.storePDF(sdsno: localcurrentSDS.sdsNo, pdfdata: completionReturnData)
+                    
 //                    self.removeSpinner()
                     self.viewSDSBTn.setTitleColor(.white, for: .normal)
                     self.viewSDSBTn.isEnabled = true
 //                    self.viewSDSBTn.isHidden = false
+                    self.isStop = true
+//                    self.progressBarSDS.isHidden = true
                 }
                 else if rtype == "2" {
 //                    self.sdsDisplay!.loadHTMLString(String(describing: completionReturnData), baseURL: nil)
@@ -1283,6 +1291,29 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeShareBtn"), object: nil)
         
 
+    }
+    
+    @objc func updateProgressView() {
+        
+//        progressView.progress += 0.1
+//        progressView.setProgress(progressView.progress, animated: true)
+//        if(progressView.progress == 1.0)
+//        {
+//            progressBarTimer.invalidate()
+//            isRunning = false
+//            strBtn.setTitle("Start", for: .normal)
+//        }
+        
+        if (isStop == false) {
+            if (progressBarSDS.progress <= 0.8) {
+                progressBarSDS.progress += 0.1
+                progressBarSDS.setProgress(progressBarSDS.progress, animated: true)
+            }
+        }
+        if (isStop == true) {
+            progressBarSDS.progress = 1.0
+            progressBarTimer.invalidate()
+        }
     }
     
 }

@@ -70,25 +70,27 @@ class SDSViewPage_VC: UIViewController {
     func sdsShow() {
 //        self.showSpinner(onView: self.view)
 
-        let pdfArray = CoreDataManager.fetchPDF(targetText: localcurrentSDS.sdsNo)
-
-        if pdfArray.count != 0 {
-            DispatchQueue.main.async {
-
-//                print("\(pdfArray[0].sdsno!)")
-                let decodeData = Data(base64Encoded: pdfArray[0].pdfdata!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
-                self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
-                localcurrentSDS.pdfData = decodeData
-                self.printBtn.isHidden = false
-                self.shareBtn.isHidden = false
-                
-                if (UIDevice.current.userInterfaceIdiom == .pad) {
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "setNavbarShareBtn"), object: nil)
-                }
-                
-//                self.removeSpinner()
-            }
-        } else {
+        //call core data pdf *
+//        let pdfArray = CoreDataManager.fetchPDF(targetText: localcurrentSDS.sdsNo)
+//
+//        if pdfArray.count != 0 {
+//            DispatchQueue.main.async {
+//
+////                print("\(pdfArray[0].sdsno!)")
+//                let decodeData = Data(base64Encoded: pdfArray[0].pdfdata!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
+//                self.sdsDisplay!.load(decodeData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: URL(fileURLWithPath: ""))
+//                localcurrentSDS.pdfData = decodeData
+//                self.printBtn.isHidden = false
+//                self.shareBtn.isHidden = false
+//
+//                if (UIDevice.current.userInterfaceIdiom == .pad) {
+//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "setNavbarShareBtn"), object: nil)
+//                }
+//
+////                self.removeSpinner()
+//            }
+//        } else {
+ //*
 // call the SDS WCF and display on SDS page
 //            let rtype : String = "1"
 //            csiWCF_VM().callSDS(sdsno: localcurrentSDS.sdsNo, rtype : rtype) { (completionReturnData) in
@@ -117,7 +119,7 @@ class SDSViewPage_VC: UIViewController {
                 self.sdsDisplay!.load(localcurrentSDS.pdfData!, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL:  URL(fileURLWithPath: ""))
             }
             
-        }
+//        }
         
     }
     
