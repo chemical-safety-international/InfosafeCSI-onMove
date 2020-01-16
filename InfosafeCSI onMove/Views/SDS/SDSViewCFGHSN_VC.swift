@@ -872,7 +872,9 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         self.dgBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         self.faBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         
-        self.viewSDSBTn.backgroundColor = UIColor.darkGray
+        if(viewSDSBTn.backgroundColor != .clear) {
+            self.viewSDSBTn.backgroundColor = UIColor.darkGray
+        }
         self.preVBtn.backgroundColor = UIColor.orange
         self.ghsBtn.backgroundColor = UIColor.darkGray
         self.dgBtn.backgroundColor = UIColor.darkGray
@@ -914,7 +916,9 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         self.dgBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         self.faBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         
-        self.viewSDSBTn.backgroundColor = UIColor.darkGray
+        if(viewSDSBTn.backgroundColor != .clear) {
+            self.viewSDSBTn.backgroundColor = UIColor.darkGray
+        }
         self.preVBtn.backgroundColor = UIColor.darkGray
         self.ghsBtn.backgroundColor = UIColor.orange
         self.dgBtn.backgroundColor = UIColor.darkGray
@@ -928,7 +932,9 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         self.dgBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         self.faBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         
-        self.viewSDSBTn.backgroundColor = UIColor.darkGray
+        if(viewSDSBTn.backgroundColor != .clear) {
+            self.viewSDSBTn.backgroundColor = UIColor.darkGray
+        }
         self.preVBtn.backgroundColor = UIColor.darkGray
         self.ghsBtn.backgroundColor = UIColor.darkGray
         self.dgBtn.backgroundColor = UIColor.orange
@@ -942,7 +948,10 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         self.dgBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         self.faBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         
-        self.viewSDSBTn.backgroundColor = UIColor.darkGray
+        if(viewSDSBTn.backgroundColor != .clear) {
+            self.viewSDSBTn.backgroundColor = UIColor.darkGray
+        }
+        
         self.preVBtn.backgroundColor = UIColor.darkGray
         self.ghsBtn.backgroundColor = UIColor.darkGray
         self.dgBtn.backgroundColor = UIColor.darkGray
@@ -975,8 +984,11 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     
     func preloadSDS() {
 //        self.progressBarSDS.isHidden = false
+        self.viewSDSBTn.backgroundColor = .clear
+//        self.progressBarSDS.tintColor = .darkGray
+        
         progressBarSDS.progress = 0.0
-          self.progressBarTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(SDSViewCFGHSN_VC.updateProgressView), userInfo: nil, repeats: true)
+        self.progressBarTimer = Timer.scheduledTimer(timeInterval: 0.8, target: self, selector: #selector(SDSViewCFGHSN_VC.updateProgressView), userInfo: nil, repeats: true)
         
 //        viewSDSBTn.isHidden = true
         viewSDSBTn.setTitleColor(.black, for: .normal)
@@ -1002,6 +1014,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
 //                    self.viewSDSBTn.isHidden = false
                     self.isStop = true
 //                    self.progressBarSDS.isHidden = true
+                    self.viewSDSBTn.backgroundColor = .darkGray
                 }
                 else if rtype == "2" {
 //                    self.sdsDisplay!.loadHTMLString(String(describing: completionReturnData), baseURL: nil)
@@ -1305,13 +1318,13 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
 //        }
         
         if (isStop == false) {
-            if (progressBarSDS.progress <= 0.8) {
-                progressBarSDS.progress += 0.1
+            if (progressBarSDS.progress <= 0.85) {
+                progressBarSDS.progress += 0.12
                 progressBarSDS.setProgress(progressBarSDS.progress, animated: true)
             }
         }
         if (isStop == true) {
-            progressBarSDS.progress = 1.0
+            progressBarSDS.progress = 1.00
             progressBarTimer.invalidate()
         }
     }
