@@ -44,16 +44,24 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
             if (imageStr != "" || imageStr?.isEmpty == false) {
                 let image = imageStr!.toImage()
                 loginLogo.image = image
-            } else {
-                let image = UIImage(named: "CSI-Logo1")
-                loginLogo.image = image
             }
+//            else {
+//                let image = UIImage(named: "CSI-Logo1")
+//                loginLogo.image = image
+//            }
 
         } else if (defaults.bool(forKey: "remeberstatus") == false) {
             userIDTextField.text = ""
             passwordTextField.text = ""
-            let logo = UIImage(named: "CSI-Logo1")
-            loginLogo.image = logo
+//            let logo = UIImage(named: "CSI-Logo1")
+//            loginLogo.image = logo
+            print(defaults.string(forKey: localclientcoreData.image) as Any)
+            let imageStr: String? = defaults.string(forKey: localclientcoreData.image)
+            if (imageStr != "" && imageStr != nil && imageStr?.isEmpty == false) {
+                let image = imageStr!.toImage()
+                loginLogo.image = image
+            }
+            
             let image = UIImage(named: "login-unticked-box")
             remember.setImage(image, for: .normal)
         }
@@ -126,7 +134,7 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
             let defaults = UserDefaults.standard
             defaults.set("", forKey: localclientcoreData.username)
             defaults.set("", forKey: localclientcoreData.password)
-            defaults.set("", forKey: localclientcoreData.image)
+//            defaults.set("", forKey: localclientcoreData.image)
             let image = UIImage(named: "login-unticked-box")
             self.remember.setImage(image, for: .normal)
             defaults.set(false, forKey: "remeberstatus")
@@ -169,7 +177,7 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
                 let defaults = UserDefaults.standard
                 defaults.set("", forKey: localclientcoreData.username)
                 defaults.set("", forKey: localclientcoreData.password)
-                defaults.set("", forKey: localclientcoreData.image)
+//                defaults.set("", forKey: localclientcoreData.image)
                 let image = UIImage(named: "login-unticked-box")
                 remember.setImage(image, for: .normal)
                 defaults.set(false, forKey: "remeberstatus")
@@ -230,7 +238,7 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
                         let defaults = UserDefaults.standard
                         defaults.set("", forKey: localclientcoreData.username)
                         defaults.set("", forKey: localclientcoreData.password)
-                        defaults.set("", forKey: localclientcoreData.image)
+//                        defaults.set("", forKey: localclientcoreData.image)
                         let image = UIImage(named: "login-unticked-box")
                         self.remember.setImage(image, for: .normal)
                         defaults.set(false, forKey: "remeberstatus")
@@ -242,7 +250,7 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
                         let defaults = UserDefaults.standard
                         defaults.set("", forKey: localclientcoreData.username)
                         defaults.set("", forKey: localclientcoreData.password)
-                        defaults.set("", forKey: localclientcoreData.image)
+//                        defaults.set("", forKey: localclientcoreData.image)
                         let image = UIImage(named: "login-unticked-box")
                         self.remember.setImage(image, for: .normal)
                         defaults.set(false, forKey: "remeberstatus")

@@ -60,6 +60,7 @@ class SearchPage_VC: UIViewController {
         self.logoffBtn.layer.cornerRadius = 5
         self.searchBtn.layer.cornerRadius = 5
         self.cPickView.layer.cornerRadius = 10
+        self.multiBtn.layer.cornerRadius = 5
     
         //enable the delegate
         self.cPickView.delegate = self
@@ -232,6 +233,10 @@ class SearchPage_VC: UIViewController {
     
     func searchData() {
 //        print("search Data called")
+        searchbar.text = searchbar.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        supplierSearchbar.text = supplierSearchbar.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        pCodeSearchbar.text = pCodeSearchbar.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        
         if searchbar.text!.isEmpty && supplierSearchbar.text!.isEmpty && pCodeSearchbar.text!.isEmpty {
             self.removeSpinner()
             searchbar.text = ""

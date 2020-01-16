@@ -154,7 +154,7 @@ struct localsearchinfo {
     static var oamount: String!
     static var pagenoamount: String!
     
-    static var totalamount: String!
+    static var totalamount: Int!
     
     
     static var psize: Int!

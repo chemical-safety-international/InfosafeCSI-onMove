@@ -742,14 +742,18 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
 
         if (maximumOffset - currentOffset <= -70.0) {
-
+            print(localsearchinfo.totalamount!)
             if (localsearchinfo.cpage < localsearchinfo.totalPage) {
                 loadmoreLbl.isHidden = false
                 loadmoreLbl.text = "Drop to load more..."
-            } else if (localsearchinfo.cpage >= localsearchinfo.totalPage) {
+            } else if (localsearchinfo.cpage >= localsearchinfo.totalPage && localsearchinfo.totalamount < 250) {
                 loadmoreLbl.isHidden = false
                 loadmoreLbl.text = "All data has been loaded."
+            } else if ( localsearchinfo.totalamount > 249) {
+                loadmoreLbl.isHidden = false
+                loadmoreLbl.text = "Only 250 results have been displayed.\n Please refine your search criteria for more accurate results."
             }
+            
         } else {
             loadmoreLbl.isHidden = true
         }

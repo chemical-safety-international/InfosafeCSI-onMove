@@ -143,7 +143,8 @@ class csiWCF_VM: UIViewController {
                 localsearchinfo.oamount = ("Other: \(self.localresult.ocount ?? 0)")
                 localsearchinfo.pagenoamount = ("\(self.localresult.pageno ?? 0) / \(self.localresult.pagecount ?? 0)")
                 localsearchinfo.totalPage = self.localresult.pagecount
-                
+                self.localresult.totalcount = self.localresult.pcount + self.localresult.lcount + self.localresult.ocount
+                localsearchinfo.totalamount = self.localresult.totalcount
 
 
                 
