@@ -55,7 +55,7 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
             passwordTextField.text = ""
 //            let logo = UIImage(named: "CSI-Logo1")
 //            loginLogo.image = logo
-            print(defaults.string(forKey: localclientcoreData.image) as Any)
+            //print(defaults.string(forKey: localclientcoreData.image) as Any)
             let imageStr: String? = defaults.string(forKey: localclientcoreData.image)
             if (imageStr != "" && imageStr != nil && imageStr?.isEmpty == false) {
                 let image = imageStr!.toImage()
