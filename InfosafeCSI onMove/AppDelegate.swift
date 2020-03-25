@@ -19,6 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 //    var restrictRotation: UIInterfaceOrientationMask = .portrait
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        
+        //run the notification
+        self.setupPushNotification(application: application)
+        
+        //limited the rotation
         if(enableAllOrientation == true) {
             return UIInterfaceOrientationMask.allButUpsideDown
         }
@@ -26,8 +31,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        return self.restrictRotation
     }
     
+    //set up the push notification
+    func setupPushNotification(application: UIApplication) -> () {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound,.badge]) { (granted,error) in
+            if(granted) {
+                DispatchQueue.main.async {
+                    application.registerForRemoteNotifications()
+                }
+            } else {
+                print("User Notification permission deied: \(error?.localizedDescription ?? "error")")
+            }
+        }
+    }
     
+    //set up notification feedback
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("Successful registration, Token is: \(tokenString(deviceToken))")
+    }
     
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("failed to register for remote notification: \(error.localizedDescription)")
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        print(userInfo)
+    }
+    
+    //create a token string
+    func tokenString(_ deviceToken: Data) -> String {
+        let bytes = [UInt8](deviceToken)
+        var token = ""
+        for byte in bytes {
+            token += String(format: "%02x", byte)
+        }
+        return token
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
