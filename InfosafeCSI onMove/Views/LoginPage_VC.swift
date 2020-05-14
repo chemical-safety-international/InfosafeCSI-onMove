@@ -202,7 +202,9 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
 
         
         self.showSpinner(onView: self.view)
-        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
+        
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+        
         csiWCF_VM().callLogin(email: email, password: password, session: session) { (completion) in
             
             //here dataResponse received from a network request
@@ -220,7 +222,6 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
                 localclientinfo.apptype = model.apptype
                 localclientinfo.error = model.error
 
-                
                 DispatchQueue.main.async {
                     if model.passed == true {
                         self.removeSpinner()
@@ -258,7 +259,7 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
                     }
                 }
             } catch let parsingError {
-                //print("Error", parsingError)
+                print("Error", parsingError)
             }
         }
     }
@@ -287,4 +288,12 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
 //    }
 }
 
+extension LoginPage_VC : URLSessionDelegate {
+    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+       //Trust the certificate even if not valid
+       let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+
+       completionHandler(.useCredential, urlCredential)
+    }
+}
 

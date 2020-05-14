@@ -120,8 +120,10 @@ class Update_VC: UIViewController {
         progressView.progress = 0.0
           self.progressBarTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(Update_VC.updateProgressView), userInfo: nil, repeats: true)
         
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+        
         let rtype : String = "1"
-        csiWCF_VM().callSDS(sdsno: "MTF9H", rtype : rtype) { (completionReturnData) in
+        csiWCF_VM().callSDS(sdsno: "MTF9H", rtype : rtype, session: session) { (completionReturnData) in
             DispatchQueue.main.async {
 
                 if rtype == "1" {
@@ -193,4 +195,14 @@ class Update_VC: UIViewController {
         print("Device system version: \(UIDevice.current.systemVersion)\n")
     }
     
+}
+
+
+extension Update_VC : URLSessionDelegate {
+    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+       //Trust the certificate even if not valid
+       let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+
+       completionHandler(.useCredential, urlCredential)
+    }
 }

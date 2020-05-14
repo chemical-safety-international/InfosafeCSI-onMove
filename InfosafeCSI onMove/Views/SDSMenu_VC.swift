@@ -101,8 +101,9 @@ class SDSMenu_VC: UIViewController {
 
         if buttonName[index] == "Classification" {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
-            
-            csiWCF_VM().callSDS_GHS(sdsno: localcurrentSDS.sdsNo) { (output) in
+
+            let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+            csiWCF_VM().callSDS_GHS(sdsno: localcurrentSDS.sdsNo, session: session) { (output) in
                 if output.contains("true") {
                     DispatchQueue.main.async {
                         
@@ -195,4 +196,13 @@ extension SDSMenu_VC : UITableViewDelegate, UITableViewDataSource {
         menuTable.isScrollEnabled = true
     }
     
+}
+
+extension SDSMenu_VC : URLSessionDelegate {
+    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+       //Trust the certificate even if not valid
+       let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+
+       completionHandler(.useCredential, urlCredential)
+    }
 }

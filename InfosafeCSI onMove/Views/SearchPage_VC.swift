@@ -291,7 +291,9 @@ class SearchPage_VC: UIViewController {
             localsearchinfo.results = []
             localsearchinfo.cpage = 1
             
-            csiWCF_VM().callSearch(pnameInputData: searchInPut, supInputData: supplierSearchInput, pcodeInputData: pCodeSeatchInput) { (completionReturnData) in
+            let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+            
+            csiWCF_VM().callSearch(pnameInputData: searchInPut, supInputData: supplierSearchInput, pcodeInputData: pCodeSeatchInput, session: session) { (completionReturnData) in
                 if completionReturnData == true {
                     DispatchQueue.main.async {
                         self.removeSpinner()
@@ -319,7 +321,8 @@ class SearchPage_VC: UIViewController {
     
     
     func callCriteria() {
-        csiWCF_VM().callCriteriaList() { (completionReturnData) in
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+        csiWCF_VM().callCriteriaList(session: session) { (completionReturnData) in
             DispatchQueue.main.async {
                 if completionReturnData.contains("true") {
                     self.cPickView.text = localcriteriainfo.arrName[0]
@@ -661,4 +664,11 @@ extension SearchPage_VC: UICollectionViewDelegate, UICollectionViewDataSource {
     
 }
 
+extension SearchPage_VC : URLSessionDelegate {
+    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+       //Trust the certificate even if not valid
+       let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
 
+       completionHandler(.useCredential, urlCredential)
+    }
+}

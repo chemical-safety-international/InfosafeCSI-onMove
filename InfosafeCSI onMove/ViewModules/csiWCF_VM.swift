@@ -28,7 +28,7 @@ class csiWCF_VM: UIViewController {
         }
     }
     
-    func callSearch(pnameInputData:String, supInputData: String, pcodeInputData: String, completion:@escaping(Bool) -> Void) {
+    func callSearch(pnameInputData:String, supInputData: String, pcodeInputData: String, session: URLSession, completion:@escaping(Bool) -> Void) {
 //        CoreDataManager.cleanSearchCoreData()
 //        print("callsearch called successfully")
         localsearchinfo.details = ""
@@ -53,7 +53,7 @@ class csiWCF_VM: UIViewController {
         let psize = localsearchinfo.psize
         
         //call search function
-        csiWCF_GetSDSSearchResultsPage(pnameInputData: pnameInputData, supInputData: supInputData, pcodeInputData: pcodeInputData, client: client!, uid: uid!, c: c!, p: p!, psize:psize!, apptp:apptp!) { (completionReturnData) in
+        csiWCF_GetSDSSearchResultsPage_https(pnameInputData: pnameInputData, supInputData: supInputData, pcodeInputData: pcodeInputData, client: client!, uid: uid!, c: c!, p: p!, psize:psize!, apptp:apptp!, session: session) { (completionReturnData) in
 
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
@@ -164,10 +164,10 @@ class csiWCF_VM: UIViewController {
         }
     }
     
-    func callCriteriaList(completion:@escaping(String) -> Void) {
+    func callCriteriaList(session: URLSession, completion:@escaping(String) -> Void) {
         
         //call the search criteria list function in the WCF
-        csiWCF_GetSearchCriteriaList(clientid: localclientinfo.clientid, infosafeid: localclientinfo.infosafeid) { (returnCompletionData) in
+        csiWCF_GetSearchCriteriaList(clientid: localclientinfo.clientid, infosafeid: localclientinfo.infosafeid, session: session) { (returnCompletionData) in
             if returnCompletionData.contains("true") {
                 completion("true")
             } else if returnCompletionData.contains("false") {
@@ -180,11 +180,11 @@ class csiWCF_VM: UIViewController {
         
     }
     
-    func callSDS(sdsno: String, rtype : String, completion:@escaping(String) -> Void ) {
+    func callSDS(sdsno: String, rtype : String, session: URLSession, completion:@escaping(String) -> Void ) {
 
 
         if rtype == "1" {
-            csiWCF_getSDS(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: sdsno, apptp: "1", rtype: rtype) { (output) in
+            csiWCF_getSDS_https(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: sdsno, apptp: "1", rtype: rtype, session: session) { (output) in
                 if output.pdfString != nil {
                     completion(output.pdfString)
                 }
@@ -197,7 +197,7 @@ class csiWCF_VM: UIViewController {
             }
         }
         else if rtype == "2" {
-            csiWCF_getSDS(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: sdsno, apptp: "1", rtype: rtype) { (output) in
+            csiWCF_getSDS_https(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: sdsno, apptp: "1", rtype: rtype, session: session) { (output) in
                 
                 let strForWeb = """
                     <html>
@@ -217,9 +217,10 @@ class csiWCF_VM: UIViewController {
         }
     }
     
-    func callSDS_Core(completion:@escaping(String) -> Void) {
+    func callSDS_Core(session: URLSession, completion:@escaping(String) -> Void) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
-        csiWCF_getCoreInfo(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1") { (output) in
+        
+        csiWCF_getCoreInfo_https(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: localcurrentSDS.sdsNo, apptp: "1", rtype: "1", session: session) { (output) in
             if output.sds != nil {
                 
                 // change string to date format
@@ -255,10 +256,10 @@ class csiWCF_VM: UIViewController {
         }
     }
     
-    func callSDS_GHS(sdsno: String, completion:@escaping(String) -> Void) {        
+    func callSDS_GHS(sdsno: String, session: URLSession, completion:@escaping(String) -> Void) {
         DispatchQueue.main.async {
 
-            csiWCF_getClassification(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: sdsno, apptp: "1", rtype: "1") { (output) in
+            csiWCF_getClassification_https(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: sdsno, apptp: "1", rtype: "1", session:  session) { (output) in
                 
                 if output.sds != nil {
                     localViewSDSGHS.formatcode = output.formatcode
@@ -311,11 +312,11 @@ class csiWCF_VM: UIViewController {
     }
     
     
-    func callSDS_FA(sdsno: String, completion:@escaping(String) -> Void) {
+    func callSDS_FA(sdsno: String, session: URLSession, completion:@escaping(String) -> Void) {
         
 
 //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
-        csiWCF_getFirstAid(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet:  sdsno, apptp: "1", rtype: "1") { (output) in
+        csiWCF_getFirstAid_https(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet:  sdsno, apptp: "1", rtype: "1", session: session) { (output) in
             if output.sds != nil {
                 
                 
@@ -336,11 +337,11 @@ class csiWCF_VM: UIViewController {
         }
     }
     
-    func callSDS_Trans(sdsno: String, completion:@escaping(String) -> Void) {
+    func callSDS_Trans(sdsno: String, session: URLSession, completion:@escaping(String) -> Void) {
         
 //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
 
-        csiWCF_getTransport(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: sdsno, apptp: "1", rtype: "1") { (output) in
+        csiWCF_getTransport_https(clientid: localclientinfo.clientid, uid: localclientinfo.infosafeid, sdsNoGet: sdsno, apptp: "1", rtype: "1", session: session) { (output) in
             if output.sds != nil {
                 
 //                print(output)

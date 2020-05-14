@@ -48,8 +48,8 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 
                 return }
         
-        let str = String.init(data: dataResponse, encoding: .utf8)
-        print(str as Any)
+//        let str = String.init(data: dataResponse, encoding: .utf8)
+//        print(str as Any)
         completion(dataResponse)
     }
     task.resume()
@@ -75,7 +75,7 @@ func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, d
 
     //insert json string to the request
     request.httpBody = jsonData
-    print(request)
+//    print(request)
 
     let task = session.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
@@ -89,21 +89,13 @@ func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, d
 
                 return }
         
-        let str = String.init(data: dataResponse, encoding: .utf8)
-        print("E: " + str! as Any)
+//        let str = String.init(data: dataResponse, encoding: .utf8)
+//        print("E: " + str! as Any)
         completion(dataResponse)
     }
     task.resume()
 }
 
-extension LoginPage_VC : URLSessionDelegate {
-    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-       //Trust the certificate even if not valid
-       let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
-
-       completionHandler(.useCredential, urlCredential)
-    }
-}
 
 //Call the WCF function: 'GetSDSSearchResultsPageEx' with input data
 func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String, pcodeInputData: String,  client: String, uid: String, c:String, p : Int, psize : Int, apptp: Int, completion:@escaping(Data) -> Void) -> (Void) {
@@ -256,8 +248,159 @@ func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String,
     
 }
 
+//https for getsdsSearchResults
+func csiWCF_GetSDSSearchResultsPage_https(pnameInputData:String, supInputData: String, pcodeInputData: String,  client: String, uid: String, c:String, p : Int, psize : Int, apptp: Int, session: URLSession, completion:@escaping(Data) -> Void) -> (Void) {
+ 
+    //create json data
+    var advanced: String = "0"
+    var type: String = "2"
+    var singleValue: String = ""
+    var advanArray: [Any] = []
+    
+    let pnameStr = pnameInputData.trimmingCharacters(in: .whitespacesAndNewlines)
+    let supStr = supInputData.trimmingCharacters(in: .whitespacesAndNewlines)
+    let pcodeStr = pcodeInputData.trimmingCharacters(in: .whitespacesAndNewlines)
+    
+    
+//    if (pnameStr.isEmpty == false && supStr.isEmpty == true && pcodeStr.isEmpty == true) {
+//        advanced = "0"
+//        type = "2"
+//        singleValue = pnameStr
+//    } else if (pnameStr.isEmpty == true && supStr.isEmpty == false && pcodeStr.isEmpty == true) {
+//        advanced = "0"
+//        type = "4"
+//        singleValue = supStr
+//
+//    } else if (pnameStr.isEmpty == true && supStr.isEmpty == true && pcodeStr.isEmpty == false) {
+//        advanced = "0"
+//        type = "8"
+//        singleValue = pcodeStr
+//    } else {
+//        advanced = "1"
+//    }
+//
+//    if (pnameStr.isEmpty == false || supStr.isEmpty == false || pcodeStr.isEmpty == false && localcriteriainfo.type1.isEmpty == false) {
+//        advanced = "1"
+//    }
+    
+
+
+
+    
+//    var add1: [String: Any]!
+//    if localcriteriainfo.type1.isEmpty == false {
+//
+//    } else {
+//        add1 = ["type": "", "isgroup": "0", "groups": [], "values": []]
+//    }
+//
+//    var add2: [String: Any]!
+//    if localcriteriainfo.type2.isEmpty == false {
+//
+//    } else {
+//        add2 = ["type": "", "isgroup": "0", "groups": [], "values": []]
+//    }
+//
+//    var add3: [String: Any]!
+//    if localcriteriainfo.type3.isEmpty == false {
+//
+//    } else {
+//        add3 = ["type": "", "isgroup": "0", "groups": [], "values": []]
+//    }
+
+    //add value to the array
+    if(pnameStr.isEmpty == false) {
+        type = "2"
+        singleValue = "0" + pnameStr
+        let pName: [String: Any] = ["type": "2", "isgroup": "0", "groups": [], "values": [singleValue]]
+        advanArray.append(pName)
+    }
+    
+    if(supStr.isEmpty == false) {
+        type = "4"
+        singleValue = "0" + supStr
+        let sup: [String: Any] = ["type": "4", "isgroup": "0", "groups": [], "values": [singleValue]]
+        advanArray.append(sup)
+    }
+    
+    if(pcodeStr.isEmpty == false) {
+        type = "8"
+        singleValue = "0" + pcodeStr
+        let pcode: [String: Any] = ["type": "8", "isgroup": "0", "groups": [], "values": [singleValue]]
+        advanArray.append(pcode)
+    }
+    
+    
+    //set for more criterias' values added into the array
+    if(localcriteriainfo.type1.isEmpty == false) {
+        let add1: [String: Any] = ["type": localcriteriainfo.type1!, "isgroup": "0", "groups": [], "values": [localcriteriainfo.value1]]
+        advanArray.append(add1)
+    }
+    
+    if(localcriteriainfo.type2.isEmpty == false) {
+        let add2: [String: Any] = ["type": localcriteriainfo.type2!, "isgroup": "0", "groups": [], "values": [localcriteriainfo.value2]]
+        advanArray.append(add2)
+    }
+    
+    if(localcriteriainfo.type3.isEmpty == false) {
+        let add3: [String: Any] = ["type": localcriteriainfo.type3!, "isgroup": "0", "groups": [], "values": [localcriteriainfo.value3]]
+        advanArray.append(add3)
+    }
+    
+    //if array count is more than one  will use multi-search (current all use)
+    if (advanArray.count > 1) {
+        advanced = "1"
+    } else {
+        advanced = ""
+        singleValue.remove(at: singleValue.startIndex)
+    }
+
+    //create json string
+    let json: [String: Any] = ["client":client, "uid":uid, "apptp":apptp, "c":type, "v":singleValue, "p":p, "psize":psize, "advanced": advanced, "advancedsitetype": "3", "advanceditems": advanArray]
+    
+    let jsonData = try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)
+    
+    //setup url
+    let url = URL(string: csiWCF_URLHeader + "GetSDSSearchResultsPage")!
+    
+    //setup request
+    var request = URLRequest(url: url)
+    request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+    request.httpMethod = "POST"
+    
+    request.httpBody = jsonData
+    
+    
+//    print(localcriteriainfo.arrName)
+//    print(localcriteriainfo.arrCode)
+//    print(advanArray)
+//    print(json)
+    
+    //create task
+    let task = session.dataTask(with: request) { (data, response, error) in
+        guard let dataResponse = data,
+            error == nil else {
+                print(error?.localizedDescription ?? "Response Error")
+                
+                DispatchQueue.main.async {
+                    //send the notification to searchPage_VC
+                    NotificationCenter.default.post(name: Notification.Name("errorSearch"), object: nil)
+                }
+
+                return }
+        
+//        let str = String.init(data: dataResponse, encoding: .utf8)
+//        print(str as Any)
+        completion(dataResponse)
+    }
+
+    //start task
+    task.resume()
+    
+}
+
 //Call the WCF function: 'GetSearchCriteriaList'
-func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, completion:@escaping(String) -> Void) -> (Void) {
+func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, session: URLSession, completion:@escaping(String) -> Void) -> (Void) {
     
     let client = clientid
     let uid = infosafeid
@@ -280,7 +423,7 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, completion
     
     //create task
 
-    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+    let task = session.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
                 print(error?.localizedDescription ?? "Response Error")
@@ -360,6 +503,48 @@ func csiWCF_getSDS(clientid: String, uid: String, sdsNoGet: String, apptp : Stri
     task.resume()
 }
 
+//https for getSDS
+func csiWCF_getSDS_https(clientid: String, uid: String, sdsNoGet: String, apptp : String, rtype: String, session: URLSession, completion:@escaping(outViewSDSData) -> Void) -> (Void) {
+
+    let json: [String: Any] = ["client":clientid, "apptp": apptp, "uid":uid, "sds": sdsNoGet, "rtype" : rtype, "regetFormat":"1", "f":"", "subf":""]
+    let jsonData = try? JSONSerialization.data(withJSONObject: json)
+//    print(json)
+    let url = URL(string: csiWCF_URLHeader + "ViewSDS")!
+    
+    var request = URLRequest(url:url)
+    request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+    request.httpMethod = "POST"
+    
+    request.httpBody = jsonData
+    
+    let task = session.dataTask(with: request) { (data, response, error) in
+        guard let dataResponse = data,
+            error == nil else {
+                print(error?.localizedDescription ?? "Response Error")
+                DispatchQueue.main.async {
+                    //send the notification to searchPage_VC
+                    NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
+                }
+                return }
+
+        do {
+            let decoder = JSONDecoder()
+            let model = try decoder.decode(outViewSDSData.self, from: dataResponse)
+            
+//            let str = String.init(data: dataResponse, encoding: .utf8)
+//            print(str as Any)
+            
+            completion(model)
+
+        } catch let parsingError {
+            print("Error", parsingError)
+        }
+        
+        
+    }
+    task.resume()
+}
+
 func csiWCF_getCoreInfo(clientid: String, uid: String, sdsNoGet: String, apptp : String, rtype: String, completion:@escaping(outViewSDSCore) -> Void) -> (Void) {
 
     let json: [String: Any] = ["client":clientid, "apptp": apptp, "uid":uid, "sds": sdsNoGet, "rtype" : rtype, "regetFormat":"1", "f":"", "subf":""]
@@ -400,6 +585,48 @@ func csiWCF_getCoreInfo(clientid: String, uid: String, sdsNoGet: String, apptp :
     task.resume()
 }
 
+//https for core info
+func csiWCF_getCoreInfo_https(clientid: String, uid: String, sdsNoGet: String, apptp : String, rtype: String, session: URLSession, completion:@escaping(outViewSDSCore) -> Void) -> (Void) {
+
+    let json: [String: Any] = ["client":clientid, "apptp": apptp, "uid":uid, "sds": sdsNoGet, "rtype" : rtype, "regetFormat":"1", "f":"", "subf":""]
+    let jsonData = try? JSONSerialization.data(withJSONObject: json)
+
+
+    let url = URL(string: csiWCF_URLHeader + "ViewSDS_Core")!
+    
+    var request = URLRequest(url:url)
+    request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+    request.httpMethod = "POST"
+    
+    request.httpBody = jsonData
+    
+    let task = session.dataTask(with: request) { (data, response, error) in
+        guard let dataResponse = data,
+            error == nil else {
+                print(error?.localizedDescription ?? "Response Error")
+//                DispatchQueue.main.async {
+//                    //send the notification to searchPage_VC
+//                    NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
+//                }
+                return }
+
+        do {
+//            let str = String.init(data: dataResponse, encoding: .utf8)
+            let decoder = JSONDecoder()
+            let cModel = try decoder.decode(outViewSDSCore.self, from: dataResponse)
+
+            completion(cModel)
+
+        } catch let parsingError {
+            print("Error", parsingError)
+        }
+        
+        
+    }
+    task.resume()
+}
+
+
 func csiWCF_getClassification(clientid: String, uid: String, sdsNoGet: String, apptp : String, rtype: String, completion:@escaping(outViewSDSGHS) -> Void) -> (Void) {
 
     let json: [String: Any] = ["client":clientid, "apptp": apptp, "uid":uid, "sds": sdsNoGet, "rtype" : rtype, "regetFormat":"1", "f":"", "subf":""]
@@ -414,6 +641,50 @@ func csiWCF_getClassification(clientid: String, uid: String, sdsNoGet: String, a
     request.httpBody = jsonData
     
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        guard let dataResponse = data,
+            error == nil else {
+                print(error?.localizedDescription ?? "Response Error")
+//                DispatchQueue.main.async {
+//                    //send the notification to searchPage_VC
+//                    NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
+//                }
+                return }
+
+        do {
+
+            let decoder = JSONDecoder()
+            let cModel = try decoder.decode(outViewSDSGHS.self, from: dataResponse)
+            
+//            let str = String.init(data: dataResponse, encoding: .utf8)
+//            print(str as Any)
+            
+            completion(cModel)
+
+        } catch let parsingError {
+            print("Error", parsingError)
+        }
+        
+        
+    }
+    task.resume()
+}
+
+
+//https for getclassification
+func csiWCF_getClassification_https(clientid: String, uid: String, sdsNoGet: String, apptp : String, rtype: String, session: URLSession, completion:@escaping(outViewSDSGHS) -> Void) -> (Void) {
+
+    let json: [String: Any] = ["client":clientid, "apptp": apptp, "uid":uid, "sds": sdsNoGet, "rtype" : rtype, "regetFormat":"1", "f":"", "subf":""]
+    let jsonData = try? JSONSerialization.data(withJSONObject: json)
+
+    let url = URL(string: csiWCF_URLHeader + "ViewSDS_Classification")!
+    
+    var request = URLRequest(url:url)
+    request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+    request.httpMethod = "POST"
+    
+    request.httpBody = jsonData
+    
+    let task = session.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
                 print(error?.localizedDescription ?? "Response Error")
@@ -481,6 +752,45 @@ func csiWCF_getFirstAid(clientid: String, uid: String, sdsNoGet: String, apptp :
     task.resume()
 }
 
+//https for getFirstAid
+func csiWCF_getFirstAid_https(clientid: String, uid: String, sdsNoGet: String, apptp : String, rtype: String, session: URLSession, completion:@escaping(outViewSDSFA) -> Void) -> (Void) {
+
+    let json: [String: Any] = ["client":clientid, "apptp": apptp, "uid":uid, "sds": sdsNoGet, "rtype" : rtype, "regetFormat":"1", "f":"", "subf":""]
+    let jsonData = try? JSONSerialization.data(withJSONObject: json)
+
+    let url = URL(string: csiWCF_URLHeader + "ViewSDS_FirstAid")!
+    
+    var request = URLRequest(url:url)
+    request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+    request.httpMethod = "POST"
+    
+    request.httpBody = jsonData
+    
+    let task = session.dataTask(with: request) { (data, response, error) in
+        guard let dataResponse = data,
+            error == nil else {
+                print(error?.localizedDescription ?? "Response Error")
+//                DispatchQueue.main.async {
+//                    //send the notification to searchPage_VC
+//                    NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
+//                }
+                return }
+
+        do {
+//            let str = String.init(data: dataResponse, encoding: .utf8)
+            let decoder = JSONDecoder()
+            let cModel = try decoder.decode(outViewSDSFA.self, from: dataResponse)
+//            print(str as Any)
+            completion(cModel)
+
+        } catch let parsingError {
+            print("Error", parsingError)
+        }
+        
+        
+    }
+    task.resume()
+}
 
 func csiWCF_getTransport(clientid: String, uid: String, sdsNoGet: String, apptp : String, rtype: String, completion:@escaping(outViewSDSTI) -> Void) -> (Void) {
 
@@ -496,6 +806,50 @@ func csiWCF_getTransport(clientid: String, uid: String, sdsNoGet: String, apptp 
     request.httpBody = jsonData
     
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        guard let dataResponse = data,
+            error == nil else {
+                print(error?.localizedDescription ?? "Response Error")
+//                DispatchQueue.main.async {
+//                    //send the notification to searchPage_VC
+//                    NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
+//                }
+                return }
+
+        do {
+
+            let decoder = JSONDecoder()
+            let cModel = try decoder.decode(outViewSDSTI.self, from: dataResponse)
+            
+//            let str = String.init(data: dataResponse, encoding: .utf8)
+//            print(str as Any)
+            
+            completion(cModel)
+
+        } catch let parsingError {
+            print("Error", parsingError)
+        }
+        
+        
+    }
+    task.resume()
+}
+
+
+//https for getTransport
+func csiWCF_getTransport_https(clientid: String, uid: String, sdsNoGet: String, apptp : String, rtype: String, session: URLSession, completion:@escaping(outViewSDSTI) -> Void) -> (Void) {
+
+    let json: [String: Any] = ["client":clientid, "apptp": apptp, "uid":uid, "sds": sdsNoGet, "rtype" : rtype, "regetFormat":"1", "f":"", "subf":""]
+    let jsonData = try? JSONSerialization.data(withJSONObject: json)
+
+    let url = URL(string: csiWCF_URLHeader + "ViewSDS_Transport")!
+    
+    var request = URLRequest(url:url)
+    request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+    request.httpMethod = "POST"
+    
+    request.httpBody = jsonData
+    
+    let task = session.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
                 print(error?.localizedDescription ?? "Response Error")

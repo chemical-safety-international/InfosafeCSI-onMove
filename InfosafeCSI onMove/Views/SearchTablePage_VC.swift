@@ -597,7 +597,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
         view.sizeToFit()
 
         
-        
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
 
         // controll the animation of side menu (click on the same row - no change)
         if (view.frame.width >= 1024) {
@@ -607,13 +607,13 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
 //            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hideContainer"), object: nil)
 //            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showSDS"), object: nil)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
-            csiWCF_VM().callSDS_FA(sdsno: localcurrentSDS.sdsNo) { (output) in
+            csiWCF_VM().callSDS_FA(sdsno: localcurrentSDS.sdsNo, session: session) { (output) in
                 if output.contains("true") {
                     DispatchQueue.main.async {
-                        csiWCF_VM().callSDS_Trans(sdsno: localcurrentSDS.sdsNo) { (output) in
+                        csiWCF_VM().callSDS_Trans(sdsno: localcurrentSDS.sdsNo, session: session) { (output) in
                             if output.contains("true") {
                                 DispatchQueue.main.async {
-                                    csiWCF_VM().callSDS_GHS(sdsno: localcurrentSDS.sdsNo) { (output) in
+                                    csiWCF_VM().callSDS_GHS(sdsno: localcurrentSDS.sdsNo, session: session) { (output) in
                                         if output.contains("true") {
                                             DispatchQueue.main.async {
 //                                                print("tapped")
@@ -661,13 +661,13 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
 //                menuAppear()
 //            }
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
-            csiWCF_VM().callSDS_FA(sdsno: localcurrentSDS.sdsNo) { (output) in
+            csiWCF_VM().callSDS_FA(sdsno: localcurrentSDS.sdsNo, session: session) { (output) in
                 if output.contains("true") {
                     DispatchQueue.main.async {
-                        csiWCF_VM().callSDS_Trans(sdsno: localcurrentSDS.sdsNo) { (output) in
+                        csiWCF_VM().callSDS_Trans(sdsno: localcurrentSDS.sdsNo, session: session) { (output) in
                             if output.contains("true") {
                                 DispatchQueue.main.async {
-                                    csiWCF_VM().callSDS_GHS(sdsno: localcurrentSDS.sdsNo) { (output) in
+                                    csiWCF_VM().callSDS_GHS(sdsno: localcurrentSDS.sdsNo, session: session) { (output) in
                                         if output.contains("true") {
                                             DispatchQueue.main.async {
 //                                                print("tapped")
@@ -742,7 +742,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
 
         if (maximumOffset - currentOffset <= -70.0) {
-            print(localsearchinfo.totalamount!)
+//            print(localsearchinfo.totalamount!)
             if (localsearchinfo.cpage < localsearchinfo.totalPage) {
                 loadmoreLbl.isHidden = false
                 loadmoreLbl.text = "Drop to load more..."
@@ -776,8 +776,8 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                 self.showSpinner(onView: self.view)
                 localsearchinfo.cpage += 1
                 
-                
-                csiWCF_VM().callSearch(pnameInputData: localcriteriainfo.searchValue, supInputData: localcriteriainfo.supSearchValue, pcodeInputData: localcriteriainfo.pcodeSearchValue ) { (completionReturnData) in
+                let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+                csiWCF_VM().callSearch(pnameInputData: localcriteriainfo.searchValue, supInputData: localcriteriainfo.supSearchValue, pcodeInputData: localcriteriainfo.pcodeSearchValue, session: session ) { (completionReturnData) in
                     if completionReturnData == true {
                         DispatchQueue.main.async {
                             self.removeSpinner()
@@ -827,4 +827,13 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
         
     }
     
+}
+
+extension SearchTablePage_VC : URLSessionDelegate {
+    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+       //Trust the certificate even if not valid
+       let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+
+       completionHandler(.useCredential, urlCredential)
+    }
 }

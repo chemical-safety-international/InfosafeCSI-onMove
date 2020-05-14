@@ -273,13 +273,14 @@ class SplitView_VC: UIViewController {
         localDeafultData.sdsNo = localsearchinfo.results[0].synno
         localcurrentSDS.sdsNo = localDeafultData.sdsNo
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
-        csiWCF_VM().callSDS_FA(sdsno: localDeafultData.sdsNo) { (output) in
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+        csiWCF_VM().callSDS_FA(sdsno: localDeafultData.sdsNo, session: session) { (output) in
             if output.contains("true") {
                 DispatchQueue.main.async {
-                    csiWCF_VM().callSDS_Trans(sdsno: localDeafultData.sdsNo) { (output) in
+                    csiWCF_VM().callSDS_Trans(sdsno: localDeafultData.sdsNo, session: session) { (output) in
                         if output.contains("true") {
                             DispatchQueue.main.async {
-                                csiWCF_VM().callSDS_GHS(sdsno: localDeafultData.sdsNo) { (output) in
+                                csiWCF_VM().callSDS_GHS(sdsno: localDeafultData.sdsNo, session: session) { (output) in
                                     if output.contains("true") {
                                         DispatchQueue.main.async {
 
@@ -357,9 +358,10 @@ class SplitView_VC: UIViewController {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
             }
         } else {
+            let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
             
             let rtype : String = "1"
-            csiWCF_VM().callSDS(sdsno: localcurrentSDS.sdsNo, rtype : rtype) { (completionReturnData) in
+            csiWCF_VM().callSDS(sdsno: localcurrentSDS.sdsNo, rtype : rtype, session: session) { (completionReturnData) in
                 DispatchQueue.main.async {
                     
                     if rtype == "1" {
@@ -436,7 +438,8 @@ class SplitView_VC: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSpin"), object: nil)
         containerView.isHidden = false
 
-        csiWCF_VM().callSDS_GHS(sdsno: localcurrentSDS.sdsNo) { (output) in
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+        csiWCF_VM().callSDS_GHS(sdsno: localcurrentSDS.sdsNo, session: session) { (output) in
             if output.contains("true") {
                 DispatchQueue.main.async {
                     if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
@@ -527,5 +530,23 @@ extension WKWebView {
             #endif
             }
         }
+    }
+}
+
+extension SDSViewPage_VC : URLSessionDelegate {
+    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+       //Trust the certificate even if not valid
+       let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+
+       completionHandler(.useCredential, urlCredential)
+    }
+}
+
+extension SplitView_VC : URLSessionDelegate {
+    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+       //Trust the certificate even if not valid
+       let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+
+       completionHandler(.useCredential, urlCredential)
     }
 }

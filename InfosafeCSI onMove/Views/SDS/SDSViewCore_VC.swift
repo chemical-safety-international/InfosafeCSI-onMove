@@ -83,8 +83,8 @@ class SDSViewCore_VC: UIViewController, UIScrollViewDelegate {
 
     // call the WCF
     func callSDSCore() {
-
-        csiWCF_VM().callSDS_Core() { (output) in
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+        csiWCF_VM().callSDS_Core(session: session) { (output) in
             if output.contains("true") {
 //                print("Successfully called Core info.!")
                 self.getValue()
@@ -239,4 +239,13 @@ class SDSViewCore_VC: UIViewController, UIScrollViewDelegate {
     }
 
 
+}
+
+extension SDSViewCore_VC : URLSessionDelegate {
+    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+       //Trust the certificate even if not valid
+       let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+
+       completionHandler(.useCredential, urlCredential)
+    }
 }

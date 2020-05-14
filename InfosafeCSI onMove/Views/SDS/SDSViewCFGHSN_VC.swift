@@ -993,9 +993,10 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
 //        viewSDSBTn.isHidden = true
         viewSDSBTn.setTitleColor(.black, for: .normal)
         viewSDSBTn.isEnabled = false
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
         
         let rtype : String = "1"
-        csiWCF_VM().callSDS(sdsno: localcurrentSDS.sdsNo, rtype : rtype) { (completionReturnData) in
+        csiWCF_VM().callSDS(sdsno: localcurrentSDS.sdsNo, rtype : rtype, session: session) { (completionReturnData) in
             DispatchQueue.main.async {
 
                 if rtype == "1" {
@@ -1329,4 +1330,14 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         }
     }
     
+}
+
+
+extension SDSViewCFGHSN_VC : URLSessionDelegate {
+    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+       //Trust the certificate even if not valid
+       let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+
+       completionHandler(.useCredential, urlCredential)
+    }
 }
