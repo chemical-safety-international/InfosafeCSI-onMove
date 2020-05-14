@@ -252,6 +252,7 @@
 		577B1A5A228500BE00E5C4AB /* globalVar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalVar.swift; sourceTree = "<group>"; };
 		577B1A5C2285195600E5C4AB /* SearchTablePage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTablePage_VC.swift; sourceTree = "<group>"; };
 		578B9E6D23600F9100AB1475 /* Pictograms.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Pictograms.txt; sourceTree = "<group>"; };
+		578CCC01242AE296003B7F1C /* Chemical Safety - InfosafeCSI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Chemical Safety - InfosafeCSI.entitlements"; sourceTree = "<group>"; };
 		578F6B93234D52FC00CCDFC9 /* SDSViewFA_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSViewFA_VC.swift; sourceTree = "<group>"; };
 		57A4667F234FF36A007B810D /* GHSCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GHSCollectionViewCell.swift; sourceTree = "<group>"; };
 		57A47C45238B91B80097B068 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
@@ -489,6 +490,7 @@
 		17818BB722811A88000EAFF1 /* InfosafeCSI onMove */ = {
 			isa = PBXGroup;
 			children = (
+				578CCC01242AE296003B7F1C /* Chemical Safety - InfosafeCSI.entitlements */,
 				57AAA6FA23508C2700FAD796 /* Images */,
 				57C8B92A22825DBB004966C5 /* ViewModules */,
 				57C8B92922825D98004966C5 /* Views */,
@@ -1293,6 +1295,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "InfosafeCSI onMove/Chemical Safety - InfosafeCSI.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = ZT7UW87A6L;
@@ -1314,6 +1317,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "InfosafeCSI onMove/Chemical Safety - InfosafeCSI.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = ZT7UW87A6L;
