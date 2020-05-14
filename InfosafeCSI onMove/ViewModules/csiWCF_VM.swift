@@ -17,12 +17,12 @@ class csiWCF_VM: UIViewController {
     
     var localresult = localsearchinfo()
     
-    func callLogin(email: String, password: String, completions:@escaping(Data) -> Void) {
+    func callLogin(email: String, password: String, session: URLSession, completions:@escaping(Data) -> Void) {
         
         let deviceid: String = ""
         let devicemac: String = ""
         
-        csiWCF_loginbyEmail(email: email, password: password, deviceid: deviceid, devicemac: devicemac) { (returnCompletionData) in
+        csiWCF_loginbyEmail_https(email: email, password: password, deviceid: deviceid, devicemac: devicemac, session: session) { (returnCompletionData) in
 
             completions(returnCompletionData)
         }

@@ -8,8 +8,9 @@
 
 import Foundation
 
-var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
-//var csiWCF_URLHeader = "http://gold/CSIMD_WCF/CSI_MD_Service.svc/"
+
+//var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
+var csiWCF_URLHeader = "https://gold:4438/CSIMD_WCF/CSI_MD_Service.svc/"
 
 
 // Call the WCF function: 'loginbyEami' with email, password, deviceid, devicemac and return the data from WCF
@@ -34,7 +35,7 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 
     //insert json string to the request
     request.httpBody = jsonData
-//    print(json)
+    print(json)
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
@@ -47,14 +48,62 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 
                 return }
         
-//        let str = String.init(data: dataResponse, encoding: .utf8)
-//        print(str as Any)
+        let str = String.init(data: dataResponse, encoding: .utf8)
+        print(str as Any)
         completion(dataResponse)
     }
     task.resume()
 }
 
+func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, devicemac:String, session: URLSession, completion: @escaping (Data) -> Void) -> (Void)
+{
+    
+    //create a json type string
+    let json: [String: Any] = ["email":email, "password":password, "deviceid":deviceid, "devicemac":devicemac, "phoneno": "", "devicename": locallogininfo.deviceName ?? "", "devicemodel": locallogininfo.model ?? "", "deviceserialno": locallogininfo.UUID ?? "", "deviceSEID": "", "deviceIMEI": "", "deviceMEID": "", "sourceip":""]
+    
+    //serialiazation of json string
+    let jsonData = try? JSONSerialization.data(withJSONObject: json)
+    
+    //*create URL string point to wcf method* should be changed after setting up core data
+    let url = URL(string: csiWCF_URLHeader + "loginbyEmail")!
+    //let url = URL(string: "https://gold:4438/CSIMD_WCF/CSI_MD_Service.svc")!
+    
+    //create request
+    var request = URLRequest(url: url)
+    request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+    request.httpMethod = "POST"
 
+    //insert json string to the request
+    request.httpBody = jsonData
+    print(request)
+
+    let task = session.dataTask(with: request) { (data, response, error) in
+        guard let dataResponse = data,
+            error == nil else {
+                print(error?.localizedDescription ?? "Response Error")
+
+                DispatchQueue.main.async {
+                    //send the notification to searchPage_VC
+                    NotificationCenter.default.post(name: Notification.Name("errorLogin"), object: nil)
+                }
+
+                return }
+        
+        let str = String.init(data: dataResponse, encoding: .utf8)
+        print("E: " + str! as Any)
+        completion(dataResponse)
+    }
+    task.resume()
+}
+
+extension LoginPage_VC : URLSessionDelegate {
+    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+       //Trust the certificate even if not valid
+       let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+
+       completionHandler(.useCredential, urlCredential)
+    }
+}
 
 //Call the WCF function: 'GetSDSSearchResultsPageEx' with input data
 func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String, pcodeInputData: String,  client: String, uid: String, c:String, p : Int, psize : Int, apptp: Int, completion:@escaping(Data) -> Void) -> (Void) {

@@ -202,7 +202,8 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
 
         
         self.showSpinner(onView: self.view)
-        csiWCF_VM().callLogin(email: email, password: password) { (completion) in
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
+        csiWCF_VM().callLogin(email: email, password: password, session: session) { (completion) in
             
             //here dataResponse received from a network request
             do {
@@ -257,7 +258,7 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
                     }
                 }
             } catch let parsingError {
-                print("Error", parsingError)
+                //print("Error", parsingError)
             }
         }
     }
