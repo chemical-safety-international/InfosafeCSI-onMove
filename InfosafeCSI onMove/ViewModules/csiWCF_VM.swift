@@ -28,7 +28,7 @@ class csiWCF_VM: UIViewController {
         }
     }
     
-    func callSearch(pnameInputData:String, supInputData: String, pcodeInputData: String, session: URLSession, completion:@escaping(Bool) -> Void) {
+    func callSearch(pnameInputData:String, supInputData: String, pcodeInputData: String, barcode: String, session: URLSession, completion:@escaping(Bool) -> Void) {
 //        CoreDataManager.cleanSearchCoreData()
 //        print("callsearch called successfully")
         localsearchinfo.details = ""

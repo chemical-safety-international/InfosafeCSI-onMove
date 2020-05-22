@@ -28,7 +28,7 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>To take photo</string>
+	<string>To take photo or Scan barcode</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

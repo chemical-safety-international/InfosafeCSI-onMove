@@ -89,8 +89,9 @@ func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, d
 
                 return }
         
-//        let str = String.init(data: dataResponse, encoding: .utf8)
-//        print("E: " + str! as Any)
+        let str = String.init(data: dataResponse, encoding: .utf8)
+        print(str! as Any)
+        print("finished")
         completion(dataResponse)
     }
     task.resume()

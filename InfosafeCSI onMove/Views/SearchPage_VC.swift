@@ -293,7 +293,7 @@ class SearchPage_VC: UIViewController {
             
             let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
             
-            csiWCF_VM().callSearch(pnameInputData: searchInPut, supInputData: supplierSearchInput, pcodeInputData: pCodeSeatchInput, session: session) { (completionReturnData) in
+            csiWCF_VM().callSearch(pnameInputData: searchInPut, supInputData: supplierSearchInput, pcodeInputData: pCodeSeatchInput, barcode: "", session: session) { (completionReturnData) in
                 if completionReturnData == true {
                     DispatchQueue.main.async {
                         self.removeSpinner()
