@@ -15,15 +15,43 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var previewLayer: AVCaptureVideoPreviewLayer!
     
     var barcodeValue: String!
+    @IBOutlet weak var captureView: UIView!
+    @IBOutlet weak var buttonView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        buttonView.backgroundColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
+        
         startScan()
     }
     
+        func setNavBar() {
+            
+            //change background color
+//            DispatchQueue.main.async {
+                
+                //change background color & back button color
+                self.navigationController?.navigationBar.isTranslucent = false
+                self.view.backgroundColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
+                self.navigationController?.navigationBar.barTintColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
+                self.navigationController?.navigationBar.tintColor = UIColor.white
+                        
+                //change navigation bar text color and font
+                self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25), .foregroundColor: UIColor.white]
+                self.navigationItem.title = "SCANNING"
+                
+                // set right item to make title view in the center
+    //            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "    ", style: .plain, target: self, action: .none)
+//                self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
+//                self.navigationController?.navigationBar.shadowImage = UIImage()
+//                self.navigationController?.navigationBar.layoutIfNeeded()
+//
+//            }
+    }
+    
     func startScan() {
-        view.backgroundColor = UIColor.black
+        captureView.backgroundColor = UIColor.black
                 captureSession = AVCaptureSession()
 
                 guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { return }
@@ -48,16 +76,16 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                     captureSession.addOutput(metadataOutput)
 
                     metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-                    metadataOutput.metadataObjectTypes = [.ean8, .ean13, .pdf417]
+                    metadataOutput.metadataObjectTypes = [.ean8, .ean13, .pdf417, .code128, .code39, .code93, .itf14]
                 } else {
                     failed()
                     return
                 }
 
                 previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-                previewLayer.frame = view.layer.bounds
+                previewLayer.frame = captureView.layer.bounds
                 previewLayer.videoGravity = .resizeAspectFill
-                view.layer.addSublayer(previewLayer)
+                captureView.layer.addSublayer(previewLayer)
 
                 captureSession.startRunning()
     }
@@ -73,7 +101,7 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         super.viewWillAppear(animated)
         
         self.navigationController?.isNavigationBarHidden = true
-        
+//        setNavBar()
         if (captureSession?.isRunning == false) {
             captureSession.startRunning()
         }
@@ -81,7 +109,7 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
+        self.navigationController?.isNavigationBarHidden = false
         if (captureSession?.isRunning == true) {
             captureSession.stopRunning()
         }
@@ -118,9 +146,13 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     
     func scanAlert() {
-        let ac = UIAlertController(title: "Barcode Search", message: "Do you want to use code:\n\(barcodeValue ?? "NULL")\nto search?", preferredStyle: .alert)
+        let ac = UIAlertController(title: "Barcode Search", message: "Do you want to use code:\n\"\(barcodeValue ?? "NULL")\"\nto search?", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action) in
             ac.dismiss(animated: true, completion: nil)
+            
+            self.showSpinner(onView: self.view)
+            
+            localsearchinfo.results = []
             
             //call search function
             let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
@@ -155,6 +187,10 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             self.startScan()
         }))
         self.present(ac, animated: true, completion: nil)
+    }
+    
+    @IBAction func backButtonTapped(_ sender: Any) {
+        _ = self.navigationController?.popViewController(animated: true)
     }
 }
 

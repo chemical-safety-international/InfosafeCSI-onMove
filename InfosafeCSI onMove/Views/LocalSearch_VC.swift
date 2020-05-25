@@ -66,7 +66,7 @@ class LocalSearch_VC: UIViewController {
         let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
         
         if count == 0 {
-            csiWCF_VM().callSearch(pnameInputData: searchInPut, supInputData: supSearchInput, pcodeInputData: pcodeSearchInput, session: session) { (completionReturnData) in
+            csiWCF_VM().callSearch(pnameInputData: searchInPut, supInputData: supSearchInput, pcodeInputData: pcodeSearchInput, barcode: "", session: session) { (completionReturnData) in
                 if completionReturnData == true {
                     DispatchQueue.main.async {
                         self.removeSpinner()

@@ -89,9 +89,9 @@ func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, d
 
                 return }
         
-        let str = String.init(data: dataResponse, encoding: .utf8)
-        print(str! as Any)
-        print("finished")
+//        let str = String.init(data: dataResponse, encoding: .utf8)
+//        print(str! as Any)
+//        print("finished")
         completion(dataResponse)
     }
     task.resume()
@@ -250,7 +250,7 @@ func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String,
 }
 
 //https for getsdsSearchResults
-func csiWCF_GetSDSSearchResultsPage_https(pnameInputData:String, supInputData: String, pcodeInputData: String,  client: String, uid: String, c:String, p : Int, psize : Int, apptp: Int, session: URLSession, completion:@escaping(Data) -> Void) -> (Void) {
+func csiWCF_GetSDSSearchResultsPage_https(pnameInputData:String, supInputData: String, pcodeInputData: String, barcodeInputData: String, client: String, uid: String, c:String, p : Int, psize : Int, apptp: Int, session: URLSession, completion:@escaping(Data) -> Void) -> (Void) {
  
     //create json data
     var advanced: String = "0"
@@ -261,6 +261,7 @@ func csiWCF_GetSDSSearchResultsPage_https(pnameInputData:String, supInputData: S
     let pnameStr = pnameInputData.trimmingCharacters(in: .whitespacesAndNewlines)
     let supStr = supInputData.trimmingCharacters(in: .whitespacesAndNewlines)
     let pcodeStr = pcodeInputData.trimmingCharacters(in: .whitespacesAndNewlines)
+    let barcodeStr = barcodeInputData.trimmingCharacters(in: .whitespacesAndNewlines)
     
     
 //    if (pnameStr.isEmpty == false && supStr.isEmpty == true && pcodeStr.isEmpty == true) {
@@ -329,6 +330,13 @@ func csiWCF_GetSDSSearchResultsPage_https(pnameInputData:String, supInputData: S
         singleValue = "0" + pcodeStr
         let pcode: [String: Any] = ["type": "8", "isgroup": "0", "groups": [], "values": [singleValue]]
         advanArray.append(pcode)
+    }
+    
+    if(barcodeStr.isEmpty == false) {
+        type = "28"
+        singleValue = "0" + barcodeStr
+//        let bcode: [String: Any] = ["type": "28", "isgroup": "0", "groups": [], "values": [singleValue]]
+//        advanArray.append(bcode)
     }
     
     
@@ -462,6 +470,7 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, session: U
     task.resume()
     
 }
+
 
 func csiWCF_getSDS(clientid: String, uid: String, sdsNoGet: String, apptp : String, rtype: String, completion:@escaping(outViewSDSData) -> Void) -> (Void) {
 

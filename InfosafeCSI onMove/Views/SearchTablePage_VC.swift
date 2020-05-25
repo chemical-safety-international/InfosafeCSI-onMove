@@ -130,6 +130,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         setNavBar()
     }
     
+    
     //handle the screen size when did rotation
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         splitViewSetup()
@@ -182,6 +183,14 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
          appDelegate.enableAllOrientation = false
+        
+//        if self.isMovingFromParent
+//         {
+//             //On click of back or swipe back
+//            print("pressed back1")
+//            let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
+//            self.navigationController?.pushViewController(loginJump!, animated: true)
+//         }
  
     }
     
@@ -777,7 +786,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                 localsearchinfo.cpage += 1
                 
                 let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
-                csiWCF_VM().callSearch(pnameInputData: localcriteriainfo.searchValue, supInputData: localcriteriainfo.supSearchValue, pcodeInputData: localcriteriainfo.pcodeSearchValue, session: session ) { (completionReturnData) in
+                csiWCF_VM().callSearch(pnameInputData: localcriteriainfo.searchValue, supInputData: localcriteriainfo.supSearchValue, pcodeInputData: localcriteriainfo.pcodeSearchValue, barcode: "", session: session ) { (completionReturnData) in
                     if completionReturnData == true {
                         DispatchQueue.main.async {
                             self.removeSpinner()

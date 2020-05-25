@@ -53,7 +53,7 @@ class csiWCF_VM: UIViewController {
         let psize = localsearchinfo.psize
         
         //call search function
-        csiWCF_GetSDSSearchResultsPage_https(pnameInputData: pnameInputData, supInputData: supInputData, pcodeInputData: pcodeInputData, client: client!, uid: uid!, c: c!, p: p!, psize:psize!, apptp:apptp!, session: session) { (completionReturnData) in
+        csiWCF_GetSDSSearchResultsPage_https(pnameInputData: pnameInputData, supInputData: supInputData, pcodeInputData: pcodeInputData, barcodeInputData: barcode, client: client!, uid: uid!, c: c!, p: p!, psize:psize!, apptp:apptp!, session: session) { (completionReturnData) in
 
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: completionReturnData, options: []) as? [String: AnyObject]
@@ -179,6 +179,7 @@ class csiWCF_VM: UIViewController {
         }
         
     }
+    
     
     func callSDS(sdsno: String, rtype : String, session: URLSession, completion:@escaping(String) -> Void ) {
 

@@ -117,7 +117,6 @@ class SearchPage_VC: UIViewController {
     }
     
     
-    
     // custom picker view
     func createPicker() {
 
@@ -222,6 +221,7 @@ class SearchPage_VC: UIViewController {
         super.viewWillDisappear(animated)
         
         self.navigationController?.navigationBar.isHidden = false
+
     }
     
     
