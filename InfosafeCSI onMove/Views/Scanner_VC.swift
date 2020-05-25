@@ -76,7 +76,7 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                     captureSession.addOutput(metadataOutput)
 
                     metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-                    metadataOutput.metadataObjectTypes = [.ean8, .ean13, .pdf417, .code128, .code39, .code93, .itf14]
+                    metadataOutput.metadataObjectTypes = [.ean8, .ean13, .pdf417, .code128, .code39, .code93, .itf14, .qr, .code39Mod43, .aztec, .dataMatrix, .interleaved2of5, .upce]
                 } else {
                     failed()
                     return
@@ -166,14 +166,9 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                                 }
                             } else {
                                 DispatchQueue.main.async {
-                                    if (self.view.bounds.height <= 320) {
-            //                            print(self.view.bounds.height)
-                                            self.removeSpinner()
-                                            self.showAlert(title: "", message: "No Search Result Find.")
-                                    } else {
-            //                            print(self.view.bounds.height)
-                                            self.removeSpinner()
-                                    }
+                                    self.removeSpinner()
+                                    self.showAlert(title: "", message: "NO RESULT FIND.")
+                                    self.startScan()
                                 }
                             }
             }
