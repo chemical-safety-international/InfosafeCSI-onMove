@@ -26,30 +26,32 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         startScan()
     }
     
-        func setNavBar() {
-            
-            //change background color
-//            DispatchQueue.main.async {
-                
-                //change background color & back button color
-                self.navigationController?.navigationBar.isTranslucent = false
-                self.view.backgroundColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
-                self.navigationController?.navigationBar.barTintColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
-                self.navigationController?.navigationBar.tintColor = UIColor.white
-                        
-                //change navigation bar text color and font
-                self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25), .foregroundColor: UIColor.white]
-                self.navigationItem.title = "SCANNING"
-                
-                // set right item to make title view in the center
-    //            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "    ", style: .plain, target: self, action: .none)
-//                self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
-//                self.navigationController?.navigationBar.shadowImage = UIImage()
-//                self.navigationController?.navigationBar.layoutIfNeeded()
+    //not working currently
+//        func setNavBar() {
 //
-//            }
-    }
+//            //change background color
+////            DispatchQueue.main.async {
+//
+//                //change background color & back button color
+//                self.navigationController?.navigationBar.isTranslucent = false
+//                self.view.backgroundColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
+//                self.navigationController?.navigationBar.barTintColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
+//                self.navigationController?.navigationBar.tintColor = UIColor.white
+//
+//                //change navigation bar text color and font
+//                self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25), .foregroundColor: UIColor.white]
+//                self.navigationItem.title = "SCANNING"
+//
+//                // set right item to make title view in the center
+//    //            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "    ", style: .plain, target: self, action: .none)
+////                self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
+////                self.navigationController?.navigationBar.shadowImage = UIImage()
+////                self.navigationController?.navigationBar.layoutIfNeeded()
+////
+////            }
+//    }
     
+    //build capture function and view
     func startScan() {
         captureView.backgroundColor = UIColor.black
                 captureSession = AVCaptureSession()
@@ -144,7 +146,7 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         return .portrait
     }
     
-    
+    //Alert after scanning
     func scanAlert() {
         let ac = UIAlertController(title: "Barcode Search", message: "Do you want to use code:\n\"\(barcodeValue ?? "NULL")\"\nto search?", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action) in
@@ -184,6 +186,7 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         self.present(ac, animated: true, completion: nil)
     }
     
+    //instead of navigation bar back button, back to pervious page
     @IBAction func backButtonTapped(_ sender: Any) {
         _ = self.navigationController?.popViewController(animated: true)
     }
