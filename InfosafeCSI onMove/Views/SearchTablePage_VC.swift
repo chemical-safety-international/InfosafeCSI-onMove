@@ -113,6 +113,8 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         
 //        setNavBar()
 
+        //replace navigation back button with customise back button
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(self.backToSearchPage(sender:)))
         
     }
     
@@ -209,6 +211,15 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
 //
 //        }
 //    }
+    
+    //set customise back button action
+    @objc func backToSearchPage(sender: AnyObject) {
+        let backJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
+//        self.navigationController?.popToViewController(backJump!, animated: true)
+//        self.navigationController?.popViewController(animated: true)
+        
+        self.navigationController?.pushViewController(backJump!, animated: true)
+    }
     
     func setNavBar() {
         

@@ -35,7 +35,7 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
 
     //insert json string to the request
     request.httpBody = jsonData
-    print(json)
+//    print(json)
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
@@ -341,10 +341,6 @@ func csiWCF_GetSDSSearchResultsPage_https(pnameInputData:String, supInputData: S
     
     
     //set for more criterias' values added into the array
-    if(localcriteriainfo.type1.isEmpty == false) {
-        let add1: [String: Any] = ["type": localcriteriainfo.type1!, "isgroup": "0", "groups": [], "values": [localcriteriainfo.value1]]
-        advanArray.append(add1)
-    }
     
     if(localcriteriainfo.type2.isEmpty == false) {
         let add2: [String: Any] = ["type": localcriteriainfo.type2!, "isgroup": "0", "groups": [], "values": [localcriteriainfo.value2]]

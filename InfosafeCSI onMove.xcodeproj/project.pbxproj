@@ -1324,7 +1324,7 @@
 				CODE_SIGN_ENTITLEMENTS = "InfosafeCSI onMove/Chemical Safety - InfosafeCSI.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DQNS8CDPT5;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "InfosafeCSI onMove/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -26,13 +26,13 @@ class SearchPage_VC: UIViewController {
     @IBOutlet weak var noSearchResultLbl: UILabel!
     
     // multi-search test
-    @IBOutlet weak var newCriteria: UISearchBar!
+
+    @IBOutlet weak var barcodeSearchbar: UISearchBar!
     @IBOutlet weak var multiBtn: UIButton!
     @IBOutlet weak var criteriaCV: UICollectionView!
     @IBOutlet weak var newCriteria2: UISearchBar!
     @IBOutlet weak var newCriteria3: UISearchBar!
     
-    @IBOutlet weak var newSBHeight: NSLayoutConstraint!
     @IBOutlet weak var newSBHeight2: NSLayoutConstraint!
     @IBOutlet weak var newSBHeight3: NSLayoutConstraint!
     
@@ -104,16 +104,19 @@ class SearchPage_VC: UIViewController {
         cPickView.isHidden = true
         
         criteriaCV.isHidden = true
-        newCriteria.isHidden = true
+
         newCriteria2.isHidden = true
         newCriteria3.isHidden = true
-        newSBHeight.constant = 0
+
         newSBHeight2.constant = 0
         newSBHeight3.constant = 0
         
-        localcriteriainfo.type1 = ""
+
         localcriteriainfo.type2 = ""
         localcriteriainfo.type3 = ""
+        
+        //disable swipe to back function
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     
@@ -152,11 +155,16 @@ class SearchPage_VC: UIViewController {
         pCodeSearchbar.setPlaceholder(textColor: .black)
         pCodeSearchbar.setSearchImage(color: .black)
         
-        newCriteria.set(textColor: .black)
+        barcodeSearchbar.set(textColor: .black)
         //newCriteria text field color
-        newCriteria.setTextField(color: UIColor.white)
-        newCriteria.setPlaceholder(textColor: .black)
-        newCriteria.setSearchImage(color: .black)
+        barcodeSearchbar.setTextField(color: UIColor.white)
+        barcodeSearchbar.setPlaceholder(textColor: .black)
+        barcodeSearchbar.setSearchImage(color: .black)
+        
+        barcodeSearchbar.showsBookmarkButton = true
+        barcodeSearchbar.setImage(UIImage.init(systemName: "camera"), for: .bookmark, state: .normal)
+        
+//        barcodeSearchbar.addSubview(barcodeScanButton)
         
         newCriteria2.set(textColor: .black)
         //newCriteria2 text field color
@@ -170,6 +178,11 @@ class SearchPage_VC: UIViewController {
         newCriteria3.setPlaceholder(textColor: .black)
         newCriteria3.setSearchImage(color: .black)
         
+    }
+    
+    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "ScannerPage") as? Scanner_VC
+        self.navigationController?.pushViewController(searchJump!, animated: true)
     }
     
     //add arrow image into pickview
@@ -236,28 +249,31 @@ class SearchPage_VC: UIViewController {
         searchbar.text = searchbar.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         supplierSearchbar.text = supplierSearchbar.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         pCodeSearchbar.text = pCodeSearchbar.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        barcodeSearchbar.text = barcodeSearchbar.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        if searchbar.text!.isEmpty && supplierSearchbar.text!.isEmpty && pCodeSearchbar.text!.isEmpty {
+        
+        if searchbar.text!.isEmpty && supplierSearchbar.text!.isEmpty && pCodeSearchbar.text!.isEmpty && barcodeSearchbar.text!.isEmpty {
             self.removeSpinner()
             searchbar.text = ""
             supplierSearchbar.text = ""
             pCodeSearchbar.text = ""
             
-            self.showAlert(title: "Hi", message: "Search content is empty.")
+            self.showAlert(title:"", message: "Search content is empty.")
             
-        } else if searchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" &&  supplierSearchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" && pCodeSearchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == ""{
+        } else if searchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" &&  supplierSearchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" && pCodeSearchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" && barcodeSearchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == ""{
             self.removeSpinner()
             searchbar.text = ""
             supplierSearchbar.text = ""
             pCodeSearchbar.text = ""
-            self.showAlert(title: "Hi", message: "Search content is empty.")
+            barcodeSearchbar.text = ""
+            self.showAlert(title: "", message: "Search content is empty.")
         } else if searchbar.text!.count < 3 && searchbar.text!.isEmpty == false {
             self.removeSpinner()
-            self.showAlert(title: "Hi", message: "Please enter more than 2 characters for product name!")
+            self.showAlert(title: "", message: "Please enter more than 2 characters for product name!")
         
         } else if supplierSearchbar.text!.count < 2 && supplierSearchbar.text!.isEmpty == false {
             self.removeSpinner()
-            self.showAlert(title: "Hi", message: "Please enter more than 1 characters for supplier!")
+            self.showAlert(title: "", message: "Please enter more than 1 characters for supplier!")
             
         } else {
 //            print("Called call search")
@@ -267,15 +283,15 @@ class SearchPage_VC: UIViewController {
             let searchInPut = searchbar.text!
             let supplierSearchInput = supplierSearchbar.text!
             let pCodeSeatchInput = pCodeSearchbar.text!
+            let barcodeSearchInput = barcodeSearchbar.text!
             
             localcriteriainfo.searchValue = searchInPut
             localcriteriainfo.supSearchValue = supplierSearchInput
             localcriteriainfo.pcodeSearchValue = pCodeSeatchInput
+            localcriteriainfo.barcodeSearchValue = barcodeSearchInput
             
             
-            if (newCriteria.isHidden == false) {
-                localcriteriainfo.value1 = newCriteria.text!
-            }
+            
             
             if (newCriteria2.isHidden == false) {
                 localcriteriainfo.value2 = newCriteria2.text!
@@ -293,7 +309,7 @@ class SearchPage_VC: UIViewController {
             
             let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
             
-            csiWCF_VM().callSearch(pnameInputData: searchInPut, supInputData: supplierSearchInput, pcodeInputData: pCodeSeatchInput, barcode: "", session: session) { (completionReturnData) in
+            csiWCF_VM().callSearch(pnameInputData: searchInPut, supInputData: supplierSearchInput, pcodeInputData: pCodeSeatchInput, barcode: barcodeSearchInput, session: session) { (completionReturnData) in
                 if completionReturnData == true {
                     DispatchQueue.main.async {
                         self.removeSpinner()
@@ -350,7 +366,7 @@ class SearchPage_VC: UIViewController {
         searchbar.endEditing(true)
         supplierSearchbar.endEditing(true)
         pCodeSearchbar.endEditing(true)
-        newCriteria.endEditing(true)
+        barcodeSearchbar.endEditing(true)
         newCriteria2.endEditing(true)
         newCriteria3.endEditing(true)
     }
@@ -367,16 +383,12 @@ class SearchPage_VC: UIViewController {
             multiBtn.setTitle(" Multi-Search ", for: .normal)
             count = 0
             
-            newCriteria.isHidden = true
             newCriteria2.isHidden = true
             newCriteria3.isHidden = true
-            newSBHeight.constant = 0
+
             newSBHeight2.constant = 0
             newSBHeight3.constant = 0
             
-            localcriteriainfo.type1 = ""
-            localcriteriainfo.value1 = ""
-            newCriteria.text = ""
             
             localcriteriainfo.type2 = ""
             localcriteriainfo.value2 = ""
@@ -495,13 +507,7 @@ extension SearchPage_VC: UIPickerViewDelegate, UIPickerViewDataSource {
         localcriteriainfo.pickerValue = localcriteriainfo.arrName[selectedRow]
         self.cPickView.resignFirstResponder()
         
-        if count == 0 {
-            newCriteria.isHidden = false
-            newCriteria.placeholder = localcriteriainfo.arrName[selectedRow]
-            localcriteriainfo.type1 = localcriteriainfo.arrCode[selectedRow]
-            newSBHeight.constant = 56
-            count += 1
-        } else if count == 1 {
+        if count == 1 {
             newCriteria2.isHidden = false
             newCriteria2.placeholder = localcriteriainfo.arrName[selectedRow]
             localcriteriainfo.type2 = localcriteriainfo.arrCode[selectedRow]
@@ -638,13 +644,7 @@ extension SearchPage_VC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         
-        if count == 0 {
-            newCriteria.isHidden = false
-            newCriteria.placeholder = localcriteriainfo.arrName[indexPath.row]
-            localcriteriainfo.type1 = localcriteriainfo.arrCode[indexPath.row]
-            newSBHeight.constant = 56
-            count += 1
-        } else if count == 1 {
+        if count == 1 {
             newCriteria2.isHidden = false
             newCriteria2.placeholder = localcriteriainfo.arrName[indexPath.row]
             localcriteriainfo.type2 = localcriteriainfo.arrCode[indexPath.row]

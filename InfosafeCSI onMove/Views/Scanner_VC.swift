@@ -148,9 +148,9 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     //Alert after scanning
     func scanAlert() {
-        let ac = UIAlertController(title: "Barcode Search", message: "Do you want to use code:\n\"\(barcodeValue ?? "NULL")\"\nto search?", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action) in
-            ac.dismiss(animated: true, completion: nil)
+//        let ac = UIAlertController(title: "Barcode Detected", message: "Search the value:\n\"\(barcodeValue ?? "NULL")\"?", preferredStyle: .alert)
+//        ac.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action) in
+//            ac.dismiss(animated: true, completion: nil)
             
             self.showSpinner(onView: self.view)
             
@@ -158,7 +158,7 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             
             //call search function
             let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
-                        
+            
             csiWCF_VM().callSearch(pnameInputData: "", supInputData: "", pcodeInputData: "", barcode: self.barcodeValue, session: session) { (completionReturnData) in
                             if completionReturnData == true {
                                 DispatchQueue.main.async {
@@ -169,21 +169,21 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                             } else {
                                 DispatchQueue.main.async {
                                     self.removeSpinner()
-                                    self.showAlert(title: "", message: "NO RESULT FIND.")
+                                    self.showAlert(title: "", message: "No result found.")
                                     self.startScan()
                                 }
                             }
             }
             //back to pervious page
 //            _ = self.navigationController?.popViewController(animated: true)
-        }))
-        ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action) in
-            ac.dismiss(animated: true, completion: nil)
-            
-            //redo the scanning
-            self.startScan()
-        }))
-        self.present(ac, animated: true, completion: nil)
+//        }))
+//        ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action) in
+//            ac.dismiss(animated: true, completion: nil)
+//
+//            //redo the scanning
+//            self.startScan()
+//        }))
+//        self.present(ac, animated: true, completion: nil)
     }
     
     //instead of navigation bar back button, back to pervious page

@@ -30,6 +30,8 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
         
         // Do any additional setup after loading the view.
         self.navigationController!.navigationBar.isHidden = false;
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+//        self.navigationController?.navigationItem.backBarButtonItem?.isEnabled = false;
         self.hideKeyboardWhenTappedAround()
         
         let defaults = UserDefaults.standard

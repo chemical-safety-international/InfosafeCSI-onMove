@@ -64,6 +64,7 @@ struct localcriteriainfo {
     static var searchValue: String!
     static var supSearchValue: String!
     static var pcodeSearchValue: String!
+    static var barcodeSearchValue: String!
     
     //multi-search test
     static var type1: String!
