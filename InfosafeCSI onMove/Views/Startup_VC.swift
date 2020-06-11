@@ -109,6 +109,7 @@ class StartupPage_VC: UIViewController {
 //        print("Device systen name: \(UIDevice.current.systemName)\n")
 //        print("Device system version: \(UIDevice.current.systemVersion)\n")
 //    }
+    
 }
 
 

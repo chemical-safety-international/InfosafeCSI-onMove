@@ -17,7 +17,7 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var barcodeValue: String!
     @IBOutlet weak var captureView: UIView!
     @IBOutlet weak var buttonView: UIView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,43 +53,44 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     //build capture function and view
     func startScan() {
+        
         captureView.backgroundColor = UIColor.black
-                captureSession = AVCaptureSession()
+        captureSession = AVCaptureSession()
 
-                guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { return }
-                let videoInput: AVCaptureDeviceInput
+        guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { return }
+        let videoInput: AVCaptureDeviceInput
 
-                do {
-                    videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
-                } catch {
-                    return
-                }
+        do {
+            videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
+        } catch {
+            return
+        }
 
-                if (captureSession.canAddInput(videoInput)) {
-                    captureSession.addInput(videoInput)
-                } else {
-                    failed()
-                    return
-                }
+        if (captureSession.canAddInput(videoInput)) {
+            captureSession.addInput(videoInput)
+        } else {
+            failed()
+            return
+        }
 
-                let metadataOutput = AVCaptureMetadataOutput()
+        let metadataOutput = AVCaptureMetadataOutput()
 
-                if (captureSession.canAddOutput(metadataOutput)) {
-                    captureSession.addOutput(metadataOutput)
+        if (captureSession.canAddOutput(metadataOutput)) {
+            captureSession.addOutput(metadataOutput)
 
-                    metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-                    metadataOutput.metadataObjectTypes = [.ean8, .ean13, .pdf417, .code128, .code39, .code93, .itf14, .qr, .code39Mod43, .aztec, .dataMatrix, .interleaved2of5, .upce]
-                } else {
-                    failed()
-                    return
-                }
+            metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+            metadataOutput.metadataObjectTypes = [.ean8, .ean13, .pdf417, .code128, .code39, .code93, .itf14, .qr, .code39Mod43, .aztec, .dataMatrix, .interleaved2of5, .upce]
+        } else {
+            failed()
+            return
+        }
 
-                previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-                previewLayer.frame = captureView.layer.bounds
-                previewLayer.videoGravity = .resizeAspectFill
-                captureView.layer.addSublayer(previewLayer)
+        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        previewLayer.frame = captureView.layer.bounds
+        previewLayer.videoGravity = .resizeAspectFill
+        captureView.layer.addSublayer(previewLayer)
 
-                captureSession.startRunning()
+        captureSession.startRunning()
     }
 
     func failed() {
