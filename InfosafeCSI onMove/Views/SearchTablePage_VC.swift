@@ -152,6 +152,8 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     override func viewWillAppear(_ animated: Bool) {
         
+        self.navigationController?.isNavigationBarHidden = false
+        
         if UIDevice.current.userInterfaceIdiom == .pad {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             appDelegate.enableAllOrientation = true

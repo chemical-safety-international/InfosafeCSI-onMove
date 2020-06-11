@@ -16,40 +16,40 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     var barcodeValue: String!
     @IBOutlet weak var captureView: UIView!
-    @IBOutlet weak var buttonView: UIView!
+//    @IBOutlet weak var buttonView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        buttonView.backgroundColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
-        
+//        buttonView.backgroundColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
+        self.navigationController?.navigationBar.isTranslucent = false
         startScan()
     }
     
-    //not working currently
-//        func setNavBar() {
+    //set up navigation bar
+        func setNavBar() {
+
+            //change background color
+//            DispatchQueue.main.async {
+
+                //change background color & back button color
+                self.navigationController?.navigationBar.isTranslucent = false
+                self.view.backgroundColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
+                self.navigationController?.navigationBar.barTintColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
+                self.navigationController?.navigationBar.tintColor = UIColor.white
+
+                //change navigation bar text color and font
+                self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25), .foregroundColor: UIColor.white]
+                self.navigationItem.title = "SCANNING"
+
+                // set right item to make title view in the center
+    //            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "    ", style: .plain, target: self, action: .none)
+//                self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
+//                self.navigationController?.navigationBar.shadowImage = UIImage()
+//                self.navigationController?.navigationBar.layoutIfNeeded()
 //
-//            //change background color
-////            DispatchQueue.main.async {
-//
-//                //change background color & back button color
-//                self.navigationController?.navigationBar.isTranslucent = false
-//                self.view.backgroundColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
-//                self.navigationController?.navigationBar.barTintColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
-//                self.navigationController?.navigationBar.tintColor = UIColor.white
-//
-//                //change navigation bar text color and font
-//                self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25), .foregroundColor: UIColor.white]
-//                self.navigationItem.title = "SCANNING"
-//
-//                // set right item to make title view in the center
-//    //            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "    ", style: .plain, target: self, action: .none)
-////                self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
-////                self.navigationController?.navigationBar.shadowImage = UIImage()
-////                self.navigationController?.navigationBar.layoutIfNeeded()
-////
-////            }
-//    }
+//            }
+    }
     
     //build capture function and view
     func startScan() {
@@ -88,6 +88,7 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer.frame = captureView.layer.bounds
         previewLayer.videoGravity = .resizeAspectFill
+
         captureView.layer.addSublayer(previewLayer)
 
         captureSession.startRunning()
@@ -103,8 +104,8 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.isNavigationBarHidden = true
-//        setNavBar()
+        self.navigationController?.isNavigationBarHidden = false
+        setNavBar()
         if (captureSession?.isRunning == false) {
             captureSession.startRunning()
         }
@@ -112,7 +113,7 @@ class Scanner_VC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = true
         if (captureSession?.isRunning == true) {
             captureSession.stopRunning()
         }
