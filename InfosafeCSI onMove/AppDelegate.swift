@@ -32,30 +32,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     //set up the push notification
-    func setupPushNotification(application: UIApplication) -> () {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound,.badge]) { (granted,error) in
-            if(granted) {
-                DispatchQueue.main.async {
-                    application.registerForRemoteNotifications()
-                }
-            } else {
-                print("User Notification permission deied: \(error?.localizedDescription ?? "error")")
-            }
-        }
-    }
+//    func setupPushNotification(application: UIApplication) -> () {
+//        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound,.badge]) { (granted,error) in
+//            if(granted) {
+//                DispatchQueue.main.async {
+//                    application.registerForRemoteNotifications()
+//                }
+//            } else {
+//                print("User Notification permission deied: \(error?.localizedDescription ?? "error")")
+//            }
+//        }
+//    }
     
     //set up notification feedback
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        print("Successful registration, Token is: \(tokenString(deviceToken))")
-    }
+//    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+//        print("Successful registration, Token is: \(tokenString(deviceToken))")
+//    }
+//
+//    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+//        print("failed to register for remote notification: \(error.localizedDescription)")
+//    }
     
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("failed to register for remote notification: \(error.localizedDescription)")
-    }
-    
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        print(userInfo)
-    }
+//    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+//        print(userInfo)
+//    }
     
     //create a token string
     func tokenString(_ deviceToken: Data) -> String {
