@@ -1300,7 +1300,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = DQNS8CDPT5;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "InfosafeCSI onMove/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1308,7 +1308,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.40;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMov";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMove";
 				PRODUCT_NAME = "Chemical Safety - InfosafeCSI";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1322,7 +1322,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = DQNS8CDPT5;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "InfosafeCSI onMove/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1330,7 +1330,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.40;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMov";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMove";
 				PRODUCT_NAME = "Chemical Safety - InfosafeCSI";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

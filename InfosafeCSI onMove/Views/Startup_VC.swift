@@ -14,7 +14,6 @@ class StartupPage_VC: UIViewController {
     @IBOutlet weak var startBtn: UIButton!
     @IBOutlet weak var bgImg: UIImageView!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -144,7 +143,16 @@ class StartupPage_VC: UIViewController {
                                 // Check if they are the same. If not, an upgrade is available.
 //                                print("\(version)")
 //                                print(currentVersion)
-                                if (version != currentVersion) && (version > currentVersion) {
+
+                                let localVersionNumber = Float(currentVersion)
+                                let appStoreVersionNumber = Float(version)
+                                
+                                let localVersionMajorNumber = Float(round(10*localVersionNumber!)/10)
+                                let appStoreVersionMajorNumber = Float(round(10*appStoreVersionNumber!)/10)
+//                                print(localVersionMajorNumber)
+//                                print(appStoreVersionMajorNumber)
+
+                                if (localVersionNumber != appStoreVersionNumber) && (appStoreVersionMajorNumber > localVersionMajorNumber) {
                                     upgradeAvailable = true
                                 }
                             }
