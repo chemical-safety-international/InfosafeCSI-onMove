@@ -35,11 +35,14 @@ class StartupPage_VC: UIViewController {
 //        checkVersionUpdate()
         
         
-        if (appUpdateAvailable() != false) {
+        if (appUpdateAvailable() == false) {
+            
             startBtn.isHidden = false
+            
         } else {
+            
             startBtn.isHidden = true
-            goToAppStore()
+            updateAlert()
         }
     }
     
@@ -120,15 +123,6 @@ class StartupPage_VC: UIViewController {
 //        print("Device system version: \(UIDevice.current.systemVersion)\n")
 //    }
     
-    func checkVersionUpdate() {
-        //First get the nsObject by defining as an optional anyObject
-        let nsObject: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as AnyObject?
-
-        //Then just cast the object as a String, but be careful, you may want to double check for nil
-        let version = nsObject as! String
-        print(version)
-    }
-    
       func appUpdateAvailable() -> Bool
     {
 //        let storeInfoURL: String = "https://apps.apple.com/nz/app/chemical-safety-infosafecsi/id1462709058"
@@ -162,9 +156,21 @@ class StartupPage_VC: UIViewController {
         return upgradeAvailable
     }
     
-    func goToAppStore() {
-        let appStoreAppID = "1462709058"
-        UIApplication.shared.open(URL(string: "itms://itunes.apple.com/app/id" + appStoreAppID)!)
+    func goToAppStoreLink() {
+//        let appStoreAppID = "1462709058"
+//        UIApplication.shared.open(URL(string: "itms://itunes.apple.com/app/id" + appStoreAppID)!)
+        UIApplication.shared.open(URL(string: "https://apps.apple.com/nz/app/chemical-safety-infosafecsi/id1462709058")!)
+    }
+    
+    func updateAlert() {
+        
+        let ac = UIAlertController(title: "", message: "Find new version. Do you want to update now?", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style:  .default, handler: {(action) in
+            ac.dismiss(animated: true, completion: nil)
+            self.goToAppStoreLink()
+        }))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(ac, animated: true, completion: nil)
     }
     
 }
