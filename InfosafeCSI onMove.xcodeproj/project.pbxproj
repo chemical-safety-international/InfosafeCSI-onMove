@@ -18,6 +18,7 @@
 		17818BED22815661000EAFF1 /* UserProfilesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17818BEC22815661000EAFF1 /* UserProfilesData.swift */; };
 		17818BEF22815681000EAFF1 /* UserProfilesAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17818BEE22815681000EAFF1 /* UserProfilesAccess.swift */; };
 		17A26840228D04410039A798 /* Startup_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A2683F228D04410039A798 /* Startup_VC.swift */; };
+		3C8642BAD4A5BE7029CA34FF /* Pods_InfosafeCSI_onMoveTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ED6CDE86E269C16E7155CB9 /* Pods_InfosafeCSI_onMoveTests.framework */; };
 		5720266122DC469D003E1C17 /* PhotoPage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5720266022DC469D003E1C17 /* PhotoPage_VC.swift */; };
 		5743492122B08C000036199E /* SDSMenu_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743492022B08C000036199E /* SDSMenu_VC.swift */; };
 		5743492322B094F00036199E /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743492222B094F00036199E /* MenuTableViewCell.swift */; };
@@ -29,6 +30,8 @@
 		577B1A592284059700E5C4AB /* SearchPage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577B1A582284059700E5C4AB /* SearchPage_VC.swift */; };
 		577B1A5B228500BE00E5C4AB /* globalVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577B1A5A228500BE00E5C4AB /* globalVar.swift */; };
 		577B1A5D2285195600E5C4AB /* SearchTablePage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577B1A5C2285195600E5C4AB /* SearchTablePage_VC.swift */; };
+		57886E70249C2D47001EDF99 /* OCR_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57886E6F249C2D47001EDF99 /* OCR_VC.swift */; };
+		57886EAB24A5BED3001EDF99 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 57886EAA24A5BED3001EDF99 /* tessdata */; };
 		578B9E6E23600F9200AB1475 /* Pictograms.txt in Resources */ = {isa = PBXBuildFile; fileRef = 578B9E6D23600F9100AB1475 /* Pictograms.txt */; };
 		578F6B94234D52FC00CCDFC9 /* SDSViewFA_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578F6B93234D52FC00CCDFC9 /* SDSViewFA_VC.swift */; };
 		5793128324760DFB009E5E8A /* Scanner_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5793128224760DFB009E5E8A /* Scanner_VC.swift */; };
@@ -203,7 +206,9 @@
 		57E1686122DD505C00CBD310 /* GalleryPage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E1686022DD505C00CBD310 /* GalleryPage_VC.swift */; };
 		57E1A81D23348EC300072377 /* Update_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E1A81C23348EC300072377 /* Update_VC.swift */; };
 		57F4C2C5234D402900647559 /* SDSViewCF_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4C2C4234D402900647559 /* SDSViewCF_VC.swift */; };
+		8371E28F8F1EA712A619CDB8 /* Pods_InfosafeCSI_onMove_InfosafeCSI_onMoveUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E456E078E9310B732052422 /* Pods_InfosafeCSI_onMove_InfosafeCSI_onMoveUITests.framework */; };
 		AC9AB9DA2288DFA900C2C71E /* SDSView_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */; };
+		F9824B05066D03B7E3A769F7 /* Pods_InfosafeCSI_onMove.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A8318F0D2153154145DE0E /* Pods_InfosafeCSI_onMove.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -224,6 +229,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01705A35CE95BA3F99DB219B /* Pods-InfosafeCSI onMove.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InfosafeCSI onMove.debug.xcconfig"; path = "Target Support Files/Pods-InfosafeCSI onMove/Pods-InfosafeCSI onMove.debug.xcconfig"; sourceTree = "<group>"; };
 		17818BB522811A88000EAFF1 /* Chemical Safety - InfosafeCSI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chemical Safety - InfosafeCSI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		17818BB822811A88000EAFF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17818BBA22811A88000EAFF1 /* LoginPage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage_VC.swift; sourceTree = "<group>"; };
@@ -241,6 +247,10 @@
 		17818BEC22815661000EAFF1 /* UserProfilesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilesData.swift; sourceTree = "<group>"; };
 		17818BEE22815681000EAFF1 /* UserProfilesAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilesAccess.swift; sourceTree = "<group>"; };
 		17A2683F228D04410039A798 /* Startup_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Startup_VC.swift; sourceTree = "<group>"; };
+		2E4526FE6ADC950CCCF407D0 /* Pods-InfosafeCSI onMoveTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InfosafeCSI onMoveTests.release.xcconfig"; path = "Target Support Files/Pods-InfosafeCSI onMoveTests/Pods-InfosafeCSI onMoveTests.release.xcconfig"; sourceTree = "<group>"; };
+		2E456E078E9310B732052422 /* Pods_InfosafeCSI_onMove_InfosafeCSI_onMoveUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InfosafeCSI_onMove_InfosafeCSI_onMoveUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2ED6CDE86E269C16E7155CB9 /* Pods_InfosafeCSI_onMoveTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InfosafeCSI_onMoveTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3255027F8DC04B9BBED93F0B /* Pods-InfosafeCSI onMove.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InfosafeCSI onMove.release.xcconfig"; path = "Target Support Files/Pods-InfosafeCSI onMove/Pods-InfosafeCSI onMove.release.xcconfig"; sourceTree = "<group>"; };
 		5720266022DC469D003E1C17 /* PhotoPage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPage_VC.swift; sourceTree = "<group>"; };
 		5743492022B08C000036199E /* SDSMenu_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSMenu_VC.swift; sourceTree = "<group>"; };
 		5743492222B094F00036199E /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
@@ -252,6 +262,8 @@
 		577B1A582284059700E5C4AB /* SearchPage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPage_VC.swift; sourceTree = "<group>"; };
 		577B1A5A228500BE00E5C4AB /* globalVar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalVar.swift; sourceTree = "<group>"; };
 		577B1A5C2285195600E5C4AB /* SearchTablePage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTablePage_VC.swift; sourceTree = "<group>"; };
+		57886E6F249C2D47001EDF99 /* OCR_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCR_VC.swift; sourceTree = "<group>"; };
+		57886EAA24A5BED3001EDF99 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
 		578B9E6D23600F9100AB1475 /* Pictograms.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Pictograms.txt; sourceTree = "<group>"; };
 		578F6B93234D52FC00CCDFC9 /* SDSViewFA_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSViewFA_VC.swift; sourceTree = "<group>"; };
 		5793128224760DFB009E5E8A /* Scanner_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scanner_VC.swift; sourceTree = "<group>"; };
@@ -426,7 +438,11 @@
 		57E1686022DD505C00CBD310 /* GalleryPage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryPage_VC.swift; sourceTree = "<group>"; };
 		57E1A81C23348EC300072377 /* Update_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update_VC.swift; sourceTree = "<group>"; };
 		57F4C2C4234D402900647559 /* SDSViewCF_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSViewCF_VC.swift; sourceTree = "<group>"; };
+		938B609F6CCB7FA36F63461C /* Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests.debug.xcconfig"; path = "Target Support Files/Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests/Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		AC9AB9D92288DFA900C2C71E /* SDSView_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSView_VC.swift; sourceTree = "<group>"; };
+		B4A8318F0D2153154145DE0E /* Pods_InfosafeCSI_onMove.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InfosafeCSI_onMove.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE6C17FD942AE0BF9878BCD4 /* Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests.release.xcconfig"; path = "Target Support Files/Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests/Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests.release.xcconfig"; sourceTree = "<group>"; };
+		F448CEB265ABDC1078D86FF8 /* Pods-InfosafeCSI onMoveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InfosafeCSI onMoveTests.debug.xcconfig"; path = "Target Support Files/Pods-InfosafeCSI onMoveTests/Pods-InfosafeCSI onMoveTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -435,6 +451,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				57A8090722CDB20100CA4439 /* WebKit.framework in Frameworks */,
+				F9824B05066D03B7E3A769F7 /* Pods_InfosafeCSI_onMove.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +459,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C8642BAD4A5BE7029CA34FF /* Pods_InfosafeCSI_onMoveTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,6 +467,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8371E28F8F1EA712A619CDB8 /* Pods_InfosafeCSI_onMove_InfosafeCSI_onMoveUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +494,7 @@
 				17818BDA22811A89000EAFF1 /* InfosafeCSI onMoveUITests */,
 				17818BB622811A88000EAFF1 /* Products */,
 				57A8090522CDB20000CA4439 /* Frameworks */,
+				34E2480103179CD927EE0869 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -497,6 +517,7 @@
 				57C8B92622813ECC004966C5 /* Modules */,
 				17818BB822811A88000EAFF1 /* AppDelegate.swift */,
 				17818BBC22811A88000EAFF1 /* Main.storyboard */,
+				57886EAA24A5BED3001EDF99 /* tessdata */,
 				17818BC222811A89000EAFF1 /* Assets.xcassets */,
 				17818BC422811A89000EAFF1 /* LaunchScreen.storyboard */,
 				17818BC722811A89000EAFF1 /* Info.plist */,
@@ -549,6 +570,19 @@
 			path = Entities;
 			sourceTree = "<group>";
 		};
+		34E2480103179CD927EE0869 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				01705A35CE95BA3F99DB219B /* Pods-InfosafeCSI onMove.debug.xcconfig */,
+				3255027F8DC04B9BBED93F0B /* Pods-InfosafeCSI onMove.release.xcconfig */,
+				938B609F6CCB7FA36F63461C /* Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests.debug.xcconfig */,
+				CE6C17FD942AE0BF9878BCD4 /* Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests.release.xcconfig */,
+				F448CEB265ABDC1078D86FF8 /* Pods-InfosafeCSI onMoveTests.debug.xcconfig */,
+				2E4526FE6ADC950CCCF407D0 /* Pods-InfosafeCSI onMoveTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		5720266222DD4ED5003E1C17 /* Photo */ = {
 			isa = PBXGroup;
 			children = (
@@ -570,6 +604,9 @@
 			isa = PBXGroup;
 			children = (
 				57A8090622CDB20100CA4439 /* WebKit.framework */,
+				B4A8318F0D2153154145DE0E /* Pods_InfosafeCSI_onMove.framework */,
+				2E456E078E9310B732052422 /* Pods_InfosafeCSI_onMove_InfosafeCSI_onMoveUITests.framework */,
+				2ED6CDE86E269C16E7155CB9 /* Pods_InfosafeCSI_onMoveTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -775,6 +812,7 @@
 				57DF2CC1231396BE0044A96B /* StoredPDF_VC.swift */,
 				57A47C45238B91B80097B068 /* extensions.swift */,
 				5793128224760DFB009E5E8A /* Scanner_VC.swift */,
+				57886E6F249C2D47001EDF99 /* OCR_VC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -807,9 +845,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 17818BE022811A89000EAFF1 /* Build configuration list for PBXNativeTarget "InfosafeCSI onMove" */;
 			buildPhases = (
+				C1839D80CE599AB32D341C79 /* [CP] Check Pods Manifest.lock */,
 				17818BB122811A88000EAFF1 /* Sources */,
 				17818BB222811A88000EAFF1 /* Frameworks */,
 				17818BB322811A88000EAFF1 /* Resources */,
+				BEFF53A7AD5D715BA67AA475 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -824,6 +864,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 17818BE322811A89000EAFF1 /* Build configuration list for PBXNativeTarget "InfosafeCSI onMoveTests" */;
 			buildPhases = (
+				D5FDA1ACA1883C5E8EE30AF2 /* [CP] Check Pods Manifest.lock */,
 				17818BC822811A89000EAFF1 /* Sources */,
 				17818BC922811A89000EAFF1 /* Frameworks */,
 				17818BCA22811A89000EAFF1 /* Resources */,
@@ -842,9 +883,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 17818BE622811A89000EAFF1 /* Build configuration list for PBXNativeTarget "InfosafeCSI onMoveUITests" */;
 			buildPhases = (
+				76EE2C20E1A316D849A86090 /* [CP] Check Pods Manifest.lock */,
 				17818BD322811A89000EAFF1 /* Sources */,
 				17818BD422811A89000EAFF1 /* Frameworks */,
 				17818BD522811A89000EAFF1 /* Resources */,
+				8AC3C443E9D5ED09873DBC55 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -974,6 +1017,7 @@
 				57AAA7C523508D0600FAD796 /* GHS01.png in Resources */,
 				57AAA7A523508D0600FAD796 /* 21.png in Resources */,
 				57AAA7CE23508D0600FAD796 /* GHS09.png in Resources */,
+				57886EAB24A5BED3001EDF99 /* tessdata in Resources */,
 				17818BC622811A89000EAFF1 /* LaunchScreen.storyboard in Resources */,
 				57AAA80323508D0600FAD796 /* R6EN8.png in Resources */,
 				57AAA80023508D0600FAD796 /* R6EN7b_sr.png in Resources */,
@@ -1085,6 +1129,109 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		76EE2C20E1A316D849A86090 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8AC3C443E9D5ED09873DBC55 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests/Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests/Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests/Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BEFF53A7AD5D715BA67AA475 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-InfosafeCSI onMove/Pods-InfosafeCSI onMove-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-InfosafeCSI onMove/Pods-InfosafeCSI onMove-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-InfosafeCSI onMove/Pods-InfosafeCSI onMove-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C1839D80CE599AB32D341C79 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-InfosafeCSI onMove-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D5FDA1ACA1883C5E8EE30AF2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-InfosafeCSI onMoveTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		17818BB122811A88000EAFF1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1116,6 +1263,7 @@
 				57A815B12345D4CA00EE352B /* SDSViewCore_VC.swift in Sources */,
 				577B1A5D2285195600E5C4AB /* SearchTablePage_VC.swift in Sources */,
 				5720266122DC469D003E1C17 /* PhotoPage_VC.swift in Sources */,
+				57886E70249C2D47001EDF99 /* OCR_VC.swift in Sources */,
 				57A46680234FF36A007B810D /* GHSCollectionViewCell.swift in Sources */,
 				57A47C482390E07C0097B068 /* multiSearchCell.swift in Sources */,
 				17818BEF22815681000EAFF1 /* UserProfilesAccess.swift in Sources */,
@@ -1295,12 +1443,14 @@
 		};
 		17818BE122811A89000EAFF1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01705A35CE95BA3F99DB219B /* Pods-InfosafeCSI onMove.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = DQNS8CDPT5;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "InfosafeCSI onMove/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1308,7 +1458,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.40;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMove";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMov";
 				PRODUCT_NAME = "Chemical Safety - InfosafeCSI";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1317,12 +1467,14 @@
 		};
 		17818BE222811A89000EAFF1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3255027F8DC04B9BBED93F0B /* Pods-InfosafeCSI onMove.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = DQNS8CDPT5;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "InfosafeCSI onMove/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1330,7 +1482,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.40;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMove";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMov";
 				PRODUCT_NAME = "Chemical Safety - InfosafeCSI";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1339,6 +1491,7 @@
 		};
 		17818BE422811A89000EAFF1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F448CEB265ABDC1078D86FF8 /* Pods-InfosafeCSI onMoveTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1360,6 +1513,7 @@
 		};
 		17818BE522811A89000EAFF1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2E4526FE6ADC950CCCF407D0 /* Pods-InfosafeCSI onMoveTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1381,6 +1535,7 @@
 		};
 		17818BE722811A89000EAFF1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 938B609F6CCB7FA36F63461C /* Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1401,6 +1556,7 @@
 		};
 		17818BE822811A89000EAFF1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CE6C17FD942AE0BF9878BCD4 /* Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

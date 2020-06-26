@@ -172,7 +172,7 @@ class StartupPage_VC: UIViewController {
     
     func updateAlert() {
         
-        let ac = UIAlertController(title: "", message: "Find new version. Do you want to update now?", preferredStyle: .alert)
+        let ac = UIAlertController(title: "", message: "Find new version. Click OK to update now.", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style:  .default, handler: {(action) in
             ac.dismiss(animated: true, completion: nil)
             self.goToAppStoreLink()
