@@ -1,0 +1,24 @@
+PODS:
+  - GPUImage (0.1.7)
+  - Mantis (0.52)
+  - TesseractOCRiOS (5.0.1)
+
+DEPENDENCIES:
+  - GPUImage
+  - Mantis (~> 0.28)
+  - TesseractOCRiOS
+
+SPEC REPOS:
+  trunk:
+    - GPUImage
+    - Mantis
+    - TesseractOCRiOS
+
+SPEC CHECKSUMS:
+  GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
+  Mantis: 0fb7056ad8fbe61e0c195b483d73591a06bcae09
+  TesseractOCRiOS: 2c189465f86abb030d0c5141c90da9705b647854
+
+PODFILE CHECKSUM: e04d43809db450090e6beb29a40e8ec080f3c8d7
+
+COCOAPODS: 1.9.3

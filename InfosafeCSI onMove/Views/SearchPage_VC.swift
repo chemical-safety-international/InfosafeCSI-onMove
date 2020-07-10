@@ -14,7 +14,7 @@ class SearchPage_VC: UIViewController {
 
     //IBOutlet
     @IBOutlet weak var cPickView: UITextField!
-    @IBOutlet weak var searchbar: UISearchBar!
+    @IBOutlet weak var productNameSearchbar: UISearchBar!
     @IBOutlet weak var searchBtn: UIButton!
     
     @IBOutlet weak var logoffBtn: UIButton!
@@ -64,7 +64,7 @@ class SearchPage_VC: UIViewController {
     
         //enable the delegate
         self.cPickView.delegate = self
-        self.searchbar.delegate = self
+        self.productNameSearchbar.delegate = self
         
 
         //setup navigation function
@@ -133,14 +133,16 @@ class SearchPage_VC: UIViewController {
     //custom search bar
     func setSearchbar() {
 //        searchbar.placeholder = "Enter"
-        searchbar.set(textColor: .black)
+        productNameSearchbar.set(textColor: .black)
         
         //searchbar text field color
-        searchbar.setTextField(color: UIColor.white)
+        productNameSearchbar.setTextField(color: UIColor.white)
         
-        searchbar.setPlaceholder(textColor: .black)
-        searchbar.setSearchImage(color: .black)
+        productNameSearchbar.setPlaceholder(textColor: .black)
+        productNameSearchbar.setSearchImage(color: .black)
 //        searchbar.setClearButton(color: .red)
+        productNameSearchbar.showsBookmarkButton = true
+        productNameSearchbar.setImage(UIImage.init(systemName: "camera"), for: .bookmark, state: .normal)
         
         
         supplierSearchbar.set(textColor: .black)
@@ -181,9 +183,18 @@ class SearchPage_VC: UIViewController {
     }
     
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
-        let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "ScannerPage") as? Scanner_VC
-        self.navigationController?.pushViewController(searchJump!, animated: true)
+    
+        if searchBar == barcodeSearchbar {
+            let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "ScannerPage") as? Scanner_VC
+            self.navigationController?.pushViewController(searchJump!, animated: true)
+        } else if searchBar == productNameSearchbar {
+            
+            let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "OCRScannerPage") as? OCR_VC
+            self.navigationController?.pushViewController(searchJump!, animated: true)
+        }
+        
     }
+    
     
     //add arrow image into pickview
     func createArrow() {
@@ -246,28 +257,28 @@ class SearchPage_VC: UIViewController {
     
     func searchData() {
 //        print("search Data called")
-        searchbar.text = searchbar.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        productNameSearchbar.text = productNameSearchbar.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         supplierSearchbar.text = supplierSearchbar.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         pCodeSearchbar.text = pCodeSearchbar.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         barcodeSearchbar.text = barcodeSearchbar.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         
         
-        if searchbar.text!.isEmpty && supplierSearchbar.text!.isEmpty && pCodeSearchbar.text!.isEmpty && barcodeSearchbar.text!.isEmpty {
+        if productNameSearchbar.text!.isEmpty && supplierSearchbar.text!.isEmpty && pCodeSearchbar.text!.isEmpty && barcodeSearchbar.text!.isEmpty {
             self.removeSpinner()
-            searchbar.text = ""
+            productNameSearchbar.text = ""
             supplierSearchbar.text = ""
             pCodeSearchbar.text = ""
             
             self.showAlert(title:"", message: "Search content is empty.")
             
-        } else if searchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" &&  supplierSearchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" && pCodeSearchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" && barcodeSearchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == ""{
+        } else if productNameSearchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" &&  supplierSearchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" && pCodeSearchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" && barcodeSearchbar.text!.trimmingCharacters(in: .whitespacesAndNewlines) == ""{
             self.removeSpinner()
-            searchbar.text = ""
+            productNameSearchbar.text = ""
             supplierSearchbar.text = ""
             pCodeSearchbar.text = ""
             barcodeSearchbar.text = ""
             self.showAlert(title: "", message: "Search content is empty.")
-        } else if searchbar.text!.count < 3 && searchbar.text!.isEmpty == false {
+        } else if productNameSearchbar.text!.count < 3 && productNameSearchbar.text!.isEmpty == false {
             self.removeSpinner()
             self.showAlert(title: "", message: "Please enter more than 2 characters for product name!")
         
@@ -280,7 +291,7 @@ class SearchPage_VC: UIViewController {
             self.cPickView.endEditing(true)
             self.showSpinner(onView: self.view)
             
-            let searchInPut = searchbar.text!
+            let searchInPut = productNameSearchbar.text!
             let supplierSearchInput = supplierSearchbar.text!
             let pCodeSeatchInput = pCodeSearchbar.text!
             let barcodeSearchInput = barcodeSearchbar.text!
@@ -363,7 +374,7 @@ class SearchPage_VC: UIViewController {
     
     //Notify to disKeyboard
     @objc func disKeyboard() {
-        searchbar.endEditing(true)
+        productNameSearchbar.endEditing(true)
         supplierSearchbar.endEditing(true)
         pCodeSearchbar.endEditing(true)
         barcodeSearchbar.endEditing(true)
@@ -441,7 +452,7 @@ extension SearchPage_VC: UISearchBarDelegate {
 //    }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchbar.resignFirstResponder()
+        productNameSearchbar.resignFirstResponder()
 //        print("search bar return pressed")
         self.searchData()
     }

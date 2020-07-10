@@ -1,0 +1,4 @@
+${PODS_ROOT}/Target Support Files/Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests/Pods-InfosafeCSI onMove-InfosafeCSI onMoveUITests-frameworks.sh
+${BUILT_PRODUCTS_DIR}/GPUImage/GPUImage.framework
+${BUILT_PRODUCTS_DIR}/Mantis/Mantis.framework
+${BUILT_PRODUCTS_DIR}/TesseractOCRiOS/TesseractOCR.framework

@@ -1,0 +1,5 @@
+#import <Foundation/Foundation.h>
+@interface PodsDummy_Pods_InfosafeCSI_onMove_InfosafeCSI_onMoveUITests : NSObject
+@end
+@implementation PodsDummy_Pods_InfosafeCSI_onMove_InfosafeCSI_onMoveUITests
+@end
