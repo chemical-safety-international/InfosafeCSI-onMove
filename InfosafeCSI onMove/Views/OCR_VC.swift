@@ -70,7 +70,7 @@ class OCR_VC: UIViewController, G8TesseractDelegate, UIImagePickerControllerDele
 
             //change navigation bar text color and font
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25), .foregroundColor: UIColor.white]
-            self.navigationItem.title = "SCANNING"
+            self.navigationItem.title = "SCANNING OCR"
 
     }
     
@@ -171,7 +171,9 @@ class OCR_VC: UIViewController, G8TesseractDelegate, UIImagePickerControllerDele
 //        }
 //    }
 
-    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.navigationController?.popViewController(animated: true)
+    }
     
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
