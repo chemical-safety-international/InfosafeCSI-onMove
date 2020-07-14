@@ -527,18 +527,54 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
     @IBAction func imdgBtnTapped(_ sender: Any) {
         
         DispatchQueue.main.async {
-            self.unno.text = localViewSDSTIIMDG.imdg_unno
-            self.dgCLbl.text = localViewSDSTIIMDG.imdg_dgclass
-            self.subRiskLbl.text = localViewSDSTIIMDG.imdg_subrisks
-            self.pg.text = localViewSDSTIIMDG.imdg_packgrp
-            self.psn.text = localViewSDSTIIMDG.imdg_psn
+            
+            if (localViewSDSTIIMDG.imdg_unno.isEmpty == false) {
+                self.unno.text = localViewSDSTIIMDG.imdg_unno
+            } else {
+                self.unno.text = ""
+            }
+            
+            if (localViewSDSTIIMDG.imdg_dgclass.isEmpty == false) {
+                self.dgCLbl.text = localViewSDSTIIMDG.imdg_dgclass
+            } else {
+                self.dgCLbl.text = ""
+            }
+            
+            if (localViewSDSTIIMDG.imdg_subrisks.isEmpty == false) {
+               self.subRiskLbl.text = localViewSDSTIIMDG.imdg_subrisks
+            } else {
+                self.subRiskLbl.text = ""
+            }
+            
+            
+            if (localViewSDSTIIMDG.imdg_packgrp.isEmpty == false) {
+                self.pg.text = localViewSDSTIIMDG.imdg_packgrp
+            } else {
+                self.pg.text = ""
+            }
+            
+            if (localViewSDSTIIMDG.imdg_psn.isEmpty == false) {
+               self.psn.text = localViewSDSTIIMDG.imdg_psn
+            } else {
+               self.psn.text = ""
+            }
             
             self.dgClassImage.image = nil
             self.subRiskImg1.image = nil
             self.subRiskImg2.image = nil
             
-            self.dgCLbl.text = localViewSDSTIIMDG.imdg_dgclass
-            self.subRiskLbl.text = localViewSDSTIIMDG.imdg_subrisks
+            if (localViewSDSTIIMDG.imdg_dgclass.isEmpty == false) {
+                self.dgCLbl.text = localViewSDSTIIMDG.imdg_dgclass
+            } else {
+               self.dgCLbl.text = ""
+            }
+            
+            if (localViewSDSTIIMDG.imdg_subrisks.isEmpty == false) {
+               self.subRiskLbl.text = localViewSDSTIIMDG.imdg_subrisks
+            } else {
+               self.subRiskLbl.text = ""
+            }
+            
             
             self.psnSYMGap.constant = 0
             self.SYMBT.text = ""
@@ -688,18 +724,53 @@ class SDSViewTI_VC: UIViewController, UIScrollViewDelegate {
     @IBAction func iataBtnTapped(_ sender: Any) {
         
         DispatchQueue.main.async {
-            self.unno.text = localViewSDSTIIATA.iata_unno
-            self.dgCLbl.text = localViewSDSTIIATA.iata_dgclass
-            self.subRiskLbl.text = localViewSDSTIIATA.iata_subrisks
-            self.pg.text = localViewSDSTIIATA.iata_packgrp
-            self.psn.text = localViewSDSTIIATA.iata_psn
+            if (localViewSDSTIIATA.iata_unno.isEmpty == false) {
+                self.unno.text = localViewSDSTIIATA.iata_unno
+            } else {
+               self.unno.text = ""
+            }
+            
+            if (localViewSDSTIIATA.iata_dgclass.isEmpty == false) {
+                self.dgCLbl.text = localViewSDSTIIATA.iata_dgclass
+            } else {
+                self.dgCLbl.text = ""
+            }
+            
+            if (localViewSDSTIIATA.iata_subrisks.isEmpty == false) {
+               self.subRiskLbl.text = localViewSDSTIIATA.iata_subrisks
+            } else {
+                self.subRiskLbl.text = ""
+            }
+            
+            if (localViewSDSTIIATA.iata_packgrp.isEmpty == false) {
+              self.pg.text = localViewSDSTIIATA.iata_packgrp
+            } else {
+               self.pg.text = ""
+            }
+            
+            if (localViewSDSTIIATA.iata_psn.isEmpty == false) {
+               self.psn.text = localViewSDSTIIATA.iata_psn
+            } else {
+                self.psn.text = ""
+            }
         
             self.dgClassImage.image = nil
             self.subRiskImg1.image = nil
             self.subRiskImg2.image = nil
             
-            self.dgCLbl.text = localViewSDSTIIATA.iata_dgclass
-            self.subRiskLbl.text = localViewSDSTIIATA.iata_subrisks
+            if (localViewSDSTIIATA.iata_dgclass.isEmpty == false) {
+                self.dgCLbl.text = localViewSDSTIIATA.iata_dgclass
+            } else {
+                self.dgCLbl.text = ""
+            }
+            
+            
+            if (localViewSDSTIIATA.iata_subrisks.isEmpty == false) {
+                self.subRiskLbl.text = localViewSDSTIIATA.iata_subrisks
+            } else {
+                self.subRiskLbl.text = ""
+            }
+            
             
             if(localViewSDSTIIATA.iata_symbol.isEmpty == false) {
                 self.SYMBT.text = "SYMBOL"

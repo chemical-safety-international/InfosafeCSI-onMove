@@ -172,7 +172,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
     func setCFTIValue() {
         
         getValue()
-        viewSDSBTn.isEnabled = true
+        
         preVBtn.isEnabled = false
         ghsBtn.isEnabled = true
         dgBtn.isEnabled = true
@@ -1033,7 +1033,9 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         scrollDownArrow.isHidden = true
         getValue()
         
-        viewSDSBTn.isEnabled = true
+        if (self.view.frame.width > 500) {
+            self.viewSDSBTn.isEnabled = true
+        }
         preVBtn.isEnabled = false
         ghsBtn.isEnabled = true
         dgBtn.isEnabled = true
@@ -1187,7 +1189,9 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         
         self.viewMore()
         
-        self.viewSDSBTn.isEnabled = true
+        if (self.view.frame.width > 500) {
+            self.viewSDSBTn.isEnabled = true
+        }
         self.preVBtn.isEnabled = true
         self.ghsBtn.isEnabled = false
         self.dgBtn.isEnabled = true
@@ -1242,7 +1246,9 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             self.viewMoreLbl.isHidden = true
             self.scrollDownArrow.isHidden = true
             
-            self.viewSDSBTn.isEnabled = true
+            if (self.view.frame.width > 500) {
+                self.viewSDSBTn.isEnabled = true
+            }
             self.preVBtn.isEnabled = true
             self.ghsBtn.isEnabled = true
             self.dgBtn.isEnabled = false
@@ -1272,7 +1278,9 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             self.viewMoreLbl.isHidden = true
             self.scrollDownArrow.isHidden = true
             
-            self.viewSDSBTn.isEnabled = true
+            if (self.view.frame.width > 500) {
+                self.viewSDSBTn.isEnabled = true
+            }
             self.preVBtn.isEnabled = true
             self.ghsBtn.isEnabled = true
             self.dgBtn.isEnabled = true
