@@ -97,7 +97,7 @@ class OCR_VC: UIViewController, G8TesseractDelegate, UIImagePickerControllerDele
             tesseract.recognize()
             let recoText = tesseract.recognizedText?.trimmingCharacters(in: .whitespacesAndNewlines)
             if recoText!.isEmpty {
-                recognizedTextView.text = "No text recognized."
+                recognizedTextView.text = "No text recognised."
             } else {
                recognizedTextView.text = recoText
             }
@@ -214,7 +214,7 @@ class OCR_VC: UIViewController, G8TesseractDelegate, UIImagePickerControllerDele
         
         let recognizeText = recognizedTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         print(recognizeText)
-        if recognizedTextView.text!.isEmpty || recognizedTextView.text! == "No text recognized." || recognizedTextView.text! == "Recognizing Text" {
+        if recognizedTextView.text!.isEmpty || recognizedTextView.text! == "No text recognised." || recognizedTextView.text! == "Recognising Text" {
             self.removeSpinner()
             recognizedTextView.text = ""
             
@@ -235,7 +235,7 @@ class OCR_VC: UIViewController, G8TesseractDelegate, UIImagePickerControllerDele
                 } else {
                     DispatchQueue.main.async {
                                 self.removeSpinner()
-                                self.showAlert(title: "", message: "No Search Result Find.")
+                                self.showAlert(title: "", message: "No Search Results Found.")
                     }
                 }
             }
@@ -314,8 +314,9 @@ extension OCR_VC: CropViewControllerDelegate {
     
     func cropViewControllerDidCancel(_ cropViewController: CropViewController, original: UIImage) {
 //        loadingScreen.isHidden = false
-        cameraView.image = original
-        recognizeImage(image: original)
+//        cameraView.image = original
+//        recognizeImage(image: original)
+        self.navigationController?.popViewController(animated: true)
     }
     
     
