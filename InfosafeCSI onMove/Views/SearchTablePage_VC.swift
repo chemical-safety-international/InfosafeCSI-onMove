@@ -26,7 +26,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     @IBOutlet weak var splitView: UIView!
 
-    @IBOutlet weak var tablecellView: UIView!
+//    @IBOutlet weak var tablecellView: UIView!
     
     
     var selectedIndex:Bool = false;

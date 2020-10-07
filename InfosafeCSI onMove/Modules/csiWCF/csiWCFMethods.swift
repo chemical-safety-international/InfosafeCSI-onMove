@@ -9,8 +9,8 @@
 import Foundation
 
 
-//var csiWCF_URLHeader = "http://www.csinfosafe.com/CSIMD_WCF/CSI_MD_Service.svc/"
-var csiWCF_URLHeader = "https://gold:4438/CSIMD_WCF/CSI_MD_Service.svc/"
+var csiWCF_URLHeader = "https://203.55.180.101/CSIMD_WCF/CSI_MD_Service.svc/"
+//var csiWCF_URLHeader = "https://gold:4438/CSIMD_WCF/CSI_MD_Service.svc/"
 
 
 // Call the WCF function: 'loginbyEami' with email, password, deviceid, devicemac and return the data from WCF
@@ -75,6 +75,7 @@ func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, d
 
     //insert json string to the request
     request.httpBody = jsonData
+    
 //    print(request)
 
     let task = session.dataTask(with: request) { (data, response, error) in
@@ -89,6 +90,7 @@ func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, d
 
                 return }
         
+//check return value
 //        let str = String.init(data: dataResponse, encoding: .utf8)
 //        print(str! as Any)
 //        print("finished")
