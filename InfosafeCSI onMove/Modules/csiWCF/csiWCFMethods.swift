@@ -9,7 +9,9 @@
 import Foundation
 
 
-var csiWCF_URLHeader = "https://203.55.180.101/CSIMD_WCF/CSI_MD_Service.svc/"
+//var csiWCF_URLHeader = "https://203.55.180.101/CSIMD_WCF/CSI_MD_Service.svc/"
+
+var csiWCF_URLHeader = "https://192.168.10.15/CSIMD_WCF/CSI_MD_Service.svc/"
 //var csiWCF_URLHeader = "https://gold:4438/CSIMD_WCF/CSI_MD_Service.svc/"
 
 
@@ -91,8 +93,8 @@ func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, d
                 return }
         
 //check return value
-//        let str = String.init(data: dataResponse, encoding: .utf8)
-//        print(str! as Any)
+        let str = String.init(data: dataResponse, encoding: .utf8)
+        print(str! as Any)
 //        print("finished")
         completion(dataResponse)
     }
@@ -344,15 +346,15 @@ func csiWCF_GetSDSSearchResultsPage_https(pnameInputData:String, supInputData: S
     
     //set for more criterias' values added into the array
     
-    if(localcriteriainfo.type2.isEmpty == false) {
-        let add2: [String: Any] = ["type": localcriteriainfo.type2!, "isgroup": "0", "groups": [], "values": [localcriteriainfo.value2]]
-        advanArray.append(add2)
-    }
-    
-    if(localcriteriainfo.type3.isEmpty == false) {
-        let add3: [String: Any] = ["type": localcriteriainfo.type3!, "isgroup": "0", "groups": [], "values": [localcriteriainfo.value3]]
-        advanArray.append(add3)
-    }
+//    if(localcriteriainfo.type2.isEmpty == false) {
+//        let add2: [String: Any] = ["type": localcriteriainfo.type2!, "isgroup": "0", "groups": [], "values": [localcriteriainfo.value2]]
+//        advanArray.append(add2)
+//    }
+//    
+//    if(localcriteriainfo.type3.isEmpty == false) {
+//        let add3: [String: Any] = ["type": localcriteriainfo.type3!, "isgroup": "0", "groups": [], "values": [localcriteriainfo.value3]]
+//        advanArray.append(add3)
+//    }
     
     //if array count is more than one  will use multi-search (current all use)
     if (advanArray.count > 1) {

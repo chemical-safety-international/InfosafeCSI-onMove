@@ -332,7 +332,7 @@ class SearchPage_VC: UIViewController {
                         if (self.view.bounds.height <= 320) {
 //                            print(self.view.bounds.height)
                                 self.removeSpinner()
-                                self.showAlert(title: "", message: "No Search Result Find.")
+                                self.showAlert(title: "", message: "No Search Result Found.")
                         } else {
 //                            print(self.view.bounds.height)
                                 self.removeSpinner()

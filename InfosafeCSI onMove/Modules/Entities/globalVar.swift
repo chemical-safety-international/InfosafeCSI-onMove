@@ -39,6 +39,17 @@ struct localclientinfo {
     static var clientloginstatus: String!
     static var apptype: Int!
     static var error: String!
+    
+    static var clientList: [clientListItem] = []
+    static var selectclientname: String!
+    
+    struct clientListItem {
+        var clientName: String!
+        
+        init (clientName: String? = nil) {
+            self.clientName = clientName
+        }
+    }
 }
 
 struct localclientcoreData {
@@ -234,6 +245,30 @@ struct localSearchData {
         self.haz = haz
         self.GHS_Pictogram = GHS_Pictogram
         self.Com_Country = Com_Country
+    }
+}
+
+struct checkPurchaseSearchData {
+    var productName: String!
+    var noOfSupplier: String!
+    
+    init(productName: String? = nil, noOfSupplier: String? = nil) {
+        self.productName = productName
+        self.noOfSupplier = noOfSupplier
+    }
+}
+
+struct checkPurchaseSearchPassData {
+    static var passedProductName: String!
+}
+
+struct checkPurchaseSearchSupplierData {
+    var supplier: String!
+    var noOfSDS: String!
+    
+    init(supplier: String? = nil, noOfSDS: String? = nil) {
+        self.supplier = supplier
+        self.noOfSDS = noOfSDS
     }
 }
 

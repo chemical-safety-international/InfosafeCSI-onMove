@@ -125,7 +125,9 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
 //            self.remember.setImage(image, for: .normal)
 //            defaults.set(false, forKey: "remeberstatus")
 //        }
-        loginBtn.isHidden = true
+        
+//        loginBtn.isHidden = true
+        
 //        userIDTextField.enablesReturnKeyAutomatically = true
 //        passwordTextField.enablesReturnKeyAutomatically = true
     }
@@ -232,7 +234,7 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
                             defaults.set(localclientinfo.clientlogo, forKey: localclientcoreData.image)
                         }
 
-                        let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
+                        let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchSelection") as? SearchSelection_VC
                         self.navigationController?.pushViewController(loginJump!, animated: true)
                     } else if model.passed == false {
                         self.removeSpinner()
