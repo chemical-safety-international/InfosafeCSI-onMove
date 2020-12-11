@@ -23,10 +23,19 @@ class CheckPurchaseSearchPage_VC: UIViewController {
         self.hideKeyboard()
         self.setNavigationbar()
         self.setSearchbars()
+        self.setupButton()
         self.callCriteria()
         
         localsearchinfo.cpage = 1
         localsearchinfo.psize = 50
+        
+        searchTypeOption.searchType = "Check Before You Buy"
+        
+        if #available(iOS 14.0, *) {
+            self.navigationItem.backBarButtonItem?.menu = nil
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     func setSearchbars() {
@@ -75,6 +84,10 @@ class CheckPurchaseSearchPage_VC: UIViewController {
                
             
 //        }
+    }
+    
+    func setupButton() {
+        self.searchButton.layer.cornerRadius = 5
     }
     
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
@@ -203,6 +216,11 @@ class CheckPurchaseSearchPage_VC: UIViewController {
         self.searchData()
     }
     
+    // disable swipe to go back
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
+    }
+    
     
     /*
     // MARK: - Navigation
@@ -223,5 +241,13 @@ extension CheckPurchaseSearchPage_VC : URLSessionDelegate {
        let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
 
        completionHandler(.useCredential, urlCredential)
+    }
+}
+
+extension CheckPurchaseSearchPage_VC: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        productNameSearchbar.resignFirstResponder()
+//        print("search bar return pressed")
+        self.searchData()
     }
 }

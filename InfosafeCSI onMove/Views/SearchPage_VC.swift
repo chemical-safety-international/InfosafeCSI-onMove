@@ -17,7 +17,6 @@ class SearchPage_VC: UIViewController {
     @IBOutlet weak var productNameSearchbar: UISearchBar!
     @IBOutlet weak var searchBtn: UIButton!
     
-    @IBOutlet weak var logoffBtn: UIButton!
 
     
     @IBOutlet weak var supplierSearchbar: UISearchBar!
@@ -55,9 +54,8 @@ class SearchPage_VC: UIViewController {
         
         // load the criteria list for picker
         self.callCriteria()
-        
+        self.setNavigationbar()
         //button style
-        self.logoffBtn.layer.cornerRadius = 5
         self.searchBtn.layer.cornerRadius = 5
         self.cPickView.layer.cornerRadius = 10
         self.multiBtn.layer.cornerRadius = 5
@@ -117,6 +115,26 @@ class SearchPage_VC: UIViewController {
         
         //disable swipe to back function
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        
+        searchTypeOption.searchType = "Product Search"
+    }
+    
+    //set navigation bar
+    func setNavigationbar() {
+        //change background color
+//        DispatchQueue.main.async {
+//
+//            //change background color & back button color
+            self.navigationController?.navigationBar.isTranslucent = false
+            self.navigationController?.navigationBar.barTintColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
+            self.navigationController?.navigationBar.tintColor = UIColor.white
+
+//            //change navigation bar text color and font
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 23), .foregroundColor: UIColor.white]
+            self.navigationItem.title = "Search Product"
+               
+            
+//        }
     }
     
     
@@ -234,19 +252,19 @@ class SearchPage_VC: UIViewController {
         return false
     }
     
-    //hide the navigation bar
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.navigationController?.navigationBar.isHidden = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        self.navigationController?.navigationBar.isHidden = false
-
-    }
+//    //hide the navigation bar
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//
+//        self.navigationController?.navigationBar.isHidden = true
+//    }
+//
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//
+//        self.navigationController?.navigationBar.isHidden = false
+//
+//    }
     
     
     @IBAction func searchBtnTapped(_ sender: Any) {

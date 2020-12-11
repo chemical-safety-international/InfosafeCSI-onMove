@@ -67,6 +67,10 @@ struct outCriteriaData: Codable {
     let items: [items]!
 }
 
+struct searchTypeOption {
+    static var searchType: String = "Product Search"
+}
+
 struct localcriteriainfo {
     static var arrCode: [String] = []
     static var arrName: [String] = []
@@ -98,67 +102,7 @@ struct localsearchinfo {
     var totalcount: Int!
     
     static var results: [item] = []
-    
-    struct item {
-
-        var sdsno: String!
-        var synno: String!
-        var company: String!
-        var issueDate: String!
-        var prodname: String!
-        var prodtype: String!
-        var ispartial: Bool!
-        var ps: String!
-        var unno: String!
-        var subrisk1: String!
-        var prodcode: String!
-        var dgclass: String!
-        var GHS_Pictogram: String!
-        var Com_Country: String!
-        var haz: String!
-        var ufs: [uf]!
-        
-        init(sdsno: String? = nil, synno: String? = nil, company: String? = nil, issueDate: String? = nil, prodname: String? = nil, prodtype: String? = nil, ispartial: Bool? = nil, ps: String? = nil, unno: String? = nil, subrisk1: String? = nil, prodcode: String? = nil, dgclass: String? = nil, haz: String? = nil, GHS_Pictogram: String? = nil, Com_Country: String? = nil, ufs: [uf]? = nil) {
-            self.sdsno = sdsno
-            self.synno = synno
-            self.company = company
-            self.issueDate = issueDate
-            self.prodname = prodname
-            self.prodtype = prodtype
-            self.ispartial = ispartial
-            self.ps = ps
-            self.unno = unno
-            self.subrisk1 = subrisk1
-            self.prodcode = prodcode
-            self.dgclass = dgclass
-            self.haz = haz
-            self.GHS_Pictogram = GHS_Pictogram
-            self.Com_Country = Com_Country
-            self.ufs = ufs
-        }
-    }
-    struct uf {
-        var uftitle: String!
-        var uftext: String!
-        
-        init(uftitle: String? = nil, uftext: String? = nil) {
-            self.uftitle = uftitle
-            self.uftext = uftext
-        }
-    }
-    init(pcount: Int? = nil, ocount: Int? = nil, lcount: Int? = nil, pageno: Int? = nil, result: Bool? = nil, pagecount: Int? = nil, totalcount: Int? = nil, results: [item]? = nil) {
-        self.pcount = pcount
-        self.ocount = ocount
-        self.lcount = lcount
-        self.pageno = pageno
-        self.result = result
-        self.pagecount = pagecount
-        self.totalcount = totalcount
-//        self.results = results
-    }
-
-    
-    
+      
     // set the text and value to amount labels
     static var details: String!
     static var pamount: String!
@@ -173,6 +117,67 @@ struct localsearchinfo {
     static var cpage: Int!
     
     static var totalPage: Int!
+    
+    init(pcount: Int? = nil, ocount: Int? = nil, lcount: Int? = nil, pageno: Int? = nil, result: Bool? = nil, pagecount: Int? = nil, totalcount: Int? = nil, results: [item]? = nil) {
+        self.pcount = pcount
+        self.ocount = ocount
+        self.lcount = lcount
+        self.pageno = pageno
+        self.result = result
+        self.pagecount = pagecount
+        self.totalcount = totalcount
+//        self.results = results
+    }
+}
+
+struct item {
+
+    var sdsno: String!
+    var synno: String!
+    var company: String!
+    var issueDate: String!
+    var prodname: String!
+    var prodtype: String!
+    var ispartial: Bool!
+    var ps: String!
+    var unno: String!
+    var subrisk1: String!
+    var prodcode: String!
+    var dgclass: String!
+    var GHS_Pictogram: String!
+    var Com_Country: String!
+    var haz: String!
+    var ufs: [uf]!
+    
+    init(sdsno: String? = nil, synno: String? = nil, company: String? = nil, issueDate: String? = nil, prodname: String? = nil, prodtype: String? = nil, ispartial: Bool? = nil, ps: String? = nil, unno: String? = nil, subrisk1: String? = nil, prodcode: String? = nil, dgclass: String? = nil, haz: String? = nil, GHS_Pictogram: String? = nil, Com_Country: String? = nil, ufs: [uf]? = nil) {
+        self.sdsno = sdsno
+        self.synno = synno
+        self.company = company
+        self.issueDate = issueDate
+        self.prodname = prodname
+        self.prodtype = prodtype
+        self.ispartial = ispartial
+        self.ps = ps
+        self.unno = unno
+        self.subrisk1 = subrisk1
+        self.prodcode = prodcode
+        self.dgclass = dgclass
+        self.haz = haz
+        self.GHS_Pictogram = GHS_Pictogram
+        self.Com_Country = Com_Country
+        self.ufs = ufs
+    }
+    
+    struct uf {
+        var uftitle: String!
+        var uftext: String!
+        
+        init(uftitle: String? = nil, uftext: String? = nil) {
+            self.uftitle = uftitle
+            self.uftext = uftext
+        }
+    }
+
 }
 
 //struct localtablesize {
@@ -250,9 +255,9 @@ struct localSearchData {
 
 struct checkPurchaseSearchData {
     var productName: String!
-    var noOfSupplier: String!
+    var noOfSupplier: Int!
     
-    init(productName: String? = nil, noOfSupplier: String? = nil) {
+    init(productName: String? = nil, noOfSupplier: Int? = nil) {
         self.productName = productName
         self.noOfSupplier = noOfSupplier
     }
@@ -260,6 +265,15 @@ struct checkPurchaseSearchData {
 
 struct checkPurchaseSearchPassData {
     static var passedProductName: String!
+    static var loadBool: Bool = true
+    static var storedDataArray : [item] = []
+    static var storedSupplierDataArray: [checkPurchaseSupplierData] = []
+}
+
+struct checkPurchaseSupplierData {
+    var supplier: String!
+    var issueDate: String!
+    var noOfSDS: Int!
 }
 
 struct checkPurchaseSearchSupplierData {

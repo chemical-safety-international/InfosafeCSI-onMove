@@ -28,5 +28,11 @@ class CheckPurchaseTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        let padding = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+//        bounds = bounds.inset(by: padding)
+//    }
 
 }

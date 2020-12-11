@@ -35,14 +35,25 @@ class StartupPage_VC: UIViewController {
         
         
         if (appUpdateAvailable() == false) {
-            
+
             startBtn.isHidden = false
-            
+
         } else {
-            
+
             startBtn.isHidden = true
             updateAlert()
         }
+        
+//        if #available(iOS 14.0, *) {
+//            self.navigationItem.backButtonDisplayMode = .minimal
+//        }
+        if #available(iOS 14.0, *) {
+            self.navigationItem.backBarButtonItem?.menu = nil
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        self.navigationItem.title = "Startup"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -135,28 +146,32 @@ class StartupPage_VC: UIViewController {
             if let dataInJSON = NSData(contentsOf: urlOnAppStore! as URL) {
                 // Try to deserialize the JSON that we got
                 if let dict: NSDictionary = try? JSONSerialization.jsonObject(with: dataInJSON as Data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: AnyObject] as NSDictionary? {
+                    
                     if let results:NSArray = dict["results"] as? NSArray {
 //                        print(results)
-                        if let version = (results[0] as AnyObject).value(forKey: "version") as? String {
-                            // Get the version number of the current version installed on device
-                            if let currentVersion = infoDictionary["CFBundleShortVersionString"] as? String {
-                                // Check if they are the same. If not, an upgrade is available.
-//                                print("\(version)")
-//                                print(currentVersion)
+                        if results.count > 0 {
+                            if let version = ((results[0]) as AnyObject).value(forKey: "version") as? String {
+                                // Get the version number of the current version installed on device
+                                if let currentVersion = infoDictionary["CFBundleShortVersionString"] as? String {
+                                    // Check if they are the same. If not, an upgrade is available.
+    //                                print("\(version)")
+    //                                print(currentVersion)
 
-                                let localVersionNumber = Float(currentVersion)
-                                let appStoreVersionNumber = Float(version)
-                                
-                                let localVersionMajorNumber = Float(round(10*localVersionNumber!)/10)
-                                let appStoreVersionMajorNumber = Float(round(10*appStoreVersionNumber!)/10)
-//                                print(localVersionMajorNumber)
-//                                print(appStoreVersionMajorNumber)
+                                    let localVersionNumber = Float(currentVersion)
+                                    let appStoreVersionNumber = Float(version)
+                                    
+                                    let localVersionMajorNumber = Float(round(10*localVersionNumber!)/10)
+                                    let appStoreVersionMajorNumber = Float(round(10*appStoreVersionNumber!)/10)
+    //                                print(localVersionMajorNumber)
+    //                                print(appStoreVersionMajorNumber)
 
-                                if (localVersionNumber != appStoreVersionNumber) && (appStoreVersionMajorNumber > localVersionMajorNumber) {
-                                    upgradeAvailable = true
+                                    if (localVersionNumber != appStoreVersionNumber) && (appStoreVersionMajorNumber > localVersionMajorNumber) {
+                                        upgradeAvailable = true
+                                    }
                                 }
                             }
                         }
+ 
                     }
                 }
             }
@@ -183,4 +198,49 @@ class StartupPage_VC: UIViewController {
     
 }
 
+//class NavigationController: UINavigationController, UINavigationControllerDelegate {
+//    init() {
+//        super.init(rootViewController: StartupPage_VC())
+//        delegate = self
+//    }
+//
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//
+//    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+//        let backButton = BackBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+//        viewController.navigationItem.backBarButtonItem = backButton
+//    }
+//}
 
+class NavigationController: UINavigationController, UINavigationControllerDelegate {
+  init() {
+    super.init(rootViewController: StartupPage_VC())
+    delegate = self
+  }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+  func navigationController(_ navigationController: UINavigationController,
+                            willShow viewController: UIViewController, animated: Bool) {
+    
+    let backButton = BackBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+    viewController.navigationItem.backBarButtonItem = backButton
+  }
+}
+
+class BackBarButtonItem: UIBarButtonItem {
+    @available(iOS 14.0, *)
+    override var menu: UIMenu? {
+        set {
+            // Don't set the menu here
+            // super.menu = menu
+        }
+        get {
+            return super.menu
+        }
+    }
+}

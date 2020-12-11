@@ -20,6 +20,8 @@ class SearchSelection_VC: UIViewController {
 
         // Do any additional setup after loading the view.
         self.setButtonsStyle()
+        
+        self.navigationItem.title = "Search Selection"
     }
     
     func setButtonsStyle() {

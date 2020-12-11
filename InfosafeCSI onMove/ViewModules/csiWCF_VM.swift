@@ -62,7 +62,7 @@ class csiWCF_VM: UIViewController {
 
                     jsonArr1.forEach { info in
                         
-                        var ritem = localsearchinfo.item()
+                        var ritem = item()
                         //var ritemuf = localsearchinfo.uf()
  
                         
@@ -108,6 +108,9 @@ class csiWCF_VM: UIViewController {
                         }
                         if let hazCode = info["haz"] as? [String: Any] {
                             ritem.haz = hazCode["value"] as? String
+                        }
+                        if let sdsNo = info["no"] as? [String: Any] {
+                            ritem.sdsno = sdsNo["value"] as? String
                         }
                         
                         ritem.Com_Country = info["scountry"] as? String

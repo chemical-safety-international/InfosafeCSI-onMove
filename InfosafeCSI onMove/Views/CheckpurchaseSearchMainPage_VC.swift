@@ -20,12 +20,14 @@ class CheckpurchaseSearchMainPage_VC: UIViewController {
     @IBOutlet weak var sortProductNameButton: UIButton!
     @IBOutlet weak var sortNoOfSupplierButton: UIButton!
     
-
+    @IBOutlet weak var loadmoreLabel: UILabel!
     
     var checkPurchaseSearchDataArray : [checkPurchaseSearchData] = []
+    var checkPurchaseSearchDataArray1 : [checkPurchaseSearchData] = []
     var tableDataValue = checkPurchaseSearchData()
     var productNameArray = [String]()
     var tableData = [String: Int]()
+    var tableData1 = [String: Int]()
     var collectionSortedData = [String: Int]()
     var supplierArray = [String]()
     
@@ -39,6 +41,9 @@ class CheckpurchaseSearchMainPage_VC: UIViewController {
         setNavigationbar()
         setupTitles()
         addData()
+        
+        self.navigationController?.navigationBar.isHidden = false
+        self.loadmoreLabel.isHidden = true
     }
     
     func setupTitles() {
@@ -60,9 +65,11 @@ class CheckpurchaseSearchMainPage_VC: UIViewController {
         productNameTittleLbl.layer.borderColor = UIColor.white.cgColor
         noOfSupplierTitleLbl.layer.borderColor = UIColor.white.cgColor
         
-        productNameTittleLbl.font = UIFont.boldSystemFont(ofSize: 15)
-        noOfSupplierTitleLbl.font = UIFont.boldSystemFont(ofSize: 13)
+        productNameTittleLbl.font = UIFont.boldSystemFont(ofSize: 16)
+        noOfSupplierTitleLbl.font = UIFont.boldSystemFont(ofSize: 12)
     }
+    
+
     
     func setNavigationbar() {
         //change background color
@@ -83,105 +90,172 @@ class CheckpurchaseSearchMainPage_VC: UIViewController {
     
     func addData() {
         
-//        for i in 0..<localsearchinfo.results.count {
-//            let productNameData = localsearchinfo.results[i].prodname ?? ""
-//            productNameArray.append(productNameData)
-//        }
-////        print(productNameArray)
-//        
-//        for i in productNameArray {
-//            if tableData[i] == nil {
-//                tableData[i] = 1
-//            } else {
-//                tableData[i]! += 1
-//            }
-//        }
-//        print("collectionData: \(tableData)")
-    
-//        for (key, value) in tableData {
-//            tableDataValue.productName = "\(key)"
-//            tableDataValue.noOfSupplier = "\(value)"
-//            checkPurchaseSearchDataArray.append(tableDataValue)
-//        }
+        //get the product names and no of product name
+        for i in 0..<localsearchinfo.results.count {
+            let productNameData = localsearchinfo.results[i].prodname ?? ""
+            productNameArray.append(productNameData)
+        }
+//        print(productNameArray)
+
+        //remove duplicates
+        for i in productNameArray {
+            if tableData[i] == nil {
+                tableData[i] = 1
+            } else {
+                tableData[i]! += 1
+            }
+        }
+//        print("TableData: \(tableData)")
+
+        for (key, value) in tableData {
+            tableDataValue.productName = "\(key)"
+            tableDataValue.noOfSupplier = Int("\(value)")
+            checkPurchaseSearchDataArray.append(tableDataValue)
+        }
         
 //        print("CheckPurchase SearchData Array: \(checkPurchaseSearchDataArray)")
+     
         
+        //get no of supplier for each product
         for i in 0..<localsearchinfo.results.count {
             let matchProductName = localsearchinfo.results[i].prodname
             supplierArray.removeAll()
             for i in 0..<localsearchinfo.results.count {
-                if matchProductName?.lowercased() == localsearchinfo.results[i].prodname.lowercased() {
+                if matchProductName == localsearchinfo.results[i].prodname {
                     let supplier = localsearchinfo.results[i].company ?? ""
                     supplierArray.append(supplier)
                 }
             }
+            
+            //remove duplicates
+            supplierArray = uniq(source: supplierArray)
+
             tableDataValue.productName = matchProductName
-            tableDataValue.noOfSupplier = "\(supplierArray.count)"
-            checkPurchaseSearchDataArray.append(tableDataValue)
+            tableDataValue.noOfSupplier = Int("\(supplierArray.count)")
+            checkPurchaseSearchDataArray1.append(tableDataValue)
+
+        }
+//        print("CheckPurchase SearchData Array1: \(checkPurchaseSearchDataArray1)")
+
+        
+        //match each product with suppliers
+        for i in 0..<checkPurchaseSearchDataArray.count {
+            let matchProductName = checkPurchaseSearchDataArray[i].productName
+            var matchNoOfSupplier = checkPurchaseSearchDataArray[i].noOfSupplier
+            for i in 0..<checkPurchaseSearchDataArray1.count {
+                if matchProductName == checkPurchaseSearchDataArray1[i].productName {
+                    matchNoOfSupplier = checkPurchaseSearchDataArray1[i].noOfSupplier
+//                    print("name: \(matchProductName ?? "") \n onriginal no: \(matchNoOfSupplier ?? "")\n current no: \(checkPurchaseSearchDataArray1[i].noOfSupplier ?? "")")
+                }
+            }
+            checkPurchaseSearchDataArray[i].noOfSupplier = matchNoOfSupplier
 
         }
         
+//        print("CheckPurchase SearchData Array: \(checkPurchaseSearchDataArray)")
+        
+        
+        //adding for sort function
+        for i in 0..<checkPurchaseSearchDataArray.count {
+            tableData1[checkPurchaseSearchDataArray[i].productName] = Int(checkPurchaseSearchDataArray[i].noOfSupplier)
+        }
+        
+        sortProductName(updown: productNameUpdownValue)
     }
     
+    //uniq function for remove duplicate items in an array
+    func uniq<S : Sequence, T : Hashable>(source: S) -> [T] where S.Iterator.Element == T {
+        var buffer = [T]()
+        var added = Set<T>()
+        for elem in source {
+            if !added.contains(elem) {
+                buffer.append(elem)
+                added.insert(elem)
+            }
+        }
+        return buffer
+    }
+    
+    //sort by name
     func sortProductName(updown: Bool) {
         checkPurchaseSearchDataArray.removeAll()
         
         if updown == true {
-            for (key, value) in self.tableData.sorted(by: { $0.key < $1.key}) {
+            for (key, value) in self.tableData1.sorted(by: { $0.key < $1.key}) {
                 tableDataValue.productName = "\(key)"
-                tableDataValue.noOfSupplier = "\(value)"
+                tableDataValue.noOfSupplier = Int("\(value)")
                 checkPurchaseSearchDataArray.append(tableDataValue)
             }
             checkPurchaseTableView.reloadData()
             let indexPath = IndexPath(row: 0, section: 0)
             checkPurchaseTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            
+            sortProductNameButton.setImage(UIImage.init(systemName: "arrowtriangle.up.fill"), for: .normal)
+            sortProductNameButton.tintColor = UIColor.gray
             productNameUpdownValue = false
         } else if updown == false {
-            for (key, value) in self.tableData.sorted(by: { $0.key > $1.key}) {
+            for (key, value) in self.tableData1.sorted(by: { $0.key > $1.key}) {
                 tableDataValue.productName = "\(key)"
-                tableDataValue.noOfSupplier = "\(value)"
+                tableDataValue.noOfSupplier = Int("\(value)")
                 checkPurchaseSearchDataArray.append(tableDataValue)
             }
             checkPurchaseTableView.reloadData()
             let indexPath = IndexPath(row: 0, section: 0)
             checkPurchaseTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            
+            sortProductNameButton.setImage(UIImage.init(systemName: "arrowtriangle.down.fill"), for: .normal)
+            sortProductNameButton.tintColor = UIColor.gray
             productNameUpdownValue = true
         }
         
+        sortNoOfSupplierButton.tintColor = UIColor.white
+        sortNoOfSupplierButton.setImage(UIImage.init(systemName: "arrowtriangle.down.fill"), for: .normal)
+        noOfSupplierUpdownValue = true
+        
     }
     
+    //sort by number
     func sortNoOfSupplier(updown: Bool) {
         checkPurchaseSearchDataArray.removeAll()
         
         if (updown == true) {
-            for (key, value) in self.tableData.sorted(by: { $0.value < $1.value}) {
+            for (key, value) in self.tableData1.sorted(by: { $1.value < $0.value}) {
                 tableDataValue.productName = "\(key)"
-                tableDataValue.noOfSupplier = "\(value)"
+                tableDataValue.noOfSupplier = Int("\(value)")
                 checkPurchaseSearchDataArray.append(tableDataValue)
             }
             checkPurchaseTableView.reloadData()
             let indexPath = IndexPath(row: 0, section: 0)
             checkPurchaseTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            
+            sortNoOfSupplierButton.setImage(UIImage.init(systemName: "arrowtriangle.up.fill"), for: .normal)
+            sortNoOfSupplierButton.tintColor = UIColor.gray
             noOfSupplierUpdownValue = false
         } else if (updown == false) {
             
-            for (key, value) in self.tableData.sorted(by: { $0.value > $1.value}) {
+            for (key, value) in self.tableData1.sorted(by: { $0.value < $1.value}) {
                 tableDataValue.productName = "\(key)"
-                tableDataValue.noOfSupplier = "\(value)"
+                tableDataValue.noOfSupplier = Int("\(value)")
                 checkPurchaseSearchDataArray.append(tableDataValue)
             }
             checkPurchaseTableView.reloadData()
             let indexPath = IndexPath(row: 0, section: 0)
             checkPurchaseTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            
+            sortNoOfSupplierButton.setImage(UIImage.init(systemName: "arrowtriangle.down.fill"), for: .normal)
+            sortNoOfSupplierButton.tintColor = UIColor.gray
             noOfSupplierUpdownValue = true
         }
-
+        sortProductNameButton.tintColor = UIColor.white
+        sortProductNameButton.setImage(UIImage.init(systemName: "arrowtriangle.down.fill"), for: .normal)
+        productNameUpdownValue = true
     }
     
 
     @IBAction func sortProductNameButtonTapped(_ sender: Any) {
     
         sortProductName(updown: productNameUpdownValue)
+
     }
     
     @IBAction func sortNoOfSupplierButtonTapped(_ sender: Any) {
@@ -197,6 +271,10 @@ class CheckpurchaseSearchMainPage_VC: UIViewController {
     }
     */
     
+    //unselect after returning back to this page
+    override func viewWillAppear(_ animated: Bool) {
+        if let indexPath = self.checkPurchaseTableView.indexPathForSelectedRow{             self.checkPurchaseTableView.deselectRow(at: indexPath, animated: animated)         }
+    }
 
 }
 
@@ -220,7 +298,7 @@ extension CheckpurchaseSearchMainPage_VC:UITableViewDelegate, UITableViewDataSou
 
             cell.productNameLabel.text = self.checkPurchaseSearchDataArray[indexPath.row].productName
             
-            cell.noOfSupplierLabel.text = self.checkPurchaseSearchDataArray[indexPath.row].noOfSupplier
+            cell.noOfSupplierLabel.text = String(self.checkPurchaseSearchDataArray[indexPath.row].noOfSupplier)
             
             cell.backgroundColor = UIColor.darkGray
 
@@ -231,7 +309,7 @@ extension CheckpurchaseSearchMainPage_VC:UITableViewDelegate, UITableViewDataSou
             
             cell.productNameLabel.text = self.checkPurchaseSearchDataArray[indexPath.row].productName
             
-            cell.noOfSupplierLabel.text = self.checkPurchaseSearchDataArray[indexPath.row].noOfSupplier
+            cell.noOfSupplierLabel.text = String(self.checkPurchaseSearchDataArray[indexPath.row].noOfSupplier)
             
             cell.backgroundColor = UIColor.darkGray
             
@@ -242,17 +320,21 @@ extension CheckpurchaseSearchMainPage_VC:UITableViewDelegate, UITableViewDataSou
             
         } else {
             cell.productNameLabel.text = self.checkPurchaseSearchDataArray[indexPath.row].productName
-            cell.noOfSupplierLabel.text = self.checkPurchaseSearchDataArray[indexPath.row].noOfSupplier
+            cell.noOfSupplierLabel.text = String(self.checkPurchaseSearchDataArray[indexPath.row].noOfSupplier)
             
-            cell.backgroundColor = UIColor.lightGray
+//            cell.backgroundColor = UIColor.lightGray
+            cell.backgroundColor = UIColor.gray
 
-            cell.productNameLabel.textColor = UIColor.black
-            cell.noOfSupplierLabel.textColor = UIColor.black
+//            cell.productNameLabel.textColor = UIColor.black
+//            cell.noOfSupplierLabel.textColor = UIColor.black
+            cell.productNameLabel.textColor = UIColor.white
+            cell.noOfSupplierLabel.textColor = UIColor.white
 //            print("nor: \(indexPath.section)")
         }
         
 
 //            cell.updateConstraints()
+//        cell.selectionStyle = .none
 
         return cell
         
@@ -267,6 +349,28 @@ extension CheckpurchaseSearchMainPage_VC:UITableViewDelegate, UITableViewDataSou
         self.navigationController?.pushViewController(sdsJump!, animated: true)
     
 //
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+
+        
+        let currentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+
+        if (maximumOffset - currentOffset <= -70.0) {
+            
+            if (localsearchinfo.results.count < 250) {
+                loadmoreLabel.isHidden = false
+                loadmoreLabel.text = "All data has been loaded."
+            } else if ( localsearchinfo.results.count > 249) {
+                loadmoreLabel.isHidden = false
+                loadmoreLabel.text = "Only 250 results have been displayed.\n Please refine your search criteria for more accurate results."
+            }
+            
+        } else {
+            loadmoreLabel.isHidden = true
+        }
+        
     }
     
     

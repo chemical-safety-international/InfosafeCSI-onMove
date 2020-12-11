@@ -41,7 +41,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.tableDisplay.contentInsetAdjustmentBehavior = .never
 
         self.view.backgroundColor = UIColor(red:0.11, green:0.15, blue:0.18, alpha:1.0)
@@ -114,8 +114,11 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
 //        setNavBar()
 
         //replace navigation back button with customise back button
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(self.backToSearchPage(sender:)))
+//        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(self.backToSearchPage(sender:)))
         
+        //remove extra separator line in table view
+        self.tableDisplay.tableFooterView = UIView()
+        self.tableDisplay.tableFooterView?.backgroundColor = UIColor.clear
     }
     
     @objc func menuDis() {
@@ -177,8 +180,10 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         } else {
 //            tableDisplay.allowsSelection = false
         }
-
         
+        
+        //unselect after returning back to this page
+        if let indexPath = self.tableDisplay.indexPathForSelectedRow{             self.tableDisplay.deselectRow(at: indexPath, animated: animated)         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -592,7 +597,7 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                 cell?.prodCLbl.highlightedTextColor = UIColor.orange
                 cell?.countryLbl.highlightedTextColor = UIColor.orange
             } else {
-                cell?.selectionStyle = .none
+//                cell?.selectionStyle = .none
             }
                
 
@@ -765,13 +770,22 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
 
         if (maximumOffset - currentOffset <= -70.0) {
 //            print(localsearchinfo.totalamount!)
-            if (localsearchinfo.cpage < localsearchinfo.totalPage) {
-                loadmoreLbl.isHidden = false
-                loadmoreLbl.text = "Drop to load more..."
-            } else if (localsearchinfo.cpage >= localsearchinfo.totalPage && localsearchinfo.totalamount < 250) {
+            //old way
+//            if (localsearchinfo.cpage < localsearchinfo.totalPage) {
+//                loadmoreLbl.isHidden = false
+//                loadmoreLbl.text = "Drop to load more..."
+//            } else if (localsearchinfo.cpage >= localsearchinfo.totalPage && localsearchinfo.totalamount < 250) {
+//                loadmoreLbl.isHidden = false
+//                loadmoreLbl.text = "All data has been loaded."
+//            } else if ( localsearchinfo.totalamount > 249) {
+//                loadmoreLbl.isHidden = false
+//                loadmoreLbl.text = "Only 250 results have been displayed.\n Please refine your search criteria for more accurate results."
+//            }
+            
+ if (localsearchinfo.results.count < 250) {
                 loadmoreLbl.isHidden = false
                 loadmoreLbl.text = "All data has been loaded."
-            } else if ( localsearchinfo.totalamount > 249) {
+            } else if ( localsearchinfo.results.count > 249) {
                 loadmoreLbl.isHidden = false
                 loadmoreLbl.text = "Only 250 results have been displayed.\n Please refine your search criteria for more accurate results."
             }

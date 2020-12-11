@@ -229,8 +229,14 @@ class OCR_VC: UIViewController, G8TesseractDelegate, UIImagePickerControllerDele
                 if completionReturnData == true {
                     DispatchQueue.main.async {
                         self.removeSpinner()
-                        let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "TablePage") as? SearchTablePage_VC
-                        self.navigationController?.pushViewController(searchJump!, animated: true)
+                        if searchTypeOption.searchType == "Product Search" {
+                            let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "TablePage") as? SearchTablePage_VC
+                            self.navigationController?.pushViewController(searchJump!, animated: true)
+                        } else if searchTypeOption.searchType == "Check Before You Buy" {
+                            let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "CollectionTablePage") as? CheckpurchaseSearchMainPage_VC
+                            self.navigationController?.pushViewController(searchJump!, animated: true)
+                        }
+  
                     }
                 } else {
                     DispatchQueue.main.async {

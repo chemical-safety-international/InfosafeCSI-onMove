@@ -78,7 +78,7 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(errorHandle), name: NSNotification.Name("errorLogin"), object: nil)
         
-
+        self.navigationItem.title = "Login"
     }
     
     @objc private func errorHandle() {
