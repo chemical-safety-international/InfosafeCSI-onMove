@@ -8,10 +8,9 @@
 
 import UIKit
 
-class MultipleLoginPage_VC: UIViewController {
+class OTACODEPage_VC: UIViewController {
 
     @IBOutlet weak var emailTextView: UITextField!
-    @IBOutlet weak var passwordTextView: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     
     

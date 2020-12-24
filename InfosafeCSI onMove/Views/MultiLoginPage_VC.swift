@@ -1,106 +1,63 @@
 //
-//  ClientSelect_VC.swift
+//  MultiLoginPage_VC.swift
 //  InfosafeCSI onMove
 //
-//  Created by Releski Tan on 26/10/20.
+//  Created by Releski Tan on 16/12/20.
 //  Copyright © 2020 Chemical Safety International. All rights reserved.
 //
 
 import UIKit
 
-class ClientSelect_VC: UIViewController {
+class MultiLoginPage_VC: UIViewController {
 
-    @IBOutlet weak var clientListTableView: UITableView!
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var countineButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        getClientList()
-//        checkTableViewRowsFit()
-        setNavigationbar()
-        
-//        NotificationCenter.default.addObserver(self, selector: #selector(jumpToSearchPage), name: NSNotification.Name("jumpToSearchPage"), object: nil)
-        clientListTableView.reloadData()
+        countineButton.layer.cornerRadius = 18
+        self.navigationItem.title = "Email Check"
+        hideKeyboard()
+        getRemeberedEmail()
+
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.isHidden = true
 
     }
     
-//    func checkTableViewRowsFit() {
-////        clientListTableView.sizeToFit()
-//        if (clientListTableView.contentSize.height < clientListTableView.frame.size.height - 40) {
-//            clientListTableView.isScrollEnabled = false;
-//         }
-//        else {
-//            clientListTableView.isScrollEnabled = true;
-//         }
-//    }
-
-    func setNavigationbar() {
-        //change background color
-//            //change background color & back button color
-            self.navigationController?.navigationBar.isTranslucent = false
-            self.navigationController?.navigationBar.barTintColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
-            self.navigationController?.navigationBar.tintColor = UIColor.white
-
-//            //change navigation bar text color and font
-            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 23), .foregroundColor: UIColor.white]
-            self.navigationItem.title = "Choose A Client"
-               
-    
-    }
-    
-    @objc func jumpToSearchPage() {
-
-        let searchPage = storyboard?.instantiateViewController(withIdentifier: "SearchSelection") as? SearchSelection_VC
-        self.navigationController?.pushViewController(searchPage!, animated: true)
-        
-    }
-
-}
-
-extension ClientSelect_VC: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return localclientinfo.clientList.count;
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "clientListCell", for: indexPath) as? ClientListTableViewCell
-        cell?.clientNameLabel.layer.cornerRadius = 15
-        cell?.clientNameLabel.layer.borderWidth = 2
-        cell?.clientNameLabel.layer.borderColor = UIColor.white.cgColor
-        cell?.clientNameLabel.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.9)
-
-        
-        if localclientinfo.clientList.isEmpty == false {
-            cell?.clientNameLabel.text = localclientinfo.clientList[indexPath.row].clientname
-        } else {
-            
+    func remeberEmail() {
+        if emailTextField.text?.isEmpty == false {
+            let defaults = UserDefaults.standard
+            defaults.set(emailTextField.text!, forKey: localclientcoreData.username)
         }
-//        cell?.clientNameLabel.sizeToFit()
-        return cell!
     }
     
+    func getRemeberedEmail() {
+        let defaults = UserDefaults.standard
+        let remeberedEmail = defaults.string(forKey: localclientcoreData.username)
+        if remeberedEmail?.isEmpty == false {
+            
+            emailTextField.text = remeberedEmail
+        }
+    }
     
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        localclientinfo.clientid = localclientinfo.clientList[indexPath.row].clientid
-        localclientinfo.appointedclient = localclientinfo.clientList[indexPath.row].clientid
-        
-        let email = locallogininfo.email
-        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
 
-//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "jumpToSearchPage"), object: nil)
+    func emailCheck() {
+        var email: String!
+        
+        email = emailTextField.text
         self.showSpinner(onView: self.view)
-        csiWCF_VM().callLogin(email: email!, password: "", session: session) { (completion) in
+        locallogininfo.email = email
+        localclientinfo.appointedclient = ""
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+        
+        csiWCF_VM().callLoginWithOTACODE(email: email, password: "", session: session, otacode: "") { (completion) in
             
             //here dataResponse received from a network request
             do {
@@ -109,7 +66,7 @@ extension ClientSelect_VC: UITableViewDelegate, UITableViewDataSource {
                 let model = try decoder.decode(outLoginData.self, from:
                     completion) //Decode JSON Response Data
 //                print(model)
-//                localclientinfo.clientid = model.clientid
+                localclientinfo.clientid = model.clientid
                 localclientinfo.clientmemberid = model.clientmemberid
                 localclientinfo.infosafeid = model.infosafeid
                 localclientinfo.clientcode = model.clientcode
@@ -120,27 +77,35 @@ extension ClientSelect_VC: UITableViewDelegate, UITableViewDataSource {
                 localclientinfo.retIndexNo = model.retIndexNo
                 localclientinfo.retIndexText = model.retIndexText
                 localclientinfo.needchooseclient = model.needchooseclient
-//                localclientinfo.appointedclient = model.appointedclient
+                if model.needchooseclient == true {
+                    localclientinfo.appointedclient = ""
+                }
                 
-//                let result = try JSONDecoder().decode(outLoginMultiClient.self, from: completion)
-
-//                let clientArray = result.relatedclients
-//
-//                for i in clientArray {
-//                    var clientList = clientListItem()
-//                    clientList.clientname = i.clientname
-//                    clientList.clientid = i.clientid
-//                    localclientinfo.clientList.append(clientList)
-//                }
+                
+                let result = try JSONDecoder().decode(outLoginMultiClient.self, from: completion)
+                localclientinfo.clientList.removeAll()
+                
+                if result.relatedclients?.count ?? [].count > 0 {
+                    let clientArray = result.relatedclients
+                    
+                    for i in clientArray! {
+                        var clientList = clientListItem()
+                        clientList.clientname = i.clientname
+                        clientList.clientid = i.clientid
+                        localclientinfo.clientList.append(clientList)
+                    }
+                }
                             
                 DispatchQueue.main.async {
                     if model.passed == true {
                         self.removeSpinner()
 
                         if localclientinfo.needchooseclient == true {
+                            self.remeberEmail()
                             let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "ClientSelect") as? ClientSelect_VC
                             self.navigationController?.pushViewController(loginJump!, animated: true)
                         } else {
+                            self.remeberEmail()
                             let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchSelection") as? SearchSelection_VC
                             self.navigationController?.pushViewController(loginJump!, animated: true)
                         }
@@ -150,19 +115,26 @@ extension ClientSelect_VC: UITableViewDelegate, UITableViewDataSource {
                         if model.isgeneric == false {
 //                            self.checkNonGenericErrorType(errorno: localclientinfo.errorno)
                             if localclientinfo.retIndexText.contains("Blank Password") {
-                                
+                                self.remeberEmail()
                                 locallogininfo.email = email
                                 let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "LoginPage") as? LoginPage_VC
                                 self.navigationController?.pushViewController(loginJump!, animated: true)
                             } else if localclientinfo.retIndexText.contains("Multiple Client") && localclientinfo.needchooseclient == true {
+                                self.remeberEmail()
                                 let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "ClientSelect") as? ClientSelect_VC
                                 self.navigationController?.pushViewController(loginJump!, animated: true)
                             } else if localclientinfo.retIndexNo.contains("E") {
                                 self.showAlert(title: "Verify Failed", message: localclientinfo.retIndexText)
                             }
+                            
                         } else if model.isgeneric == true {
 //                            self.checkGenericErrorType(errorno: localclientinfo.errorno)
-                            if localclientinfo.retIndexText.contains("OTA Code Sent") {
+                            if localclientinfo.needchooseclient == true {
+                                self.remeberEmail()
+                                let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "ClientSelect") as? ClientSelect_VC
+                                self.navigationController?.pushViewController(loginJump!, animated: true)
+                            } else if localclientinfo.retIndexText.contains("OTA Code Sent") {
+                                self.remeberEmail()
                                         let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "OTACODEPage") as? OTACODEPage_VC
                                         self.navigationController?.pushViewController(loginJump!, animated: true)
                             } else if localclientinfo.retIndexNo.contains("E") {
@@ -183,14 +155,51 @@ extension ClientSelect_VC: UITableViewDelegate, UITableViewDataSource {
                 print("Error", parsingError)
             }
         }
+ 
     }
+    
+    func hideKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(disKeyboard))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
+    }
+    
+    //Notify to disKeyboard
+    @objc func disKeyboard() {
+        emailTextField.endEditing(true)
+    }
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+    @IBAction func continueButtonTapped(_ sender: Any) {
+        emailCheck()
+    }
+    
 }
 
-extension ClientSelect_VC : URLSessionDelegate {
+
+extension MultiLoginPage_VC : URLSessionDelegate {
     public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
        //Trust the certificate even if not valid
        let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
 
        completionHandler(.useCredential, urlCredential)
+    }
+}
+
+extension MultiLoginPage_VC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == emailTextField {
+            textField.resignFirstResponder()
+            emailCheck()
+            return false
+        }
+        return true
     }
 }

@@ -10,22 +10,60 @@ import Foundation
 import UIKit
 
 struct outLoginData: Codable {
-    var apptype: Int!
-    var clientcode: String!
-    var clientid: String!
-    var clientlogo: String!
-    var clientmemberid: String!
-    var error: String!
-    var firstname: String!
-    var infosafeid: String!
-    var passed: Bool!
-    var surname: String!
+    var apptype: Int
+    var clientcode: String?
+    var clientid: String?
+    var clientlogo: String?
+    var clientmemberid: String?
+//    var error: String!
+//    var errorno: Int!
+    var firstname: String?
+    var infosafeid: String?
+    var passed: Bool
+    var surname: String?
+    var isgeneric: Bool
+    var needchooseclient: Bool
+    var needotacode: Bool
+    var needpsw: Bool
+    var retIndexNo: String?
+    var retIndexText: String?
+//    var relatedclients: [String] = []
+    var appointedclient: String?
+
+}
+
+struct outLoginMultiClient : Decodable {
+    let relatedclients: [multiClient]?
+}
+
+struct multiClient : Decodable {
+    let clientid : String?
+    let clientname: String?
+}
+
+struct loginNonGenericErrorType {
+    static var error2: String = "Client member email hasn't verified."
+    static var error3: String = "Client user detail cannot be found."
+    static var error4: String = "Client user is disabled."
+    static var error5: String = "Client member security is not enabled."
+    static var error6: String = "Password is empty."
+    static var error7: String = "Password is incorrect."
+    static var error8: String = "Appointed client is invalid."
+    
+}
+
+struct loginGenericErrorType {
+    static var error61: String = "SEND OTA CODE."
+    static var error62: String = "OTA CODE ERROR."
+    static var error63: String = "OTA CODE EXPIRED."
+    static var error66: String = "CHOOSE A CLIENT."
 }
 
 struct locallogininfo{
     static var deviceName: String?
     static var UUID: String?
     static var model: String?
+    static var email: String!
 }
 
 struct localclientinfo {
@@ -39,16 +77,29 @@ struct localclientinfo {
     static var clientloginstatus: String!
     static var apptype: Int!
     static var error: String!
-    
+    static var errorno: Int!
+    static var passed: Bool!
+    static var isgeneric: Bool!
+    static var needchooseclient: Bool!
+    static var needotacode: Bool!
+    static var needpsw: Bool!
+    static var otacode:String!
+    static var relatedclients: [String] = []
+    static var retIndexNo: String!
+    static var retIndexText: String!
     static var clientList: [clientListItem] = []
     static var selectclientname: String!
+    static var appointedclient: String!
     
-    struct clientListItem {
-        var clientName: String!
-        
-        init (clientName: String? = nil) {
-            self.clientName = clientName
-        }
+}
+
+struct clientListItem {
+    var clientid: String!
+    var clientname: String!
+    
+    init (clientid:String? = nil, clientname: String? = nil) {
+        self.clientid = clientid
+        self.clientname = clientname
     }
 }
 

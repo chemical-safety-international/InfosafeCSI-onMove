@@ -22,7 +22,18 @@ class csiWCF_VM: UIViewController {
         let deviceid: String = ""
         let devicemac: String = ""
         
-        csiWCF_loginbyEmail_https(email: email, password: password, deviceid: deviceid, devicemac: devicemac, session: session) { (returnCompletionData) in
+        csiWCF_loginbyEmail_https(email: email, password: password, deviceid: deviceid, devicemac: devicemac, otacode:"", session: session) { (returnCompletionData) in
+
+            completions(returnCompletionData)
+        }
+    }
+    
+    func callLoginWithOTACODE(email: String, password: String, session: URLSession, otacode: String, completions:@escaping(Data) -> Void) {
+        
+        let deviceid: String = ""
+        let devicemac: String = ""
+        
+        csiWCF_loginbyEmail_https(email: email, password: password, deviceid: deviceid, devicemac: devicemac, otacode: otacode, session: session) { (returnCompletionData) in
 
             completions(returnCompletionData)
         }

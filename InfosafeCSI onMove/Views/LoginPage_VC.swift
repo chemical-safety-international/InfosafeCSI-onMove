@@ -35,37 +35,30 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
         self.hideKeyboardWhenTappedAround()
         
         let defaults = UserDefaults.standard
-        if (defaults.bool(forKey: "remeberstatus") == true) {
-            userIDTextField.text = defaults.string(forKey: localclientcoreData.username)
-            passwordTextField.text = defaults.string(forKey: localclientcoreData.password)
+        if (defaults.bool(forKey: "\(localclientinfo.appointedclient ?? "")remeberstatus") == true) {
+//            userIDTextField.text = defaults.string(forKey: localclientcoreData.username)
+            if defaults.string(forKey: localclientinfo.appointedclient) == localclientinfo.appointedclient {
+            passwordTextField.text = defaults.string(forKey: "\(localclientinfo.appointedclient ?? "")\(localclientcoreData.password)")
             let image = UIImage(named: "login-ticked-box")
             remember.setImage(image, for: .normal)
-
-            //set image
-            let imageStr: String? = defaults.string(forKey: localclientcoreData.image)
-            if (imageStr != "" || imageStr?.isEmpty == false) {
-                let image = imageStr!.toImage()
-                loginLogo.image = image
             }
-//            else {
-//                let image = UIImage(named: "CSI-Logo1")
+            //set image
+//            let imageStr: String? = defaults.string(forKey: localclientcoreData.image)
+//            if (imageStr != "" || imageStr?.isEmpty == false) {
+//                let image = imageStr!.toImage()
 //                loginLogo.image = image
 //            }
 
-        } else if (defaults.bool(forKey: "remeberstatus") == false) {
-            userIDTextField.text = ""
+
+        } else if (defaults.bool(forKey: "\(localclientinfo.appointedclient ?? "")remeberstatus") == false) {
+//            userIDTextField.text = ""
             passwordTextField.text = ""
+            
 //            let logo = UIImage(named: "CSI-Logo1")
 //            loginLogo.image = logo
-            //print(defaults.string(forKey: localclientcoreData.image) as Any)
-            let imageStr: String? = defaults.string(forKey: localclientcoreData.image)
-            if (imageStr != "" && imageStr != nil && imageStr?.isEmpty == false) {
-                let image = imageStr!.toImage()
-                loginLogo.image = image
-            }
-            
-            let image = UIImage(named: "login-unticked-box")
-            remember.setImage(image, for: .normal)
+//
+//            let image = UIImage(named: "login-unticked-box")
+//            remember.setImage(image, for: .normal)
         }
         
         
@@ -78,7 +71,8 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(errorHandle), name: NSNotification.Name("errorLogin"), object: nil)
         
-        self.navigationItem.title = "Login"
+        setNavigationbar()
+        preloadEmail()
     }
     
     @objc private func errorHandle() {
@@ -89,16 +83,70 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationBar.isHidden = false
+        
+//        let defaults = UserDefaults.standard
+//        if (defaults.bool(forKey: "remeberstatus") == true) {
+//            userIDTextField.text = defaults.string(forKey: localclientcoreData.username)
+//            passwordTextField.text = defaults.string(forKey: localclientcoreData.password)
+//            let image = UIImage(named: "login-ticked-box")
+//            remember.setImage(image, for: .normal)
+//
+//            //set image
+//            let imageStr: String? = defaults.string(forKey: localclientcoreData.image)
+//            if (imageStr != "" || imageStr?.isEmpty == false) {
+//                let image = imageStr!.toImage()
+//                loginLogo.image = image
+//            }
+////            else {
+////                let image = UIImage(named: "CSI-Logo1")
+////                loginLogo.image = image
+////            }
+//
+//        } else if (defaults.bool(forKey: "remeberstatus") == false) {
+////            userIDTextField.text = ""
+//            passwordTextField.text = ""
+////            let logo = UIImage(named: "CSI-Logo1")
+////            loginLogo.image = logo
+//            //print(defaults.string(forKey: localclientcoreData.image) as Any)
+//            let imageStr: String? = defaults.string(forKey: localclientcoreData.image)
+//            if (imageStr != "" && imageStr != nil && imageStr?.isEmpty == false) {
+//                let image = imageStr!.toImage()
+//                loginLogo.image = image
+//            }
+//
+//            let image = UIImage(named: "login-unticked-box")
+//            remember.setImage(image, for: .normal)
+//        }
 
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        self.navigationController?.navigationBar.isHidden = false
+//        self.navigationController?.navigationBar.isHidden = false
 //
 
+    }
+    
+    func preloadEmail() {
+        if locallogininfo.email.isEmpty == false {
+            userIDTextField.text = locallogininfo.email
+            userIDTextField.isUserInteractionEnabled = false
+        }
+    }
+    
+    func setNavigationbar() {
+        //change background color
+        //change background color & back button color
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.barTintColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+
+        //change navigation bar text color and font
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 23), .foregroundColor: UIColor.white]
+        self.navigationItem.title = "Login"
+               
     }
     
 //    override open var shouldAutorotate: Bool {
@@ -134,14 +182,14 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         let defaults = UserDefaults.standard
-        if (defaults.bool(forKey: "remeberstatus") == true) {
+        if (defaults.bool(forKey: "\(localclientinfo.appointedclient ?? "")remeberstatus") == true) {
             let defaults = UserDefaults.standard
-            defaults.set("", forKey: localclientcoreData.username)
+//            defaults.set("", forKey: localclientcoreData.username)
             defaults.set("", forKey: localclientcoreData.password)
 //            defaults.set("", forKey: localclientcoreData.image)
-            let image = UIImage(named: "login-unticked-box")
-            self.remember.setImage(image, for: .normal)
-            defaults.set(false, forKey: "remeberstatus")
+//            let image = UIImage(named: "login-unticked-box")
+//            self.remember.setImage(image, for: .normal)
+            defaults.set(false, forKey: "\(localclientinfo.appointedclient ?? "")remeberstatus")
         }
         loginBtn.isHidden = false
 //        userIDTextField.enablesReturnKeyAutomatically = false
@@ -163,28 +211,28 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func remeberBtnTapped(_ sender: Any) {
-        if (userIDTextField.text! == "") {
-            showAlert(title: "Notice", message: "Username is empty!")
-        } else if (passwordTextField.text! == "") {
+        if (passwordTextField.text! == "") {
             showAlert(title: "Notice", message: "Password is empty!")
         } else {
+
             let defaults = UserDefaults.standard
-            if (defaults.bool(forKey: "remeberstatus") == false) {
-                let defaults = UserDefaults.standard
-                defaults.set(userIDTextField.text!, forKey: localclientcoreData.username)
-                defaults.set(passwordTextField.text!, forKey: localclientcoreData.password)
+            if (defaults.bool(forKey: "\(localclientinfo.appointedclient ?? "")remeberstatus") == false) {
+//                defaults.set(userIDTextField.text!, forKey: localclientcoreData.username)
+                defaults.set(localclientinfo.appointedclient, forKey: localclientinfo.appointedclient)
+                defaults.set(passwordTextField.text!, forKey: "\(localclientinfo.appointedclient ?? "")\(localclientcoreData.password)")
                 let image = UIImage(named: "login-ticked-box")
                 remember.setImage(image, for: .normal)
-                defaults.set(true, forKey: "remeberstatus")
+                defaults.set(true, forKey: "\(localclientinfo.appointedclient ?? "")remeberstatus")
 
-            } else if (defaults.bool(forKey: "remeberstatus") == true) {
+            } else if (defaults.bool(forKey: "\(localclientinfo.appointedclient ?? "")remeberstatus") == true) {
                 let defaults = UserDefaults.standard
-                defaults.set("", forKey: localclientcoreData.username)
+//                defaults.set("", forKey: localclientcoreData.username)
+                defaults.set("", forKey: localclientinfo.clientid)
                 defaults.set("", forKey: localclientcoreData.password)
 //                defaults.set("", forKey: localclientcoreData.image)
                 let image = UIImage(named: "login-unticked-box")
                 remember.setImage(image, for: .normal)
-                defaults.set(false, forKey: "remeberstatus")
+                defaults.set(false, forKey: "\(localclientinfo.appointedclient ?? "")remeberstatus")
             }
         }
     }
@@ -195,13 +243,14 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
         var password: String!
         
         let defaults = UserDefaults.standard
-        if (defaults.bool(forKey: "remeberstatus") == false) {
+        if (defaults.bool(forKey: "\(localclientinfo.appointedclient ?? "")remeberstatus") == false) {
             email = userIDTextField.text!
             password = passwordTextField.text!
-        } else if (defaults.bool(forKey: "remeberstatus") == true) {
+        } else if (defaults.bool(forKey: "\(localclientinfo.appointedclient ?? "")remeberstatus") == true) {
             let defaults = UserDefaults.standard
-            email = defaults.string(forKey: localclientcoreData.username)
-            password = defaults.string(forKey: localclientcoreData.password)
+//            email = defaults.string(forKey: localclientcoreData.username)
+            email = userIDTextField.text!
+            password = defaults.string(forKey: "\(localclientinfo.appointedclient ?? "")\(localclientcoreData.password)")
         }
 
         
@@ -217,80 +266,132 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
                 let decoder = JSONDecoder()
                 let model = try decoder.decode(outLoginData.self, from:
                     completion) //Decode JSON Response Data
-
+                print(model)
                 localclientinfo.clientid = model.clientid
                 localclientinfo.clientmemberid = model.clientmemberid
                 localclientinfo.infosafeid = model.infosafeid
                 localclientinfo.clientcode = model.clientcode
                 localclientinfo.clientlogo = model.clientlogo
                 localclientinfo.apptype = model.apptype
-                localclientinfo.error = model.error
+//                localclientinfo.errorno = model.errorno
+//                localclientinfo.error = model.error
+                localclientinfo.retIndexNo = model.retIndexNo
+                localclientinfo.retIndexText = model.retIndexText
 
+                            
                 DispatchQueue.main.async {
                     if model.passed == true {
                         self.removeSpinner()
-                        if (localclientinfo.clientlogo != "") {
-                            let defaults = UserDefaults.standard
-                            defaults.set(localclientinfo.clientlogo, forKey: localclientcoreData.image)
-                        }
+//                        if (localclientinfo.clientlogo != "") {
+//                            let defaults = UserDefaults.standard
+//                            defaults.set(localclientinfo.clientlogo, forKey: localclientcoreData.image)
+//                        }
 
                         let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchSelection") as? SearchSelection_VC
                         self.navigationController?.pushViewController(loginJump!, animated: true)
                     } else if model.passed == false {
+                        
                         self.removeSpinner()
-                        self.showAlert(title: "Verify Failed", message: "Email or Password is invaild, please try again.")
+                        if model.isgeneric == false {
+                            if localclientinfo.retIndexNo.contains("E") {
+                                self.showAlert(title: "Verify Failed", message: localclientinfo.retIndexText)
+                            }
+                            
+                        } else if (model.isgeneric == true) {
+                            if localclientinfo.retIndexNo.contains("E") {
+                                self.showAlert(title: "Verify Failed", message: localclientinfo.retIndexText)
+                            }
+                            
+                            
+                        } else {
+                            self.showAlert(title: "Verify Failed", message: "Email or Password is invaild, please try again.")
+                        }
+                        
+                        //reset status
                         self.passwordTextField.text = ""
                         
-                        let defaults = UserDefaults.standard
-                        defaults.set("", forKey: localclientcoreData.username)
+//                        let defaults = UserDefaults.standard
+//                        defaults.set("", forKey: localclientcoreData.username)
                         defaults.set("", forKey: localclientcoreData.password)
+                        
 //                        defaults.set("", forKey: localclientcoreData.image)
                         let image = UIImage(named: "login-unticked-box")
                         self.remember.setImage(image, for: .normal)
-                        defaults.set(false, forKey: "remeberstatus")
+                        defaults.set(false, forKey: "\(localclientinfo.appointedclient ?? "")remeberstatus")
                         
                     } else {
                         self.removeSpinner()
                         self.showAlert(title: "Failed", message: "Server is no response.")
                         
-                        let defaults = UserDefaults.standard
-                        defaults.set("", forKey: localclientcoreData.username)
+//                        let defaults = UserDefaults.standard
+//                        defaults.set("", forKey: localclientcoreData.username)
                         defaults.set("", forKey: localclientcoreData.password)
 //                        defaults.set("", forKey: localclientcoreData.image)
                         let image = UIImage(named: "login-unticked-box")
                         self.remember.setImage(image, for: .normal)
-                        defaults.set(false, forKey: "remeberstatus")
+                        defaults.set(false, forKey: "\(localclientinfo.appointedclient ?? "")remeberstatus")
                     }
                 }
             } catch let parsingError {
                 print("Error", parsingError)
             }
         }
+ 
     }
     
-//    func textTest() {
-////        let path = NSString(string: "~/Pictograms.txt").expandingTildeInPath
-////        let fileContent = try?NSString(contentsOfFile: path, encoding: String.Encoding.utf8.rawValue)
-////        print(fileContent)
-//        
-//        var items = localpictograms()
-//        let bundle = Bundle(for: type(of: self))
-//        if let path = bundle.path(forResource: "Pictograms", ofType: "txt") {
-//            let contentStr = try? NSString(contentsOfFile: path, encoding: String.Encoding.utf8.rawValue)
-//            let contentDat = contentStr?.data(using: String.Encoding.utf8.rawValue)
-//            let contentDic = try? JSONSerialization.jsonObject(with: contentDat!, options: [])
-//            print(contentDic!)
-//            
-//            let jsonArr = contentDic as? [String: Any]
-//            jsonArr!.forEach { info in
-//                
-//            }
-////            contentData.forEach
-//        } else {
-//            print("failed")
-//        }
-//    }
+    func checkNonGenericErrorType(errorno: Int) {
+        
+        switch errorno {
+        case 10002:
+            self.removeSpinner()
+            self.showAlert(title: "Verify Failed", message: loginNonGenericErrorType.error2)
+        case 10003:
+            self.removeSpinner()
+            self.showAlert(title: "Verify Failed", message: loginNonGenericErrorType.error3)
+        case 10004:
+            self.removeSpinner()
+            self.showAlert(title: "Verify Failed", message: loginNonGenericErrorType.error4)
+        case 10005:
+            self.removeSpinner()
+            self.showAlert(title: "Verify Failed", message: loginNonGenericErrorType.error5)
+        case 10006:
+            self.removeSpinner()
+            self.showAlert(title: "Verify Failed", message: loginNonGenericErrorType.error6)
+        case 10007:
+            self.removeSpinner()
+            self.showAlert(title: "Verify Failed", message: loginNonGenericErrorType.error7)
+        case 10008:
+            self.removeSpinner()
+            self.showAlert(title: "Verify Failed", message: loginNonGenericErrorType.error8)
+        default: break
+            
+        }
+        
+    }
+    
+    func checkGenericErrorType(errorno: Int) {
+        
+        switch errorno {
+        case 10020:
+            self.removeSpinner()
+            self.showAlert(title: "Verify Failed", message: loginGenericErrorType.error61)
+        case 10021:
+            self.removeSpinner()
+            self.showAlert(title: "Verify Failed", message: loginGenericErrorType.error62)
+        case 10022:
+            self.removeSpinner()
+            self.showAlert(title: "Verify Failed", message: loginGenericErrorType.error63)
+        case 10023:
+            self.removeSpinner()
+            self.showAlert(title: "Verify Failed", message: loginGenericErrorType.error66)
+        default: break
+            
+        }
+        
+    }
+    
 }
+
 
 extension LoginPage_VC : URLSessionDelegate {
     public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {

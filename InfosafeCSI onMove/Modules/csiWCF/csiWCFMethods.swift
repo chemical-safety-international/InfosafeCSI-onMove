@@ -57,12 +57,15 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
     task.resume()
 }
 
-func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, devicemac:String, session: URLSession, completion: @escaping (Data) -> Void) -> (Void)
+func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, devicemac:String, otacode:String, session: URLSession, completion: @escaping (Data) -> Void) -> (Void)
 {
     
     //create a json type string
-    let json: [String: Any] = ["email":email, "password":password, "deviceid":deviceid, "devicemac":devicemac, "phoneno": "", "devicename": locallogininfo.deviceName ?? "", "devicemodel": locallogininfo.model ?? "", "deviceserialno": locallogininfo.UUID ?? "", "deviceSEID": "", "deviceIMEI": "", "deviceMEID": "", "sourceip":""]
+    let json: [String: Any] = ["email":email, "password":password, "deviceid":deviceid, "devicemac":devicemac, "phoneno": "", "devicename": locallogininfo.deviceName ?? "", "devicemodel": locallogininfo.model ?? "", "deviceserialno": locallogininfo.UUID ?? "", "deviceSEID": "", "deviceIMEI": "", "deviceMEID": "", "sourceip":"", "otacode": otacode, "appointedclient": localclientinfo.appointedclient ?? ""]
+    //"isgeneric":"", "appointedclient": "", "generic":"", "baseURL":""
+//    let json: [String: Any] = ["email":"releski.tan@chemicalsafety.com.au", "password":"", "deviceid":deviceid, "devicemac":devicemac, "phoneno": "", "devicename": locallogininfo.deviceName ?? "", "devicemodel": locallogininfo.model ?? "", "deviceserialno": locallogininfo.UUID ?? "", "deviceSEID": "", "deviceIMEI": "", "deviceMEID": "", "sourceip":"", "appointedclient": ""]
     
+    print(json)
     //serialiazation of json string
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
@@ -95,7 +98,6 @@ func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, d
 //check return value
         let str = String.init(data: dataResponse, encoding: .utf8)
         print(str! as Any)
-//        print("finished")
         completion(dataResponse)
     }
     task.resume()

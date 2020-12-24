@@ -21,6 +21,10 @@ class StartupPage_VC: UIViewController {
         if #available(iOS 13.0, *) {
             overrideUserInterfaceStyle = .light
         }
+        
+        if #available(iOS 14.0, *) {
+//            navigationItem.backBarButtonItem?.menu?
+        }
         textLbl.font = UIFont.italicSystemFont(ofSize: 25)
         textLbl.font = UIFont.boldSystemFont(ofSize: 25)
         
@@ -198,49 +202,35 @@ class StartupPage_VC: UIViewController {
     
 }
 
+
+
 //class NavigationController: UINavigationController, UINavigationControllerDelegate {
-//    init() {
-//        super.init(rootViewController: StartupPage_VC())
-//        delegate = self
-//    }
+//  init() {
+//    super.init(rootViewController: LoginPage_VC())
+//    delegate = self
+//  }
 //
 //    required init?(coder aDecoder: NSCoder) {
 //        fatalError("init(coder:) has not been implemented")
 //    }
 //
-//    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-//        let backButton = BackBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
-//        viewController.navigationItem.backBarButtonItem = backButton
+//  func navigationController(_ navigationController: UINavigationController,
+//                            willShow viewController: UIViewController, animated: Bool) {
+//
+//    let backButton = BackBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+//    viewController.navigationItem.backBarButtonItem = backButton
+//  }
+//}
+//
+//class BackBarButtonItem: UIBarButtonItem {
+//    @available(iOS 14.0, *)
+//    override var menu: UIMenu? {
+//        set {
+//            // Don't set the menu here
+//            // super.menu = menu
+//        }
+//        get {
+//            return super.menu
+//        }
 //    }
 //}
-
-class NavigationController: UINavigationController, UINavigationControllerDelegate {
-  init() {
-    super.init(rootViewController: StartupPage_VC())
-    delegate = self
-  }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-  func navigationController(_ navigationController: UINavigationController,
-                            willShow viewController: UIViewController, animated: Bool) {
-    
-    let backButton = BackBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
-    viewController.navigationItem.backBarButtonItem = backButton
-  }
-}
-
-class BackBarButtonItem: UIBarButtonItem {
-    @available(iOS 14.0, *)
-    override var menu: UIMenu? {
-        set {
-            // Don't set the menu here
-            // super.menu = menu
-        }
-        get {
-            return super.menu
-        }
-    }
-}

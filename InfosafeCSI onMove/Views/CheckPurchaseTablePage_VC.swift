@@ -86,7 +86,7 @@ class CheckPurchaseTablePage_VC: UIViewController {
 
 //            //change navigation bar text color and font
 
-            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20), .foregroundColor: UIColor.white]
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18), .foregroundColor: UIColor.white]
         
             self.navigationItem.title = checkPurchaseSearchPassData.passedProductName
 //        }
@@ -135,7 +135,9 @@ class CheckPurchaseTablePage_VC: UIViewController {
                 }
             }
             
-            let uniqueSDSCount = Array(Set(sdsDataArray))
+            //count how many unique SDS
+//            let uniqueSDSCount = Array(Set(sdsDataArray))
+            
 //            tableDataValue.supplier = matchSupplier
 //            tableDataValue.noOfSDS = String(uniqueSDSCount.count)
 //            checkPurchaseSearchSupplierDataArray.append(tableDataValue)
@@ -166,38 +168,18 @@ class CheckPurchaseTablePage_VC: UIViewController {
             }
             
             supplierFullDataValue.supplier = matchSupplier
-            supplierFullDataValue.noOfSDS = uniqueSDSCount.count
+            //count no of SDS
+//            supplierFullDataValue.noOfSDS = uniqueSDSCount.count
+            //changed to count the products
+            supplierFullDataValue.noOfSDS = sdsDataArray.count
             supplierFullDataValue.issueDate = (issueDateRange)
             supplierFullData.append(supplierFullDataValue)
-//            print("\(matchSupplier)'s issue value array: \(issueDateValueArray)")
+
         }
-//        print("issue array: \(issueDateArray)\n")
         sortData()
     }
-    
-//    func countSDS() {
-//        checkPurchaseSearchSupplierDataArray.removeAll()
-//        let matchProductName = checkPurchaseSearchPassData.passedProductName
-//        for (key, _) in tableData {
-//            sdsDataArray.removeAll()
-//            let matchSupplier = "\(key)"
-//            issueDateValueArray.removeAll()
-//            for i in 0..<localsearchinfo.results.count {
-//                if matchProductName == localsearchinfo.results[i].prodname && matchSupplier == localsearchinfo.results[i].company {
-//                    let sdsValue = localsearchinfo.results[i].sdsno ?? ""
-//                    sdsDataArray.append(sdsValue)
-//                }
-//
-//            }
-//            print(sdsDataArray)
-//            let uniqueSDSCount = Array(Set(sdsDataArray))
-//            tableDataValue.supplier = matchSupplier
-//            tableDataValue.noOfSDS = String(uniqueSDSCount.count)
-//            checkPurchaseSearchSupplierDataArray.append(tableDataValue)
-//        }
-//    }
             
-    
+    // sort the no of SDS function (changed to sort no of the products)
     func sortData() {
 //        print(supplierFullData)
         sortedsupplierFullData = supplierFullData.sorted {
@@ -218,7 +200,7 @@ extension CheckPurchaseTablePage_VC: UITableViewDelegate, UITableViewDataSource 
             let cell = tableView.dequeueReusableCell(withIdentifier: "checkBuyTableCell", for: indexPath) as! CheckPurchaseTableViewCell
         
         cell.supplierLabel.text = String(self.sortedsupplierFullData[indexPath.row].supplier)
-        cell.noOfSDSLabel.text = "No of SDS: \(String(self.sortedsupplierFullData[indexPath.row].noOfSDS ?? 0))"
+        cell.noOfSDSLabel.text = "No. Of Products: \(String(self.sortedsupplierFullData[indexPath.row].noOfSDS ?? 0))"
         cell.issueDateLabel.text = "Issue Date: \(String(sortedsupplierFullData[indexPath.row].issueDate))"
         
         cell.supplierLabel.textColor = UIColor.white

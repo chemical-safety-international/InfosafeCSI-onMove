@@ -23,7 +23,7 @@
 		5743492122B08C000036199E /* SDSMenu_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743492022B08C000036199E /* SDSMenu_VC.swift */; };
 		5743492322B094F00036199E /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743492222B094F00036199E /* MenuTableViewCell.swift */; };
 		574D034A234D909900B93F7C /* SDSViewTI_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574D0349234D909900B93F7C /* SDSViewTI_VC.swift */; };
-		575B76B8255E01BD0057A231 /* MultipleLoginPage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575B76B7255E01BC0057A231 /* MultipleLoginPage_VC.swift */; };
+		575B76B8255E01BD0057A231 /* OTACODEPage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575B76B7255E01BC0057A231 /* OTACODEPage_VC.swift */; };
 		57711F57228808300051E576 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57711F56228808300051E576 /* TableViewCell.swift */; };
 		57727D2F230B765900734B43 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57727D2E230B765900734B43 /* CoreDataManager.swift */; };
 		57727D31230CC6D300734B43 /* LocalSearch_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57727D30230CC6D300734B43 /* LocalSearch_VC.swift */; };
@@ -41,6 +41,7 @@
 		578B9E6E23600F9200AB1475 /* Pictograms.txt in Resources */ = {isa = PBXBuildFile; fileRef = 578B9E6D23600F9100AB1475 /* Pictograms.txt */; };
 		578F6B94234D52FC00CCDFC9 /* SDSViewFA_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578F6B93234D52FC00CCDFC9 /* SDSViewFA_VC.swift */; };
 		5793128324760DFB009E5E8A /* Scanner_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5793128224760DFB009E5E8A /* Scanner_VC.swift */; };
+		57997A92258990240077A021 /* MultiLoginPage_VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57997A91258990240077A021 /* MultiLoginPage_VC.swift */; };
 		57A46680234FF36A007B810D /* GHSCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A4667F234FF36A007B810D /* GHSCollectionViewCell.swift */; };
 		57A47C46238B91B80097B068 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A47C45238B91B80097B068 /* extensions.swift */; };
 		57A47C482390E07C0097B068 /* multiSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A47C472390E07C0097B068 /* multiSearchCell.swift */; };
@@ -264,7 +265,7 @@
 		5743492022B08C000036199E /* SDSMenu_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSMenu_VC.swift; sourceTree = "<group>"; };
 		5743492222B094F00036199E /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		574D0349234D909900B93F7C /* SDSViewTI_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSViewTI_VC.swift; sourceTree = "<group>"; };
-		575B76B7255E01BC0057A231 /* MultipleLoginPage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleLoginPage_VC.swift; sourceTree = "<group>"; };
+		575B76B7255E01BC0057A231 /* OTACODEPage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTACODEPage_VC.swift; sourceTree = "<group>"; };
 		57711F56228808300051E576 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		57727D2E230B765900734B43 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		57727D30230CC6D300734B43 /* LocalSearch_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSearch_VC.swift; sourceTree = "<group>"; };
@@ -282,6 +283,7 @@
 		578B9E6D23600F9100AB1475 /* Pictograms.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Pictograms.txt; sourceTree = "<group>"; };
 		578F6B93234D52FC00CCDFC9 /* SDSViewFA_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSViewFA_VC.swift; sourceTree = "<group>"; };
 		5793128224760DFB009E5E8A /* Scanner_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scanner_VC.swift; sourceTree = "<group>"; };
+		57997A91258990240077A021 /* MultiLoginPage_VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLoginPage_VC.swift; sourceTree = "<group>"; };
 		57A4667F234FF36A007B810D /* GHSCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GHSCollectionViewCell.swift; sourceTree = "<group>"; };
 		57A47C45238B91B80097B068 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		57A47C472390E07C0097B068 /* multiSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = multiSearchCell.swift; sourceTree = "<group>"; };
@@ -835,11 +837,12 @@
 				5793128224760DFB009E5E8A /* Scanner_VC.swift */,
 				57886E6F249C2D47001EDF99 /* OCR_VC.swift */,
 				57C28FBD2546493300172B78 /* ClientSelect_VC.swift */,
-				575B76B7255E01BC0057A231 /* MultipleLoginPage_VC.swift */,
+				575B76B7255E01BC0057A231 /* OTACODEPage_VC.swift */,
 				577B04A625634A7D009E46A7 /* CheckPurchaseTablePage_VC.swift */,
 				57F258DF2567515B00171BE9 /* SearchSelection_VC.swift */,
 				5782E99D256B2D85000185B6 /* CheckPurchaseSearchPage_VC.swift */,
 				5782E9A2256C814A000185B6 /* CheckpurchaseSearchMainPage_VC.swift */,
+				57997A91258990240077A021 /* MultiLoginPage_VC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1287,6 +1290,7 @@
 				57E1A81D23348EC300072377 /* Update_VC.swift in Sources */,
 				57C8B92C22825DE4004966C5 /* csiWCF_VM.swift in Sources */,
 				57E1686122DD505C00CBD310 /* GalleryPage_VC.swift in Sources */,
+				57997A92258990240077A021 /* MultiLoginPage_VC.swift in Sources */,
 				5782E99E256B2D85000185B6 /* CheckPurchaseSearchPage_VC.swift in Sources */,
 				17818BC122811A88000EAFF1 /* InfosafeCSI_onMove.xcdatamodeld in Sources */,
 				5743492322B094F00036199E /* MenuTableViewCell.swift in Sources */,
@@ -1294,7 +1298,7 @@
 				57A815B12345D4CA00EE352B /* SDSViewCore_VC.swift in Sources */,
 				577B1A5D2285195600E5C4AB /* SearchTablePage_VC.swift in Sources */,
 				5720266122DC469D003E1C17 /* PhotoPage_VC.swift in Sources */,
-				575B76B8255E01BD0057A231 /* MultipleLoginPage_VC.swift in Sources */,
+				575B76B8255E01BD0057A231 /* OTACODEPage_VC.swift in Sources */,
 				57C6F281253FF66E00E9BDC5 /* ClientListTableViewCell.swift in Sources */,
 				57886E70249C2D47001EDF99 /* OCR_VC.swift in Sources */,
 				5782E9A3256C814A000185B6 /* CheckpurchaseSearchMainPage_VC.swift in Sources */,
@@ -1485,7 +1489,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = DQNS8CDPT5;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "InfosafeCSI onMove/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1494,7 +1498,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.40;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMov";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMove";
 				PRODUCT_NAME = "Chemical Safety - InfosafeCSI";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1509,7 +1513,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = DQNS8CDPT5;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "InfosafeCSI onMove/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1518,7 +1522,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.40;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMov";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chemicalsafety.InfosafeCSI-onMove";
 				PRODUCT_NAME = "Chemical Safety - InfosafeCSI";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
