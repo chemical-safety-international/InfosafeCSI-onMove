@@ -18,7 +18,7 @@ class OTACODEPage_VC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-
+        localclientinfo.otacode = ""
         loginButton.layer.cornerRadius = 18
         setNavigationbar()
         hideKeyboard()
@@ -50,7 +50,7 @@ class OTACODEPage_VC: UIViewController {
         
         otacode = otacodeTextField.text
         self.showSpinner(onView: self.view)
-        
+        localclientinfo.otacode = otacode
         let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
         
         csiWCF_VM().callLoginWithOTACODE(email: locallogininfo.email, password: "", session: session, otacode: otacode) { (completion) in

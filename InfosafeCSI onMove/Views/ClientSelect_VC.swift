@@ -100,7 +100,13 @@ extension ClientSelect_VC: UITableViewDelegate, UITableViewDataSource {
 
 //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "jumpToSearchPage"), object: nil)
         self.showSpinner(onView: self.view)
-        csiWCF_VM().callLogin(email: email!, password: "", session: session) { (completion) in
+        var otacode: String!
+        if (localclientinfo.otacode.isEmpty == false) {
+            otacode = localclientinfo.otacode
+        } else {
+            otacode = ""
+        }
+        csiWCF_VM().callLoginWithOTACODE(email: email!, password: "", session: session, otacode: otacode) { (completion) in
             
             //here dataResponse received from a network request
             do {

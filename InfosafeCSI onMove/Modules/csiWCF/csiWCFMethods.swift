@@ -62,10 +62,8 @@ func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, d
     
     //create a json type string
     let json: [String: Any] = ["email":email, "password":password, "deviceid":deviceid, "devicemac":devicemac, "phoneno": "", "devicename": locallogininfo.deviceName ?? "", "devicemodel": locallogininfo.model ?? "", "deviceserialno": locallogininfo.UUID ?? "", "deviceSEID": "", "deviceIMEI": "", "deviceMEID": "", "sourceip":"", "otacode": otacode, "appointedclient": localclientinfo.appointedclient ?? ""]
-    //"isgeneric":"", "appointedclient": "", "generic":"", "baseURL":""
-//    let json: [String: Any] = ["email":"releski.tan@chemicalsafety.com.au", "password":"", "deviceid":deviceid, "devicemac":devicemac, "phoneno": "", "devicename": locallogininfo.deviceName ?? "", "devicemodel": locallogininfo.model ?? "", "deviceserialno": locallogininfo.UUID ?? "", "deviceSEID": "", "deviceIMEI": "", "deviceMEID": "", "sourceip":"", "appointedclient": ""]
-    
-    print(json)
+   
+//    print(json)
     //serialiazation of json string
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
@@ -96,8 +94,8 @@ func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, d
                 return }
         
 //check return value
-        let str = String.init(data: dataResponse, encoding: .utf8)
-        print(str! as Any)
+//        let str = String.init(data: dataResponse, encoding: .utf8)
+//        print(str! as Any)
         completion(dataResponse)
     }
     task.resume()
@@ -385,7 +383,7 @@ func csiWCF_GetSDSSearchResultsPage_https(pnameInputData:String, supInputData: S
 //    print(localcriteriainfo.arrName)
 //    print(localcriteriainfo.arrCode)
 //    print(advanArray)
-//    print(json)
+    print(json)
     
     //create task
     let task = session.dataTask(with: request) { (data, response, error) in
@@ -400,8 +398,8 @@ func csiWCF_GetSDSSearchResultsPage_https(pnameInputData:String, supInputData: S
 
                 return }
         
-//        let str = String.init(data: dataResponse, encoding: .utf8)
-//        print(str as Any)
+        let str = String.init(data: dataResponse, encoding: .utf8)
+        print(str as Any)
         completion(dataResponse)
     }
 

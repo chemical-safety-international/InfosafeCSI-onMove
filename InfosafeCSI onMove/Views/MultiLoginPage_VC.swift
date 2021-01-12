@@ -55,6 +55,7 @@ class MultiLoginPage_VC: UIViewController {
         self.showSpinner(onView: self.view)
         locallogininfo.email = email
         localclientinfo.appointedclient = ""
+
         let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
         
         csiWCF_VM().callLoginWithOTACODE(email: email, password: "", session: session, otacode: "") { (completion) in
@@ -79,6 +80,7 @@ class MultiLoginPage_VC: UIViewController {
                 localclientinfo.needchooseclient = model.needchooseclient
                 if model.needchooseclient == true {
                     localclientinfo.appointedclient = ""
+                    localclientinfo.otacode = ""
                 }
                 
                 
