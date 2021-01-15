@@ -53,6 +53,8 @@ class OTACODEPage_VC: UIViewController {
         localclientinfo.otacode = otacode
         let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
         
+        localclientinfo.clientList.removeAll()
+        
         csiWCF_VM().callLoginWithOTACODE(email: locallogininfo.email, password: "", session: session, otacode: otacode) { (completion) in
             
             //here dataResponse received from a network request
