@@ -49,7 +49,7 @@ class ClientSelect_VC: UIViewController {
 
 //            //change navigation bar text color and font
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 23), .foregroundColor: UIColor.white]
-            self.navigationItem.title = "Choose A Client"
+            self.navigationItem.title = "Select a Company"
                
     
     }
@@ -70,10 +70,12 @@ extension ClientSelect_VC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "clientListCell", for: indexPath) as? ClientListTableViewCell
-        cell?.clientNameLabel.layer.cornerRadius = 15
-        cell?.clientNameLabel.layer.borderWidth = 2
+
+        cell?.clientNameLabel.layer.cornerRadius = 8
+        cell?.clientNameLabel.layer.borderWidth = 0.5
         cell?.clientNameLabel.layer.borderColor = UIColor.white.cgColor
-        cell?.clientNameLabel.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.9)
+        //cell?.clientNameLabel.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.9)
+        cell?.clientNameLabel.backgroundColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
 
         
         if localclientinfo.clientList.isEmpty == false {
@@ -115,6 +117,7 @@ extension ClientSelect_VC: UITableViewDelegate, UITableViewDataSource {
                 let model = try decoder.decode(outLoginData.self, from:
                     completion) //Decode JSON Response Data
 //                print(model)
+                
 //                localclientinfo.clientid = model.clientid
                 localclientinfo.clientmemberid = model.clientmemberid
                 localclientinfo.infosafeid = model.infosafeid
@@ -147,7 +150,8 @@ extension ClientSelect_VC: UITableViewDelegate, UITableViewDataSource {
                             let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "ClientSelect") as? ClientSelect_VC
                             self.navigationController?.pushViewController(loginJump!, animated: true)
                         } else {
-                            let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchSelection") as? SearchSelection_VC
+                            
+                            let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
                             self.navigationController?.pushViewController(loginJump!, animated: true)
                         }
                     } else if model.passed == false {
@@ -158,8 +162,27 @@ extension ClientSelect_VC: UITableViewDelegate, UITableViewDataSource {
                             if localclientinfo.retIndexText.contains("Blank Password") {
                                 
                                 locallogininfo.email = email
-                                let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "LoginPage") as? LoginPage_VC
-                                self.navigationController?.pushViewController(loginJump!, animated: true)
+                                localclientinfo.clientlogo = ""
+                                
+                                csiWCF_VM().callGetClientLogo(clientID: localclientinfo.appointedclient, session: session) { (completion) in
+                                    do {
+      
+                                        let decoder = JSONDecoder()
+                                        let model = try decoder.decode(logoData.self, from:
+                                            completion) //Decode JSON Response Data
+                        //                print(model)
+
+                                        localclientinfo.clientlogo = model.clientlogo
+                                        
+                                        let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "LoginPage") as? LoginPage_VC
+                                        self.navigationController?.pushViewController(loginJump!, animated: true)
+                                        
+                                    } catch let parsingError {
+                                        print("Error", parsingError)
+                                    }
+                                }
+//                                let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "LoginPage") as? LoginPage_VC
+//                                self.navigationController?.pushViewController(loginJump!, animated: true)
                             } else if localclientinfo.retIndexText.contains("Multiple Client") && localclientinfo.needchooseclient == true {
                                 let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "ClientSelect") as? ClientSelect_VC
                                 self.navigationController?.pushViewController(loginJump!, animated: true)

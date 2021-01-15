@@ -32,6 +32,10 @@ struct outLoginData: Codable {
 
 }
 
+struct logoData: Codable {
+    var clientlogo: String?
+}
+
 struct outLoginMultiClient : Decodable {
     let relatedclients: [multiClient]?
 }

@@ -85,7 +85,7 @@ func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, d
         guard let dataResponse = data,
             error == nil else {
                 print(error?.localizedDescription ?? "Response Error")
-
+                
                 DispatchQueue.main.async {
                     //send the notification to searchPage_VC
                     NotificationCenter.default.post(name: Notification.Name("errorLogin"), object: nil)
@@ -95,7 +95,52 @@ func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, d
         
 //check return value
 //        let str = String.init(data: dataResponse, encoding: .utf8)
-//        print(str! as Any)
+//
+//        print(str as Any)
+        completion(dataResponse)
+    }
+    task.resume()
+}
+
+//call the WCF function: 'GetClientLogo' with input data
+func csiWCF_GetClientLogo_https(clientID: String, session: URLSession, completion: @escaping (Data) -> Void) -> (Void)
+{
+//    let json: [String: Any] = ["clientID":clientID]
+   
+    let json: [String: Any] = ["clientid": clientID]
+    //serialiazation of json string
+    let jsonData = try? JSONSerialization.data(withJSONObject: json)
+    
+    //*create URL string point to wcf method* should be changed after setting up core data
+    let url = URL(string: csiWCF_URLHeader + "GetClientLogo")!
+    
+    //create request
+    var request = URLRequest(url: url)
+    
+//    request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+    request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+    request.httpMethod = "POST"
+
+    //insert json string to the request
+    request.httpBody = jsonData
+
+
+    //create task
+    let task = session.dataTask(with: request) { (data, response, error) in
+        guard let dataResponse = data,
+            error == nil else {
+                print(error?.localizedDescription ?? "Response Error")
+                
+                DispatchQueue.main.async {
+                    //send the notification to searchPage_VC
+                    NotificationCenter.default.post(name: Notification.Name("error"), object: nil)
+                }
+
+                return }
+
+//        let str = String.init(data: dataResponse, encoding: .utf8)
+//        print(str as Any)
+        
         completion(dataResponse)
     }
     task.resume()

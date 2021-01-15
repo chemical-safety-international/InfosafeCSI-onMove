@@ -73,6 +73,7 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
         
         setNavigationbar()
         preloadEmail()
+        loadLogo()
     }
     
     @objc private func errorHandle() {
@@ -127,6 +128,15 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
 //        self.navigationController?.navigationBar.isHidden = false
 //
 
+    }
+    
+    func loadLogo() {
+        if localclientinfo.clientlogo.isEmpty == false {
+                let image = localclientinfo.clientlogo!.toImage()
+                loginLogo.image = image
+        } else {
+            loginLogo.image = UIImage(named: "CSI-Logo1")
+        }
     }
     
     func preloadEmail() {
@@ -266,7 +276,7 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
                 let decoder = JSONDecoder()
                 let model = try decoder.decode(outLoginData.self, from:
                     completion) //Decode JSON Response Data
-                print(model)
+//                print(model)
                 localclientinfo.clientid = model.clientid
                 localclientinfo.clientmemberid = model.clientmemberid
                 localclientinfo.infosafeid = model.infosafeid
@@ -287,7 +297,7 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
 //                            defaults.set(localclientinfo.clientlogo, forKey: localclientcoreData.image)
 //                        }
 
-                        let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchSelection") as? SearchSelection_VC
+                        let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
                         self.navigationController?.pushViewController(loginJump!, animated: true)
                     } else if model.passed == false {
                         

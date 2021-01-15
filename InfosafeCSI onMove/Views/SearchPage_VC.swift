@@ -35,6 +35,9 @@ class SearchPage_VC: UIViewController {
     @IBOutlet weak var newSBHeight2: NSLayoutConstraint!
     @IBOutlet weak var newSBHeight3: NSLayoutConstraint!
     
+    
+    @IBOutlet weak var checkBeforeYouPurchaseSwitch: UISwitch!
+    
     var count = 0
     
     
@@ -266,6 +269,24 @@ class SearchPage_VC: UIViewController {
 //
 //    }
     
+    @IBAction func checkbeforeyoupurchaseSwitchTapped(_ sender: Any) {
+        if checkBeforeYouPurchaseSwitch.isOn {
+
+            self.navigationItem.title = "Check Before You Purchase"
+            searchTypeOption.searchType = "Check Before You Buy"
+            supplierSearchbar.isUserInteractionEnabled = false
+            supplierSearchbar.text = ""
+            supplierSearchbar.setTextField(color: UIColor.gray)
+        } else {
+            self.navigationItem.title = "Search Product"
+            searchTypeOption.searchType = "Product Search"
+            supplierSearchbar.isUserInteractionEnabled = true
+            supplierSearchbar.setTextField(color: UIColor.white)
+        }
+        
+    }
+    
+    
     
     @IBAction func searchBtnTapped(_ sender: Any) {
 //        print("search button tapped")
@@ -342,8 +363,16 @@ class SearchPage_VC: UIViewController {
                 if completionReturnData == true {
                     DispatchQueue.main.async {
                         self.removeSpinner()
-                        let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "TablePage") as? SearchTablePage_VC
-                        self.navigationController?.pushViewController(searchJump!, animated: true)
+                        
+                        if searchTypeOption.searchType == "Product Search" {
+                            let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "TablePage") as? SearchTablePage_VC
+                            self.navigationController?.pushViewController(searchJump!, animated: true)
+                        } else if searchTypeOption.searchType == "Check Before You Buy" {
+                            let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "CollectionTablePage") as? CheckpurchaseSearchMainPage_VC
+                            self.navigationController?.pushViewController(searchJump!, animated: true)
+                        }
+//                        let searchJump = self.storyboard?.instantiateViewController(withIdentifier: "TablePage") as? SearchTablePage_VC
+//                        self.navigationController?.pushViewController(searchJump!, animated: true)
                     }
                 } else {
                     DispatchQueue.main.async {

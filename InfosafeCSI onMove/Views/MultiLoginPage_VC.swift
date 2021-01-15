@@ -108,7 +108,7 @@ class MultiLoginPage_VC: UIViewController {
                             self.navigationController?.pushViewController(loginJump!, animated: true)
                         } else {
                             self.remeberEmail()
-                            let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchSelection") as? SearchSelection_VC
+                            let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
                             self.navigationController?.pushViewController(loginJump!, animated: true)
                         }
                     } else if model.passed == false {

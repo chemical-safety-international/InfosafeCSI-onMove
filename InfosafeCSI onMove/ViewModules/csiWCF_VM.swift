@@ -39,6 +39,15 @@ class csiWCF_VM: UIViewController {
         }
     }
     
+    func callGetClientLogo(clientID: String, session: URLSession, completions:@escaping(Data) -> Void) {
+        
+        csiWCF_GetClientLogo_https(clientID: clientID, session: session) {
+            (returnCompletionData) in
+            
+            completions(returnCompletionData)
+        }
+    }
+    
     func callSearch(pnameInputData:String, supInputData: String, pcodeInputData: String, barcode: String, session: URLSession, completion:@escaping(Bool) -> Void) {
 //        CoreDataManager.cleanSearchCoreData()
 //        print("callsearch called successfully")
