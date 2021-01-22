@@ -428,7 +428,7 @@ func csiWCF_GetSDSSearchResultsPage_https(pnameInputData:String, supInputData: S
 //    print(localcriteriainfo.arrName)
 //    print(localcriteriainfo.arrCode)
 //    print(advanArray)
-    print(json)
+//    print(json)
     
     //create task
     let task = session.dataTask(with: request) { (data, response, error) in
@@ -443,8 +443,8 @@ func csiWCF_GetSDSSearchResultsPage_https(pnameInputData:String, supInputData: S
 
                 return }
         
-        let str = String.init(data: dataResponse, encoding: .utf8)
-        print(str as Any)
+//        let str = String.init(data: dataResponse, encoding: .utf8)
+//        print(str as Any)
         completion(dataResponse)
     }
 

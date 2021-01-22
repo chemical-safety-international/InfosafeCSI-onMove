@@ -37,6 +37,8 @@ class SearchPage_VC: UIViewController {
     
     
     @IBOutlet weak var checkBeforeYouPurchaseSwitch: UISwitch!
+    @IBOutlet weak var checkBeforeYouPurchaseQuestionButton: UIButton!
+    @IBOutlet weak var companyLogoImageView: UIImageView!
     
     var count = 0
     
@@ -100,6 +102,7 @@ class SearchPage_VC: UIViewController {
         
         self.view.backgroundColor = UIColor(red:0.76, green:0.75, blue:0.75, alpha:1.0)
         setSearchbar()
+        setCompanyLogo()
 
         //multi-Search test
         cPickView.isHidden = true
@@ -138,6 +141,15 @@ class SearchPage_VC: UIViewController {
                
             
 //        }
+    }
+    
+    func setCompanyLogo() {
+        if localclientinfo.clientlogo.isEmpty == false {
+                let image = localclientinfo.clientlogo!.toImage()
+                companyLogoImageView.image = image
+        } else {
+            companyLogoImageView.image = UIImage(named: "CSI-Logo1")
+        }
     }
     
     
@@ -286,6 +298,9 @@ class SearchPage_VC: UIViewController {
         
     }
     
+    @IBAction func checkBeforeYouPurchaseQuestionButton(_ sender: Any) {
+        self.self.showAlert(title: "", message: "Turn on to enable Check Before You Purchase search function.")
+    }
     
     
     @IBAction func searchBtnTapped(_ sender: Any) {

@@ -8,19 +8,17 @@
 
 import UIKit
 
-class CheckpurchaseSearchMainPage_VC: UIViewController {
+class CheckpurchaseSearchMainPage_VC: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var checkPurchaseTableView: UITableView!
     
-    @IBOutlet weak var productNameTittleLbl: UILabel!
-    @IBOutlet weak var noOfSupplierTitleLbl: UILabel!
-    
-    
-    
-    @IBOutlet weak var sortProductNameButton: UIButton!
-    @IBOutlet weak var sortNoOfSupplierButton: UIButton!
-    
     @IBOutlet weak var loadmoreLabel: UILabel!
+    
+    @IBOutlet weak var searchProductNameSearchBar: UISearchBar!
+    @IBOutlet weak var sortView: UIView!
+    
+    @IBOutlet weak var sortingBySegmentControl: UISegmentedControl!
+    @IBOutlet weak var sortingInSegmentControl: UISegmentedControl!
     
     var checkPurchaseSearchDataArray : [checkPurchaseSearchData] = []
     var checkPurchaseSearchDataArray1 : [checkPurchaseSearchData] = []
@@ -31,51 +29,63 @@ class CheckpurchaseSearchMainPage_VC: UIViewController {
     var collectionSortedData = [String: Int]()
     var supplierArray = [String]()
     
+    var checkPurchaseSearchFilterdData: [checkPurchaseSearchData] = []
+    
     var productNameUpdownValue: Bool = true
     var noOfSupplierUpdownValue: Bool = true
+    
+    var settingBool: Bool = false
+    var sortingBy: String = "Product Name"
+    var defaultSegmentNumber: Int = 0
+    var currentSegmentNumber: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         setNavigationbar()
-        setupTitles()
+        setSearchBar()
         addData()
         
         self.navigationController?.navigationBar.isHidden = false
         self.loadmoreLabel.isHidden = true
+        self.sortView.isHidden = true
+        self.sortView.layer.cornerRadius = 10
+        checkPurchaseSearchFilterdData = checkPurchaseSearchDataArray
+        
+        //chang the selected segment text color
+        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
+        
+        //event for touch already selected segment
+        let segmentedTapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapGestureSegment(_:)))
+        sortingInSegmentControl.addGestureRecognizer(segmentedTapGesture)
+        
+        //default sorting
+        sortProductName(updown: true)
     }
     
-    func setupTitles() {
-        let productNameTitle = "Product Name"
-        let noOfSupplierTitle = "No. Of Suppliers"
+// function to control if the user tapped the selected segment
+    @IBAction func onTapGestureSegment(_ tapGesture: UITapGestureRecognizer) {
         
-        productNameTittleLbl.text = productNameTitle
-        noOfSupplierTitleLbl.text = noOfSupplierTitle
-        
-        productNameTittleLbl.backgroundColor = UIColor.orange
-        noOfSupplierTitleLbl.backgroundColor = UIColor.orange
-        
-        productNameTittleLbl.textColor = UIColor.white
-        noOfSupplierTitleLbl.textColor = UIColor.white
-        
-        productNameTittleLbl.layer.borderWidth = 0.5
-        noOfSupplierTitleLbl.layer.borderWidth = 0.5
-        
-        productNameTittleLbl.layer.borderColor = UIColor.white.cgColor
-        noOfSupplierTitleLbl.layer.borderColor = UIColor.white.cgColor
-        
-        productNameTittleLbl.font = UIFont.boldSystemFont(ofSize: 16)
-        noOfSupplierTitleLbl.font = UIFont.boldSystemFont(ofSize: 12)
-    }
-    
+        let point = tapGesture.location(in: sortingInSegmentControl)
+        let segmentSize = sortingInSegmentControl.bounds.size.width / CGFloat(sortingInSegmentControl.numberOfSegments)
+        let touchedSegment = Int(point.x / segmentSize)
 
+        if sortingInSegmentControl.selectedSegmentIndex != touchedSegment {
+            // Normal behaviour the segment changes
+            sortingInSegmentControl.selectedSegmentIndex = touchedSegment
+        } else {
+            // Tap on the already selected segment
+            sortingInSegmentControl.selectedSegmentIndex = touchedSegment
+        }
+        sortingInDidChanged(sortingInSegmentControl)
+        
+    }
     
+    
+    //set up navigation bar
     func setNavigationbar() {
-        //change background color
-//        DispatchQueue.main.async {
-//
-//            //change background color & back button color
+            //change background color & back button color
             self.navigationController?.navigationBar.isTranslucent = false
             self.navigationController?.navigationBar.barTintColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
             self.navigationController?.navigationBar.tintColor = UIColor.white
@@ -84,10 +94,11 @@ class CheckpurchaseSearchMainPage_VC: UIViewController {
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 23), .foregroundColor: UIColor.white]
             self.navigationItem.title = "Result"
                
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(sortTapped))
             
-//        }
     }
     
+    //load data into array
     func addData() {
         
         //get the product names and no of product name
@@ -95,7 +106,6 @@ class CheckpurchaseSearchMainPage_VC: UIViewController {
             let productNameData = localsearchinfo.results[i].prodname ?? ""
             productNameArray.append(productNameData)
         }
-//        print(productNameArray)
 
         //remove duplicates
         for i in productNameArray {
@@ -105,15 +115,13 @@ class CheckpurchaseSearchMainPage_VC: UIViewController {
                 tableData[i]! += 1
             }
         }
-//        print("TableData: \(tableData)")
 
         for (key, value) in tableData {
             tableDataValue.productName = "\(key)"
             tableDataValue.noOfSupplier = Int("\(value)")
             checkPurchaseSearchDataArray.append(tableDataValue)
         }
-        
-//        print("CheckPurchase SearchData Array: \(checkPurchaseSearchDataArray)")
+
      
         
         //get no of supplier for each product
@@ -135,7 +143,6 @@ class CheckpurchaseSearchMainPage_VC: UIViewController {
             checkPurchaseSearchDataArray1.append(tableDataValue)
 
         }
-//        print("CheckPurchase SearchData Array1: \(checkPurchaseSearchDataArray1)")
 
         
         //match each product with suppliers
@@ -145,22 +152,16 @@ class CheckpurchaseSearchMainPage_VC: UIViewController {
             for i in 0..<checkPurchaseSearchDataArray1.count {
                 if matchProductName == checkPurchaseSearchDataArray1[i].productName {
                     matchNoOfSupplier = checkPurchaseSearchDataArray1[i].noOfSupplier
-//                    print("name: \(matchProductName ?? "") \n onriginal no: \(matchNoOfSupplier ?? "")\n current no: \(checkPurchaseSearchDataArray1[i].noOfSupplier ?? "")")
                 }
             }
             checkPurchaseSearchDataArray[i].noOfSupplier = matchNoOfSupplier
-
         }
-        
-//        print("CheckPurchase SearchData Array: \(checkPurchaseSearchDataArray)")
-        
         
         //adding for sort function
         for i in 0..<checkPurchaseSearchDataArray.count {
             tableData1[checkPurchaseSearchDataArray[i].productName] = Int(checkPurchaseSearchDataArray[i].noOfSupplier)
         }
-        
-        sortProductName(updown: productNameUpdownValue)
+
     }
     
     //uniq function for remove duplicate items in an array
@@ -176,166 +177,218 @@ class CheckpurchaseSearchMainPage_VC: UIViewController {
         return buffer
     }
     
+    //function for navigation button
+    @objc func sortTapped() {
+        
+        if settingBool == false {
+            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.orange
+            
+            sortView.isHidden = false
+            settingBool = true
+        } else if settingBool == true {
+            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            sortView.isHidden = true
+            settingBool = false
+        }
+
+    }
+    
+    @IBAction func sortingByDidChanged(_ sender: UISegmentedControl) {
+       
+        if sender.selectedSegmentIndex == 0 {
+            sortingBy = "Product Name"
+            sortingInSegmentControl.setTitle("A to Z", forSegmentAt: 0)
+            sortingInSegmentControl.setTitle("Z to A", forSegmentAt: 1)
+            sortProductName(updown: true)
+            sortingInSegmentControl.selectedSegmentIndex = 0
+        } else if sender.selectedSegmentIndex == 1 {
+            sortingBy = "No. Of Supplier(s)"
+            sortingInSegmentControl.setTitle("Largest to Smallest", forSegmentAt: 0)
+            sortingInSegmentControl.setTitle("Smallest to Largest", forSegmentAt: 1)
+            sortNoOfSupplier(updown: true)
+            sortingInSegmentControl.selectedSegmentIndex = 0
+        }
+    }
+    
+    
+    @IBAction func sortingInDidChanged(_ sender: UISegmentedControl) {
+        
+        if sender.selectedSegmentIndex == 0 {
+            if sortingBy == "Product Name" {
+                sortProductName(updown: true)
+                sortView.isHidden = true
+                settingBool = false
+                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            } else if sortingBy == "No. Of Supplier(s)" {
+                sortNoOfSupplier(updown: true)
+                sortView.isHidden = true
+                settingBool = false
+                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            }
+            
+            currentSegmentNumber = 0
+            defaultSegmentNumber = 0
+            
+        } else if sender.selectedSegmentIndex == 1 {
+            if sortingBy == "Product Name" {
+                sortProductName(updown: false)
+                sortView.isHidden = true
+                settingBool = false
+                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            } else if sortingBy == "No. Of Supplier(s)" {
+                sortNoOfSupplier(updown: false)
+                sortView.isHidden = true
+                settingBool = false
+                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            }
+            currentSegmentNumber = 1
+            defaultSegmentNumber = 1
+            
+        }
+    }
+    
+    
     //sort by name
     func sortProductName(updown: Bool) {
-        checkPurchaseSearchDataArray.removeAll()
+        checkPurchaseSearchFilterdData.removeAll()
+        searchProductNameSearchBar.text = ""
         
         if updown == true {
             for (key, value) in self.tableData1.sorted(by: { $0.key < $1.key}) {
                 tableDataValue.productName = "\(key)"
                 tableDataValue.noOfSupplier = Int("\(value)")
-                checkPurchaseSearchDataArray.append(tableDataValue)
+                checkPurchaseSearchFilterdData.append(tableDataValue)
             }
             checkPurchaseTableView.reloadData()
             let indexPath = IndexPath(row: 0, section: 0)
             checkPurchaseTableView.scrollToRow(at: indexPath, at: .top, animated: true)
             
-            sortProductNameButton.setImage(UIImage.init(systemName: "arrowtriangle.up.fill"), for: .normal)
-            sortProductNameButton.tintColor = UIColor.gray
             productNameUpdownValue = false
         } else if updown == false {
             for (key, value) in self.tableData1.sorted(by: { $0.key > $1.key}) {
                 tableDataValue.productName = "\(key)"
                 tableDataValue.noOfSupplier = Int("\(value)")
-                checkPurchaseSearchDataArray.append(tableDataValue)
+                checkPurchaseSearchFilterdData.append(tableDataValue)
             }
             checkPurchaseTableView.reloadData()
             let indexPath = IndexPath(row: 0, section: 0)
             checkPurchaseTableView.scrollToRow(at: indexPath, at: .top, animated: true)
             
-            sortProductNameButton.setImage(UIImage.init(systemName: "arrowtriangle.down.fill"), for: .normal)
-            sortProductNameButton.tintColor = UIColor.gray
             productNameUpdownValue = true
         }
         
-        sortNoOfSupplierButton.tintColor = UIColor.white
-        sortNoOfSupplierButton.setImage(UIImage.init(systemName: "arrowtriangle.down.fill"), for: .normal)
+
         noOfSupplierUpdownValue = true
         
     }
     
     //sort by number
     func sortNoOfSupplier(updown: Bool) {
-        checkPurchaseSearchDataArray.removeAll()
+        checkPurchaseSearchFilterdData.removeAll()
+        searchProductNameSearchBar.text = ""
         
         if (updown == true) {
             for (key, value) in self.tableData1.sorted(by: { $1.value < $0.value}) {
                 tableDataValue.productName = "\(key)"
                 tableDataValue.noOfSupplier = Int("\(value)")
-                checkPurchaseSearchDataArray.append(tableDataValue)
+                checkPurchaseSearchFilterdData.append(tableDataValue)
             }
             checkPurchaseTableView.reloadData()
             let indexPath = IndexPath(row: 0, section: 0)
             checkPurchaseTableView.scrollToRow(at: indexPath, at: .top, animated: true)
             
-            sortNoOfSupplierButton.setImage(UIImage.init(systemName: "arrowtriangle.up.fill"), for: .normal)
-            sortNoOfSupplierButton.tintColor = UIColor.gray
             noOfSupplierUpdownValue = false
         } else if (updown == false) {
             
             for (key, value) in self.tableData1.sorted(by: { $0.value < $1.value}) {
                 tableDataValue.productName = "\(key)"
                 tableDataValue.noOfSupplier = Int("\(value)")
-                checkPurchaseSearchDataArray.append(tableDataValue)
+                checkPurchaseSearchFilterdData.append(tableDataValue)
             }
             checkPurchaseTableView.reloadData()
             let indexPath = IndexPath(row: 0, section: 0)
             checkPurchaseTableView.scrollToRow(at: indexPath, at: .top, animated: true)
             
-            sortNoOfSupplierButton.setImage(UIImage.init(systemName: "arrowtriangle.down.fill"), for: .normal)
-            sortNoOfSupplierButton.tintColor = UIColor.gray
             noOfSupplierUpdownValue = true
         }
-        sortProductNameButton.tintColor = UIColor.white
-        sortProductNameButton.setImage(UIImage.init(systemName: "arrowtriangle.down.fill"), for: .normal)
+
         productNameUpdownValue = true
     }
-    
-
-    @IBAction func sortProductNameButtonTapped(_ sender: Any) {
-    
-        sortProductName(updown: productNameUpdownValue)
-
-    }
-    
-    @IBAction func sortNoOfSupplierButtonTapped(_ sender: Any) {
-        sortNoOfSupplier(updown: noOfSupplierUpdownValue)
-    }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     //unselect after returning back to this page
     override func viewWillAppear(_ animated: Bool) {
         if let indexPath = self.checkPurchaseTableView.indexPathForSelectedRow{             self.checkPurchaseTableView.deselectRow(at: indexPath, animated: animated)         }
     }
+    
+    //tap the view outside the sort view will dismiss sort view
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+         let touch = touches.first
+        if touch?.view != self.sortView {
+            sortView.resignFirstResponder()
+
+            sortView.isHidden = true
+            settingBool = false
+            navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+
+        } else if touch?.view == self.sortView {
+            sortView.resignFirstResponder()
+            if currentSegmentNumber == defaultSegmentNumber {
+                sortView.isHidden = true
+                settingBool = false
+                navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            }
+        }
+    }
+    
+    //catch the action of typing
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        checkPurchaseSearchFilterdData = []
+        
+        if searchText == "" {
+            checkPurchaseSearchFilterdData = checkPurchaseSearchDataArray
+        } else {
+            for item in checkPurchaseSearchDataArray {
+                if item.productName.uppercased().contains(searchText.uppercased()) {
+                    checkPurchaseSearchFilterdData.append(item)
+                }
+            }
+        }
+        self.checkPurchaseTableView.reloadData()
+        
+    }
+    
+    //setup search bar style
+    func setSearchBar() {
+        searchProductNameSearchBar.set(textColor: .black)
+        //searchbar text field color
+        searchProductNameSearchBar.setTextField(color: UIColor.white)
+        searchProductNameSearchBar.setPlaceholder(textColor: .black)
+        searchProductNameSearchBar.setSearchImage(color: .black)
+    }
 
 }
 
+//control for tableview
 extension CheckpurchaseSearchMainPage_VC:UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return checkPurchaseSearchDataArray.count
+        return checkPurchaseSearchFilterdData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "checkPurchaseMainTableViewCell", for: indexPath) as! CheckPurchaseMainTableViewCell
         
-        cell.productNameLabel.layer.borderWidth = 0.5
-        cell.noOfSupplierLabel.layer.borderWidth = 0.5
+        cell.productNameLabel.text = self.checkPurchaseSearchFilterdData[indexPath.row].productName
         
-        cell.productNameLabel.layer.borderColor = UIColor.white.cgColor
-        cell.noOfSupplierLabel.layer.borderColor = UIColor.white.cgColor
+        cell.noOfSupplierLabel.text = String(self.checkPurchaseSearchFilterdData[indexPath.row].noOfSupplier)
         
-        if indexPath.row == 0 {
+        let image = UIImage(named: "CSI-CFBC")
+        let imageView = UIImageView(image: image)
+        cell.backgroundView = imageView
 
-            cell.productNameLabel.text = self.checkPurchaseSearchDataArray[indexPath.row].productName
-            
-            cell.noOfSupplierLabel.text = String(self.checkPurchaseSearchDataArray[indexPath.row].noOfSupplier)
-            
-            cell.backgroundColor = UIColor.darkGray
-
-            cell.productNameLabel.textColor = UIColor.white
-            cell.noOfSupplierLabel.textColor = UIColor.white
-
-        } else if indexPath.row % 2 == 0 && indexPath.row != 0 {
-            
-            cell.productNameLabel.text = self.checkPurchaseSearchDataArray[indexPath.row].productName
-            
-            cell.noOfSupplierLabel.text = String(self.checkPurchaseSearchDataArray[indexPath.row].noOfSupplier)
-            
-            cell.backgroundColor = UIColor.darkGray
-            
-            cell.productNameLabel.textColor = UIColor.white
-            cell.noOfSupplierLabel.textColor = UIColor.white
-            
-//            print("%2: \(indexPath.section)")
-            
-        } else {
-            cell.productNameLabel.text = self.checkPurchaseSearchDataArray[indexPath.row].productName
-            cell.noOfSupplierLabel.text = String(self.checkPurchaseSearchDataArray[indexPath.row].noOfSupplier)
-            
-//            cell.backgroundColor = UIColor.lightGray
-            cell.backgroundColor = UIColor.gray
-
-//            cell.productNameLabel.textColor = UIColor.black
-//            cell.noOfSupplierLabel.textColor = UIColor.black
-            cell.productNameLabel.textColor = UIColor.white
-            cell.noOfSupplierLabel.textColor = UIColor.white
-//            print("nor: \(indexPath.section)")
-        }
+        cell.layer.cornerRadius = 10
         
-
-//            cell.updateConstraints()
-//        cell.selectionStyle = .none
-
         return cell
         
     }
@@ -343,16 +396,20 @@ extension CheckpurchaseSearchMainPage_VC:UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
 //        print(checkPurchaseSearchDataArray[indexPath.row].productName ?? "")
-        checkPurchaseSearchPassData.passedProductName = checkPurchaseSearchDataArray[indexPath.row].productName
+        checkPurchaseSearchPassData.passedProductName = checkPurchaseSearchFilterdData[indexPath.row].productName
         
         let sdsJump = self.storyboard?.instantiateViewController(withIdentifier: "SupplierPage") as? CheckPurchaseTablePage_VC
         self.navigationController?.pushViewController(sdsJump!, animated: true)
     
-//
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
+        if settingBool == true {
+            sortView.isHidden = true
+            navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            settingBool = false
+        }
         
         let currentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height

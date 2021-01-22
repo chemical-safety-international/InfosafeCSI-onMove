@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CheckPurchaseTablePage_VC: UIViewController {
+class CheckPurchaseTablePage_VC: UIViewController, UISearchBarDelegate {
 
     var supplierArray = [String]()
     var tableData = [String: Int]()
@@ -21,8 +21,19 @@ class CheckPurchaseTablePage_VC: UIViewController {
     var supplierFullData = [checkPurchaseSupplierData]()
     var sortedsupplierFullData = [checkPurchaseSupplierData]()
     
+    var checkPurchaseSearchSupplierFilterdData:[checkPurchaseSupplierData] = []
+    
+    var settingBool: Bool = false
+    var sortingBy: String = "Supplier"
+    
     @IBOutlet weak var supplierTableView: UITableView!
     @IBOutlet weak var loadmoreLabel: UILabel!
+    
+    @IBOutlet weak var searchSupplierSearchBar: UISearchBar!
+    
+    @IBOutlet weak var supplierSortView: UIView!
+    @IBOutlet weak var supplierSortingBySegmentControl: UISegmentedControl!
+    @IBOutlet weak var supplierSortingAsSegmentControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +41,7 @@ class CheckPurchaseTablePage_VC: UIViewController {
         // Do any additional setup after loading the view.
         setupNavigationMultilineTitle()
         setNavigationbar()
+        setSearchBar()
         getSupplier()
         getData()
 //        countSDS()
@@ -37,23 +49,27 @@ class CheckPurchaseTablePage_VC: UIViewController {
         //remove extra separator line in table view
         self.supplierTableView.tableFooterView = UIView()
         self.supplierTableView.tableFooterView?.backgroundColor = UIColor.clear
-        
+        self.supplierSortView.isHidden = true
         checkPurchaseSearchPassData.loadBool = true
-//        print("view did load \(checkPurchaseSearchPassData.loadBool)")
-        
         self.navigationController?.navigationBar.isHidden = false
         self.loadmoreLabel.isHidden = true
+        
+        checkPurchaseSearchSupplierFilterdData = sortedsupplierFullData
+        
+        //chang the selected segment text color
+        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
+        
     }
     
+    //check 
     override func viewWillAppear(_ animated: Bool) {
-//        print("view will appear 1st: \(checkPurchaseSearchPassData.loadBool)")
+
         if checkPurchaseSearchPassData.loadBool == true {
             checkPurchaseSearchPassData.storedDataArray = localsearchinfo.results
             checkPurchaseSearchPassData.loadBool = false
         } else {
             localsearchinfo.results = checkPurchaseSearchPassData.storedDataArray
         }
-//        print("view will appear 2nd: \(checkPurchaseSearchPassData.loadBool)")
         
         //unselect after returning back to this page
         if let indexPath = self.supplierTableView.indexPathForSelectedRow{             self.supplierTableView.deselectRow(at: indexPath, animated: animated)         }
@@ -64,32 +80,29 @@ class CheckPurchaseTablePage_VC: UIViewController {
         setupNavigationMultilineTitle()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
+    //set up the navigation bar
     func setNavigationbar() {
-//        //change background color
-//        DispatchQueue.main.async {
-//
-//            //change background color & back button color
-            self.navigationController?.navigationBar.isTranslucent = false
-            self.navigationController?.navigationBar.barTintColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
-            self.navigationController?.navigationBar.tintColor = UIColor.white
 
-//            //change navigation bar text color and font
+        //change background color & back button color
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.barTintColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
+        self.navigationController?.navigationBar.tintColor = UIColor.white
 
-            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18), .foregroundColor: UIColor.white]
+        //change navigation bar text color and font
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18), .foregroundColor: UIColor.white]
         
-            self.navigationItem.title = checkPurchaseSearchPassData.passedProductName
-//        }
+        self.navigationItem.title = checkPurchaseSearchPassData.passedProductName
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(sortTapped))
+    }
+    
+    //set up the search bar
+    func setSearchBar() {
+        searchSupplierSearchBar.set(textColor: .black)
+        //searchbar text field color
+        searchSupplierSearchBar.setTextField(color: UIColor.white)
+        searchSupplierSearchBar.setPlaceholder(textColor: .black)
+        searchSupplierSearchBar.setSearchImage(color: .black)
     }
     
     func getSupplier() {
@@ -117,6 +130,15 @@ class CheckPurchaseTablePage_VC: UIViewController {
         
     }
     
+    // Operator Overloading Methods
+//    static func >(lhs: NSDate, rhs: NSDate) -> Bool {
+//        return lhs.compare(rhs) == ComparisonResult.OrderedAscending
+//    }
+//
+//    static func <(lhs: NSDate, rhs: NSDate) -> Bool {
+//        return lhs.compare(rhs) == ComparisonResult.OrderedDescending
+//    }
+    
     func getData() {
         checkPurchaseSearchSupplierDataArray.removeAll()
         let matchProductName = checkPurchaseSearchPassData.passedProductName
@@ -135,17 +157,8 @@ class CheckPurchaseTablePage_VC: UIViewController {
                 }
             }
             
-            //count how many unique SDS
-//            let uniqueSDSCount = Array(Set(sdsDataArray))
-            
-//            tableDataValue.supplier = matchSupplier
-//            tableDataValue.noOfSDS = String(uniqueSDSCount.count)
-//            checkPurchaseSearchSupplierDataArray.append(tableDataValue)
-            
+            //set issue date range
             if issueDateValueArray.count > 1 {
-//                print(issueDateValueArray)
-//                print("first item is: \(issueDateValueArray.first ?? "")")
-//                issueDateArray.append("multi")
 
                 var issueDateRangeArray = [Int]()
 
@@ -156,6 +169,7 @@ class CheckPurchaseTablePage_VC: UIViewController {
                     dateFormatter.dateFormat = "yyyy"
                     let date2 = Int(dateFormatter.string(from: date!)) ?? 0000
                     issueDateRangeArray.append(date2)
+                    
                 }
                 let minYear = issueDateRangeArray.min() ?? 0
                 let maxYear = issueDateRangeArray.max() ?? 0
@@ -167,24 +181,134 @@ class CheckPurchaseTablePage_VC: UIViewController {
                 issueDateArray.append(issueDateValueArray.first ?? "")
             }
             
-            supplierFullDataValue.supplier = matchSupplier
-            //count no of SDS
+//            supplierFullDataValue.supplier = matchSupplier
+//            //count no of SDS
+////            supplierFullDataValue.noOfSDS = uniqueSDSCount.count
+//            //changed to count the products
+//            supplierFullDataValue.noOfSDS = sdsDataArray.count
+//            supplierFullDataValue.issueDate = (issueDateRange)
+//            supplierFullData.append(supplierFullDataValue)
+            
+                supplierFullDataValue.supplier = matchSupplier
+                //count no of SDS
 //            supplierFullDataValue.noOfSDS = uniqueSDSCount.count
-            //changed to count the products
-            supplierFullDataValue.noOfSDS = sdsDataArray.count
-            supplierFullDataValue.issueDate = (issueDateRange)
-            supplierFullData.append(supplierFullDataValue)
+                //changed to count the products
+                supplierFullDataValue.noOfSDS = sdsDataArray.count
+                supplierFullDataValue.issueDate = (issueDateRange)
+                supplierFullData.append(supplierFullDataValue)
 
         }
-        sortData()
+        sortDataDefault()
     }
+    
+    @objc func sortTapped() {
+        
+        if settingBool == false {
+            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.orange
+
+            supplierSortView.isHidden = false
+            settingBool = true
+        } else if settingBool == true {
+            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            supplierSortView.isHidden = true
+
+            settingBool = false
+        }
+
+    }
+    
+    @IBAction func sortingByDidChange(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            sortingBy = "Supplier"
+            supplierSortingAsSegmentControl.setTitle("A to Z", forSegmentAt: 0)
+            supplierSortingAsSegmentControl.setTitle("Z to A", forSegmentAt: 1)
+            sortSupplier(updown: true)
+            supplierSortingAsSegmentControl.selectedSegmentIndex = 0
+        } else if sender.selectedSegmentIndex == 1 {
+            sortingBy = "No. Of SDS(s)"
+            supplierSortingAsSegmentControl.setTitle("Largest to Smallest", forSegmentAt: 0)
+            supplierSortingAsSegmentControl.setTitle("Smallest to Largest", forSegmentAt: 1)
+            sortNumberOfSDS(updown: true)
+            supplierSortingAsSegmentControl.selectedSegmentIndex = 0
+        }
+    }
+    
             
     // sort the no of SDS function (changed to sort no of the products)
-    func sortData() {
-//        print(supplierFullData)
+    func sortDataDefault() {
+
         sortedsupplierFullData = supplierFullData.sorted {
-            $0.noOfSDS > $1.noOfSDS
+            $1.supplier > $0.supplier
         }
+    }
+    
+    func sortSupplier(updown: Bool) {
+        checkPurchaseSearchSupplierFilterdData.removeAll()
+        searchSupplierSearchBar.text = ""
+        
+        if updown == true {
+            
+            checkPurchaseSearchSupplierFilterdData = supplierFullData.sorted {
+                $1.supplier > $0.supplier
+            }
+            supplierTableView.reloadData()
+            let indexPath = IndexPath(row: 0, section: 0)
+            supplierTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            
+
+        } else if updown == false {
+            checkPurchaseSearchSupplierFilterdData = supplierFullData.sorted {
+                $0.supplier > $1.supplier
+            }
+            supplierTableView.reloadData()
+            let indexPath = IndexPath(row: 0, section: 0)
+            supplierTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            
+
+        }
+        
+    }
+    
+    func sortNumberOfSDS(updown: Bool) {
+        checkPurchaseSearchSupplierFilterdData.removeAll()
+        searchSupplierSearchBar.text = ""
+        
+        if updown == true {
+            
+            checkPurchaseSearchSupplierFilterdData = supplierFullData.sorted {
+                $0.noOfSDS > $1.noOfSDS
+            }
+            supplierTableView.reloadData()
+            let indexPath = IndexPath(row: 0, section: 0)
+            supplierTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            
+
+        } else if updown == false {
+            checkPurchaseSearchSupplierFilterdData = supplierFullData.sorted {
+                $1.noOfSDS > $0.noOfSDS
+            }
+            supplierTableView.reloadData()
+            let indexPath = IndexPath(row: 0, section: 0)
+            supplierTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            
+        }
+        
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        checkPurchaseSearchSupplierFilterdData = []
+        
+        if searchText == "" {
+            checkPurchaseSearchSupplierFilterdData = sortedsupplierFullData
+        } else {
+            for item in sortedsupplierFullData {
+                if item.supplier.uppercased().contains(searchText.uppercased()) {
+                    checkPurchaseSearchSupplierFilterdData.append(item)
+                }
+            }
+        }
+        self.supplierTableView.reloadData()
+        
     }
 
 }
@@ -192,16 +316,17 @@ class CheckPurchaseTablePage_VC: UIViewController {
 extension CheckPurchaseTablePage_VC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sortedsupplierFullData.count
+//        return sortedsupplierFullData.count
+        return checkPurchaseSearchSupplierFilterdData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
             let cell = tableView.dequeueReusableCell(withIdentifier: "checkBuyTableCell", for: indexPath) as! CheckPurchaseTableViewCell
         
-        cell.supplierLabel.text = String(self.sortedsupplierFullData[indexPath.row].supplier)
-        cell.noOfSDSLabel.text = "No. Of Products: \(String(self.sortedsupplierFullData[indexPath.row].noOfSDS ?? 0))"
-        cell.issueDateLabel.text = "Issue Date: \(String(sortedsupplierFullData[indexPath.row].issueDate))"
+        cell.supplierLabel.text = String(self.checkPurchaseSearchSupplierFilterdData[indexPath.row].supplier)
+        cell.noOfSDSLabel.text = "No. Of Products: \(String(self.checkPurchaseSearchSupplierFilterdData[indexPath.row].noOfSDS ?? 0))"
+        cell.issueDateLabel.text = "Issue Date: \(String(checkPurchaseSearchSupplierFilterdData[indexPath.row].issueDate))"
         
         cell.supplierLabel.textColor = UIColor.white
         cell.noOfSDSLabel.textColor = UIColor.white
@@ -219,7 +344,7 @@ extension CheckPurchaseTablePage_VC: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         localsearchinfo.results.removeAll()
         let matchProductName = checkPurchaseSearchPassData.passedProductName
-        let matchSupplier = sortedsupplierFullData[indexPath.row].supplier
+        let matchSupplier = checkPurchaseSearchSupplierFilterdData[indexPath.row].supplier
         
         for i in 0..<checkPurchaseSearchPassData.storedDataArray.count {
             var ritem = item()

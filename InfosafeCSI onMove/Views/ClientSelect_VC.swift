@@ -75,7 +75,7 @@ extension ClientSelect_VC: UITableViewDelegate, UITableViewDataSource {
         cell?.clientNameLabel.layer.borderWidth = 0.5
         cell?.clientNameLabel.layer.borderColor = UIColor.white.cgColor
         //cell?.clientNameLabel.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.9)
-        cell?.clientNameLabel.backgroundColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
+        cell?.clientNameLabel.backgroundColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0).withAlphaComponent(0.5)
 
         
         if localclientinfo.clientList.isEmpty == false {
@@ -83,6 +83,7 @@ extension ClientSelect_VC: UITableViewDelegate, UITableViewDataSource {
         } else {
             
         }
+        
 //        cell?.clientNameLabel.sizeToFit()
         return cell!
     }
@@ -129,6 +130,7 @@ extension ClientSelect_VC: UITableViewDelegate, UITableViewDataSource {
                 localclientinfo.retIndexNo = model.retIndexNo
                 localclientinfo.retIndexText = model.retIndexText
                 localclientinfo.needchooseclient = model.needchooseclient
+
 //                localclientinfo.appointedclient = model.appointedclient
                 
 //                let result = try JSONDecoder().decode(outLoginMultiClient.self, from: completion)
