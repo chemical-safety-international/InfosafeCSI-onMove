@@ -131,7 +131,7 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
     }
     
     func loadLogo() {
-        if localclientinfo.clientlogo.isEmpty == false {
+        if localclientinfo.clientlogo != nil {
                 let image = localclientinfo.clientlogo!.toImage()
                 loginLogo.image = image
         } else {

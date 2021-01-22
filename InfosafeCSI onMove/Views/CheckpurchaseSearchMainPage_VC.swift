@@ -46,6 +46,7 @@ class CheckpurchaseSearchMainPage_VC: UIViewController, UISearchBarDelegate {
         setNavigationbar()
         setSearchBar()
         addData()
+        hideKeyboard()
         
         self.navigationController?.navigationBar.isHidden = false
         self.loadmoreLabel.isHidden = true
@@ -365,6 +366,18 @@ class CheckpurchaseSearchMainPage_VC: UIViewController, UISearchBarDelegate {
         searchProductNameSearchBar.setPlaceholder(textColor: .black)
         searchProductNameSearchBar.setSearchImage(color: .black)
     }
+    
+    //hide keyboard function
+    func hideKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(disKeyboard))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
+    }
+    
+    //Notify to disKeyboard
+    @objc func disKeyboard() {
+        searchProductNameSearchBar.endEditing(true)
+    }
 
 }
 
@@ -427,6 +440,8 @@ extension CheckpurchaseSearchMainPage_VC:UITableViewDelegate, UITableViewDataSou
         } else {
             loadmoreLabel.isHidden = true
         }
+        
+        searchProductNameSearchBar.endEditing(true)
         
     }
     

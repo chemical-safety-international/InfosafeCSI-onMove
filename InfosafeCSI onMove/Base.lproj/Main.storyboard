@@ -518,7 +518,7 @@
                                 <rect key="frame" x="5" y="54" width="404" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
-                                    <outlet property="delegate" destination="xWe-oU-wWn" id="qn8-qb-0IK"/>
+                                    <outlet property="delegate" destination="xWe-oU-wWn" id="Tqa-NW-Hq2"/>
                                 </connections>
                             </searchBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="67o-ai-okT">

@@ -71,6 +71,11 @@ class MultiLoginPage_VC: UIViewController {
                 localclientinfo.clientmemberid = model.clientmemberid
                 localclientinfo.infosafeid = model.infosafeid
                 localclientinfo.clientcode = model.clientcode
+                if model.clientlogo == nil {
+                    localclientinfo.clientlogo = ""
+                } else {
+                    localclientinfo.clientlogo = model.clientlogo
+                }
                 localclientinfo.clientlogo = model.clientlogo
                 localclientinfo.apptype = model.apptype
 //                localclientinfo.errorno = model.errorno

@@ -44,12 +44,14 @@ class CheckPurchaseTablePage_VC: UIViewController, UISearchBarDelegate {
         setSearchBar()
         getSupplier()
         getData()
+        hideKeyboard()
 //        countSDS()
         
         //remove extra separator line in table view
         self.supplierTableView.tableFooterView = UIView()
         self.supplierTableView.tableFooterView?.backgroundColor = UIColor.clear
         self.supplierSortView.isHidden = true
+        self.supplierSortView.layer.cornerRadius = 10
         checkPurchaseSearchPassData.loadBool = true
         self.navigationController?.navigationBar.isHidden = false
         self.loadmoreLabel.isHidden = true
@@ -310,6 +312,18 @@ class CheckPurchaseTablePage_VC: UIViewController, UISearchBarDelegate {
         self.supplierTableView.reloadData()
         
     }
+    
+    //hide keyboard function
+    func hideKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(disKeyboard))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
+    }
+    
+    //Notify to disKeyboard
+    @objc func disKeyboard() {
+        searchSupplierSearchBar.endEditing(true)
+    }
 
 }
 
@@ -391,7 +405,7 @@ extension CheckPurchaseTablePage_VC: UITableViewDelegate, UITableViewDataSource 
         } else {
             loadmoreLabel.isHidden = true
         }
-        
+        searchSupplierSearchBar.endEditing(true)
     }
     
 }
