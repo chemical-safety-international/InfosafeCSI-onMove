@@ -157,6 +157,7 @@ struct localsearchinfo {
     var totalcount: Int!
     
     static var results: [item] = []
+
       
     // set the text and value to amount labels
     static var details: String!
@@ -190,7 +191,7 @@ struct item {
     var sdsno: String!
     var synno: String!
     var company: String!
-    var issueDate: String!
+    var issueDate: Date!
     var prodname: String!
     var prodtype: String!
     var ispartial: Bool!
@@ -204,24 +205,24 @@ struct item {
     var haz: String!
     var ufs: [uf]!
     
-    init(sdsno: String? = nil, synno: String? = nil, company: String? = nil, issueDate: String? = nil, prodname: String? = nil, prodtype: String? = nil, ispartial: Bool? = nil, ps: String? = nil, unno: String? = nil, subrisk1: String? = nil, prodcode: String? = nil, dgclass: String? = nil, haz: String? = nil, GHS_Pictogram: String? = nil, Com_Country: String? = nil, ufs: [uf]? = nil) {
-        self.sdsno = sdsno
-        self.synno = synno
-        self.company = company
-        self.issueDate = issueDate
-        self.prodname = prodname
-        self.prodtype = prodtype
-        self.ispartial = ispartial
-        self.ps = ps
-        self.unno = unno
-        self.subrisk1 = subrisk1
-        self.prodcode = prodcode
-        self.dgclass = dgclass
-        self.haz = haz
-        self.GHS_Pictogram = GHS_Pictogram
-        self.Com_Country = Com_Country
-        self.ufs = ufs
-    }
+//    init(sdsno: String? = nil, synno: String? = nil, company: String? = nil, issueDate: String? = nil, prodname: String? = nil, prodtype: String? = nil, ispartial: Bool? = nil, ps: String? = nil, unno: String? = nil, subrisk1: String? = nil, prodcode: String? = nil, dgclass: String? = nil, haz: String? = nil, GHS_Pictogram: String? = nil, Com_Country: String? = nil, ufs: [uf]? = nil) {
+//        self.sdsno = sdsno
+//        self.synno = synno
+//        self.company = company
+//        self.issueDate = issueDate
+//        self.prodname = prodname
+//        self.prodtype = prodtype
+//        self.ispartial = ispartial
+//        self.ps = ps
+//        self.unno = unno
+//        self.subrisk1 = subrisk1
+//        self.prodcode = prodcode
+//        self.dgclass = dgclass
+//        self.haz = haz
+//        self.GHS_Pictogram = GHS_Pictogram
+//        self.Com_Country = Com_Country
+//        self.ufs = ufs
+//    }
     
     struct uf {
         var uftitle: String!
@@ -234,6 +235,7 @@ struct item {
     }
 
 }
+
 
 //struct localtablesize {
 //    static var tableHeight: CGFloat!
@@ -329,6 +331,8 @@ struct checkPurchaseSupplierData {
     var supplier: String!
     var issueDate: String!
     var noOfSDS: Int!
+    var maxIssueDate: Date!
+    var minIssueDate: Date!
 }
 
 struct checkPurchaseSearchSupplierData {

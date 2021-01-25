@@ -26,6 +26,9 @@ class CheckPurchaseTablePage_VC: UIViewController, UISearchBarDelegate {
     var settingBool: Bool = false
     var sortingBy: String = "Supplier"
     
+    var defaultSegmentNumber: Int = 0
+    var currentSegmentNumber: Int = 0
+    
     @IBOutlet weak var supplierTableView: UITableView!
     @IBOutlet weak var loadmoreLabel: UILabel!
     
@@ -61,7 +64,29 @@ class CheckPurchaseTablePage_VC: UIViewController, UISearchBarDelegate {
         //chang the selected segment text color
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         
+        //event for touch already selected segment
+        let segmentedTapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapGestureSegment(_:)))
+        supplierSortingAsSegmentControl.addGestureRecognizer(segmentedTapGesture)
+        
     }
+    
+    // function to control if the user tapped the selected segment
+        @IBAction func onTapGestureSegment(_ tapGesture: UITapGestureRecognizer) {
+            
+            let point = tapGesture.location(in: supplierSortingAsSegmentControl)
+            let segmentSize = supplierSortingAsSegmentControl.bounds.size.width / CGFloat(supplierSortingAsSegmentControl.numberOfSegments)
+            let touchedSegment = Int(point.x / segmentSize)
+
+            if supplierSortingAsSegmentControl.selectedSegmentIndex != touchedSegment {
+                // Normal behaviour the segment changes
+                supplierSortingAsSegmentControl.selectedSegmentIndex = touchedSegment
+            } else {
+                // Tap on the already selected segment
+                supplierSortingAsSegmentControl.selectedSegmentIndex = touchedSegment
+            }
+            sortingAsDidChange(supplierSortingAsSegmentControl)
+            
+        }
     
     //check 
     override func viewWillAppear(_ animated: Bool) {
@@ -145,13 +170,18 @@ class CheckPurchaseTablePage_VC: UIViewController, UISearchBarDelegate {
         checkPurchaseSearchSupplierDataArray.removeAll()
         let matchProductName = checkPurchaseSearchPassData.passedProductName
         var issueDateRange: String = ""
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        
         for (key, _) in tableData {
             let matchSupplier = "\(key)"
             sdsDataArray.removeAll()
             issueDateValueArray.removeAll()
             for i in 0..<localsearchinfo.results.count {
                 if matchProductName == localsearchinfo.results[i].prodname && matchSupplier == localsearchinfo.results[i].company {
-                    let issuedateValue = localsearchinfo.results[i].issueDate ?? ""
+                    
+                    let issuedateValue = dateFormatter.string(from: localsearchinfo.results[i].issueDate)
                     issueDateValueArray.append(issuedateValue)
                     
                     let sdsValue = localsearchinfo.results[i].sdsno ?? ""
@@ -162,25 +192,43 @@ class CheckPurchaseTablePage_VC: UIViewController, UISearchBarDelegate {
             //set issue date range
             if issueDateValueArray.count > 1 {
 
-                var issueDateRangeArray = [Int]()
+//                var issueDateRangeArray = [Int]()
+                var issueDateRangeArray = [Date]()
+
+//                for i in 0..<issueDateValueArray.count {
+//                    let dateFormatter = DateFormatter()
+//                    dateFormatter.dateFormat = "dd/MM/yyyy"
+//                    let date = dateFormatter.date(from: issueDateValueArray[i])
+//                    dateFormatter.dateFormat = "yyyy"
+//                    let date2 = Int(dateFormatter.string(from: date!)) ?? 0000
+//                    issueDateRangeArray.append(date2)
+//
+//                }
+//                let minYear = issueDateRangeArray.min() ?? 0
+//                let maxYear = issueDateRangeArray.max() ?? 0
+//                issueDateRange = "\(minYear) - \(maxYear)"
+//                issueDateArray.append(issueDateRange)
 
                 for i in 0..<issueDateValueArray.count {
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "dd/MM/yyyy"
-                    let date = dateFormatter.date(from: issueDateValueArray[i])
-                    dateFormatter.dateFormat = "yyyy"
-                    let date2 = Int(dateFormatter.string(from: date!)) ?? 0000
-                    issueDateRangeArray.append(date2)
                     
+                    let date = dateFormatter.date(from: issueDateValueArray[i])!
+                    issueDateRangeArray.append(date)
                 }
-                let minYear = issueDateRangeArray.min() ?? 0
-                let maxYear = issueDateRangeArray.max() ?? 0
-                issueDateRange = "\(minYear) - \(maxYear)"
+                
+                let minDate = issueDateValueArray.min()
+                let maxDate = issueDateValueArray.max()
+                issueDateRange = "\(minDate ?? "") - \(maxDate ?? "")"
+//                issueDateRange = "\(dateFormatter.string(from: minDate)) - \(dateFormatter.string(from: maxDate))"
                 issueDateArray.append(issueDateRange)
-
+                
+                supplierFullDataValue.minIssueDate = dateFormatter.date(from: minDate!)
+                supplierFullDataValue.maxIssueDate = dateFormatter.date(from: maxDate!)
             } else {
+                
                 issueDateRange = issueDateValueArray.first ?? ""
                 issueDateArray.append(issueDateValueArray.first ?? "")
+                supplierFullDataValue.minIssueDate = dateFormatter.date(from: issueDateRange)
+                supplierFullDataValue.maxIssueDate = dateFormatter.date(from: issueDateRange)
             }
             
 //            supplierFullDataValue.supplier = matchSupplier
@@ -236,10 +284,75 @@ class CheckPurchaseTablePage_VC: UIViewController, UISearchBarDelegate {
             sortingBy = "Issue Date"
             supplierSortingAsSegmentControl.setTitle("Latest to Oldest", forSegmentAt: 0)
             supplierSortingAsSegmentControl.setTitle("Oldest to Latest", forSegmentAt: 1)
-//            sortNumberOfSDS(updown: true)
+            sortIssueDate(updown: true)
             supplierSortingAsSegmentControl.selectedSegmentIndex = 0
         }
     }
+    
+    @IBAction func sortingAsDidChange(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            if sortingBy == "Supplier" {
+                sortSupplier(updown: true)
+                supplierSortView.isHidden = true
+                settingBool = false
+                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            } else if sortingBy == "No. Of SDS(s)" {
+                sortNumberOfSDS(updown: true)
+                supplierSortView.isHidden = true
+                settingBool = false
+                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            } else if sortingBy == "Issue Date" {
+                sortIssueDate(updown: true)
+                supplierSortView.isHidden = true
+                settingBool = false
+                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            }
+            
+            currentSegmentNumber = 0
+            defaultSegmentNumber = 0
+        } else if sender.selectedSegmentIndex == 1 {
+            if sortingBy == "Supplier" {
+                sortSupplier(updown: false)
+                supplierSortView.isHidden = true
+                settingBool = false
+                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            } else if sortingBy == "No. Of SDS(s)" {
+                sortNumberOfSDS(updown: false)
+                supplierSortView.isHidden = true
+                settingBool = false
+                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            } else if sortingBy == "Issue Date" {
+                sortIssueDate(updown: false)
+                supplierSortView.isHidden = true
+                settingBool = false
+                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            }
+            
+            currentSegmentNumber = 1
+            defaultSegmentNumber = 1
+        }
+    }
+    
+    //tap the view outside the sort view will dismiss sort view
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+         let touch = touches.first
+        if touch?.view != self.supplierSortView {
+            supplierSortView.resignFirstResponder()
+
+            supplierSortView.isHidden = true
+            settingBool = false
+            navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+
+        } else if touch?.view == self.supplierSortView {
+            supplierSortView.resignFirstResponder()
+            if currentSegmentNumber == defaultSegmentNumber {
+                supplierSortView.isHidden = true
+                settingBool = false
+                navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            }
+        }
+    }
+    
     
             
     // sort the no of SDS function (changed to sort no of the products)
@@ -250,6 +363,7 @@ class CheckPurchaseTablePage_VC: UIViewController, UISearchBarDelegate {
         }
     }
     
+    //sort supplier
     func sortSupplier(updown: Bool) {
         checkPurchaseSearchSupplierFilterdData.removeAll()
         searchSupplierSearchBar.text = ""
@@ -259,6 +373,7 @@ class CheckPurchaseTablePage_VC: UIViewController, UISearchBarDelegate {
             checkPurchaseSearchSupplierFilterdData = supplierFullData.sorted {
                 $1.supplier > $0.supplier
             }
+
             supplierTableView.reloadData()
             let indexPath = IndexPath(row: 0, section: 0)
             supplierTableView.scrollToRow(at: indexPath, at: .top, animated: true)
@@ -277,6 +392,7 @@ class CheckPurchaseTablePage_VC: UIViewController, UISearchBarDelegate {
         
     }
     
+    //sort no. of sds
     func sortNumberOfSDS(updown: Bool) {
         checkPurchaseSearchSupplierFilterdData.removeAll()
         searchSupplierSearchBar.text = ""
@@ -301,6 +417,32 @@ class CheckPurchaseTablePage_VC: UIViewController, UISearchBarDelegate {
             
         }
         
+    }
+    
+    //sort issue date
+    func sortIssueDate(updown: Bool) {
+        checkPurchaseSearchSupplierFilterdData.removeAll()
+        searchSupplierSearchBar.text = ""
+        
+        if updown == true {
+            
+            checkPurchaseSearchSupplierFilterdData = supplierFullData.sorted {
+                $0.maxIssueDate > $1.maxIssueDate
+            }
+            supplierTableView.reloadData()
+            let indexPath = IndexPath(row: 0, section: 0)
+            supplierTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            
+
+        } else if updown == false {
+            checkPurchaseSearchSupplierFilterdData = supplierFullData.sorted {
+                $1.minIssueDate > $0.minIssueDate
+            }
+            supplierTableView.reloadData()
+            let indexPath = IndexPath(row: 0, section: 0)
+            supplierTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            
+        }
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -394,6 +536,11 @@ extension CheckPurchaseTablePage_VC: UITableViewDelegate, UITableViewDataSource 
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
+        if settingBool == true {
+            supplierSortView.isHidden = true
+            navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+            settingBool = false
+        }
         
         let currentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height

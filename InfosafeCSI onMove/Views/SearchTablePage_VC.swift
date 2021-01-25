@@ -119,6 +119,8 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
         //remove extra separator line in table view
         self.tableDisplay.tableFooterView = UIView()
         self.tableDisplay.tableFooterView?.backgroundColor = UIColor.clear
+        
+        defaultOrder()
     }
     
     @objc func menuDis() {
@@ -342,6 +344,44 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
             }, completion: nil)
         
     }
+    //sort parameters
+    var localsearchFilterData :[item] = []
+    var localsearchData1 = [item]()
+    var localsearchValue = item()
+    
+    //default sort order - synonym product name and issue date
+    func defaultOrder() {
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        
+        for i in localsearchinfo.results {
+            localsearchValue.sdsno = i.sdsno
+            localsearchValue.synno = i.synno
+            localsearchValue.company = i.company
+            localsearchValue.prodname = i.prodname
+            localsearchValue.prodtype = i.prodtype
+            localsearchValue.ispartial = i.ispartial
+            localsearchValue.ps = i.ps
+            localsearchValue.unno = i.unno
+            localsearchValue.subrisk1 = i.subrisk1
+            localsearchValue.prodcode = i.prodcode
+            localsearchValue.dgclass = i.dgclass
+            localsearchValue.GHS_Pictogram = i.GHS_Pictogram
+            localsearchValue.Com_Country = i.Com_Country
+            localsearchValue.haz = i.haz
+            localsearchValue.issueDate = i.issueDate
+            
+            localsearchData1.append(localsearchValue)
+        }
+        
+        localsearchFilterData = localsearchData1.sorted {
+            if $0.prodname == $1.prodname {
+               return ($1.issueDate < $0.issueDate)
+            }
+               return ($0.prodname < $1.prodname)
+        }
+    }
     
 }
     
@@ -356,12 +396,12 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
     
     // non-expandable
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return localsearchinfo.results.count
+        return localsearchFilterData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if localsearchinfo.results.isEmpty == true {
+        if localsearchFilterData.isEmpty == true {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
             cell?.SupplierLbl.text = "No result"
@@ -369,20 +409,21 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
            
-            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd/MM/yyyy"
 //            DispatchQueue.main.async {
-                            cell?.name.text = localsearchinfo.results[indexPath.row].prodname
-                            cell?.SupplierLbl.text = localsearchinfo.results[indexPath.row].company
-                            cell?.IssueDateLbl.text = localsearchinfo.results[indexPath.row].issueDate
-                            cell?.UNNoLbl.text = localsearchinfo.results[indexPath.row].unno
-                            cell?.prodCLbl.text = localsearchinfo.results[indexPath.row].prodcode
+                            cell?.name.text = localsearchFilterData[indexPath.row].prodname
+                            cell?.SupplierLbl.text = localsearchFilterData[indexPath.row].company
+            cell?.IssueDateLbl.text = dateFormatter.string(from: localsearchFilterData[indexPath.row].issueDate)
+                            cell?.UNNoLbl.text = localsearchFilterData[indexPath.row].unno
+                            cell?.prodCLbl.text = localsearchFilterData[indexPath.row].prodcode
                 //            cell?.dgcLbl.text = localsearchinfo.results[indexPath.row].dgclass
                 //            cell?.psLbl.text = localsearchinfo.results[indexPath.row].ps
                 //            cell?.hazLbl.text = localsearchinfo.results[indexPath.row].haz
-                            if (localsearchinfo.results[indexPath.row].Com_Country.isEmpty == true) {
+                            if (localsearchFilterData[indexPath.row].Com_Country.isEmpty == true) {
                                 cell?.countryLbl.text = "Australia"
                             } else {
-                               cell?.countryLbl.text = localsearchinfo.results[indexPath.row].Com_Country
+                               cell?.countryLbl.text = localsearchFilterData[indexPath.row].Com_Country
                             }
                 
                 // setup the GHS pictograms in cells
@@ -400,8 +441,8 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                             cell?.issImg4Gap.constant = 0
                             cell?.img1BotGap.constant = 10
                             
-                            if (localsearchinfo.results[indexPath.row].GHS_Pictogram.isEmpty == false) {
-                                picArray = localsearchinfo.results[indexPath.row].GHS_Pictogram.components(separatedBy: ",")
+                            if (localsearchFilterData[indexPath.row].GHS_Pictogram.isEmpty == false) {
+                                picArray = localsearchFilterData[indexPath.row].GHS_Pictogram.components(separatedBy: ",")
                             }
 //                            print(localsearchinfo.results[indexPath.row].GHS_Pictogram)
                             
@@ -546,11 +587,11 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
             
             
             //setup name type pic
-            if localsearchinfo.results[indexPath.row].prodtype == "P" {
+            if localsearchFilterData[indexPath.row].prodtype == "P" {
                 cell?.nameType?.image = UIImage(named: "ProdNameType-Primary")
-            } else if localsearchinfo.results[indexPath.row].prodtype == "O" {
+            } else if localsearchFilterData[indexPath.row].prodtype == "O" {
                 cell?.nameType?.image = UIImage(named: "ProdNameType-Other")
-            } else if localsearchinfo.results[indexPath.row].prodtype == "L" {
+            } else if localsearchFilterData[indexPath.row].prodtype == "L" {
                 cell?.nameType?.image = UIImage(named: "ProdNameType-Local")
             }
             

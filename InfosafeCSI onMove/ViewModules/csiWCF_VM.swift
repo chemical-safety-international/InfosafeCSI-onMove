@@ -97,7 +97,9 @@ class csiWCF_VM: UIViewController {
 //                            ritem.sdsno = no["value"] as? String
 //                        }
                         if let issueData = info["issue"] as? [String: Any] {
-                            ritem.issueDate = issueData["value"] as? String
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "dd/MM/yyyy"
+                            ritem.issueDate = dateFormatter.date(from: issueData["value"] as! String)
                         }
                         if let key = info["key"] as? [String: Any] {
                             ritem.synno = key["value"] as? String
