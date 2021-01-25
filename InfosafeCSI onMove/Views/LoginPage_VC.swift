@@ -127,14 +127,16 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
 
 //        self.navigationController?.navigationBar.isHidden = false
 //
-
     }
     
+    //load the company logo if it has
     func loadLogo() {
-        if localclientinfo.clientlogo != nil {
+
+        if localclientinfo.clientlogo != nil && localclientinfo.clientlogo != "" {
                 let image = localclientinfo.clientlogo!.toImage()
                 loginLogo.image = image
         } else {
+
             loginLogo.image = UIImage(named: "CSI-Logo1")
         }
     }

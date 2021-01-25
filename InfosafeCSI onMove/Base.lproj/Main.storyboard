@@ -108,8 +108,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="passwordCheck-background" translatesAutoresizingMaskIntoConstraints="NO" id="MZo-NG-cqg">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="test3" translatesAutoresizingMaskIntoConstraints="NO" id="MZo-NG-cqg">
+                                <rect key="frame" x="0.0" y="250" width="414" height="646"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R3k-Mw-Z8A">
                                 <rect key="frame" x="30" y="249" width="354" height="35"/>
@@ -213,7 +213,7 @@
                             <constraint firstItem="cJN-Jc-9CN" firstAttribute="top" secondItem="oMZ-2a-qi9" secondAttribute="bottom" constant="8" id="dIR-1y-xx1"/>
                             <constraint firstItem="iMv-tA-XUR" firstAttribute="trailing" secondItem="R3k-Mw-Z8A" secondAttribute="trailing" constant="30" id="fjS-4r-kHd"/>
                             <constraint firstItem="iMv-tA-XUR" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Uvm-pw-6Ry" secondAttribute="trailing" constant="100" id="g12-WJ-Rq6"/>
-                            <constraint firstItem="MZo-NG-cqg" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="itX-JL-qO1"/>
+                            <constraint firstItem="MZo-NG-cqg" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="250" id="itX-JL-qO1"/>
                             <constraint firstItem="arA-dx-5Ii" firstAttribute="top" secondItem="iMv-tA-XUR" secondAttribute="top" constant="40" id="jqG-gQ-wG8"/>
                             <constraint firstAttribute="trailing" secondItem="MZo-NG-cqg" secondAttribute="trailing" id="myg-Ld-bmV"/>
                             <constraint firstItem="R3k-Mw-Z8A" firstAttribute="top" secondItem="arA-dx-5Ii" secondAttribute="bottom" constant="15" id="na9-HS-hgd"/>
@@ -723,14 +723,12 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="1jz-Wp-P7G">
-                                        <rect key="frame" x="65" y="51" width="260" height="32"/>
+                                        <rect key="frame" x="65" y="51" width="317" height="32"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="260" id="gwq-9l-g57"/>
-                                        </constraints>
                                         <segments>
                                             <segment title="Supplier"/>
                                             <segment title="No. Of SDS(s)"/>
+                                            <segment title="Issue Date"/>
                                         </segments>
                                         <color key="selectedSegmentTintColor" red="1" green="0.62440943149999995" blue="0.2609370406" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <connections>
@@ -745,7 +743,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="C0a-u5-4L0">
-                                        <rect key="frame" x="65" y="97" width="259.33333333333331" height="32"/>
+                                        <rect key="frame" x="65" y="97" width="318.66666666666669" height="32"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <segments>
                                             <segment title="A to Z"/>
@@ -4457,7 +4455,7 @@
             <objects>
                 <viewController id="IrI-OX-SOw" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vbU-AS-xqV">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="837"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="i0S-dR-4ga"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -4608,9 +4606,9 @@
         <image name="emailCheck-background" width="5227" height="3267"/>
         <image name="login-unticked-box" width="233" height="230"/>
         <image name="multipleClient-background" width="3648" height="5472"/>
-        <image name="passwordCheck-background" width="4016" height="6016"/>
         <image name="print" width="600" height="400"/>
         <image name="questionmark.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="test3" width="2996" height="4493"/>
         <image name="white-drop-down-arrow" width="1000" height="1000"/>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

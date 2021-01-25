@@ -232,6 +232,12 @@ class CheckPurchaseTablePage_VC: UIViewController, UISearchBarDelegate {
             supplierSortingAsSegmentControl.setTitle("Smallest to Largest", forSegmentAt: 1)
             sortNumberOfSDS(updown: true)
             supplierSortingAsSegmentControl.selectedSegmentIndex = 0
+        } else if sender.selectedSegmentIndex == 2 {
+            sortingBy = "Issue Date"
+            supplierSortingAsSegmentControl.setTitle("Latest to Oldest", forSegmentAt: 0)
+            supplierSortingAsSegmentControl.setTitle("Oldest to Latest", forSegmentAt: 1)
+//            sortNumberOfSDS(updown: true)
+            supplierSortingAsSegmentControl.selectedSegmentIndex = 0
         }
     }
     

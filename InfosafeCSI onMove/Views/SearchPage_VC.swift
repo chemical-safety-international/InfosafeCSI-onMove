@@ -41,6 +41,7 @@ class SearchPage_VC: UIViewController {
     @IBOutlet weak var companyLogoImageView: UIImageView!
     
     var count = 0
+    var supplierText: String = ""
     
     
     // create picker view
@@ -129,7 +130,7 @@ class SearchPage_VC: UIViewController {
     func setNavigationbar() {
         //change background color
 //        DispatchQueue.main.async {
-//
+        self.navigationController?.navigationBar.isHidden = false
 //            //change background color & back button color
             self.navigationController?.navigationBar.isTranslucent = false
             self.navigationController?.navigationBar.barTintColor = UIColor(red:0.25, green:0.26, blue:0.26, alpha:1.0)
@@ -143,8 +144,9 @@ class SearchPage_VC: UIViewController {
 //        }
     }
     
+    //load the company logo if it has
     func setCompanyLogo() {
-        if localclientinfo.clientlogo.isEmpty == false {
+        if localclientinfo.clientlogo != nil && localclientinfo.clientlogo != "" {
                 let image = localclientinfo.clientlogo!.toImage()
                 companyLogoImageView.image = image
         } else {
@@ -287,6 +289,7 @@ class SearchPage_VC: UIViewController {
             self.navigationItem.title = "Check Before You Purchase"
             searchTypeOption.searchType = "Check Before You Buy"
             supplierSearchbar.isUserInteractionEnabled = false
+            supplierText = supplierSearchbar.text ?? ""
             supplierSearchbar.text = ""
             supplierSearchbar.setTextField(color: UIColor.gray)
         } else {
@@ -294,6 +297,7 @@ class SearchPage_VC: UIViewController {
             searchTypeOption.searchType = "Product Search"
             supplierSearchbar.isUserInteractionEnabled = true
             supplierSearchbar.setTextField(color: UIColor.white)
+            supplierSearchbar.text = supplierText
         }
         
     }

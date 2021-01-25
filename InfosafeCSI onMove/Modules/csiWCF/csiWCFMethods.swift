@@ -9,9 +9,9 @@
 import Foundation
 
 
-//var csiWCF_URLHeader = "https://203.55.180.101/CSIMD_WCF/CSI_MD_Service.svc/"
+var csiWCF_URLHeader = "https://203.55.180.101/CSIMD_WCF/CSI_MD_Service.svc/"
 
-var csiWCF_URLHeader = "https://192.168.10.15/CSIMD_WCF/CSI_MD_Service.svc/"
+//var csiWCF_URLHeader = "https://192.168.10.15/CSIMD_WCF/CSI_MD_Service.svc/"
 //var csiWCF_URLHeader = "https://gold:4438/CSIMD_WCF/CSI_MD_Service.svc/"
 
 
