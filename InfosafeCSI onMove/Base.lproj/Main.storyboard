@@ -537,7 +537,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="npY-Ss-Gxd">
-                                        <rect key="frame" x="55" y="51" width="261" height="32"/>
+                                        <rect key="frame" x="50" y="51" width="261" height="32"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <segments>
                                             <segment title="Product Name"/>
@@ -555,7 +555,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="PAB-lq-Pz4">
-                                        <rect key="frame" x="55" y="97" width="260.33333333333331" height="32"/>
+                                        <rect key="frame" x="50" y="97" width="260.33333333333331" height="32"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <segments>
                                             <segment title="A to Z"/>
@@ -577,7 +577,7 @@
                                     <constraint firstItem="PAB-lq-Pz4" firstAttribute="leading" secondItem="npY-Ss-Gxd" secondAttribute="leading" id="5pL-89-DMh"/>
                                     <constraint firstItem="ITq-xf-mjf" firstAttribute="leading" secondItem="67o-ai-okT" secondAttribute="leading" constant="15" id="FKE-Qz-bGU"/>
                                     <constraint firstItem="npY-Ss-Gxd" firstAttribute="width" secondItem="PAB-lq-Pz4" secondAttribute="width" multiplier="0.956679" constant="12" id="Fcg-P6-Gsk"/>
-                                    <constraint firstItem="npY-Ss-Gxd" firstAttribute="leading" secondItem="qsA-fa-Kml" secondAttribute="trailing" constant="15" id="IzL-KP-kMw"/>
+                                    <constraint firstItem="npY-Ss-Gxd" firstAttribute="leading" secondItem="qsA-fa-Kml" secondAttribute="trailing" constant="10" id="IzL-KP-kMw"/>
                                     <constraint firstItem="ITq-xf-mjf" firstAttribute="top" secondItem="qsA-fa-Kml" secondAttribute="bottom" constant="25" id="XgC-P2-p0Z"/>
                                     <constraint firstItem="qsA-fa-Kml" firstAttribute="top" secondItem="fdM-B3-C5c" secondAttribute="bottom" constant="25" id="YkT-6z-VpA"/>
                                     <constraint firstItem="npY-Ss-Gxd" firstAttribute="centerY" secondItem="qsA-fa-Kml" secondAttribute="centerY" id="jiG-wD-N00"/>
@@ -723,7 +723,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="1jz-Wp-P7G">
-                                        <rect key="frame" x="55" y="51" width="317" height="32"/>
+                                        <rect key="frame" x="50" y="51" width="344" height="32"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <segments>
                                             <segment title="Supplier"/>
@@ -743,7 +743,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="C0a-u5-4L0">
-                                        <rect key="frame" x="55" y="97" width="318.66666666666669" height="32"/>
+                                        <rect key="frame" x="50" y="97" width="344" height="32"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <segments>
                                             <segment title="A to Z"/>
@@ -765,11 +765,12 @@
                                     <constraint firstItem="yO6-LS-caw" firstAttribute="top" secondItem="Xfy-MQ-XzB" secondAttribute="bottom" constant="25" id="CmQ-ig-1bM"/>
                                     <constraint firstItem="PCB-Md-Lw4" firstAttribute="leading" secondItem="68P-bm-35u" secondAttribute="leading" constant="15" id="IGr-Jc-NxG"/>
                                     <constraint firstItem="Xfy-MQ-XzB" firstAttribute="leading" secondItem="68P-bm-35u" secondAttribute="leading" constant="15" id="L3Z-4a-fBl"/>
+                                    <constraint firstAttribute="trailing" secondItem="1jz-Wp-P7G" secondAttribute="trailing" constant="10" id="OIA-S5-1IX"/>
                                     <constraint firstItem="Xfy-MQ-XzB" firstAttribute="top" secondItem="PCB-Md-Lw4" secondAttribute="bottom" constant="25" id="RdY-K5-vLK"/>
                                     <constraint firstItem="C0a-u5-4L0" firstAttribute="centerY" secondItem="yO6-LS-caw" secondAttribute="centerY" id="XOD-A4-zc3"/>
                                     <constraint firstItem="1jz-Wp-P7G" firstAttribute="centerY" secondItem="Xfy-MQ-XzB" secondAttribute="centerY" id="a5P-We-3cR"/>
-                                    <constraint firstItem="1jz-Wp-P7G" firstAttribute="width" secondItem="C0a-u5-4L0" secondAttribute="width" multiplier="0.956679" constant="12" id="guI-6e-VnZ"/>
-                                    <constraint firstItem="1jz-Wp-P7G" firstAttribute="leading" secondItem="Xfy-MQ-XzB" secondAttribute="trailing" constant="15" id="pKF-1q-jGH"/>
+                                    <constraint firstItem="1jz-Wp-P7G" firstAttribute="leading" secondItem="Xfy-MQ-XzB" secondAttribute="trailing" constant="10" id="pKF-1q-jGH"/>
+                                    <constraint firstItem="C0a-u5-4L0" firstAttribute="trailing" secondItem="1jz-Wp-P7G" secondAttribute="trailing" id="vAw-KH-k1P"/>
                                     <constraint firstItem="PCB-Md-Lw4" firstAttribute="top" secondItem="68P-bm-35u" secondAttribute="top" constant="10" id="yed-Ha-6hk"/>
                                 </constraints>
                             </view>

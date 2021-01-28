@@ -576,13 +576,6 @@
 			path = csiWCF;
 			sourceTree = "<group>";
 		};
-		17818BEA22815524000EAFF1 /* UserProfile */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = UserProfile;
-			sourceTree = "<group>";
-		};
 		17818BEB2281563E000EAFF1 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
@@ -812,7 +805,6 @@
 			children = (
 				57727D2D230B726000734B43 /* CoreData */,
 				17818BEB2281563E000EAFF1 /* Entities */,
-				17818BEA22815524000EAFF1 /* UserProfile */,
 				17818BE9228152AA000EAFF1 /* csiWCF */,
 			);
 			path = Modules;

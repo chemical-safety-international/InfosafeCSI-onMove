@@ -11,9 +11,9 @@ import Foundation
 
 //var csiWCF_URLHeader = "https://203.55.180.101/CSIMD_WCF/CSI_MD_Service.svc/"
 
-var csiWCF_URLHeader = "https://192.168.10.15/CSIMD_WCF/CSI_MD_Service.svc/"
-//var csiWCF_URLHeader = "https://gold:4438/CSIMD_WCF/CSI_MD_Service.svc/"
+//var csiWCF_URLHeader = "https://192.168.10.15/CSIMD_WCF/CSI_MD_Service.svc/"
 
+var csiWCF_URLHeader = "https://www.csinfosafe.com/CSIMD_WCF_Test/CSI_MD_Service.svc/"
 
 // Call the WCF function: 'loginbyEami' with email, password, deviceid, devicemac and return the data from WCF
 //WCF for LoginByEamil
@@ -63,7 +63,7 @@ func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, d
     //create a json type string
     let json: [String: Any] = ["email":email, "password":password, "deviceid":deviceid, "devicemac":devicemac, "phoneno": "", "devicename": locallogininfo.deviceName ?? "", "devicemodel": locallogininfo.model ?? "", "deviceserialno": locallogininfo.UUID ?? "", "deviceSEID": "", "deviceIMEI": "", "deviceMEID": "", "sourceip":"", "otacode": otacode, "appointedclient": localclientinfo.appointedclient ?? ""]
    
-//    print(json)
+    print(json)
     //serialiazation of json string
     let jsonData = try? JSONSerialization.data(withJSONObject: json)
     
@@ -94,9 +94,9 @@ func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, d
                 return }
         
 //check return value
-//        let str = String.init(data: dataResponse, encoding: .utf8)
-//
-//        print(str as Any)
+        let str = String.init(data: dataResponse, encoding: .utf8)
+
+        print(str as Any)
         completion(dataResponse)
     }
     task.resume()

@@ -212,7 +212,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
             
             if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
                 
-                self.GHSClassT.text = "GHS CLASSFICATION"
+                self.GHSClassT.text = "GHS CLASSIFICATION"
                 
                 if (localViewSDSGHS.ps.isEmpty == false) {
                     self.PST.text = "POISONS SCHEDULE"
@@ -1056,7 +1056,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
         if (localViewSDSGHS.formatcode == "0F" || localViewSDSGHS.formatcode == "0A") {
             self.navigationItem.title = "GHS"
         } else {
-            self.navigationItem.title = "CLASSFICATION"
+            self.navigationItem.title = "CLASSIFICATION"
         }
         
         

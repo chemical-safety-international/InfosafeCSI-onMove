@@ -217,7 +217,13 @@ class CheckPurchaseTablePage_VC: UIViewController, UISearchBarDelegate {
                 
                 let minDate = issueDateValueArray.min()
                 let maxDate = issueDateValueArray.max()
-                issueDateRange = "\(minDate ?? "") - \(maxDate ?? "")"
+                
+                if minDate == maxDate {
+                    issueDateRange = minDate ?? ""
+                } else {
+                    issueDateRange = "\(minDate ?? "") - \(maxDate ?? "")"
+                }
+                
 //                issueDateRange = "\(dateFormatter.string(from: minDate)) - \(dateFormatter.string(from: maxDate))"
                 issueDateArray.append(issueDateRange)
                 

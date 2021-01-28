@@ -41,8 +41,6 @@ class OTACODEPage_VC: UIViewController {
 //            //change navigation bar text color and font
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 23), .foregroundColor: UIColor.white]
             self.navigationItem.title = "OTA Code"
-               
-    
     }
     
     func sendOTACode() {
@@ -90,12 +88,17 @@ class OTACODEPage_VC: UIViewController {
                     }
                 }
 
-                
-                
                 DispatchQueue.main.async {
+                    
+                    if localclientinfo.otacode.isEmpty == false {
+                        let defaults = UserDefaults.standard
+                        defaults.set(localclientinfo.otacode, forKey: "OTACode")
+                        defaults.set(locallogininfo.email, forKey: "OTAEmail\(locallogininfo.email ?? "")")
+                    }
                     
                     if model.passed == true {
                         self.removeSpinner()
+                     
                         if localclientinfo.needchooseclient == true {
                             let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "ClientSelect") as? ClientSelect_VC
                             self.navigationController?.pushViewController(loginJump!, animated: true)
@@ -144,17 +147,7 @@ class OTACODEPage_VC: UIViewController {
         sendOTACode()
         
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
-
 }
 
 

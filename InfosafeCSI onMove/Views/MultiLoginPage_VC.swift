@@ -56,7 +56,10 @@ class MultiLoginPage_VC: UIViewController {
         locallogininfo.email = email
         localclientinfo.appointedclient = ""
 
-        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+            //only use for untrust website
+//        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+        
+        let session = URLSession(configuration: .default)
         
         csiWCF_VM().callLoginWithOTACODE(email: email, password: "", session: session, otacode: "") { (completion) in
             
@@ -109,9 +112,21 @@ class MultiLoginPage_VC: UIViewController {
                     if model.passed == true {
                         self.removeSpinner()
 
-                        if localclientinfo.needchooseclient == true {
+                        if localclientinfo.needchooseclient == true && model.isgeneric == true{
                             self.remeberEmail()
+                            
+                            let defaults = UserDefaults.standard
+                            let otaremeberedEmail = defaults.string(forKey: "OTAEmail")
+                            if (otaremeberedEmail == self.emailTextField.text) {
+                                localclientinfo.otacode = defaults.string(forKey: "OTACode")
+                                print(localclientinfo.otacode)
+                            }
+                            
                             let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "ClientSelect") as? ClientSelect_VC
+                            self.navigationController?.pushViewController(loginJump!, animated: true)
+                        } else if localclientinfo.needchooseclient == true && model.isgeneric == false{
+                            self.remeberEmail()
+                            let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "SearchPage") as? SearchPage_VC
                             self.navigationController?.pushViewController(loginJump!, animated: true)
                         } else {
                             self.remeberEmail()
@@ -140,8 +155,20 @@ class MultiLoginPage_VC: UIViewController {
 //                            self.checkGenericErrorType(errorno: localclientinfo.errorno)
                             if localclientinfo.needchooseclient == true {
                                 self.remeberEmail()
+                                
+                                let defaults = UserDefaults.standard
+                                let otaremeberedEmail = defaults.string(forKey: "OTAEmail\(self.emailTextField.text ?? "")")
+                                if (otaremeberedEmail == self.emailTextField.text) {
+                                    localclientinfo.otacode = defaults.string(forKey: "OTACode")
+
+                                }
+//                                print(otaremeberedEmail)
+//                                print(self.emailTextField.text)
+//                                print(localclientinfo.otacode)
+                                
                                 let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "ClientSelect") as? ClientSelect_VC
                                 self.navigationController?.pushViewController(loginJump!, animated: true)
+
                             } else if localclientinfo.retIndexText.contains("OTA Code Sent") {
                                 self.remeberEmail()
                                         let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "OTACODEPage") as? OTACODEPage_VC
@@ -177,30 +204,22 @@ class MultiLoginPage_VC: UIViewController {
     @objc func disKeyboard() {
         emailTextField.endEditing(true)
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     @IBAction func continueButtonTapped(_ sender: Any) {
         emailCheck()
     }
     
 }
 
-
-extension MultiLoginPage_VC : URLSessionDelegate {
-    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-       //Trust the certificate even if not valid
-       let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
-
-       completionHandler(.useCredential, urlCredential)
-    }
-}
+//only use for untrust website
+//extension MultiLoginPage_VC : URLSessionDelegate {
+//    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+//       //Trust the certificate even if not valid
+//       let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+//
+//       completionHandler(.useCredential, urlCredential)
+//    }
+//}
 
 extension MultiLoginPage_VC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
