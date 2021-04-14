@@ -104,7 +104,7 @@ extension ClientSelect_VC: UITableViewDelegate, UITableViewDataSource {
 //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "jumpToSearchPage"), object: nil)
         self.showSpinner(onView: self.view)
         var otacode: String!
-        print(localclientinfo.otacode)
+        //print(localclientinfo.otacode)
         if (localclientinfo.otacode.isEmpty == false) {
             otacode = localclientinfo.otacode
         } else {

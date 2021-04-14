@@ -119,7 +119,7 @@ class MultiLoginPage_VC: UIViewController {
                             let otaremeberedEmail = defaults.string(forKey: "OTAEmail")
                             if (otaremeberedEmail == self.emailTextField.text) {
                                 localclientinfo.otacode = defaults.string(forKey: "OTACode")
-                                print(localclientinfo.otacode)
+                                print(localclientinfo.otacode ?? "")
                             }
                             
                             let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "ClientSelect") as? ClientSelect_VC
@@ -149,6 +149,10 @@ class MultiLoginPage_VC: UIViewController {
                                 self.navigationController?.pushViewController(loginJump!, animated: true)
                             } else if localclientinfo.retIndexNo.contains("E") {
                                 self.showAlert(title: "Verify Failed", message: localclientinfo.retIndexText)
+                            } else if localclientinfo.retIndexNo.contains("A10001") {
+                                self.remeberEmail()
+                                        let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "OTACODEPage") as? OTACODEPage_VC
+                                        self.navigationController?.pushViewController(loginJump!, animated: true)
                             }
                             
                         } else if model.isgeneric == true {

@@ -276,6 +276,8 @@ class LoginPage_VC: UIViewController, UITextFieldDelegate {
             do {
                 //here dataResponse received from a network request
                 let decoder = JSONDecoder()
+                print("Completion:")
+                print(completion)
                 let model = try decoder.decode(outLoginData.self, from:
                     completion) //Decode JSON Response Data
 //                print(model)

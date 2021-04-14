@@ -4583,7 +4583,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RPA-Se-vbn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="9kW-O7-aVy" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-1346" y="-654"/>
+            <point key="canvasLocation" x="-1346.376811594203" y="-654.24107142857144"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

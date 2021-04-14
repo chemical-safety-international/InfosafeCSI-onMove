@@ -69,7 +69,6 @@ func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, d
     
     //*create URL string point to wcf method* should be changed after setting up core data
     let url = URL(string: csiWCF_URLHeader + "loginbyEmail")!
-    //let url = URL(string: "https://gold:4438/CSIMD_WCF/CSI_MD_Service.svc")!
     
     //create request
     var request = URLRequest(url: url)
@@ -79,7 +78,7 @@ func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, d
     //insert json string to the request
     request.httpBody = jsonData
     
-//    print(request)
+    print(request)
 
     let task = session.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
@@ -96,6 +95,7 @@ func csiWCF_loginbyEmail_https(email:String, password:String, deviceid:String, d
 //check return value
         let str = String.init(data: dataResponse, encoding: .utf8)
 
+        print("Return1")
         print(str as Any)
         completion(dataResponse)
     }
