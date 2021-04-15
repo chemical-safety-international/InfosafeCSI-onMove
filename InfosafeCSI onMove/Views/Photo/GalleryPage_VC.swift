@@ -29,7 +29,7 @@ class GalleryPage_VC: UIViewController {
 //        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
 //        let imagePath = paths.appending("/\(imageName)")
         
-        print(imagePath)
+//        print(imagePath)
         
 //        self.imageView.image = UIImage(contentsOfFile: imagePath)
         if fileManager.fileExists(atPath: imagePath) {

@@ -90,7 +90,7 @@ class SDSViewCore_VC: UIViewController, UIScrollViewDelegate {
                 self.getValue()
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeSpin"), object: nil)
             } else {
-                print("Something missing!")
+//                print("Something missing!")
             }
         }
     }

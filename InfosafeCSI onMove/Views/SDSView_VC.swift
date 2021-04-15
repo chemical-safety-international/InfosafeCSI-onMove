@@ -268,7 +268,7 @@ class SplitView_VC: UIViewController {
      }
      */
     func loadGHSScreen() {
-        print("loaded")
+//        print("loaded")
         GHSContainer.isHidden = false
         localDeafultData.sdsNo = localsearchinfo.results[0].synno
         localcurrentSDS.sdsNo = localDeafultData.sdsNo
@@ -526,7 +526,7 @@ extension WKWebView {
             record in
             WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
             #if DEBUG
-            print("WKWebsiteDataStore record deleted:", record)
+//            print("WKWebsiteDataStore record deleted:", record)
             #endif
             }
         }

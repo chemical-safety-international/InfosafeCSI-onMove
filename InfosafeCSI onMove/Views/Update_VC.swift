@@ -131,7 +131,7 @@ class Update_VC: UIViewController {
                     let decodeData = Data(base64Encoded: completionReturnData, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
 
                     localcurrentSDS.pdfData = decodeData
-                    print("finished loading")
+//                    print("finished loading")
                     self.isStop = true
                 }
 
@@ -164,19 +164,19 @@ class Update_VC: UIViewController {
     
     func modelName() {
         let modelName = UIDevice.modelName
-        print("Model name: \(modelName)\n")
+//        print("Model name: \(modelName)\n")
         
     }
     
     // for identify the device uniquely (will create a new one after reinstalling)
     func UUID() {
         let uuid = UIDevice.current.identifierForVendor?.uuidString
-        print("UUID: \(uuid ?? "")\n")
+//        print("UUID: \(uuid ?? "")\n")
     }
     
     func deviceName() {
         let deviceName = UIDevice.current.name
-        print("Device name: \(deviceName)\n")
+//        print("Device name: \(deviceName)\n")
         
     }
     
@@ -186,13 +186,13 @@ class Update_VC: UIViewController {
         format.dateFormat = "HH:mm:ss dd-MM-yyyy"
         
         let formattedDate = format.string(from: date)
-        print("Current date: \(formattedDate)\n")
+//        print("Current date: \(formattedDate)\n")
     }
     
     func currentDevice() {
         
-        print("Device systen name: \(UIDevice.current.systemName)\n")
-        print("Device system version: \(UIDevice.current.systemVersion)\n")
+//        print("Device systen name: \(UIDevice.current.systemName)\n")
+//        print("Device system version: \(UIDevice.current.systemVersion)\n")
     }
     
 }

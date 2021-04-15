@@ -158,7 +158,6 @@ extension ClientSelect_VC: UITableViewDelegate, UITableViewDataSource {
                             self.navigationController?.pushViewController(loginJump!, animated: true)
                         }
                     } else if model.passed == false {
-                        
                         self.removeSpinner()
                         if model.isgeneric == false {
 //                            self.checkNonGenericErrorType(errorno: localclientinfo.errorno)
@@ -184,28 +183,28 @@ extension ClientSelect_VC: UITableViewDelegate, UITableViewDataSource {
                                         print("Error", parsingError)
                                     }
                                 }
-//                                let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "LoginPage") as? LoginPage_VC
-//                                self.navigationController?.pushViewController(loginJump!, animated: true)
-                            } else if localclientinfo.retIndexText.contains("Multiple Client") && localclientinfo.needchooseclient == true {
+                            } else if localclientinfo.retIndexNo.contains("A10002") && localclientinfo.needchooseclient == true {
                                 let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "ClientSelect") as? ClientSelect_VC
                                 self.navigationController?.pushViewController(loginJump!, animated: true)
+                            } else if localclientinfo.retIndexNo.contains("A10001") {
+                                let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "OTACODEPage") as? OTACODEPage_VC
+                                self.navigationController?.pushViewController(loginJump!, animated: true)
                             } else if localclientinfo.retIndexNo.contains("E") {
+                                self.removeSpinner()
                                 self.showAlert(title: "Verify Failed", message: localclientinfo.retIndexText)
                             }
                         } else if model.isgeneric == true {
 //                            self.checkGenericErrorType(errorno: localclientinfo.errorno)
-                            if localclientinfo.retIndexText.contains("OTA Code Sent") {
+                            if localclientinfo.retIndexNo.contains("A10001") {
                                         let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "OTACODEPage") as? OTACODEPage_VC
                                         self.navigationController?.pushViewController(loginJump!, animated: true)
                             } else if localclientinfo.retIndexNo.contains("E") {
                                 self.showAlert(title: "Verify Failed", message: localclientinfo.retIndexText)
                             }
-                            
                         } else {
                             self.removeSpinner()
                             self.showAlert(title: "Verify Failed", message: "Email is invaild, please try again.")
                         }
-                        
                     } else {
                         self.removeSpinner()
                         self.showAlert(title: "Failed", message: "Server is no response.")

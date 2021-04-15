@@ -110,7 +110,7 @@ class OCR_VC: UIViewController, G8TesseractDelegate, UIImagePickerControllerDele
 
     
     func progressImageRecognition(for tesseract: G8Tesseract) {
-        print("Recognition Progress \(tesseract.progress) %")
+//        print("Recognition Progress \(tesseract.progress) %")
     }
     
     override func didReceiveMemoryWarning() {
@@ -213,7 +213,7 @@ class OCR_VC: UIViewController, G8TesseractDelegate, UIImagePickerControllerDele
     @IBAction func OCRSearchButtonTapped(_ sender: Any) {
         
         let recognizeText = recognizedTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        print(recognizeText)
+//        print(recognizeText)
         if recognizedTextView.text!.isEmpty || recognizedTextView.text! == "No text recognised." || recognizedTextView.text! == "Recognising Text" {
             self.removeSpinner()
             recognizedTextView.text = ""

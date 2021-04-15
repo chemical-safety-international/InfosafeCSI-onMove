@@ -67,9 +67,9 @@ class PhotoPage_VC: UIViewController, UIImagePickerControllerDelegate, UINavigat
         let imageData = image.pngData()
         
         
-        print(imagePath)
+//        print(imagePath)
 //        print(imagePath1)
-        print("Binary data is: \(String(describing: imageData))")
+//        print("Binary data is: \(String(describing: imageData))")
         
         //store it in the document directory
         fileManager.createFile(atPath: imagePath as String, contents: imageData, attributes: nil)

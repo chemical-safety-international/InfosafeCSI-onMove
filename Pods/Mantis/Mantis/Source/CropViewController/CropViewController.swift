@@ -63,7 +63,7 @@ public class CropViewController: UIViewController {
     private var initialLayout = false
     
     deinit {
-        print("CropViewController deinit.")
+//        print("CropViewController deinit.")
     }
     
     init(image: UIImage, config: Mantis.Config = Mantis.Config(), mode: CropViewControllerMode = .normal) {

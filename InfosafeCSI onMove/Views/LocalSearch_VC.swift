@@ -40,11 +40,11 @@ class LocalSearch_VC: UIViewController {
         productItemArray = CoreDataManager.fetchObj()
         
         let text = "Total records: \(productItemArray.count)"
-        print(text)
+//        print(text)
     }
 
     func localSearch() {
-        print("local search function called")
+//        print("local search function called")
 //        if searchbar.text!.isEmpty {
 //            self.removeSpinner()
 //            self.showAlert(title: "Failed", message: "Search content empty.")
@@ -96,7 +96,7 @@ class LocalSearch_VC: UIViewController {
     
     @IBAction func searchBtnTapped(_ sender: Any) {
         let searchText = searchBar.text
-        print(searchText!)
+//        print(searchText!)
 //        guard searchText!.isEmpty else {
 //            productItemArray = CoreDataManager.fetchObj()
 //            
@@ -131,7 +131,7 @@ class LocalSearch_VC: UIViewController {
         if pdfA.count != 0 {
             DispatchQueue.main.async {
                 
-                print("\(pdfA[0].sdsno!)")
+//                print("\(pdfA[0].sdsno!)")
 //                let decodeData = Data(base64Encoded: pdfA[0].pdfdata!, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
         
                 for index in 1...10000 {

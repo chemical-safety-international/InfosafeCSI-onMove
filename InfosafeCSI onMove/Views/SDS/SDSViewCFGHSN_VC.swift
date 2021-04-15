@@ -777,7 +777,7 @@ class SDSViewCFGHSN_VC: UIViewController, UIScrollViewDelegate {
 
                             fixSubStr1 = fixSubArray[0].replacingOccurrences(of: ".", with: "")
                             if (fixSubStr1.contains("None") || fixSubStr1.contains("NIL") || fixSubStr1.isEmpty == true) {
-                                                            print("here1")
+//                                                            print("here1")
                                 self.subImg1.image = nil
                                 self.subImg1height.constant = 0
                                 self.subImg1.frame.size.height = 0

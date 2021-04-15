@@ -127,7 +127,7 @@ class OTACODEPage_VC: UIViewController {
                     }
                 }
             } catch let parsingError {
-                print("Error", parsingError)
+//                print("Error", parsingError)
             }
         }
     }

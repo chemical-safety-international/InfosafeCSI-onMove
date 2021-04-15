@@ -41,7 +41,7 @@ func csiWCF_loginbyEmail(email:String, password:String, deviceid:String, devicem
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
-                print(error?.localizedDescription ?? "Response Error")
+//                print(error?.localizedDescription ?? "Response Error")
 
                 DispatchQueue.main.async {
                     //send the notification to searchPage_VC
@@ -129,7 +129,7 @@ func csiWCF_GetClientLogo_https(clientID: String, session: URLSession, completio
     let task = session.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
-                print(error?.localizedDescription ?? "Response Error")
+//                print(error?.localizedDescription ?? "Response Error")
                 
                 DispatchQueue.main.async {
                     //send the notification to searchPage_VC
@@ -279,7 +279,7 @@ func csiWCF_GetSDSSearchResultsPage(pnameInputData:String, supInputData: String,
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
-                print(error?.localizedDescription ?? "Response Error")
+//                print(error?.localizedDescription ?? "Response Error")
                 
                 DispatchQueue.main.async {
                     //send the notification to searchPage_VC
@@ -434,7 +434,7 @@ func csiWCF_GetSDSSearchResultsPage_https(pnameInputData:String, supInputData: S
     let task = session.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
-                print(error?.localizedDescription ?? "Response Error")
+//                print(error?.localizedDescription ?? "Response Error")
                 
                 DispatchQueue.main.async {
                     //send the notification to searchPage_VC
@@ -480,7 +480,7 @@ func csiWCF_GetSearchCriteriaList(clientid:String, infosafeid:String, session: U
     let task = session.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
-                print(error?.localizedDescription ?? "Response Error")
+//                print(error?.localizedDescription ?? "Response Error")
                 return }
         
             
@@ -533,7 +533,7 @@ func csiWCF_getSDS(clientid: String, uid: String, sdsNoGet: String, apptp : Stri
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
-                print(error?.localizedDescription ?? "Response Error")
+//                print(error?.localizedDescription ?? "Response Error")
                 DispatchQueue.main.async {
                     //send the notification to searchPage_VC
                     NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
@@ -575,7 +575,7 @@ func csiWCF_getSDS_https(clientid: String, uid: String, sdsNoGet: String, apptp 
     let task = session.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
-                print(error?.localizedDescription ?? "Response Error")
+//                print(error?.localizedDescription ?? "Response Error")
                 DispatchQueue.main.async {
                     //send the notification to searchPage_VC
                     NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
@@ -617,7 +617,7 @@ func csiWCF_getCoreInfo(clientid: String, uid: String, sdsNoGet: String, apptp :
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
-                print(error?.localizedDescription ?? "Response Error")
+//                print(error?.localizedDescription ?? "Response Error")
 //                DispatchQueue.main.async {
 //                    //send the notification to searchPage_VC
 //                    NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
@@ -658,7 +658,7 @@ func csiWCF_getCoreInfo_https(clientid: String, uid: String, sdsNoGet: String, a
     let task = session.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
-                print(error?.localizedDescription ?? "Response Error")
+//                print(error?.localizedDescription ?? "Response Error")
 //                DispatchQueue.main.async {
 //                    //send the notification to searchPage_VC
 //                    NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
@@ -698,7 +698,7 @@ func csiWCF_getClassification(clientid: String, uid: String, sdsNoGet: String, a
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
-                print(error?.localizedDescription ?? "Response Error")
+//                print(error?.localizedDescription ?? "Response Error")
 //                DispatchQueue.main.async {
 //                    //send the notification to searchPage_VC
 //                    NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
@@ -742,7 +742,7 @@ func csiWCF_getClassification_https(clientid: String, uid: String, sdsNoGet: Str
     let task = session.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
-                print(error?.localizedDescription ?? "Response Error")
+//                print(error?.localizedDescription ?? "Response Error")
 //                DispatchQueue.main.async {
 //                    //send the notification to searchPage_VC
 //                    NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
@@ -784,7 +784,7 @@ func csiWCF_getFirstAid(clientid: String, uid: String, sdsNoGet: String, apptp :
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
-                print(error?.localizedDescription ?? "Response Error")
+//                print(error?.localizedDescription ?? "Response Error")
 //                DispatchQueue.main.async {
 //                    //send the notification to searchPage_VC
 //                    NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
@@ -824,7 +824,7 @@ func csiWCF_getFirstAid_https(clientid: String, uid: String, sdsNoGet: String, a
     let task = session.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
-                print(error?.localizedDescription ?? "Response Error")
+//                print(error?.localizedDescription ?? "Response Error")
 //                DispatchQueue.main.async {
 //                    //send the notification to searchPage_VC
 //                    NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
@@ -863,7 +863,7 @@ func csiWCF_getTransport(clientid: String, uid: String, sdsNoGet: String, apptp 
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
-                print(error?.localizedDescription ?? "Response Error")
+//                print(error?.localizedDescription ?? "Response Error")
 //                DispatchQueue.main.async {
 //                    //send the notification to searchPage_VC
 //                    NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)
@@ -907,7 +907,7 @@ func csiWCF_getTransport_https(clientid: String, uid: String, sdsNoGet: String, 
     let task = session.dataTask(with: request) { (data, response, error) in
         guard let dataResponse = data,
             error == nil else {
-                print(error?.localizedDescription ?? "Response Error")
+//                print(error?.localizedDescription ?? "Response Error")
 //                DispatchQueue.main.async {
 //                    //send the notification to searchPage_VC
 //                    NotificationCenter.default.post(name: Notification.Name("errorSDSView"), object: nil)

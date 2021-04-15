@@ -105,8 +105,6 @@ class MultiLoginPage_VC: UIViewController {
                         localclientinfo.clientList.append(clientList)
                     }
                 }
-                
-                
                             
                 DispatchQueue.main.async {
                     if model.passed == true {
@@ -119,7 +117,7 @@ class MultiLoginPage_VC: UIViewController {
                             let otaremeberedEmail = defaults.string(forKey: "OTAEmail")
                             if (otaremeberedEmail == self.emailTextField.text) {
                                 localclientinfo.otacode = defaults.string(forKey: "OTACode")
-                                print(localclientinfo.otacode ?? "")
+//                                print(localclientinfo.otacode ?? "")
                             }
                             
                             let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "ClientSelect") as? ClientSelect_VC
@@ -143,16 +141,16 @@ class MultiLoginPage_VC: UIViewController {
                                 locallogininfo.email = email
                                 let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "LoginPage") as? LoginPage_VC
                                 self.navigationController?.pushViewController(loginJump!, animated: true)
-                            } else if localclientinfo.retIndexText.contains("Multiple Client") && localclientinfo.needchooseclient == true {
+                            } else if localclientinfo.retIndexNo.contains("A10002") && localclientinfo.needchooseclient == true {
                                 self.remeberEmail()
                                 let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "ClientSelect") as? ClientSelect_VC
                                 self.navigationController?.pushViewController(loginJump!, animated: true)
-                            } else if localclientinfo.retIndexNo.contains("E") {
-                                self.showAlert(title: "Verify Failed", message: localclientinfo.retIndexText)
-                            } else if localclientinfo.retIndexNo.contains("A10001") {
+                            }  else if localclientinfo.retIndexNo.contains("A10001") {
                                 self.remeberEmail()
                                         let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "OTACODEPage") as? OTACODEPage_VC
                                         self.navigationController?.pushViewController(loginJump!, animated: true)
+                            } else if localclientinfo.retIndexNo.contains("E") {
+                                self.showAlert(title: "Verify Failed", message: localclientinfo.retIndexText)
                             }
                             
                         } else if model.isgeneric == true {
@@ -173,7 +171,7 @@ class MultiLoginPage_VC: UIViewController {
                                 let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "ClientSelect") as? ClientSelect_VC
                                 self.navigationController?.pushViewController(loginJump!, animated: true)
 
-                            } else if localclientinfo.retIndexText.contains("OTA Code Sent") {
+                            } else if localclientinfo.retIndexNo.contains("A10001") {
                                 self.remeberEmail()
                                         let loginJump = self.storyboard?.instantiateViewController(withIdentifier: "OTACODEPage") as? OTACODEPage_VC
                                         self.navigationController?.pushViewController(loginJump!, animated: true)

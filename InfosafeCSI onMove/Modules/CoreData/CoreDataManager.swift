@@ -59,9 +59,9 @@ class CoreDataManager: NSObject {
         
         do {            
             try context.save()
-            print("Saved successfully!")
+//            print("Saved successfully!")
         } catch {
-            print(error.localizedDescription)
+//            print(error.localizedDescription)
         }
     }
     
@@ -89,7 +89,7 @@ class CoreDataManager: NSObject {
                 productArray.append(prod)
                 }
             } catch {
-                print(error.localizedDescription)
+//                print(error.localizedDescription)
             }
         
             return productArray
@@ -107,16 +107,16 @@ class CoreDataManager: NSObject {
         let pdfArray = CoreDataManager.fetchPDF(targetText: localcurrentSDS.sdsNo)
         
         if pdfArray.isEmpty == false {
-            print("it already exist in core data")
+//            print("it already exist in core data")
         } else {
             manageObj.setValue(sdsno, forKey: "sdsno")
             manageObj.setValue(pdfdata, forKey: "pdfdata")
             
             do {
                 try context.save()
-                print("Saved successfully!")
+//                print("Saved successfully!")
             } catch {
-                print(error.localizedDescription)
+//                print(error.localizedDescription)
             }
         }
 
@@ -138,9 +138,9 @@ class CoreDataManager: NSObject {
             
             do {
                 try context.save()
-                print("Saved successfully!")
+//                print("Saved successfully!")
             } catch {
-                print(error.localizedDescription)
+//                print(error.localizedDescription)
             }
         
         
@@ -170,7 +170,7 @@ class CoreDataManager: NSObject {
                 pdfArray.append(prod)
             }
         } catch {
-            print(error.localizedDescription)
+//            print(error.localizedDescription)
         }
         return pdfArray
     }
@@ -183,10 +183,10 @@ class CoreDataManager: NSObject {
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
         
         do {
-            print("Deleting all data!")
+//            print("Deleting all data!")
             try getContext().execute(deleteRequest)
         } catch {
-            print(error.localizedDescription)
+//            print(error.localizedDescription)
         }
         
     }
@@ -208,10 +208,10 @@ class CoreDataManager: NSObject {
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
         
         do {
-            print("Deleting all data!")
+//            print("Deleting all data!")
             try getContext().execute(deleteRequest)
         } catch {
-            print(error.localizedDescription)
+//            print(error.localizedDescription)
         }
         
         
@@ -253,7 +253,7 @@ class CoreDataManager: NSObject {
                 fileSize += fileDictionary.fileSize()
             }
             budleSize = fileSize
-            print("budle size \(budleSize)\n")
+//            print("budle size \(budleSize)\n")
         } catch {
             print(error.localizedDescription)
         }

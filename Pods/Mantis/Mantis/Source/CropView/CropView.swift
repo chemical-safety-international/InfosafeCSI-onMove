@@ -67,7 +67,7 @@ class CropView: UIView {
     var forceFixedRatio = false
     
     deinit {
-        print("CropView deinit.")
+//        print("CropView deinit.")
     }
     
     init(image: UIImage, viewModel: CropViewModel = CropViewModel()) {

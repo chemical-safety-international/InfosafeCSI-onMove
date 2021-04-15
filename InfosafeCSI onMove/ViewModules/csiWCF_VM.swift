@@ -175,7 +175,7 @@ class csiWCF_VM: UIViewController {
                 
                 
             } catch let parsingError {
-                print("Error", parsingError)
+//                print("Error", parsingError)
             }
 //            print(self.localresult)
             if  self.localresult.pagecount != 0 {

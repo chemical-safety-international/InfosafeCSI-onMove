@@ -175,7 +175,7 @@ class SearchTablePage_VC: UIViewController, UISearchBarDelegate, UITextFieldDele
 //        }
         
         if (UIDevice.current.userInterfaceIdiom == .pad) {
-            print("UIDevice")
+//            print("UIDevice")
             let indexPath = IndexPath(row: 0, section: 0)
             tableDisplay.selectRow(at: indexPath, animated: true, scrollPosition: .top)
 //            tableDisplay.allowsSelection = true
@@ -698,13 +698,13 @@ extension SearchTablePage_VC: UITableViewDelegate, UITableViewDataSource {
                                     }
                                 }
                             }else {
-                            print("Something wrong!")
+//                            print("Something wrong!")
                             }
                         }
                     }
 
                 }else {
-                    print("Something wrong!")
+//                    print("Something wrong!")
                 }
 
             }
